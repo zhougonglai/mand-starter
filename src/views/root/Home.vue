@@ -6,7 +6,9 @@
         <div class="search" />
       </div>
       <div class="app-header-action">
-        <md-button type="primary" size="small" inline round>申请入驻</md-button>
+        <md-button type="primary" size="small" inline round @click="gotoSign"
+          >申请入驻</md-button
+        >
       </div>
     </div>
     <div class="menus">
@@ -120,6 +122,11 @@ export default {
         }
       ]
     };
+  },
+  methods: {
+    gotoSign() {
+      this.$router.push({ name: "binding" });
+    }
   }
 };
 </script>

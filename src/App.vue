@@ -1,13 +1,6 @@
 <template>
   <router-view />
 </template>
-<script>
-export default {
-  created() {
-    this.$router.push({ name: "binding" });
-  }
-};
-</script>
 <style lang="stylus">
 svg.icon {
   width: 74px;
