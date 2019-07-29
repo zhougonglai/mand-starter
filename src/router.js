@@ -1,53 +1,60 @@
-import Vue from 'vue';
-import Router from 'vue-router';
+import Vue from "vue";
+import Router from "vue-router";
+
 Vue.use(Router);
 
 export default new Router({
-  mode: 'history',
+  mode: "history",
   base: process.env.BASE_URL,
   routes: [
     {
-      path: '/',
+      path: "/",
       component: () =>
-        import(/* webpackChunkName: "Root" */ './views/root/Root.vue'),
+        import(/* webpackChunkName: "Root" */ "./views/root/Root.vue"),
       children: [
         {
-          path: '',
-          name: 'home',
+          path: "",
+          name: "home",
           component: () =>
-            import(/* webpackChunkName: "Home" */ './views/root/Home.vue')
+            import(/* webpackChunkName: "Home" */ "./views/root/Home.vue")
         },
         {
-          path: 'search',
-          name: 'search',
+          path: "search",
+          name: "search",
           component: () =>
-            import(/* webpackChunkName: "Search" */ './views/root/Search.vue')
+            import(/* webpackChunkName: "Search" */ "./views/root/Search.vue")
         },
         {
-          path: 'account',
-          name: 'account',
+          path: "account",
+          name: "account",
           component: () =>
-            import(/* webpackChunkName: "Account" */ './views/root/Account.vue')
+            import(/* webpackChunkName: "Account" */ "./views/root/Account.vue")
         }
       ]
     },
     {
-      path: '/sign',
-      name: 'sign',
+      path: "/binding",
+      name: "binding",
       component: () =>
-        import(/* webpackChunkName: "Sign" */ './views/sign/index.vue'),
+        import(/* webpackChunkName: "binding" */ "./views/Binding.vue")
+    },
+    {
+      path: "/sign",
+      name: "sign",
+      component: () =>
+        import(/* webpackChunkName: "Sign" */ "./views/sign/index.vue"),
       children: [
         {
-          path: 'in',
-          name: 'sign_in',
+          path: "in",
+          name: "sign_in",
           component: () =>
-            import(/* webpackChunkName: "SignIn" */ './views/sign/SignIn.vue')
+            import(/* webpackChunkName: "SignIn" */ "./views/sign/SignIn.vue")
         },
         {
-          path: 'up',
-          name: 'sign_up',
+          path: "up",
+          name: "sign_up",
           component: () =>
-            import(/* webpackChunkName: "SignUp" */ './views/sign/SignUp.vue')
+            import(/* webpackChunkName: "SignUp" */ "./views/sign/SignUp.vue")
         }
       ]
     }

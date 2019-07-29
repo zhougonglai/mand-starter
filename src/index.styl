@@ -1,7 +1,165 @@
+/**
+ * Eric Meyer's Reset CSS v2.0 (http://meyerweb.com/eric/tools/css/reset/)
+ * http://cssreset.com
+ */
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video, input
+  margin: 0
+  padding: 0
+  border: 0
+  font-size: 100%
+  font-weight: normal
+  vertical-align: baseline
+
 body
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB',
   'Microsoft YaHei', 'Helvetica Neue', Helvetica, Arial, sans-serif, 'Apple Color Emoji',
   'Segoe UI Emoji', 'Segoe UI Symbol';
+  font-size: 16px;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-overflow-scrolling: touch;
+  -webkit-text-size-adjust: none
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0)
+
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure,
+footer, header, menu, nav, section
+  display: block
+
+body
+  line-height: 1
+
+blockquote, q
+  quotes: none
+
+blockquote:before, blockquote:after,
+q:before, q:after
+  content: none
+
+table
+  border-collapse: collapse
+  border-spacing: 0
+
+a
+  color: #7e8c8d
+  -webkit-backface-visibility: hidden
+  text-decoration: none
+
+li
+  list-style: none
 
 .flex
   display: flex
+
+input
+  outline: 0;
+  outline-style: none
+  caret-color: color-primary
+
+.fill
+  flex: 1
+
+.scroll-y
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+
+button
+  &.md-button
+    height: 80px
+    &.primary
+      background-image: linear-gradient(90deg, #F946F3 0%, #C158FE 100%);
+
+.clear-fix
+  &::after
+    content: ""
+    display: table
+    clear: both
+
+.border-top-1px, .border-right-1px, .border-bottom-1px, .border-left-1px
+  position: relative
+  &::before, &::after
+    content: ""
+    display: block
+    position: absolute
+    transform-origin: 0 0
+
+.border-top-1px
+  &::before
+    border-top: 1PX solid #ebebeb
+    left: 0
+    top: 0
+    width: 100%
+    transform-origin: 0 top
+
+.border-right-1px
+  &::after
+    border-right: 1PX solid #f5f5f5
+    top: 0
+    right: 0
+    height: 100%
+    transform-origin: right 0
+
+.border-bottom-1px
+  &::after
+    border-bottom: 1PX solid #ebebeb
+    left: 0
+    bottom: 0
+    width: 100%
+    transform-origin: 0 bottom
+
+.border-left-1px
+  &::before
+    border-left: 1PX solid #f5f5f5
+    top: 0
+    left: 0
+    height: 100%
+    transform-origin: left 0
+
+@media (min-resolution: 2dppx)
+  .border-top-1px
+    &::before
+      width: 200%
+      transform: scale(.5)
+  .border-right-1px
+    &::after
+      height: 200%
+      transform: scale(.5)
+  .border-bottom-1px
+    &::after
+      width: 200%
+      transform: scale(.5)
+  .border-left-1px
+    &::before
+      height: 200%
+      transform: scale(.5)
+
+@media (min-resolution: 3dppx)
+  .border-top-1px
+    &::before
+      width: 300%
+      transform: scale(.333)
+  .border-right-1px
+    &::after
+      height: 300%
+      transform: scale(.333)
+  .border-bottom-1px
+    &::after
+      width: 300%
+      transform: scale(.333)
+  .border-left-1px
+    &::before
+      height: 300%
+      transform: scale(.333)
