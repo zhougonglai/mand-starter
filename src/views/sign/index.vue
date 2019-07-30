@@ -66,6 +66,7 @@ export default {
 
   /deep/.md-tabs {
     margin-top: 16px;
+
     .md-tab-bar {
       background-color: transparent;
       padding: 0 20vw;
@@ -77,7 +78,7 @@ export default {
 
       .md-tab-bar-ink {
         height: 8px;
-        left: 12px;
+        left: 8%;
         max-width: 48px;
         border-radius: 5px;
       }
