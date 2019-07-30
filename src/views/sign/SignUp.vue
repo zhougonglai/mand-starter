@@ -23,15 +23,32 @@
             placeholder="请输入验证码"
             :maxlength="6"
           />
+          <md-button
+            type="primary"
+            round
+            size="small"
+            class="button"
+            :loging="sendCode.status"
+            >发送验证码</md-button
+          >
         </div>
       </div>
       <div class="fiel-row">
         <div class="fiel-item fill">
           <input
-            type="password"
+            :type="passwordStatus ? 'text' : 'password'"
             :value="signUp.password"
             placeholder="请输入登录密码"
           />
+          <svg
+            class="icon"
+            aria-hidden="true"
+            @click="passwordStatus = !passwordStatus"
+          >
+            <use
+              :xlink:href="passwordStatus ? '#icon-eye' : '#icon-eye-slash'"
+            />
+          </svg>
         </div>
       </div>
       <div class="fiel-row">
@@ -41,6 +58,10 @@
             :value="signUp.invite"
             placeholder="请输入邀请码"
           />
+          <!-- <md-input-item
+           type="digit"
+           placeholder="请输入邀请码"
+           clearable /> -->
         </div>
       </div>
       <div class="fiel-row">
@@ -62,12 +83,17 @@ export default {
   data() {
     return {
       area_code: 86,
+      sendCode: {
+        status: false,
+        time: 60
+      },
       signUp: {
         phone: "",
         password: "",
         code: "",
         invite: ""
-      }
+      },
+      passwordStatus: false
     };
   }
 };

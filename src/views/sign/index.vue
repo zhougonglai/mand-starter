@@ -110,13 +110,18 @@ export default {
     font-weight: lighter;
     display: flex;
     align-items: center;
-    padding: 16px;
+    padding: 8px;
 
     input {
       border: none;
       padding-left: 16px;
       width: 100%;
       height: 100%;
+      border-radius: 32px;
+    }
+
+    button.button.small{
+      width: fit-content;
     }
 
     & + .fiel-item {
