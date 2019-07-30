@@ -137,6 +137,15 @@ export default {
       text-align: center;
     }
 
+    svg.icon {
+      width: 32px;
+      height: 32px;
+
+      &:last-child {
+        margin-right: 16px;
+      }
+    }
+
     &.inline {
       display: inline-flex;
     }

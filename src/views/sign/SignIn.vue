@@ -10,6 +10,7 @@
           <input
             type="tel"
             :value="signIn.phone"
+            @input="fielInput($event, 'phone')"
             placeholder="请输入手机号"
             :maxlength="11"
           />
@@ -18,10 +19,20 @@
       <div class="fiel-row">
         <div class="fiel-item fill">
           <input
-            type="password"
+            :type="passwordStatus ? 'text' : 'password'"
             :value="signIn.password"
+            @input="fielInput($event, 'password')"
             placeholder="请输入登录密码"
           />
+          <svg
+            class="icon"
+            aria-hidden="true"
+            @click="passwordStatus = !passwordStatus"
+          >
+            <use
+              :xlink:href="passwordStatus ? '#icon-eye' : '#icon-eye-slash'"
+            />
+          </svg>
         </div>
       </div>
       <div class="fiel-row">
@@ -46,8 +57,19 @@ export default {
       signIn: {
         phone: "",
         password: ""
-      }
+      },
+      passwordStatus: false
     };
+  },
+  methods: {
+    fielInput(
+      {
+        target: { value }
+      },
+      target
+    ) {
+      this.signIn[target] = value;
+    }
   }
 };
 </script>

@@ -3,11 +3,11 @@
 </template>
 <script>
 export default {
-  name: 'account'
-}
+  name: "account"
+};
 </script>
 <style lang="stylus" scoped>
-#account{
+#account {
   width: 750px;
   flex: 1;
   overflow-y: auto;

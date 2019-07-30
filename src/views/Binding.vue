@@ -1,5 +1,9 @@
 <template>
   <div id="binding">
+    <div class="logo-top">
+      <img src="@/assets/images/logo.png" alt="logo" class="logo" />
+      <h1 class="logo-title">欢迎入驻NN约玩</h1>
+    </div>
     <div class="info-board">
       <div class="info">
         <p class="label">
@@ -7,10 +11,12 @@
         </p>
       </div>
       <div class="info-actions">
-        <md-button type="primary" round @click="gotoSignUp"
+        <md-button type="primary" round @click="gotoSignUp" :loading="false"
           >注册新账号</md-button
         >
-        <md-button type="link" @click="gotoSignIn">绑定已有账号</md-button>
+        <md-button type="link" @click="gotoSignIn" :loading="false"
+          >绑定已有账号</md-button
+        >
       </div>
     </div>
   </div>
@@ -36,22 +42,41 @@ export default {
 #binding {
   width: 100%;
   display: flex;
+  flex-direction: column;
   align-items: center;
-  justify-content: center;
   height: 100vh;
+  padding-top: 8vh;
   padding-bottom: constant(safe-area-inset-bottom);
   padding-bottom: env(safe-area-inset-bottom);
 
+  .logo-top {
+    img.logo {
+      width: 343px;
+    }
+
+    h1.logo-title {
+      margin-top: 28px;
+      text-align: center;
+      font-size: 40px;
+      color: #606166;
+      line-height: 44px;
+      font-family: PingFangSC-Medium;
+    }
+  }
+
   .info-board {
     width: 80vw;
-    transform: translateY(-10vh);
+    margin-top: 160px;
 
     .info {
-      font-size: 36px;
-      color: #606166;
-      letter-spacing: 0;
-      text-align: left;
-      line-height: 52px;
+      .label {
+        font-size: 28px;
+        color: #606166;
+        letter-spacing: 0;
+        text-align: left;
+        line-height: 52px;
+        text-align: center;
+      }
     }
   }
 
