@@ -107,6 +107,8 @@ export default {
   .fiel-row {
     display: flex;
     height: 80px;
+    font-size: 24px;
+    line-height: 80px;
 
     & + .fiel-row {
       margin-top: 32px;
@@ -120,6 +122,7 @@ export default {
     font-size: 32px;
     line-height: 80px;
     font-weight: lighter;
+    font-size: 28px;
     display: flex;
     align-items: center;
     padding: 8px;

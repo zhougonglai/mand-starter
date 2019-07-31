@@ -1,10 +1,6 @@
 <template>
   <router-view />
 </template>
-<style lang="stylus" scoped>
-#app {
-}
-</style>
 <style lang="stylus">
 svg.icon {
   width: 74px;

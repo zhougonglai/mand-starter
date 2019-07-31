@@ -36,7 +36,9 @@
         </div>
       </div>
       <div class="fiel-row">
-        <md-button type="primary" round>立即登录</md-button>
+        <md-button type="primary" round @click="gotoBasicInfo"
+          >立即登录</md-button
+        >
       </div>
     </form>
   </div>
@@ -72,6 +74,9 @@ export default {
       target
     ) {
       this.signIn[target] = value;
+    },
+    gotoBasicInfo() {
+      this.$router.push({ name: "basic_info" });
     },
     ...mapActions("global", ["toggleAreaSelector"])
   }

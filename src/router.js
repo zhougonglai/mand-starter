@@ -10,25 +10,25 @@ export default new Router({
     {
       path: "/",
       component: () =>
-        import(/* webpackChunkName: "Root" */ "./views/root/Root.vue"),
+        import(/* webpackChunkName: "root" */ "@/views/root/Root.vue"),
       children: [
         {
           path: "",
           name: "home",
           component: () =>
-            import(/* webpackChunkName: "Home" */ "./views/root/Home.vue")
+            import(/* webpackChunkName: "home" */ "@/views/root/Home.vue")
         },
         {
           path: "search",
           name: "search",
           component: () =>
-            import(/* webpackChunkName: "Search" */ "./views/root/Search.vue")
+            import(/* webpackChunkName: "search" */ "@/views/root/Search.vue")
         },
         {
           path: "account",
           name: "account",
           component: () =>
-            import(/* webpackChunkName: "Account" */ "./views/root/Account.vue")
+            import(/* webpackChunkName: "account" */ "@/views/root/Account.vue")
         }
       ]
     },
@@ -36,25 +36,37 @@ export default new Router({
       path: "/binding",
       name: "binding",
       component: () =>
-        import(/* webpackChunkName: "binding" */ "./views/Binding.vue")
+        import(/* webpackChunkName: "binding" */ "@/views/Binding.vue")
+    },
+    {
+      path: "/basic_info",
+      name: "basic_info",
+      component: () =>
+        import(/* webpackChunkName: "basic_info" */ "@/views/artboard/BasicInfo.vue")
+    },
+    {
+      path: "/service_info",
+      name: "service_info",
+      component: () =>
+        import(/* webpackChunkName: "service_info" */ "@/views/artboard/ServiceInfo.vue")
     },
     {
       path: "/sign",
       name: "sign",
       component: () =>
-        import(/* webpackChunkName: "Sign" */ "./views/sign/index.vue"),
+        import(/* webpackChunkName: "sign" */ "@/views/sign/index.vue"),
       children: [
         {
           path: "in",
           name: "sign_in",
           component: () =>
-            import(/* webpackChunkName: "SignIn" */ "./views/sign/SignIn.vue")
+            import(/* webpackChunkName: "sign_in" */ "@/views/sign/SignIn.vue")
         },
         {
           path: "up",
           name: "sign_up",
           component: () =>
-            import(/* webpackChunkName: "SignUp" */ "./views/sign/SignUp.vue")
+            import(/* webpackChunkName: "sign_up" */ "@/views/sign/SignUp.vue")
         }
       ]
     }
