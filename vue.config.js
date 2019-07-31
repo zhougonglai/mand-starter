@@ -10,12 +10,35 @@ module.exports = {
       }
     }
   },
+
   devServer: {
     proxy: "https://www.easy-mock.com/mock/5cbd107d08c37e59eb3df85f/api"
   },
+
   pwa: {
     workboxOptions: {
       importWorkboxFrom: "local"
+    }
+  },
+
+  pluginOptions: {
+    prerenderSpa: {
+      registry: undefined,
+      renderRoutes: [
+        "/",
+        "/home",
+        "/search",
+        "/account",
+        "/binding",
+        "/sign/in",
+        "/sign/up",
+        "/protocol",
+        "/basicinfo",
+        "/serviceinfo"
+      ],
+      useRenderEvent: true,
+      headless: true,
+      onlyProduction: true
     }
   }
 };

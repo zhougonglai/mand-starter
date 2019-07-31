@@ -2,14 +2,15 @@
   <div id="sign_up">
     <form class="input-fiel">
       <div class="fiel-row">
-        <div class="fiel-item area_code inline">
-          <div class="code">+{{ area_code }}</div>
+        <div class="fiel-item area_code inline" @click="toggleAreaSelector">
+          <div class="code">+{{ areaCode.code }}</div>
           <md-icon name="arrow-down" />
         </div>
         <div class="fiel-item fill">
           <input
             type="tel"
             :value="signUp.phone"
+            @input="fielInput($event, 'phone')"
             placeholder="请输入手机号"
             :maxlength="11"
           />
@@ -20,7 +21,8 @@
           <input
             type="text"
             :value="signUp.code"
-            placeholder="请输入验证码"
+            placeholder="请输入6位数验证码"
+            @input="fielInput($event, 'code')"
             :maxlength="6"
           />
           <md-button
@@ -38,7 +40,8 @@
           <input
             :type="passwordStatus ? 'text' : 'password'"
             :value="signUp.password"
-            placeholder="请输入登录密码"
+            @input="fielInput($event, 'password')"
+            placeholder="请输入6-18位的新密码，不含空格"
           />
           <svg
             class="icon"
@@ -56,12 +59,9 @@
           <input
             type="text"
             :value="signUp.invite"
-            placeholder="请输入邀请码"
+            @input="fielInput($event, 'invite')"
+            placeholder="输入邀请码(非必填)"
           />
-          <!-- <md-input-item
-           type="digit"
-           placeholder="请输入邀请码"
-           clearable /> -->
         </div>
       </div>
       <div class="fiel-row">
@@ -72,6 +72,7 @@
 </template>
 <script>
 import { Icon, InputItem, Button } from "mand-mobile";
+import { mapState, mapActions } from "vuex";
 
 export default {
   name: "sign-up",
@@ -82,7 +83,6 @@ export default {
   },
   data() {
     return {
-      area_code: 86,
       sendCode: {
         status: false,
         time: 60
@@ -95,6 +95,20 @@ export default {
       },
       passwordStatus: false
     };
+  },
+  computed: {
+    ...mapState("global", ["areaCode"])
+  },
+  methods: {
+    fielInput(
+      {
+        target: { value }
+      },
+      target
+    ) {
+      this.signUp[target] = value;
+    },
+    ...mapActions("global", ["toggleAreaSelector"])
   }
 };
 </script>

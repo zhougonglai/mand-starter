@@ -2,8 +2,8 @@
   <div id="sign_in">
     <form class="input-fiel">
       <div class="fiel-row">
-        <div class="fiel-item area_code inline">
-          <div class="code">+{{ area_code }}</div>
+        <div class="fiel-item area_code inline" @click="toggleAreaSelector">
+          <div class="code">+{{ areaCode.code }}</div>
           <md-icon name="arrow-down" />
         </div>
         <div class="fiel-item fill">
@@ -43,6 +43,7 @@
 </template>
 <script>
 import { Icon, InputItem, Button } from "mand-mobile";
+import { mapState, mapActions } from "vuex";
 
 export default {
   name: "sign-in",
@@ -53,13 +54,15 @@ export default {
   },
   data() {
     return {
-      area_code: 86,
       signIn: {
         phone: "",
         password: ""
       },
       passwordStatus: false
     };
+  },
+  computed: {
+    ...mapState("global", ["areaCode"])
   },
   methods: {
     fielInput(
@@ -69,7 +72,8 @@ export default {
       target
     ) {
       this.signIn[target] = value;
-    }
+    },
+    ...mapActions("global", ["toggleAreaSelector"])
   }
 };
 </script>

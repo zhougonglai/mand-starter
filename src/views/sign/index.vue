@@ -14,16 +14,24 @@
         <router-view v-if="current === pane.name" />
       </md-tab-pane>
     </md-tabs>
+    <md-selector
+      v-model="areaCode.status"
+      :default-value="86"
+      :data="areaCode.list"
+      @choose="changeAreaCode"
+    />
   </div>
 </template>
 <script>
-import { Tabs, TabPane } from "mand-mobile";
+import { Tabs, TabPane, Selector } from "mand-mobile";
+import { mapState, mapActions } from "vuex";
 
 export default {
   name: "sign",
   components: {
     [Tabs.name]: Tabs,
-    [TabPane.name]: TabPane
+    [TabPane.name]: TabPane,
+    [Selector.name]: Selector
   },
   data() {
     return {
@@ -40,10 +48,14 @@ export default {
       ]
     };
   },
+  computed: {
+    ...mapState("global", ["areaCode"])
+  },
   methods: {
     paneChange({ name }) {
       this.$router.push({ name });
-    }
+    },
+    ...mapActions("global", ["changeAreaCode"])
   },
   created() {
     this.current = this.$route.name;
@@ -120,7 +132,7 @@ export default {
       border-radius: 32px;
     }
 
-    button.button.small{
+    button.button.small {
       width: fit-content;
     }
 
