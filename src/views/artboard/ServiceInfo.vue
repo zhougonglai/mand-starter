@@ -57,12 +57,15 @@
         brief="请上传您的一段该服务类型的语音介绍，一段好的语音介绍可以提升 200%的接单率(支持mp3/m4a格式的音频建议30s以内)"
       >
         <template slot="children">
-          <md-button type="primary" round>上传音频</md-button>
+          <md-button type="primary" size="small" inline round @click="record"
+            >录音</md-button
+          >
+          <input type="file" accept="audio/*" @onchange="playRecord" />
         </template>
       </md-cell-item>
       <md-cell-item>
         <template slot="children">
-          <md-button type="priamry" round>提交</md-button>
+          <md-button type="primary" round>提交</md-button>
         </template>
       </md-cell-item>
     </md-field>
@@ -86,6 +89,7 @@
 </template>
 <script>
 import { Field, CellItem, Selector, ImageViewer, Button } from "mand-mobile";
+
 export default {
   name: "service-info",
   components: {
@@ -155,6 +159,25 @@ export default {
     chooseImage(i) {
       this.clipImgs.active = i;
       this.clipImgs.status = true;
+    },
+    record() {
+      navigator.mediaDevices
+        .getUserMedia({ audio: true })
+        .then(stream => {
+          console.log(stream);
+        })
+        .catch(err => {
+          console.log("err", err);
+        });
+    },
+    recordSteam(stream) {
+      const audioContext =
+        new window.AudioContext() || window.webkitAudioContext;
+      const mediaNode = audioContext.createMediaStreamSource(stream);
+      mediaNode.connect(audioContext.destination);
+    },
+    playRecord(stream) {
+      console.log(stream);
     }
   }
 };
