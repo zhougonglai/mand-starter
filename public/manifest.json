@@ -16,5 +16,13 @@
   "start_url": "./index.html",
   "display": "standalone",
   "background_color": "#8e4cfc",
-  "theme_color": "#8e4cfc"
+  "theme_color": "#8e4cfc",
+  "permissions": {
+    "audio-capture": {
+      "description": "获取用户录音描述文件"
+    },
+    "video-capture": {
+      "description": "认证用户头像"
+    }
+  }
 }

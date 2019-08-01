@@ -60,6 +60,14 @@
           <md-button type="primary" size="small" inline round @click="record"
             >录音</md-button
           >
+          <md-button
+            type="primary"
+            size="small"
+            inline
+            round
+            @click="starRecord"
+            >开始录音</md-button
+          >
           <input type="file" accept="audio/*" @onchange="playRecord" />
         </template>
       </md-cell-item>
@@ -89,6 +97,7 @@
 </template>
 <script>
 import { Field, CellItem, Selector, ImageViewer, Button } from "mand-mobile";
+import { setTimeout } from "timers";
 
 export default {
   name: "service-info",
@@ -140,7 +149,9 @@ export default {
           "http://img-hxy021.didistatic.com/static/strategymis/insurancePlatform_spu/uploads/27fb7f097ca218d743f816836bc7ea4a",
           "http://manhattan.didistatic.com/static/manhattan/insurancePlatform_spu/uploads/c2912793a222eb24b606a582fd849ab7"
         ]
-      }
+      },
+      mediaRecorder: null,
+      chunks: []
     };
   },
   methods: {
@@ -161,14 +172,30 @@ export default {
       this.clipImgs.status = true;
     },
     record() {
-      navigator.mediaDevices
-        .getUserMedia({ audio: true })
-        .then(stream => {
-          console.log(stream);
-        })
-        .catch(err => {
-          console.log("err", err);
-        });
+      if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+        navigator.mediaDevices
+          .getUserMedia({ audio: true })
+          .then(stream => {
+            console.log(stream);
+            this.mediaRecorder = new MediaRecorder(stream);
+          })
+          .catch(err => {
+            console.log("err", err);
+          });
+      } else {
+        alert("该浏览器不支持");
+      }
+    },
+    starRecord() {
+      this.mediaRecorder.start();
+      console.log("this.mediaRecorder.state", this.mediaRecorder.state);
+      this.mediaRecorder.ondataavailable = e => {
+        this.chunks.push(e.data);
+        console.log("chunks", this.chunks);
+      };
+      setTimeout(() => {
+        this.mediaRecorder.stop();
+      }, 6000);
     },
     recordSteam(stream) {
       const audioContext =

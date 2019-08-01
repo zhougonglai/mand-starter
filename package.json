@@ -10,6 +10,7 @@
     "ui": "vue ui"
   },
   "dependencies": {
+    "axios": "^0.19.0",
     "core-js": "^2.6.5",
     "current-device": "^0.8.2",
     "fastclick": "^1.0.6",
