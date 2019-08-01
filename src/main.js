@@ -1,11 +1,11 @@
-import Vue from "vue";
 import FastClick from "fastclick";
 import "normalize.css";
+import Vue from "vue";
 import App from "./App.vue";
+import "./index.styl";
+import "./registerServiceWorker";
 import router from "./router";
 import store from "./store";
-import "./registerServiceWorker";
-import "./index.styl";
 
 Vue.config.productionTip = false;
 Vue.config.devtools = process.env.NODE_ENV !== "production";

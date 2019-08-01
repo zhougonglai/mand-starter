@@ -10,7 +10,7 @@
       <md-cell-item title="所在城市" arrow />
       <md-cell-item
         title="年龄"
-        :addon="ageSelector.age"
+        :addon="ageSelector.age.text"
         arrow
         @click="toggleAgeSelector"
       />
@@ -186,10 +186,13 @@ export default {
   >>> .md-cell-item-children {
     .md-tag {
       margin-top: 14px;
-      border: 1px solid transparent;
 
       .default {
         padding: 14px;
+      }
+
+      .type-fill {
+        border: 1px solid transparent;
       }
 
       &+.md-tag {

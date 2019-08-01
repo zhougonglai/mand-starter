@@ -1,3 +1,5 @@
+import device from "current-device";
+
 export default {
   appId: "wxb2050880192fddb7",
   wx_authorize() {
@@ -64,5 +66,9 @@ export default {
         imgUrl
       });
     });
-  }
+  },
+  getUserMedia: async constraints => {
+    return await navigator.mediaDevices.getUserMedia(constraints);
+  },
+  device
 };
