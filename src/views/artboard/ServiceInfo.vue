@@ -78,11 +78,13 @@
       </md-cell-item>
     </md-field>
     <md-selector
+      title="技能类型"
       v-model="skill.status"
       :data="skill.list"
       @choose="skillChoose"
     />
     <md-selector
+      title="选择陪玩段位"
       v-model="level.status"
       :data="level.list"
       @choose="levelChoose"

@@ -131,6 +131,10 @@ export default {
       border-color: rgba(193, 88, 254, 1);
     }
 
+    p {
+      line-height: normal;
+    }
+
     input {
       border: none;
       padding-left: 16px;

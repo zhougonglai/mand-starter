@@ -9,9 +9,16 @@
         <div class="fiel-item fill">
           <input
             type="tel"
+            v-if="signIn.accountType"
             v-model="signIn.phone"
             placeholder="请输入手机号"
             :maxlength="11"
+          />
+          <input
+            type="email"
+            v-else
+            v-model="signIn.email"
+            placeholder="请输入邮箱/账号"
           />
         </div>
       </div>
@@ -31,6 +38,15 @@
               :xlink:href="passwordStatus ? '#icon-eye' : '#icon-eye-slash'"
             />
           </svg>
+        </div>
+      </div>
+      <div class="fiel-row">
+        <div class="fill" @click="changeAccountType">
+          <div class="font-normal">邮箱/账号登录</div>
+          <div class="font-normal gray">可使用NN账户(原雷神账号)登录</div>
+        </div>
+        <div class="right center">
+          <md-button type="link" size="small" inline>忘记密码?</md-button>
         </div>
       </div>
       <div class="fiel-row">
@@ -55,7 +71,9 @@ export default {
   data() {
     return {
       signIn: {
+        accountType: false,
         phone: "",
+        email: "",
         password: ""
       },
       passwordStatus: false
@@ -67,6 +85,9 @@ export default {
   methods: {
     gotoBasicInfo() {
       this.$router.push({ name: "basic_info" });
+    },
+    changeAccountType() {
+      this.signIn.accountType = !this.signIn.accountType;
     },
     ...mapActions("global", ["toggleAreaSelector"])
   }

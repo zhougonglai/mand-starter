@@ -24,7 +24,7 @@
             :maxlength="6"
           />
           <md-button
-            type="primary"
+            type="link"
             round
             size="small"
             class="button"
