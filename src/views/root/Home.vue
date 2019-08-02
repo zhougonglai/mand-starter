@@ -20,7 +20,11 @@
               v-for="(game, $$index) in gameArr"
               :key="$$index"
             >
-              <svg class="icon game-icon" aria-hidden="true">
+              <svg
+                class="icon game-icon"
+                aria-hidden="true"
+                @click="trigerTarget(game.key)"
+              >
                 <use :xlink:href="game.icon" />
               </svg>
               <span class="game-label">{{ game.name }}</span>
@@ -48,36 +52,44 @@ export default {
       games: [
         [
           {
-            name: "星际争霸",
-            icon: "#icon-ziyuan4"
+            name: "分享给朋友/分享到QQ",
+            icon: "#icon-ziyuan4",
+            key: "updateAppMessageShareData"
           },
           {
-            name: "模拟养成",
-            icon: "#icon-ziyuan3"
+            name: "分享到朋友圈/分享到QQ空间",
+            icon: "#icon-ziyuan3",
+            key: "updateTimelineShareData"
           },
           {
-            name: "VR",
-            icon: "#icon-ziyuan2"
+            name: "分享到腾讯微博",
+            icon: "#icon-ziyuan2",
+            key: "onMenuShareWeibo"
           },
           {
-            name: "格斗",
-            icon: "#icon-gedou"
+            name: "分享到QQ空间",
+            icon: "#icon-gedou",
+            key: "onMenuShareQZone"
           },
           {
-            name: "体育",
-            icon: "#icon-tiyu"
+            name: "开始录音",
+            icon: "#icon-tiyu",
+            key: "startRecord"
           },
           {
-            name: "休闲放置",
-            icon: "#icon-xiuxianfangzhi"
+            name: "停止录音",
+            icon: "#icon-xiuxianfangzhi",
+            key: "stopRecord"
           },
           {
-            name: "LOL",
-            icon: "#icon-ziyuan"
+            name: "播放语音",
+            icon: "#icon-ziyuan",
+            key: "playVoice"
           },
           {
-            name: "自走棋",
-            icon: "#icon-qipai1"
+            name: "拍照或从手机相册中选图",
+            icon: "#icon-qipai1",
+            key: "chooseImage"
           }
         ],
         [
@@ -120,12 +132,74 @@ export default {
           avatar:
             "http://img1.tuwandata.com/v2/thumb/jpg/MDQ4NywzNjQsMzY0LDksMywxLC0xLE5PTkUsLCw5MA==/u/www.tuwan.com/uploads/play/1043361563432825.png"
         }
-      ]
+      ],
+      localId: ""
     };
   },
   methods: {
     gotoSign() {
       this.$router.push({ name: "binding" });
+    },
+    trigerTarget(key) {
+      this[key]();
+    },
+    updateAppMessageShareData() {
+      window.wx.ready(() => {
+        window.wx.updateAppMessageShareData({
+          title: "分享给朋友/分享到QQ",
+          desc: "描述描述描述",
+          link: location.href,
+          imgUrl: "https://www.leigod.com/images/leishen_logo725.png",
+          success() {
+            alert("转发成功");
+          }
+        });
+      });
+    },
+    updateTimelineShareData() {
+      window.wx.ready(() => {
+        window.wx.updateTimelineShareData({
+          title: "分享到朋友圈/分享到QQ空间",
+          link: location.href,
+          imgUrl: "https://www.leigod.com/images/leishen_logo725.png",
+          success() {
+            alert("转发成功");
+          }
+        });
+      });
+    },
+    onMenuShareWeibo() {
+      alert("还没做");
+    },
+    onMenuShareQZone() {
+      alert("还没做");
+    },
+    startRecord() {
+      window.wx.startRecord();
+    },
+    stopRecord() {
+      window.wx.stopRecord({
+        success(res) {
+          alert("停止录音");
+          this.localId = res.localId;
+        }
+      });
+    },
+    playVoice() {
+      window.wx.playVoice({
+        localId: this.localId
+      });
+    },
+    chooseImage() {
+      window.wx.chooseImage({
+        count: 1, // 默认9
+        sizeType: ["original", "compressed"], // 可以指定是原图还是压缩图，默认二者都有
+        sourceType: ["album", "camera"], // 可以指定来源是相册还是相机，默认二者都有
+        success: function(res) {
+          var localIds = res.localIds; // 返回选定照片的本地ID列表，localId可以作为img标签的src属性显示图片
+          alert("文件Id", localIds);
+        }
+      });
     }
   }
 };

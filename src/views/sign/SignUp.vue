@@ -466,18 +466,16 @@ export default {
   },
   computed: {
     ...mapState("global", ["areaCode"]),
-    ...mapState("config", ["config", "redirect_uri"])
+    ...mapState("config", ["config"])
   },
   methods: {
-    login() {
-      this.wx_authorize();
-    },
+    login() {},
     authorizeWx() {},
     gotoBasicInfo() {
       this.$router.push({ name: "basic_info" });
     },
     ...mapActions("global", ["toggleAreaSelector"]),
-    ...mapActions("config", ["getWxConfig", "wx_authorize"])
+    ...mapActions("config", ["getWxConfig"])
   },
   mounted() {
     this.getWxConfig().then(data => {

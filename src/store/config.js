@@ -9,9 +9,7 @@ export default {
       timestamp: undefined,
       url: location.href
     },
-    redirect_uri: encodeURIComponent(
-      "http://qq156471181.vicp.cc:12707/?openId=o7hrp5hurltv-No0odArYe_wC0kw"
-    )
+    userInfo: {}
   },
   getters: {},
   actions: {
@@ -31,19 +29,11 @@ export default {
         return false;
       }
     },
-    wx_authorize({
-      state: {
-        config: { appId },
-        redirect_uri
-      }
-    }) {
-      console.log("appId", appId, redirect_uri);
-      window.open(
-        `
-          https://open.weixin.qq.com/connect/oauth2/authorize
-          ?appid=${appId}&redirect_uri=${redirect_uri}&response_type=code&scope=snsapi_userinfo#wechat_redirect
-        `
-      );
+    async getWxUserInfo(_, openId) {
+      const res = await fetch(
+        `http://qq156471181.vicp.cc/wx/user-info?openId=${openId}`
+      ).then(res => res.json());
+      return res;
     }
   },
   mutations: {

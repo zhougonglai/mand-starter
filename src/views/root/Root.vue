@@ -1,7 +1,12 @@
 <template>
   <div id="root">
     <router-view />
-    <md-tab-bar v-model="current" :items="items" :has-ink="false" @change="tabChange">
+    <md-tab-bar
+      v-model="current"
+      :items="items"
+      :has-ink="false"
+      @change="tabChange"
+    >
       <template slot="item" slot-scope="{ item }">
         <div class="custom-item">
           <div class="icon">
@@ -17,6 +22,8 @@
 </template>
 <script>
 import { TabBar, Icon } from "mand-mobile";
+import { mapActions } from "vuex";
+import { wxConfig } from "@/utils";
 
 export default {
   name: "root",
@@ -49,7 +56,17 @@ export default {
   methods: {
     tabChange({ name }) {
       this.$router.push({ name });
-    }
+    },
+    ...mapActions("config", ["getWxConfig"])
+  },
+  mounted() {
+    this.getWxConfig().then(data => {
+      if (data) {
+        wxConfig(data);
+      } else {
+        alert("获取失败");
+      }
+    });
   }
 };
 </script>
