@@ -1,4 +1,5 @@
 import axios from "axios";
+import { Toast } from "mand-mobile";
 
 import signApi from "./signApi";
 
@@ -48,5 +49,27 @@ for (let key in signApi) {
     return response;
   };
 }
+
+instance.interceptors.request.use(
+  config => {
+    Toast.loading("加载中", 0, false);
+    return config;
+  },
+  () => {
+    Toast.hide();
+    Toast.failed("请求错误, 请稍后再试!");
+  }
+);
+
+instance.interceptors.response.use(
+  res => {
+    Toast.hide();
+    return res.data;
+  },
+  () => {
+    Toast.hide();
+    Toast.failed("服务器响应失效");
+  }
+);
 
 export default Http;

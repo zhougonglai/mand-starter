@@ -9,12 +9,12 @@ export const wx_authorize = () => {
   window.open(
     `
       https://open.weixin.qq.com/connect/oauth2/authorize
-       ?appid=${appId}&redirect_uri=http://localhost:8080&response_type=code&scope=snsapi_userinfo#wechat_redirect
+       ?appid=${appId}&redirect_uri=http://10.128.20.180:8080/&response_type=code&scope=snsapi_userinfo#wechat_redirect
     `
   );
 };
 export const wxConfig = ({
-  debug = true,
+  debug = process.env.NODE_ENV !== "production",
   appId,
   timestamp,
   nonceStr,

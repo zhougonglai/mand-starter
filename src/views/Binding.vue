@@ -1,7 +1,7 @@
 <template>
   <div id="binding">
     <div class="logo-top">
-      <img src="@/assets/images/logo.png" alt="logo" class="logo" />
+      <img src="@/assets/images/login_logo.png" alt="logo" class="logo" />
       <h1 class="logo-title">欢迎入驻NN约玩</h1>
     </div>
     <div class="info-board">

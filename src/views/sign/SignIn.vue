@@ -9,8 +9,7 @@
         <div class="fiel-item fill">
           <input
             type="tel"
-            :value="signIn.phone"
-            @input="fielInput($event, 'phone')"
+            v-model="signIn.phone"
             placeholder="请输入手机号"
             :maxlength="11"
           />
@@ -20,8 +19,7 @@
         <div class="fiel-item fill">
           <input
             :type="passwordStatus ? 'text' : 'password'"
-            :value="signIn.password"
-            @input="fielInput($event, 'password')"
+            v-model="signIn.password"
             placeholder="请输入登录密码"
           />
           <svg
@@ -67,14 +65,6 @@ export default {
     ...mapState("global", ["areaCode"])
   },
   methods: {
-    fielInput(
-      {
-        target: { value }
-      },
-      target
-    ) {
-      this.signIn[target] = value;
-    },
     gotoBasicInfo() {
       this.$router.push({ name: "basic_info" });
     },

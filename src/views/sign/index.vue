@@ -1,7 +1,7 @@
 <template>
   <div id="sign">
     <div class="logo">
-      <img src="@/assets/images/logo.png" alt="nn约玩" />
+      <img src="@/assets/images/login_logo.png" alt="nn约玩" />
     </div>
     <md-tabs v-model="current" @change="paneChange">
       <md-tab-pane
@@ -120,18 +120,23 @@ export default {
     border: 1px solid #dcdfe6;
     box-sizing: border-box;
     font-size: 32px;
-    line-height: 80px;
+    line-height: 32px;
     font-weight: lighter;
     font-size: 28px;
     display: flex;
     align-items: center;
     padding: 8px;
 
+    &:focus-within, &.active {
+      border-color: rgba(193, 88, 254, 1);
+    }
+
     input {
       border: none;
       padding-left: 16px;
       width: 100%;
       height: 100%;
+      line-height: 1.5;
       border-radius: 32px;
     }
 

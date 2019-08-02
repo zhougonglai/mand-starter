@@ -9,8 +9,7 @@
         <div class="fiel-item fill">
           <input
             type="tel"
-            :value="signUp.phone"
-            @input="fielInput($event, 'phone')"
+            v-model="signUp.phone"
             placeholder="请输入手机号"
             :maxlength="11"
           />
@@ -20,9 +19,8 @@
         <div class="fiel-item fill">
           <input
             type="text"
-            :value="signUp.code"
+            v-model="signUp.code"
             placeholder="请输入6位数验证码"
-            @input="fielInput($event, 'code')"
             :maxlength="6"
           />
           <md-button
@@ -31,6 +29,7 @@
             size="small"
             class="button"
             :loging="sendCode.status"
+            @click="login"
             >发送验证码</md-button
           >
         </div>
@@ -39,8 +38,7 @@
         <div class="fiel-item fill">
           <input
             :type="passwordStatus ? 'text' : 'password'"
-            :value="signUp.password"
-            @input="fielInput($event, 'password')"
+            v-model="signUp.password"
             placeholder="请输入6-18位的新密码，不含空格"
           />
           <svg
@@ -58,20 +56,24 @@
         <div class="fiel-item fill">
           <input
             type="text"
-            :value="signUp.invite"
-            @input="fielInput($event, 'invite')"
+            v-model="signUp.invite"
             placeholder="输入邀请码(非必填)"
           />
         </div>
       </div>
-      <div class="fiel-row between">
+      <div class="fiel-row between center">
         <p>
           注册即代表同意
           <span class="primary" @click="protocol = !protocol"
             >《NN约玩协议》</span
           >
         </p>
-        <md-button size="small" class="normal" type="link" inline
+        <md-button
+          size="small"
+          @click="authorizeWx"
+          class="normal"
+          type="link"
+          inline
           >忘记密码？</md-button
         >
       </div>
@@ -435,6 +437,8 @@
 <script>
 import { Icon, InputItem, Button, Landscape } from "mand-mobile";
 import { mapState, mapActions } from "vuex";
+import axios from "axios";
+import { wx_authorize, wxConfig } from "@/utils";
 
 export default {
   name: "sign-up",
@@ -454,7 +458,7 @@ export default {
       signUp: {
         phone: "",
         password: "",
-        code: "",
+        code: process.env.VUE_APP_PLATFORM,
         invite: ""
       },
       passwordStatus: false
@@ -464,18 +468,34 @@ export default {
     ...mapState("global", ["areaCode"])
   },
   methods: {
-    fielInput(
-      {
-        target: { value }
-      },
-      target
-    ) {
-      this.signUp[target] = value;
+    login() {
+      this.$http.login().then(res => {
+        console.log("loginRes", res);
+        axios
+          .get("http://qq156471181.vicp.cc/wx/getWxConfig")
+          .then(res => res.data)
+          .then(({ rtnInfo: { data } }) => {
+            const { appId, noncestr, signature, timestamp } = data;
+
+            wxConfig({
+              appId,
+              noncestr,
+              signature,
+              timestamp
+            });
+          });
+      });
+    },
+    authorizeWx() {
+      wx_authorize();
     },
     gotoBasicInfo() {
       this.$router.push({ name: "basic_info" });
     },
     ...mapActions("global", ["toggleAreaSelector"])
+  },
+  mounted() {
+    console.log("PLATFORM", process.env.VUE_APP_PLATFORM);
   }
 };
 </script>
