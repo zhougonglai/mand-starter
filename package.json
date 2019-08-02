@@ -5,8 +5,7 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "weixin-build": "vue-cli-service build --mode weixin",
-    "dev-build": "vue-cli-service build --mode development",
+    "dev-build": "vue-cli-service build --mode weixin",
     "lint": "vue-cli-service lint",
     "now-build": "npm run build",
     "ui": "vue ui"

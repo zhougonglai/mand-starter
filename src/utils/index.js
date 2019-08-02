@@ -1,15 +1,12 @@
-// import axios from 'axios';
-
-// axios.defaults.baseURL = ''
-
-// export const request = axios;
-
 export const appId = "wxb2050880192fddb7";
 export const wx_authorize = () => {
+  const redirect_uri = encodeURIComponent(
+    "http://qq156471181.vicp.cc:12707/?openId=o7hrp5hurltv-No0odArYe_wC0kw"
+  );
   window.open(
     `
       https://open.weixin.qq.com/connect/oauth2/authorize
-       ?appid=${appId}&redirect_uri=http://10.128.20.180:8080/&response_type=code&scope=snsapi_userinfo#wechat_redirect
+       ?appid=${appId}&redirect_uri=${redirect_uri}&response_type=code&scope=snsapi_userinfo#wechat_redirect
     `
   );
 };
@@ -23,7 +20,7 @@ export const wxConfig = ({
   window.wx.config({
     debug,
     appId,
-    timestamp,
+    timestamp: parseInt(timestamp),
     nonceStr,
     signature,
     jsApiList: [

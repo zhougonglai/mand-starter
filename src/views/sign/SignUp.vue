@@ -472,14 +472,14 @@ export default {
       this.$http.login().then(res => {
         console.log("loginRes", res);
         axios
-          .get("http://qq156471181.vicp.cc/wx/getWxConfig")
+          .get(`http://qq156471181.vicp.cc/wx/getWxConfig?url=${location.href}`)
           .then(res => res.data)
           .then(({ rtnInfo: { data } }) => {
             const { appId, noncestr, signature, timestamp } = data;
 
             wxConfig({
               appId,
-              noncestr,
+              nonceStr: noncestr,
               signature,
               timestamp
             });
