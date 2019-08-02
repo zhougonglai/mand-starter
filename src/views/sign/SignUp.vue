@@ -437,8 +437,8 @@
 <script>
 import { Icon, InputItem, Button, Landscape } from "mand-mobile";
 import { mapState, mapActions } from "vuex";
-import axios from "axios";
-import { wx_authorize, wxConfig } from "@/utils";
+import { wxConfig } from "@/utils";
+// wx_authorize
 
 export default {
   name: "sign-up",
@@ -465,37 +465,28 @@ export default {
     };
   },
   computed: {
-    ...mapState("global", ["areaCode"])
+    ...mapState("global", ["areaCode"]),
+    ...mapState("config", ["config", "redirect_uri"])
   },
   methods: {
     login() {
-      this.$http.login().then(res => {
-        console.log("loginRes", res);
-        axios
-          .get(`http://qq156471181.vicp.cc/wx/getWxConfig?url=${location.href}`)
-          .then(res => res.data)
-          .then(({ rtnInfo: { data } }) => {
-            const { appId, noncestr, signature, timestamp } = data;
-
-            wxConfig({
-              appId,
-              nonceStr: noncestr,
-              signature,
-              timestamp
-            });
-          });
-      });
+      this.wx_authorize();
     },
-    authorizeWx() {
-      wx_authorize();
-    },
+    authorizeWx() {},
     gotoBasicInfo() {
       this.$router.push({ name: "basic_info" });
     },
-    ...mapActions("global", ["toggleAreaSelector"])
+    ...mapActions("global", ["toggleAreaSelector"]),
+    ...mapActions("config", ["getWxConfig", "wx_authorize"])
   },
   mounted() {
-    console.log("PLATFORM", process.env.VUE_APP_PLATFORM);
+    this.getWxConfig().then(data => {
+      if (data) {
+        wxConfig(data);
+      } else {
+        alert("获取失败");
+      }
+    });
   }
 };
 </script>

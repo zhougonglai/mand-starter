@@ -51,8 +51,6 @@ const pluginOptions = {
   }
 };
 
-console.log("nodejs", process.env.VUE_APP_PLATFORM);
-
 module.exports =
   process.env.NODE_ENV === "production"
     ? config
