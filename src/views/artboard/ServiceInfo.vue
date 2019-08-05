@@ -65,10 +65,11 @@
             size="small"
             inline
             round
-            @click="starRecord"
-            >开始录音</md-button
+            @click="stopRecord"
+            >停止录音</md-button
           >
-          <input type="file" accept="audio/*" @onchange="playRecord" />
+          <!-- <input type="file" accept="audio/*" @onchange="playRecord" /> -->
+          <audio controls autoplay playsinline ref="audio" />
         </template>
       </md-cell-item>
       <md-cell-item>
@@ -99,7 +100,12 @@
 </template>
 <script>
 import { Field, CellItem, Selector, ImageViewer, Button } from "mand-mobile";
-import { setTimeout } from "timers";
+import RecordRTC from "recordrtc";
+
+const isEdge =
+  navigator.userAgent.indexOf("Edge") !== -1 &&
+  (!!navigator.msSaveOrOpenBlob || !!navigator.msSaveBlob);
+const isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
 
 export default {
   name: "service-info",
@@ -176,10 +182,26 @@ export default {
     record() {
       if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
         navigator.mediaDevices
-          .getUserMedia({ audio: true })
+          .getUserMedia({
+            audio: isEdge
+              ? true
+              : {
+                  echoCancellation: false
+                }
+          })
           .then(stream => {
             console.log(stream);
-            this.mediaRecorder = new MediaRecorder(stream);
+            let config = {
+              type: "audio",
+              numberOfAudioChannels: isEdge ? 1 : 2,
+              checkForInactiveTracks: true,
+              bufferSize: 16384
+            };
+            if (isSafari || isEdge) {
+              config.recorderType = RecordRTC.StereoAudioRecorder;
+            }
+            this.mediaRecorder = new RecordRTC(stream, config);
+            this.mediaRecorder.startRecording();
           })
           .catch(err => {
             console.log("err", err);
@@ -188,16 +210,14 @@ export default {
         alert("该浏览器不支持");
       }
     },
-    starRecord() {
-      this.mediaRecorder.start();
-      console.log("this.mediaRecorder.state", this.mediaRecorder.state);
-      this.mediaRecorder.ondataavailable = e => {
-        this.chunks.push(e.data);
-        console.log("chunks", this.chunks);
-      };
-      setTimeout(() => {
-        this.mediaRecorder.stop();
-      }, 6000);
+    stopRecord() {
+      this.mediaRecorder.stopRecording(() => {
+        const url = URL.createObjectURL(this.mediaRecorder.getBlob());
+        this.replaceAudio(url);
+      });
+    },
+    replaceAudio(src) {
+      this.$refs.audio.src = src;
     },
     recordSteam(stream) {
       const audioContext =
