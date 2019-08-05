@@ -7,7 +7,7 @@ export default {
       noncestr: "",
       signature: "",
       timestamp: undefined,
-      url: location.href
+      url: location.origin + location.pathname
     },
     userInfo: {}
   },
@@ -18,9 +18,8 @@ export default {
         rtnCode,
         rtnInfo: { data }
       } = await fetch(
-        `http://qq156471181.vicp.cc/wx/getWxConfig?url=${encodeURIComponent(
-          location.href
-        )}`
+        `http://qq156471181.vicp.cc/nn/wx/getWxConfig?url=${location.origin +
+          location.pathname}`
       ).then(res => res.json());
       if (rtnCode === "000") {
         commit("SET_WX_CONFIG", { data });
@@ -31,7 +30,7 @@ export default {
     },
     async getWxUserInfo(_, openId) {
       const res = await fetch(
-        `http://qq156471181.vicp.cc/wx/user-info?openId=${openId}`
+        `http://qq156471181.vicp.cc/nn/wx/user-info?openId=${openId}`
       ).then(res => res.json());
       return res;
     }

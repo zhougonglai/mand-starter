@@ -70,7 +70,6 @@ export default {
   }
 };
 </script>
-
 <style lang="stylus" scoped>
 #root {
   height: 100vh;

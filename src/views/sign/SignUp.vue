@@ -437,8 +437,6 @@
 <script>
 import { Icon, InputItem, Button, Landscape } from "mand-mobile";
 import { mapState, mapActions } from "vuex";
-import { wxConfig } from "@/utils";
-// wx_authorize
 
 export default {
   name: "sign-up",
@@ -458,7 +456,7 @@ export default {
       signUp: {
         phone: "",
         password: "",
-        code: process.env.VUE_APP_PLATFORM,
+        code: "",
         invite: ""
       },
       passwordStatus: false
@@ -474,17 +472,7 @@ export default {
     gotoBasicInfo() {
       this.$router.push({ name: "basic_info" });
     },
-    ...mapActions("global", ["toggleAreaSelector"]),
-    ...mapActions("config", ["getWxConfig"])
-  },
-  mounted() {
-    this.getWxConfig().then(data => {
-      if (data) {
-        wxConfig(data);
-      } else {
-        alert("获取失败");
-      }
-    });
+    ...mapActions("global", ["toggleAreaSelector"])
   }
 };
 </script>

@@ -148,7 +148,7 @@ export default {
         window.wx.updateAppMessageShareData({
           title: "分享给朋友/分享到QQ",
           desc: "描述描述描述",
-          link: location.href,
+          link: "http://qq156471181.vicp.cc/binding",
           imgUrl: "https://www.leigod.com/images/leishen_logo725.png",
           success() {
             alert("转发成功");
@@ -160,7 +160,7 @@ export default {
       window.wx.ready(() => {
         window.wx.updateTimelineShareData({
           title: "分享到朋友圈/分享到QQ空间",
-          link: location.href,
+          link: "http://qq156471181.vicp.cc/binding",
           imgUrl: "https://www.leigod.com/images/leishen_logo725.png",
           success() {
             alert("转发成功");
@@ -179,13 +179,14 @@ export default {
     },
     stopRecord() {
       window.wx.stopRecord({
-        success(res) {
-          alert("停止录音");
+        success: res => {
+          alert("停止录音", res);
           this.localId = res.localId;
         }
       });
     },
     playVoice() {
+      console.log(this.localId);
       window.wx.playVoice({
         localId: this.localId
       });

@@ -3,13 +3,14 @@
     <md-field>
       <md-cell-item
         title="技能类型"
-        :addon="skill.active.text"
+        :addon="skill.active.text ? skill.active.text : '请选择'"
         arrow
         @click="skillToggle"
       />
       <md-cell-item
         title="段位"
-        :addon="level.active.text"
+        class="border-bottom-1px"
+        :addon="level.active.text ? level.active.text : '请选择'"
         @click="levelToggle"
         arrow
         no-border
@@ -23,6 +24,8 @@
       </md-cell-item>
       <md-cell-item
         title="服务截图"
+        class="border-bottom-1px"
+        no-border
         brief="请上传清晰游戏显示（游戏昵称和段位信息）界面的截图"
       >
         <template slot="children">
@@ -42,34 +45,67 @@
       </md-cell-item>
       <md-cell-item
         title="技能介绍"
+        class="border-bottom-1px"
         brief="好的描述可以让别人更了解你，提高接单率"
         no-border
       >
         <template slot="right">
           <md-button type="link" size="small">点击查看示例</md-button>
         </template>
-        <template slot="children"
-          >这里是兴趣爱好的介绍，这里是兴趣爱好的介绍这里是兴趣爱好的。这里是兴趣爱好的介绍，这里是兴趣爱好的介绍这里是兴趣爱好的。这里是兴趣爱好的介绍，这里是兴趣爱好的介绍这里是兴趣爱好的。这里是兴趣爱好的介绍。</template
-        >
+        <template slot="children">
+          <textarea
+            v-model="tlInfo"
+            :rows="3"
+            :maxlength="400"
+            class="fiel-input input-textarea"
+          />
+          <div class="hit">{{ tlInfo.length }} / 400</div>
+        </template>
       </md-cell-item>
       <md-cell-item
         title="语音介绍"
+        no-border
         brief="请上传您的一段该服务类型的语音介绍，一段好的语音介绍可以提升 200%的接单率(支持mp3/m4a格式的音频建议30s以内)"
       >
         <template slot="children">
-          <md-button type="primary" size="small" inline round @click="record"
+          <md-button
+            type="primary"
+            size="small"
+            class="recorder recorder_start"
+            :inactive="recorder.status"
+            inline
+            round
+            @click="record"
             >录音</md-button
           >
           <md-button
             type="primary"
             size="small"
+            class="recorder recorder_stop"
+            :inactive="!recorder.status"
+            :loading="recorder.recording"
             inline
             round
             @click="stopRecord"
             >停止录音</md-button
           >
-          <!-- <input type="file" accept="audio/*" @onchange="playRecord" /> -->
-          <audio controls autoplay playsinline ref="audio" />
+          <audio
+            v-if="!recorder.isWx"
+            controls
+            autoplay
+            playsinline
+            ref="audio"
+          />
+          <md-button
+            type="primary"
+            :inactive="recorder.localId"
+            size="small"
+            class="recorder recorder_player"
+            inline
+            round
+            @click="playRecord"
+            >播放录音</md-button
+          >
         </template>
       </md-cell-item>
       <md-cell-item>
@@ -101,6 +137,8 @@
 <script>
 import { Field, CellItem, Selector, ImageViewer, Button } from "mand-mobile";
 import RecordRTC from "recordrtc";
+import { isWx, wxConfig } from "@/utils";
+import { mapActions } from "vuex";
 
 const isEdge =
   navigator.userAgent.indexOf("Edge") !== -1 &&
@@ -158,8 +196,17 @@ export default {
           "http://manhattan.didistatic.com/static/manhattan/insurancePlatform_spu/uploads/c2912793a222eb24b606a582fd849ab7"
         ]
       },
-      mediaRecorder: null,
-      chunks: []
+      recorder: {
+        isWx: isWx(),
+        status: false,
+        recording: false,
+        mediaRecorder: null,
+        mediaSteam: null,
+        blob: null,
+        localId: ""
+      },
+      tlInfo:
+        "这里是兴趣爱好的介绍，这里是兴趣爱好的介绍这里是兴趣爱好的。这里是兴趣爱好的介绍，这里是兴趣爱好的介绍这里是兴趣爱好的。这里是兴趣爱好的介绍，这里是兴趣爱好的介绍这里是兴趣爱好的。这里是兴趣爱好的介绍。"
     };
   },
   methods: {
@@ -180,7 +227,12 @@ export default {
       this.clipImgs.status = true;
     },
     record() {
-      if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+      if (isWx()) {
+        window.wx.startRecord();
+      } else if (
+        navigator.mediaDevices &&
+        navigator.mediaDevices.getUserMedia
+      ) {
         navigator.mediaDevices
           .getUserMedia({
             audio: isEdge
@@ -200,8 +252,11 @@ export default {
             if (isSafari || isEdge) {
               config.recorderType = RecordRTC.StereoAudioRecorder;
             }
-            this.mediaRecorder = new RecordRTC(stream, config);
-            this.mediaRecorder.startRecording();
+            this.recorder.mediaSteam = stream;
+            this.recorder.mediaRecorder = new RecordRTC(stream, config);
+            this.recorder.mediaRecorder.startRecording();
+            this.recorder.status = true;
+            this.recorder.recording = true;
           })
           .catch(err => {
             console.log("err", err);
@@ -211,23 +266,43 @@ export default {
       }
     },
     stopRecord() {
-      this.mediaRecorder.stopRecording(() => {
-        const url = URL.createObjectURL(this.mediaRecorder.getBlob());
-        this.replaceAudio(url);
-      });
+      if (isWx()) {
+        window.wx.stopRecord({
+          success: res => {
+            alert("停止录音", res);
+            this.recorder.localId = res.localId;
+            this.recorder.status = false;
+            this.recorder.recording = false;
+          }
+        });
+      } else {
+        this.recorder.mediaRecorder.stopRecording(() => {
+          this.recorder.status = false;
+          const url = URL.createObjectURL(
+            this.recorder.mediaRecorder.getBlob()
+          );
+          this.replaceAudio(url);
+        });
+      }
     },
     replaceAudio(src) {
       this.$refs.audio.src = src;
     },
-    recordSteam(stream) {
-      const audioContext =
-        new window.AudioContext() || window.webkitAudioContext;
-      const mediaNode = audioContext.createMediaStreamSource(stream);
-      mediaNode.connect(audioContext.destination);
+    playRecord() {
+      window.wx.playVoice({
+        localId: this.recorder.localId
+      });
     },
-    playRecord(stream) {
-      console.log(stream);
-    }
+    ...mapActions("config", ["getWxConfig"])
+  },
+  mounted() {
+    this.getWxConfig().then(data => {
+      if (data) {
+        wxConfig(data);
+      } else {
+        alert("微信配置获取失败");
+      }
+    });
   }
 };
 </script>
@@ -260,6 +335,16 @@ export default {
         }
       }
     }
+  }
+
+  >>>.recorder {
+    &+.recorder {
+      margin-left: 16px;
+    }
+  }
+
+  audio {
+    margin-top: 16px;
   }
 }
 </style>

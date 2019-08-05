@@ -7,10 +7,17 @@
           <md-radio name="1" v-model="gender" label="女" inline />
         </template>
       </md-cell-item>
-      <md-cell-item title="所在城市" arrow />
+      <md-cell-item
+        title="所在城市"
+        :addon="
+          citySelector.active.length ? citySelector.active.join('-') : '请选择'
+        "
+        arrow
+        @click="toggleCitySelector"
+      />
       <md-cell-item
         title="年龄"
-        :addon="ageSelector.age.text"
+        :addon="ageSelector.age.text ? ageSelector.age.text : '请选择'"
         arrow
         @click="toggleAgeSelector"
       />
@@ -21,7 +28,9 @@
         brief="(必填)"
       >
         <template slot="right">
-          <small class="gray">最多可选择3个标签(3/3)</small>
+          <small class="gray"
+            >最多可选择3个标签({{ tags.active.length }}/3)</small
+          >
         </template>
         <template slot="children">
           <md-tag
@@ -36,15 +45,51 @@
         </template>
       </md-cell-item>
       <md-cell-item no-border title="兴趣爱好" class="border-bottom-1px">
-        <template slot="children"
-          >这里是兴趣爱好的介绍，这里是兴趣爱好的介绍这里是兴趣爱好的。</template
-        >
+        <template slot="children">
+          <textarea
+            v-model="fafor"
+            :rows="3"
+            :maxlength="30"
+            class="fiel-input input-textarea"
+          />
+          <div class="hit">{{ fafor.length }} / 30</div>
+        </template>
       </md-cell-item>
       <md-cell-item no-border title="形象照" brief="(必填)">
         <template slot="children">
           <ul class="image-reader-list">
-            <li class="image-reader-item add">
-              <md-image-reader is-multiple />
+            <template v-if="imageList.length">
+              <li
+                class="image-reader-item"
+                v-for="(image, index) in imageList"
+                :key="index"
+                :style="{
+                  backgroundImage: `url(${image.dataUrl})`,
+                  backgroundPosition: 'center center',
+                  backgroundRepeat: 'no-repeat',
+                  backgroundSize: 'cover'
+                }"
+              >
+                <md-tag
+                  class="image-reader-item-del"
+                  size="small"
+                  shape="quarter"
+                  fill-color="#111a34"
+                  type="fill"
+                  font-color="#fff"
+                  @click.native="onDeleteImage(image, index)"
+                >
+                  <md-icon name="close" />
+                </md-tag>
+              </li>
+            </template>
+            <li class="image-reader-item add" v-if="imageList.length < 6">
+              <md-image-reader
+                is-multiple
+                :amount="6"
+                @select="onReaderSelect"
+                @complete="onReaderComplete"
+              />
               <md-icon name="camera" size="md" color="#CCC"></md-icon>
               <p>添加图片</p>
             </li>
@@ -61,14 +106,23 @@
     </md-field>
     <md-selector
       v-model="ageSelector.status"
+      max-height="320px"
+      title="选择陪玩年龄"
       :data="ageSelector.list"
       @choose="ageChoose"
+    />
+    <md-tab-picker
+      v-model="citySelector.status"
+      title="选择地理位置"
+      :data="citySelector.list"
+      @change="cityPicker"
     />
   </div>
 </template>
 <script>
 import {
   Selector,
+  TabPicker,
   CellItem,
   Button,
   Field,
@@ -78,6 +132,9 @@ import {
   Icon,
   Toast
 } from "mand-mobile";
+import { citys, numList, wxConfig } from "@/utils";
+import { mapActions } from "vuex";
+
 export default {
   name: "basic-info",
   components: {
@@ -89,35 +146,42 @@ export default {
     [Toast.name]: Toast,
     [Radio.name]: Radio,
     [ImageReader.name]: ImageReader,
-    [Button.name]: Button
+    [Button.name]: Button,
+    [TabPicker.name]: TabPicker
   },
   data() {
     return {
       ageSelector: {
         status: false,
         age: "",
-        list: [
-          {
-            value: 18,
-            text: "18"
-          },
-          {
-            value: 19,
-            text: "19"
-          },
-          {
-            value: 20,
-            text: "20"
-          },
-          {
-            value: 21,
-            text: "21"
-          },
-          {
-            value: 22,
-            text: "22"
-          }
-        ]
+        list: numList(18, 200).map(i => ({ value: i, text: `${i}岁` }))
+      },
+      citySelector: {
+        status: false,
+        active: [],
+        list: {
+          name: "province",
+          label: "请选择",
+          options: citys.map(({ children, ...others }) => ({
+            ...others,
+            children: {
+              name: "city",
+              label: "请选择",
+              options: children.map(({ children, ...$others }) =>
+                children
+                  ? {
+                      ...$others,
+                      children: {
+                        name: "block",
+                        label: "请选择",
+                        options: children
+                      }
+                    }
+                  : { ...$others }
+              )
+            }
+          }))
+        }
       },
       tags: {
         active: [],
@@ -160,22 +224,56 @@ export default {
           }
         ]
       },
-      gender: "2"
+      imageList: [],
+      gender: "2",
+      fafor: "这里是兴趣爱好的介绍，这里是兴趣爱好的介绍这里是兴趣爱好的。"
     };
   },
   methods: {
     toggleAgeSelector() {
       this.ageSelector.status = !this.ageSelector.status;
     },
+    toggleCitySelector() {
+      this.citySelector.status = !this.citySelector.status;
+    },
     ageChoose(age) {
       this.ageSelector.age = age;
     },
     tagChoose(tag) {
-      this.tags.active.push(tag.value);
+      if (this.tags.active.includes(tag.value)) {
+        this.tags.active.splice(this.tags.active.indexOf(tag.value), 1);
+      } else {
+        if (!this.tags.active.length >= 3) {
+          this.tags.active.push(tag.value);
+        }
+      }
+    },
+    onDeleteImage(image, index) {
+      this.imageList.splice(index, 1);
+    },
+    onReaderSelect() {
+      Toast.loading("图片读取中...");
+    },
+    onReaderComplete(name, { dataUrl, file }) {
+      Toast.hide();
+      this.imageList.push({ file, dataUrl });
+    },
+    cityPicker({ values }) {
+      this.citySelector.active = values;
     },
     gotoServiceInfo() {
       this.$router.push({ name: "service_info" });
-    }
+    },
+    ...mapActions("config", ["getWxConfig"])
+  },
+  created() {
+    this.getWxConfig().then(data => {
+      if (data) {
+        wxConfig(data);
+      } else {
+        alert("微信配置获取失败");
+      }
+    });
   }
 };
 </script>
@@ -202,26 +300,42 @@ export default {
   }
 
   .image-reader-list {
-    float: left;
+    display: flex;
+    flex-wrap: wrap;
     width: 100%;
 
     .image-reader-item {
       position: relative;
-      float: left;
-      width: 23.5%;
-      padding-bottom: 23.5%;
-      margin-bottom: 2%;
-      margin-right: 2%;
+      width: 23%;
+      padding-bottom: 23%;
+      margin-top: 2%;
       background: #FFF;
       box-shadow: 0 5px 20px rgba(197, 202, 213, 0.25);
       box-sizing: border-box;
       list-style: none;
-      border-radius: 4px;
+      border-radius: 8px;
       background-size: cover;
       overflow: hidden;
 
-      &:nth-of-type(4n) {
-        margin-left: 0;
+      &+.image-reader-item {
+        margin-left: 2%;
+      }
+
+      &:nth-of-type(5n) {
+        margin-left: 0 !important;
+      }
+
+      .image-reader-item-del {
+        position: absolute;
+        top: -3px;
+        right: -3px;
+        z-index: 3;
+        opacity: 0.8;
+        margin-top: 0;
+
+        &>>>.md-icon-close {
+          font-size: 24px;
+        }
       }
 
       &.add {

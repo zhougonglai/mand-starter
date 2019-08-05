@@ -65,12 +65,25 @@ li
 .flex
   display: flex
 
-input
+
+.fiel-input,input
   outline: 0;
   outline-style: none
   caret-color: color-primary
+  -webkit-appearance: none;
+  -webkit-tab-highlight-color rgba(0,0,0,0)
   &::placeholder
     color #C0C3CC
+  &.input-textarea 
+    border-radius: 8px;
+    border-color: #E9E9ED;
+    padding: 16px;
+    line-height: 1.5
+    width: -webkit-fill-available;
+    min-width: 92%
+    &:focus,
+    &:focus-within
+      border-color: #C158FE 
 
 .fill
   flex: 1
