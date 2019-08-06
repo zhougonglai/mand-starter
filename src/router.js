@@ -51,6 +51,12 @@ export default new Router({
         import(/* webpackChunkName: "service_info" */ "@/views/artboard/ServiceInfo.vue")
     },
     {
+      path: "/result_page",
+      name: "result_page",
+      component: () =>
+        import(/* webpackChunkName: "result_page" */ "@/views/artboard/ResultPage.vue")
+    },
+    {
       path: "/sign",
       name: "sign",
       component: () =>
@@ -69,6 +75,12 @@ export default new Router({
             import(/* webpackChunkName: "sign_up" */ "@/views/sign/SignUp.vue")
         }
       ]
+    },
+    {
+      path: "/forget_password",
+      name: "forget_password",
+      component: () =>
+        import(/* webpackChunkName: "forget_password" */ "@/views/sign/ForgetPassword.vue")
     }
   ]
 });

@@ -30,7 +30,7 @@
             class="button"
             :loging="sendCode.status"
             @click="login"
-            >发送验证码</md-button
+            >获取短信验证码</md-button
           >
         </div>
       </div>
@@ -70,7 +70,7 @@
         </p>
         <md-button
           size="small"
-          @click="authorizeWx"
+          @click="forgetPassword"
           class="normal"
           type="link"
           inline
@@ -468,9 +468,11 @@ export default {
   },
   methods: {
     login() {},
-    authorizeWx() {},
     gotoBasicInfo() {
       this.$router.push({ name: "basic_info" });
+    },
+    forgetPassword() {
+      this.$router.push({ name: "forget_password" });
     },
     ...mapActions("global", ["toggleAreaSelector"])
   }

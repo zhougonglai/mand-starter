@@ -59,6 +59,21 @@ a
 li
   list-style: none
 
+button
+  &.md-button
+    height: 80px
+    &.small
+      height: 64px
+      .md-button-inner
+        font-size 24px
+        line-height: 24px
+    &.primary
+      // background-image: linear-gradient(90deg, #F946F3 0%, #C158FE 100%);
+      &::after
+        border-color: transparent
+
+
+/* --------------------------------- @help --------------------------------- */
 .font-normal
   line-height: normal;
 
@@ -91,7 +106,10 @@ li
 .between
   justify-content: space-between
 
-.center
+.justyfy-center
+  justify-content: center
+
+.align-center
   align-items: center;
 
 .scroll-y
@@ -108,19 +126,6 @@ li
 
 .text-center
   text-align: center
-
-button
-  &.md-button
-    height: 80px
-    &.small
-      height: 64px
-      .md-button-inner
-        font-size 24px
-        line-height: 24px
-    &.primary
-      // background-image: linear-gradient(90deg, #F946F3 0%, #C158FE 100%);
-      &::after
-        border-color: transparent
 
 .clear-fix
   &::after
@@ -203,3 +208,87 @@ button
     &::before
       height: 300%
       transform: scale(.333)
+
+
+/* --------------------------------- @components --------------------------------- */
+.input-fiel {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+
+  .fiel-row {
+    display: flex;
+    height: 80px;
+    font-size: 24px;
+    line-height: 80px;
+
+    & + .fiel-row {
+      margin-top: 32px;
+    }
+  }
+
+  .fiel-item {
+    border-radius: 40px;
+    border: 1px solid #dcdfe6;
+    box-sizing: border-box;
+    font-size: 32px;
+    line-height: 32px;
+    font-weight: lighter;
+    font-size: 28px;
+    display: flex;
+    align-items: center;
+    padding: 8px;
+
+    &:focus-within, &.active {
+      border-color: rgba(193, 88, 254, 1);
+    }
+
+    p {
+      line-height: normal;
+    }
+
+    input {
+      border: none;
+      padding-left: 16px;
+      width: 100%;
+      height: 100%;
+      line-height: 1.5;
+      border-radius: 32px;
+    }
+
+    button.button.small {
+      width: fit-content;
+    }
+
+    & + .fiel-item {
+      margin-left: 32px;
+    }
+
+    &.area_code {
+      width: 33%;
+    }
+
+    .code {
+      flex: 1;
+      text-align: center;
+    }
+
+    i.md-icon {
+      flex-basis: 54px;
+      text-align: center;
+    }
+
+    svg.icon {
+      width: 32px;
+      height: 32px;
+
+      &:last-child {
+        margin-right: 16px;
+      }
+    }
+
+    &.inline {
+      display: inline-flex;
+    }
+  }
+}

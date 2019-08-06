@@ -148,7 +148,7 @@
       </md-cell-item>
       <md-cell-item>
         <template slot="children">
-          <md-button type="primary" round>提交</md-button>
+          <md-button type="primary" round @click="resultPage">提交</md-button>
         </template>
       </md-cell-item>
     </md-field>
@@ -294,10 +294,20 @@ export default {
     },
     record() {
       if (isWx()) {
-        window.wx.ready(() => {
-          window.wx.startRecord();
-          this.recorder.status = true;
+        window.wx.startRecord({
+          success: () => {
+            window.wx.onVoiceRecordEnd({
+              complete: res => {
+                Toast.info(`最多只能录制1分钟,${JSON.stringify(res)}`);
+                this.recorder.localId = res.localId;
+              }
+            });
+          },
+          cancel: () => {
+            Toast.info("用户主动取消了录音");
+          }
         });
+        this.recorder.status = true;
       } else if (
         navigator.mediaDevices &&
         navigator.mediaDevices.getUserMedia
@@ -359,7 +369,15 @@ export default {
       window.wx.playVoice({
         localId: this.recorder.localId
       });
+    },
+    resultPage() {
+      this.$router.push({ name: "result_page" });
     }
+  },
+  mounted() {
+    window.wx.error(err => {
+      alert(err.toString());
+    });
   }
 };
 </script>

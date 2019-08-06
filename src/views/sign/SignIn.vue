@@ -46,7 +46,9 @@
           <div class="font-normal gray">可使用NN账户(原雷神账号)登录</div>
         </div>
         <div class="right center">
-          <md-button type="link" size="small" inline>忘记密码?</md-button>
+          <md-button type="link" size="small" inline @click="forgetPassword"
+            >忘记密码?</md-button
+          >
         </div>
       </div>
       <div class="fiel-row">
@@ -88,6 +90,9 @@ export default {
     },
     changeAccountType() {
       this.signIn.accountType = !this.signIn.accountType;
+    },
+    forgetPassword() {
+      this.$router.push({ name: "forget_password" });
     },
     ...mapActions("global", ["toggleAreaSelector"])
   }

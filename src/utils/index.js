@@ -24,6 +24,8 @@ export const wxConfig = ({
       "startRecord",
       // 停止录音
       "stopRecord",
+      // 上传录音
+      "uploadVoice",
       // 监听录音自动停止
       "onVoiceRecordEnd",
       // 播放语音

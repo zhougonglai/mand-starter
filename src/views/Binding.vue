@@ -45,6 +45,20 @@ export default {
       if (data) {
         wxConfig(data);
         console.log("nnplayer_version: ", process.env.VUE_APP_VERSION);
+        window.wx.ready(() => {
+          window.wx.updateAppMessageShareData({
+            title: "分享给朋友/分享到QQ",
+            desc: "描述描述描述",
+            link: "http://qq156471181.vicp.cc/binding",
+            imgUrl: require("@/assets/images/login_logo.png")
+          });
+
+          window.wx.updateTimelineShareData({
+            title: "分享到朋友圈/分享到QQ空间",
+            link: "http://qq156471181.vicp.cc/binding",
+            imgUrl: require("@/assets/images/login_logo.png")
+          });
+        });
       } else {
         alert("微信配置获取失败");
       }
@@ -60,9 +74,9 @@ export default {
   align-items: center;
   height: 100vh;
   padding-top: 8vh;
-  padding-bottom: constant(safe-area-inset-bottom);
-  padding-bottom: env(safe-area-inset-bottom);
 
+  // padding-bottom: constant(safe-area-inset-bottom);
+  // padding-bottom: env(safe-area-inset-bottom);
   .logo-top {
     img.logo {
       width: 343px;
