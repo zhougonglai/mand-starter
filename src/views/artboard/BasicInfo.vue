@@ -301,7 +301,6 @@ export default {
       background: #FFF;
       box-shadow: 0 5px 20px rgba(197, 202, 213, 0.25);
       box-sizing: border-box;
-      list-style: none;
       border-radius: 8px;
       background-size: cover;
       overflow: hidden;

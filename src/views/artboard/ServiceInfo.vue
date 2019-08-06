@@ -30,14 +30,51 @@
       >
         <template slot="children">
           <ul class="image_box">
-            <li
-              class="image_item"
-              v-for="(img, $index) in clipImgs.imgs"
-              @click="chooseImage($index)"
-              :key="$index"
-            >
-              <div class="img">
-                <img :src="img" />
+            <li class="image_item">
+              <div
+                class="img"
+                :style="{
+                  backgroundImage: `url(${clipImgs.img})`,
+                  backgroundPosition: 'center center',
+                  backgroundRepeat: 'no-repeat',
+                  backgroundSize: 'cover'
+                }"
+                @click="chooseImage"
+              ></div>
+              <div class="descript mt-2">
+                <div class="gray text-center">资料示例图</div>
+                <div class="gray mt-2 text-center">认证图片内容清晰</div>
+              </div>
+            </li>
+            <li class="image_item">
+              <div
+                class="img"
+                :class="{ add: !serviceInfo.img.dataUrl }"
+                :style="
+                  serviceInfo.img.dataUrl
+                    ? {
+                        backgroundImage: `url(${serviceInfo.img.dataUrl})`,
+                        backgroundPosition: 'center center',
+                        backgroundRepeat: 'no-repeat',
+                        backgroundSize: 'cover'
+                      }
+                    : {}
+                "
+              >
+                <md-image-reader
+                  @select="onReaderSelect"
+                  @complete="onReaderComplete"
+                />
+                <template v-if="!serviceInfo.img.dataUrl">
+                  <md-icon name="camera" size="md" color="#ccc" />
+                  <p>添加图片</p>
+                </template>
+              </div>
+              <div class="descript mt-2">
+                <div class="gray text-center">上传服务截图</div>
+                <div class="gray mt-2 text-center">
+                  点击{{ serviceInfo.img.dataUrl ? "更换" : "上传" }}
+                </div>
               </div>
             </li>
           </ul>
@@ -50,7 +87,9 @@
         no-border
       >
         <template slot="right">
-          <md-button type="link" size="small">点击查看示例</md-button>
+          <md-button type="link" size="small" @click="popupEx.status = true"
+            >点击查看示例</md-button
+          >
         </template>
         <template slot="children">
           <textarea
@@ -127,14 +166,27 @@
     />
     <md-image-viewer
       v-model="clipImgs.status"
-      :list="clipImgs.imgs"
-      :has-dots="true"
+      :list="[clipImgs.img]"
+      :has-dots="false"
       :initial-index="clipImgs.active"
     />
+    <md-popup v-model="popupEx.status">
+      <div class="popup popup-center">{{ tlInfo }}</div>
+    </md-popup>
   </div>
 </template>
 <script>
-import { Field, CellItem, Selector, ImageViewer, Button } from "mand-mobile";
+import {
+  Icon,
+  Field,
+  Toast,
+  Popup,
+  CellItem,
+  Selector,
+  ImageViewer,
+  ImageReader,
+  Button
+} from "mand-mobile";
 import RecordRTC from "recordrtc";
 import { isWx } from "@/utils";
 
@@ -146,10 +198,14 @@ const isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
 export default {
   name: "service-info",
   components: {
+    [Icon.name]: Icon,
     [Field.name]: Field,
+    [Toast.name]: Toast,
+    [Popup.name]: Popup,
     [CellItem.name]: CellItem,
     [Selector.name]: Selector,
     [ImageViewer.name]: ImageViewer,
+    [ImageReader.name]: ImageReader,
     [Button.name]: Button
   },
   data() {
@@ -188,16 +244,21 @@ export default {
       },
       clipImgs: {
         status: false,
-        active: 0,
-        imgs: [
-          "http://img-hxy021.didistatic.com/static/strategymis/insurancePlatform_spu/uploads/27fb7f097ca218d743f816836bc7ea4a",
-          "http://manhattan.didistatic.com/static/manhattan/insurancePlatform_spu/uploads/c2912793a222eb24b606a582fd849ab7"
-        ]
+        img:
+          "http://img-hxy021.didistatic.com/static/strategymis/insurancePlatform_spu/uploads/27fb7f097ca218d743f816836bc7ea4a"
+      },
+      serviceInfo: {
+        img: {
+          dataUrl: undefined,
+          file: undefined
+        }
+      },
+      popupEx: {
+        status: false
       },
       recorder: {
         isWx: isWx(),
         status: false,
-        recording: false,
         mediaRecorder: null,
         mediaSteam: null,
         blob: null,
@@ -220,9 +281,16 @@ export default {
     levelToggle() {
       this.level.status = !this.level.status;
     },
-    chooseImage(i) {
-      this.clipImgs.active = i;
+    chooseImage() {
       this.clipImgs.status = true;
+    },
+    onReaderSelect() {
+      Toast.loading("图片读取中...");
+    },
+    onReaderComplete(name, { dataUrl, file }) {
+      Toast.hide();
+      this.serviceInfo.img.dataUrl = dataUrl;
+      this.serviceInfo.img.file = file;
     },
     record() {
       if (isWx()) {
@@ -257,13 +325,12 @@ export default {
             this.recorder.mediaRecorder = new RecordRTC(stream, config);
             this.recorder.mediaRecorder.startRecording();
             this.recorder.status = true;
-            this.recorder.recording = true;
           })
           .catch(err => {
             console.log("err", err);
           });
       } else {
-        alert("该浏览器不支持");
+        alert("该浏览器不支持录音");
       }
     },
     stopRecord() {
@@ -273,7 +340,6 @@ export default {
             alert("停止录音", res);
             this.recorder.localId = res.localId;
             this.recorder.status = false;
-            this.recorder.recording = false;
           }
         });
       } else {
@@ -317,12 +383,40 @@ export default {
       flex: 1;
       align-items: center;
       justify-content: center;
+      flex-direction: column;
+      width: 50%;
 
       .img {
-        img {
-          height: 200px;
-          width: 200px;
-          border-radius: 8px;
+        height: 200px;
+        width: 200px;
+        border-radius: 8px;
+        position: relative;
+        background: #FFF;
+        box-shadow: 0 5px 20px rgba(197, 202, 213, 0.25);
+        box-sizing: border-box;
+        border-radius: 8px;
+        background-size: cover;
+        overflow: hidden;
+
+        &.add {
+          >>> .md-icon {
+            position: absolute;
+            top: 40%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            opacity: 0.5;
+          }
+
+          p {
+            position: absolute;
+            top: 50%;
+            left: 0;
+            width: 100%;
+            margin-top: 15px;
+            font-size: 22px;
+            color: #ccc;
+            text-align: center;
+          }
         }
       }
     }
@@ -336,6 +430,20 @@ export default {
 
   audio {
     margin-top: 16px;
+  }
+
+  .popup {
+    position: relative;
+    font-size: 28px;
+    font-weight: 500;
+    box-sizing: border-box;
+    background-color: #FFF;
+    width: 80vw;
+
+    &.popup-center {
+      padding: 50px;
+      border-radius: radius-normal;
+    }
   }
 }
 </style>
