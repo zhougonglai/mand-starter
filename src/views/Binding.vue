@@ -12,7 +12,7 @@
       </div>
       <div class="info-actions">
         <md-button type="primary" round @click="gotoSignUp" :loading="false"
-          >注册新账号@</md-button
+          >注册新账号</md-button
         >
         <md-button type="link" @click="gotoSignIn" :loading="false"
           >绑定已有账号</md-button
