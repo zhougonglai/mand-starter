@@ -83,7 +83,6 @@
             size="small"
             class="recorder recorder_stop"
             :inactive="!recorder.status"
-            :loading="recorder.recording"
             inline
             round
             @click="stopRecord"
@@ -98,7 +97,7 @@
           />
           <md-button
             type="primary"
-            :inactive="recorder.localId"
+            :inactive="!recorder.localId"
             size="small"
             class="recorder recorder_player"
             inline
@@ -137,8 +136,7 @@
 <script>
 import { Field, CellItem, Selector, ImageViewer, Button } from "mand-mobile";
 import RecordRTC from "recordrtc";
-import { isWx, wxConfig } from "@/utils";
-import { mapActions } from "vuex";
+import { isWx } from "@/utils";
 
 const isEdge =
   navigator.userAgent.indexOf("Edge") !== -1 &&
@@ -228,7 +226,10 @@ export default {
     },
     record() {
       if (isWx()) {
-        window.wx.startRecord();
+        window.wx.ready(() => {
+          window.wx.startRecord();
+          this.recorder.status = true;
+        });
       } else if (
         navigator.mediaDevices &&
         navigator.mediaDevices.getUserMedia
@@ -292,17 +293,7 @@ export default {
       window.wx.playVoice({
         localId: this.recorder.localId
       });
-    },
-    ...mapActions("config", ["getWxConfig"])
-  },
-  mounted() {
-    this.getWxConfig().then(data => {
-      if (data) {
-        wxConfig(data);
-      } else {
-        alert("微信配置获取失败");
-      }
-    });
+    }
   }
 };
 </script>

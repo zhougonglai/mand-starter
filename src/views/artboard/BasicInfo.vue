@@ -132,8 +132,7 @@ import {
   Icon,
   Toast
 } from "mand-mobile";
-import { citys, numList, wxConfig } from "@/utils";
-import { mapActions } from "vuex";
+import { citys, numList } from "@/utils";
 
 export default {
   name: "basic-info",
@@ -243,7 +242,7 @@ export default {
       if (this.tags.active.includes(tag.value)) {
         this.tags.active.splice(this.tags.active.indexOf(tag.value), 1);
       } else {
-        if (!this.tags.active.length >= 3) {
+        if (this.tags.active.length < 3) {
           this.tags.active.push(tag.value);
         }
       }
@@ -263,17 +262,7 @@ export default {
     },
     gotoServiceInfo() {
       this.$router.push({ name: "service_info" });
-    },
-    ...mapActions("config", ["getWxConfig"])
-  },
-  created() {
-    this.getWxConfig().then(data => {
-      if (data) {
-        wxConfig(data);
-      } else {
-        alert("微信配置获取失败");
-      }
-    });
+    }
   }
 };
 </script>

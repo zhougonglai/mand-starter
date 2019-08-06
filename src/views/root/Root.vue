@@ -22,8 +22,6 @@
 </template>
 <script>
 import { TabBar, Icon } from "mand-mobile";
-import { mapActions } from "vuex";
-import { wxConfig } from "@/utils";
 
 export default {
   name: "root",
@@ -56,17 +54,7 @@ export default {
   methods: {
     tabChange({ name }) {
       this.$router.push({ name });
-    },
-    ...mapActions("config", ["getWxConfig"])
-  },
-  mounted() {
-    this.getWxConfig().then(data => {
-      if (data) {
-        wxConfig(data);
-      } else {
-        alert("获取失败");
-      }
-    });
+    }
   }
 };
 </script>

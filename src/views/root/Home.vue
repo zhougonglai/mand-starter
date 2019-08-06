@@ -38,6 +38,8 @@
 </template>
 <script>
 import { Button, Swiper, SwiperItem } from "mand-mobile";
+import { mapActions } from "vuex";
+import { wxConfig } from "@/utils";
 
 export default {
   name: "home",
@@ -201,7 +203,17 @@ export default {
           alert("文件Id", localIds);
         }
       });
-    }
+    },
+    ...mapActions("config", ["getWxConfig"])
+  },
+  created() {
+    this.getWxConfig(location.href).then(data => {
+      if (data) {
+        wxConfig(data);
+      } else {
+        alert("微信配置获取失败");
+      }
+    });
   }
 };
 </script>

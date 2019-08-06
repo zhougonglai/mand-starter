@@ -7,20 +7,23 @@ export default {
       noncestr: "",
       signature: "",
       timestamp: undefined,
-      url: location.origin + location.pathname
+      url: ""
     },
     userInfo: {}
   },
   getters: {},
   actions: {
     async getWxConfig({ commit }) {
+      console.log("test_02");
       const {
         rtnCode,
         rtnInfo: { data }
       } = await fetch(
-        `http://qq156471181.vicp.cc/nn/wx/getWxConfig?url=${location.origin +
-          location.pathname}`
+        `http://qq156471181.vicp.cc/nn/wx/getWxConfig?url=${encodeURIComponent(
+          location.href
+        )}`
       ).then(res => res.json());
+
       if (rtnCode === "000") {
         commit("SET_WX_CONFIG", { data });
         return data;

@@ -23,6 +23,9 @@
 </template>
 <script>
 import { Button } from "mand-mobile";
+import { mapActions } from "vuex";
+import { wxConfig } from "@/utils";
+
 export default {
   name: "binding",
   components: {
@@ -34,7 +37,17 @@ export default {
     },
     gotoSignIn() {
       this.$router.push("/sign/in");
-    }
+    },
+    ...mapActions("config", ["getWxConfig"])
+  },
+  mounted() {
+    this.getWxConfig().then(data => {
+      if (data) {
+        wxConfig(data);
+      } else {
+        alert("微信配置获取失败");
+      }
+    });
   }
 };
 </script>
