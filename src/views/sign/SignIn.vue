@@ -3,7 +3,7 @@
     <form class="input-fiel">
       <div class="fiel-row">
         <div class="fiel-item area_code inline" @click="toggleAreaSelector">
-          <div class="code">+{{ areaCode.code }}</div>
+          <div class="code">+{{ areaCode.item.code }}</div>
           <md-icon name="arrow-down" />
         </div>
         <div class="fiel-item fill">
@@ -17,7 +17,7 @@
           <input
             type="email"
             v-else
-            v-model.lazy.trim="signIn.email"
+            v-model.lazy.trim="signIn.emailOrAccount"
             placeholder="请输入邮箱/账号"
           />
         </div>
@@ -42,7 +42,9 @@
       </div>
       <div class="fiel-row">
         <div class="fill" @click="changeAccountType">
-          <div class="line-normal">邮箱/账号登录</div>
+          <div class="line-normal">
+            {{ signIn.accountType ? "邮箱/账号登录" : "手机号登录" }}
+          </div>
           <div class="line-normal gray">可使用NN账户(原雷神账号)登录</div>
         </div>
         <div class="right align-center">
@@ -52,7 +54,7 @@
         </div>
       </div>
       <div class="fiel-row">
-        <md-button type="primary" round @click="gotoBasicInfo"
+        <md-button type="primary" round @click="login(signIn)"
           >立即登录</md-button
         >
       </div>
@@ -73,9 +75,9 @@ export default {
   data() {
     return {
       signIn: {
-        accountType: false,
+        accountType: true,
         phone: "",
-        email: "",
+        emailOrAccount: "",
         password: ""
       },
       passwordStatus: false
@@ -94,7 +96,8 @@ export default {
     forgetPassword() {
       this.$router.push({ name: "forget_password" });
     },
-    ...mapActions("global", ["toggleAreaSelector"])
+    ...mapActions("global", ["toggleAreaSelector"]),
+    ...mapActions("user", ["login"])
   }
 };
 </script>

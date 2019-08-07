@@ -144,6 +144,10 @@
             @click="playRecord"
             >播放录音</md-button
           >
+
+          <md-button type="primary" size="small" inline round @click="playTest"
+            >示例音频</md-button
+          >
         </template>
       </md-cell-item>
       <!-- <md-cell-item>
@@ -278,6 +282,7 @@ export default {
         blob: null,
         localId: ""
       },
+      testAudio: new Audio("http://techslides.com/demos/samples/sample.aac"),
       tlInfo:
         "这里是兴趣爱好的介绍，这里是兴趣爱好的介绍这里是兴趣爱好的。这里是兴趣爱好的介绍，这里是兴趣爱好的介绍这里是兴趣爱好的。这里是兴趣爱好的介绍，这里是兴趣爱好的介绍这里是兴趣爱好的。这里是兴趣爱好的介绍。"
     };
@@ -306,6 +311,15 @@ export default {
       this.serviceInfo.img.dataUrl = dataUrl;
       this.serviceInfo.img.file = file;
     },
+    uploadVoice() {
+      window.wx.uploadVoice({
+        localId: this.recorder.localId,
+        isShowProgressTips: 1,
+        success: res => {
+          console.log("serverId>>> : ", res.serverId);
+        }
+      });
+    },
     record() {
       if (isWx()) {
         window.wx.startRecord({
@@ -314,6 +328,7 @@ export default {
               complete: res => {
                 Toast.info(`最多只能录制1分钟,${JSON.stringify(res)}`);
                 this.recorder.localId = res.localId;
+                this.uploadVoice();
               }
             });
           },
@@ -364,14 +379,7 @@ export default {
             alert("停止录音", res);
             this.recorder.localId = res.localId;
             this.recorder.status = false;
-            window.wx.uploadVoice({
-              localId: this.recorder.localId, // 需要上传的音频的本地ID，由stopRecord接口获得
-              isShowProgressTips: 1, // 默认为1，显示进度提示
-              success: function(res) {
-                var serverId = res.serverId; // 返回音频的服务器端ID
-                console.log("serverId>>> : ", serverId);
-              }
-            });
+            this.uploadVoice();
           }
         });
       } else {
@@ -391,6 +399,9 @@ export default {
       window.wx.playVoice({
         localId: this.recorder.localId
       });
+    },
+    playTest() {
+      this.testAudio.play();
     },
     resultPage() {
       this.$router.push({ name: "result_page" });

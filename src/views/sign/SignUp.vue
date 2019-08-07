@@ -3,7 +3,7 @@
     <form class="input-fiel">
       <div class="fiel-row">
         <div class="fiel-item area_code inline" @click="toggleAreaSelector">
-          <div class="code">+{{ areaCode.code }}</div>
+          <div class="code">+{{ areaCode.item.code }}</div>
           <md-icon name="arrow-down" />
         </div>
         <div class="fiel-item fill">

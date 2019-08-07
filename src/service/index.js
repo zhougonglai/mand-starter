@@ -4,7 +4,7 @@ import { Toast } from "mand-mobile";
 import signApi from "./signApi";
 
 const instance = axios.create({
-  baseURL: "https://www.easy-mock.com/mock/5cbd107d08c37e59eb3df85f/api",
+  baseURL: "http://192.168.3.66:8085",
   timeout: 6000
 });
 

@@ -16,10 +16,33 @@
     </md-tabs>
     <md-selector
       v-model="areaCode.status"
+      title="选择手机区号"
       :default-value="86"
       :data="areaCode.list"
       @choose="changeAreaCode"
-    />
+      max-height="calc(100vh - 1.2rem)"
+    >
+      <template slot-scope="{ option }">
+        <div
+          class="selector-item-body"
+          :class="{ selected: option.code === areaCode.item.code }"
+        >
+          <div class="selector-item-left">
+            <span class="holder" v-text="option.group" />
+          </div>
+          <div class="selector-item-content">
+            <p class="selector-item-title">
+              <small class="gray">({{ option.iso_code }})</small>
+              <span v-text="option.name" />
+            </p>
+            <p class="selector-item-brief" v-text="option.code" />
+          </div>
+          <div class="selector-item-right flex justyfy-center align-center">
+            <img :src="option.ico" class="icon-ico" :alt="option.name" />
+          </div>
+        </div>
+      </template>
+    </md-selector>
   </div>
 </template>
 <script>
@@ -76,7 +99,67 @@ export default {
     margin-top: 10vh;
   }
 
-  /deep/.md-tabs {
+  .selector-item-body {
+    display: flex;
+    align-items: center;
+
+    &.selected {
+      .selector-item-content {
+        color: color-primary;
+      }
+    }
+
+    &.disabled {
+      opacity: 0.3;
+    }
+
+    .selector-item-left {
+      flex-shrink: 0;
+      margin-right: 32px;
+
+      .holder {
+        display: block;
+        width: 88px;
+        height: 88px;
+        border-radius: 44px;
+        background-color: #e6e6e6;
+        font-size: 32px;
+        font-weight: 500;
+        color: color-primary;
+        text-align: center;
+        line-height: 88px;
+      }
+    }
+
+    .selector-item-right {
+      flex-shrink: 0;
+      width: 88px;
+      height: 88px;
+
+      .icon-ico {
+      }
+    }
+
+    .selector-item-content {
+      flex: 1;
+      color: #111a34;
+      font-size: 32px;
+      line-height: 1.2;
+
+      .selector-item-title {
+        line-height: 1.2;
+      }
+
+      .selector-item-brief {
+        color: #858b9c;
+        font-size: 24px;
+        line-height: 1.4;
+        margin-top: 8px;
+      }
+    }
+  }
+
+  >>>.md-tabs {
     margin-top: 16px;
 
     .md-tab-bar {

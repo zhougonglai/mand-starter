@@ -1,19 +1,20 @@
+import { countryCode } from "@/utils";
+
 export default {
   namespaced: true,
   state: {
     areaCode: {
       status: false,
-      code: 86,
-      list: [
-        {
-          value: 1,
-          text: "xxx"
-        },
-        {
-          value: 86,
-          text: "中国区"
-        }
-      ]
+      item: {
+        code: 86,
+        group: "Z",
+        ico: "https://picture.leigod.com/mobile_area_code/1_5/cn.png",
+        iso_code: "cn",
+        name: "中国"
+      },
+      list: countryCode.list_country
+        .map(({ country }) => country)
+        .reduce((a, b) => a.concat(b))
     }
   },
   getters: {},
@@ -26,10 +27,10 @@ export default {
         state: { areaCode },
         commit
       },
-      { value }
+      item
     ) {
-      if (value !== areaCode.code) {
-        await commit("CHANGE_AREA_CODE", value);
+      if (item.code !== areaCode.code) {
+        await commit("CHANGE_AREA_CODE", item);
       } else {
         await "noChange";
       }
@@ -40,7 +41,7 @@ export default {
       areaCode.status = changeStatus;
     },
     CHANGE_AREA_CODE({ areaCode }, selected) {
-      areaCode.code = selected;
+      areaCode.item = selected;
       areaCode.status = false;
     }
   }
