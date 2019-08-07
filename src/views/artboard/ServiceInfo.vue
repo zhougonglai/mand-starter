@@ -382,7 +382,6 @@ export default {
                 }
           })
           .then(stream => {
-            console.log(stream);
             let config = {
               type: "audio",
               numberOfAudioChannels: isEdge ? 1 : 2,
@@ -580,7 +579,7 @@ export default {
       background-color: color-primary;
       // filter: blur(1px);
       border-radius: 0 0 8px 8px;
-      transition: width 0.625s ease;
+      transition: all 0.625s ease-out;
       right: 0;
       height: 8px;
       bottom: 0;
