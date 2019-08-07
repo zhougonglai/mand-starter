@@ -9,6 +9,7 @@
         <div class="fiel-item fill">
           <input
             type="tel"
+            :required="signIn.accountType"
             v-if="signIn.accountType"
             v-model.lazy.number.trim="signIn.phone"
             placeholder="请输入手机号"
@@ -17,6 +18,7 @@
           <input
             type="email"
             v-else
+            :required="!signIn.accountType"
             v-model.lazy.trim="signIn.emailOrAccount"
             placeholder="请输入邮箱/账号"
           />

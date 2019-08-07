@@ -64,14 +64,14 @@ export default {
                     title: "分享给朋友/分享到QQ",
                     desc: "描述描述描述",
                     link: "http://qq156471181.vicp.cc/binding",
-                    imgUrl: require("@/assets/images/login_logo.png")
+                    imgUrl: "http://139.224.119.40/img/head-logo.png"
                   });
                 }
                 if (updateTimelineShareData) {
                   window.wx.updateTimelineShareData({
                     title: "分享到朋友圈/分享到QQ空间",
                     link: "http://qq156471181.vicp.cc/binding",
-                    imgUrl: require("@/assets/images/login_logo.png")
+                    imgUrl: "http://139.224.119.40/img/head-logo.png"
                   });
                 }
               }
