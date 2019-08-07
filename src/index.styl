@@ -327,21 +327,33 @@ button
 
 /* --------------------------------- @animate --------------------------------- */
 
-@-webkit-keyframes firstBar {
+@keyframes firstBar {
   0%   { height: 10px; }
   50%  { height: 30px; }
   100% { height: 10px; }
 }
 
-@-webkit-keyframes secondBar {
+@keyframes secondBar {
   0%   { height: 30px; }
   50%  { height: 10px; }
   100% { height: 30px; }
 }
 
-@-webkit-keyframes thirdBar {
+@keyframes thirdBar {
   0%   { height: 20px; }
   40%  { height: 10px; }
   60%  { height: 30px; }
   100% { height: 20px; }
+}
+
+@keyframes waveEffect {
+  100% {
+      box-shadow: 0 0 0 8px color-primary
+  }
+}
+
+@keyframes fadeEffect {
+  100% {
+    opacity: 0
+  }
 }

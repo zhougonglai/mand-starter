@@ -145,7 +145,11 @@
             >播放录音</md-button
           >
 
-          <div class="audio-player" @click="playTest">
+          <div
+            class="audio-player"
+            @click="playTest"
+            :class="{ ended: testAudio.ended }"
+          >
             <div class="audio-bar" :class="{ playing: testAudio.playing }">
               <div class="bar" />
               <div class="bar" />
@@ -155,13 +159,20 @@
               <div class="audio-title">示例音频</div>
               <div class="audio-duation">
                 {{
-                  this.testAudio.duration
-                    ? `${this.testAudio.duration.toString().split(".")[0]}
-                : ${this.testAudio.duration.toString().split(".")[1]}`
-                    : "0"
+                  testAudio.data.duration
+                    ? round(testAudio.data.duration) + "s"
+                    : ""
                 }}
               </div>
             </div>
+            <div
+              class="audio-animate"
+              v-if="testAudio.currentTime"
+              :style="{
+                left:
+                  (testAudio.currentTime / testAudio.data.duration) * 125 + '%'
+              }"
+            ></div>
           </div>
         </template>
       </md-cell-item>
@@ -300,7 +311,9 @@ export default {
       testAudio: {
         playing: false,
         data: new Audio("http://techslides.com/demos/samples/sample.aac"),
-        duration: 0
+        duration: 0,
+        currentTime: 0,
+        ended: false
       },
       tlInfo:
         "这里是兴趣爱好的介绍，这里是兴趣爱好的介绍这里是兴趣爱好的。这里是兴趣爱好的介绍，这里是兴趣爱好的介绍这里是兴趣爱好的。这里是兴趣爱好的介绍，这里是兴趣爱好的介绍这里是兴趣爱好的。这里是兴趣爱好的介绍。"
@@ -420,13 +433,17 @@ export default {
       });
     },
     playTest() {
-      console.log(this.testAudio.data.duration);
       this.testAudio.data.play();
       this.testAudio.data.addEventListener("ended", () => {
         this.testAudio.playing = false;
+        this.testAudio.currentTime = 0;
+        this.testAudio.ended = true;
+        setTimeout(() => {
+          this.testAudio.ended = false;
+        }, 650);
       });
-      this.testAudio.data.addEventListener("playing", ev => {
-        console.log(ev);
+      this.testAudio.data.addEventListener("timeupdate", () => {
+        this.testAudio.currentTime = this.testAudio.data.currentTime;
       });
       this.testAudio.playing = true;
     },
@@ -443,9 +460,6 @@ export default {
       alert(JSON.stringify(err));
     });
     this.testAudio.data.load();
-    this.testAudio.data.addEventListener("loadedmetadata", () => {
-      this.testAudio.duration = round(this.testAudio.data.duration, 2);
-    });
   }
 };
 </script>
@@ -541,7 +555,37 @@ export default {
     border-radius: 16px;
     background-color: rgb(241, 241, 241);
     display: flex;
+    position: relative;
     padding: 16px;
+
+    &.ended {
+      &::after {
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        display: block;
+        border-radius: inherit;
+        box-shadow: 0 0 0 0 color-primary;
+        opacity: 0.2;
+        animation: fadeEffect 2s cubic-bezier(0.08, 0.82, 0.17, 1), waveEffect 0.4s cubic-bezier(0.08, 0.82, 0.17, 1);
+        animation-fill-mode: forwards;
+        content: '';
+        pointer-events: none;
+      }
+    }
+
+    .audio-animate {
+      background-color: color-primary;
+      // filter: blur(1px);
+      border-radius: 0 0 8px 8px;
+      transition: width 0.625s ease;
+      right: 0;
+      height: 8px;
+      bottom: 0;
+      position: absolute;
+    }
 
     .audio-bar {
       height: 50px;
@@ -550,6 +594,7 @@ export default {
       display: flex;
       align-items: flex-end;
       justify-content: center;
+      z-index: 99;
 
       &.playing {
         .bar {
@@ -591,9 +636,11 @@ export default {
 
     .audio-content {
       flex: 1;
+      color: color-primary;
+      z-index: 99;
       display: flex;
       align-items: center;
-      justify-content: center;
+      justify-content: space-evenly;
     }
   }
 }
