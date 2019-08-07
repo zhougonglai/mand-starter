@@ -364,6 +364,14 @@ export default {
             alert("停止录音", res);
             this.recorder.localId = res.localId;
             this.recorder.status = false;
+            window.wx.uploadVoice({
+              localId: this.recorder.localId, // 需要上传的音频的本地ID，由stopRecord接口获得
+              isShowProgressTips: 1, // 默认为1，显示进度提示
+              success: function(res) {
+                var serverId = res.serverId; // 返回音频的服务器端ID
+                console.log("serverId>>> : ", serverId);
+              }
+            });
           }
         });
       } else {
