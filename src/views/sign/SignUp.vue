@@ -9,6 +9,9 @@
         <div class="fiel-item fill">
           <input
             type="tel"
+            name="tel"
+            required
+            autocomplete="tel"
             v-model="signUp.phone"
             placeholder="请输入手机号"
             :maxlength="11"
@@ -37,6 +40,8 @@
       <div class="fiel-row">
         <div class="fiel-item fill">
           <input
+            name="password"
+            autocomplete="now-password"
             :type="passwordStatus ? 'text' : 'password'"
             v-model="signUp.password"
             placeholder="请输入6-18位的新密码，不含空格"

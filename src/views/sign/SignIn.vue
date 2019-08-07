@@ -9,6 +9,8 @@
         <div class="fiel-item fill">
           <input
             type="tel"
+            name="phone"
+            autocomplete="tel"
             :required="signIn.accountType"
             v-if="signIn.accountType"
             v-model.lazy.number.trim="signIn.phone"
@@ -16,8 +18,10 @@
             :maxlength="11"
           />
           <input
-            type="email"
+            type="text"
             v-else
+            name="email"
+            autocomplete="email"
             :required="!signIn.accountType"
             v-model.lazy.trim="signIn.emailOrAccount"
             placeholder="请输入邮箱/账号"
@@ -27,6 +31,8 @@
       <div class="fiel-row">
         <div class="fiel-item fill">
           <input
+            name="password"
+            autocomplete="current-password"
             :type="passwordStatus ? 'text' : 'password'"
             v-model.lazy="signIn.password"
             placeholder="请输入登录密码"

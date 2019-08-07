@@ -145,9 +145,24 @@
             >播放录音</md-button
           >
 
-          <md-button type="primary" size="small" inline round @click="playTest"
-            >示例音频</md-button
-          >
+          <div class="audio-player" @click="playTest">
+            <div class="audio-bar" :class="{ playing: testAudio.playing }">
+              <div class="bar" />
+              <div class="bar" />
+              <div class="bar" />
+            </div>
+            <div class="audio-content">
+              <div class="audio-title">示例音频</div>
+              <div class="audio-duation">
+                {{
+                  this.testAudio.duration
+                    ? `${this.testAudio.duration.toString().split(".")[0]}
+                : ${this.testAudio.duration.toString().split(".")[1]}`
+                    : "0"
+                }}
+              </div>
+            </div>
+          </div>
         </template>
       </md-cell-item>
       <!-- <md-cell-item>
@@ -195,7 +210,7 @@ import {
   Button
 } from "mand-mobile";
 import RecordRTC from "recordrtc";
-import { isWx } from "@/utils";
+import { isWx, round } from "@/utils";
 
 const isEdge =
   navigator.userAgent.indexOf("Edge") !== -1 &&
@@ -282,7 +297,11 @@ export default {
         blob: null,
         localId: ""
       },
-      testAudio: new Audio("http://techslides.com/demos/samples/sample.aac"),
+      testAudio: {
+        playing: false,
+        data: new Audio("http://techslides.com/demos/samples/sample.aac"),
+        duration: 0
+      },
       tlInfo:
         "这里是兴趣爱好的介绍，这里是兴趣爱好的介绍这里是兴趣爱好的。这里是兴趣爱好的介绍，这里是兴趣爱好的介绍这里是兴趣爱好的。这里是兴趣爱好的介绍，这里是兴趣爱好的介绍这里是兴趣爱好的。这里是兴趣爱好的介绍。"
     };
@@ -401,18 +420,31 @@ export default {
       });
     },
     playTest() {
-      this.testAudio.play();
+      console.log(this.testAudio.data.duration);
+      this.testAudio.data.play();
+      this.testAudio.data.addEventListener("ended", () => {
+        this.testAudio.playing = false;
+      });
+      this.testAudio.data.addEventListener("playing", ev => {
+        console.log(ev);
+      });
+      this.testAudio.playing = true;
     },
     resultPage() {
       this.$router.push({ name: "result_page" });
     },
     goBack() {
       this.$router.push({ name: "basic_info" });
-    }
+    },
+    round
   },
   mounted() {
     window.wx.error(err => {
       alert(JSON.stringify(err));
+    });
+    this.testAudio.data.load();
+    this.testAudio.data.addEventListener("loadedmetadata", () => {
+      this.testAudio.duration = round(this.testAudio.data.duration, 2);
     });
   }
 };
@@ -501,6 +533,67 @@ export default {
     &.popup-center {
       padding: 50px;
       border-radius: radius-normal;
+    }
+  }
+
+  .audio-player {
+    width: 50%;
+    border-radius: 16px;
+    background-color: rgb(241, 241, 241);
+    display: flex;
+    padding: 16px;
+
+    .audio-bar {
+      height: 50px;
+      width: 50px;
+      flex-shrink: 0;
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+
+      &.playing {
+        .bar {
+          &:nth-child(1) {
+            animation: firstBar 1s infinite;
+          }
+
+          &:nth-child(2) {
+            animation: secondBar 1s infinite;
+          }
+
+          &:nth-child(3) {
+            animation: thirdBar 1s infinite;
+          }
+        }
+      }
+
+      .bar {
+        &:nth-child(1) {
+          width: 8px;
+          height: 10px;
+          background-color: color-primary;
+        }
+
+        &:nth-child(2) {
+          width: 8px;
+          height: 30px;
+          margin: 0 8px;
+          background-color: color-primary;
+        }
+
+        &:nth-child(3) {
+          width: 8px;
+          height: 20px;
+          background-color: color-primary;
+        }
+      }
+    }
+
+    .audio-content {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
   }
 }

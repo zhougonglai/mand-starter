@@ -1,3 +1,7 @@
+/**
+ * 微信配置
+ * @param {*} config
+ */
 export const wxConfig = ({
   debug = process.env.NODE_ENV !== "production",
   appId,
@@ -82,6 +86,9 @@ export const wxShareTimeline = ({
 };
 
 export const isWx = () => navigator.userAgent.includes("MicroMessenger");
+
+export const round = (n, decimals = 0) =>
+  Number(`${Math.round(`${n}e${decimals}`)}e-${decimals}`);
 
 export const citys = [
   {
