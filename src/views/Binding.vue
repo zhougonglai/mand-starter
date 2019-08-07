@@ -24,7 +24,7 @@
 <script>
 import { Button } from "mand-mobile";
 import { mapActions } from "vuex";
-import { wxConfig } from "@/utils";
+import { isWx, wxConfig } from "@/utils";
 
 export default {
   name: "binding",
@@ -41,28 +41,47 @@ export default {
     ...mapActions("config", ["getWxConfig"])
   },
   mounted() {
-    this.getWxConfig().then(data => {
-      if (data) {
-        wxConfig(data);
-        console.log("nnplayer_version: ", process.env.VUE_APP_VERSION);
-        window.wx.ready(() => {
-          window.wx.updateAppMessageShareData({
-            title: "分享给朋友/分享到QQ",
-            desc: "描述描述描述",
-            link: "http://qq156471181.vicp.cc/binding",
-            imgUrl: require("@/assets/images/login_logo.png")
+    if (isWx()) {
+      this.getWxConfig().then(data => {
+        if (data) {
+          wxConfig(data);
+          console.log("nnplayer_version: ", process.env.VUE_APP_VERSION);
+          window.wx.ready(() => {
+            window.wx.checkJsApi({
+              jsApiList: [
+                "updateAppMessageShareData",
+                "updateTimelineShareData"
+              ],
+              success: ({
+                checkResult: {
+                  updateAppMessageShareData,
+                  updateTimelineShareData
+                }
+                // errMsg
+              }) => {
+                if (updateAppMessageShareData) {
+                  window.wx.updateAppMessageShareData({
+                    title: "分享给朋友/分享到QQ",
+                    desc: "描述描述描述",
+                    link: "http://qq156471181.vicp.cc/binding",
+                    imgUrl: require("@/assets/images/login_logo.png")
+                  });
+                }
+                if (updateTimelineShareData) {
+                  window.wx.updateTimelineShareData({
+                    title: "分享到朋友圈/分享到QQ空间",
+                    link: "http://qq156471181.vicp.cc/binding",
+                    imgUrl: require("@/assets/images/login_logo.png")
+                  });
+                }
+              }
+            });
           });
-
-          window.wx.updateTimelineShareData({
-            title: "分享到朋友圈/分享到QQ空间",
-            link: "http://qq156471181.vicp.cc/binding",
-            imgUrl: require("@/assets/images/login_logo.png")
-          });
-        });
-      } else {
-        alert("微信配置获取失败");
-      }
-    });
+        } else {
+          alert("微信配置获取失败");
+        }
+      });
+    }
   }
 };
 </script>
@@ -74,6 +93,7 @@ export default {
   align-items: center;
   height: 100vh;
   padding-top: 8vh;
+  box-sizing: border-box;
 
   // padding-bottom: constant(safe-area-inset-bottom);
   // padding-bottom: env(safe-area-inset-bottom);

@@ -2,14 +2,14 @@
   <div id="forget_password">
     <form class="input-fiel">
       <div class="fiel-row">
-        <div class="fiel-item area_code inline">
+        <div class="fiel-item area_code inline" @click="toggleAreaSelector">
           <div class="code">+{{ areaCode.code }}</div>
           <md-icon name="arrow-down" />
         </div>
         <div class="fiel-item fill">
           <input
             type="tel"
-            v-model="forgetInfo.phone"
+            v-model.lazy.trim="forgetInfo.phone"
             placeholder="请输入手机号"
             :maxlength="11"
           />
@@ -20,7 +20,7 @@
         <div class="fiel-item fill">
           <input
             type="text"
-            v-model="forgetInfo.code"
+            v-model.lazy="forgetInfo.code"
             placeholder="请输入6位数验证码"
             :maxlength="6"
           />
@@ -60,18 +60,28 @@
 
       <div class="fiel-row justyfy-center">
         已有账号?
-        <md-button type="link">立即登录></md-button>
+        <md-button type="link" @click="toLogin">立即登录></md-button>
       </div>
     </form>
+
+    <md-selector
+      v-model="areaCode.status"
+      :default-value="86"
+      :data="areaCode.list"
+      @choose="changeAreaCode"
+    />
   </div>
 </template>
 <script>
-import { Icon, Button } from "mand-mobile";
+import { Icon, Button, Selector } from "mand-mobile";
+import { mapState, mapActions } from "vuex";
+
 export default {
   name: "forget-password",
   components: {
     [Icon.name]: Icon,
-    [Button.name]: Button
+    [Button.name]: Button,
+    [Selector.name]: Selector
   },
   data() {
     return {
@@ -81,11 +91,17 @@ export default {
         status: false,
         password: ""
       },
-      areaCode: {
-        code: "86"
-      },
       passwordStatus: false
     };
+  },
+  computed: {
+    ...mapState("global", ["areaCode"])
+  },
+  methods: {
+    toLogin() {
+      this.$router.push({ name: "sign_in" });
+    },
+    ...mapActions("global", ["changeAreaCode", "toggleAreaSelector"])
   }
 };
 </script>

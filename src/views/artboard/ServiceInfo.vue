@@ -146,12 +146,14 @@
           >
         </template>
       </md-cell-item>
-      <md-cell-item>
+      <!-- <md-cell-item>
         <template slot="children">
           <md-button type="primary" round @click="resultPage">提交</md-button>
         </template>
-      </md-cell-item>
+      </md-cell-item>-->
     </md-field>
+
+    <md-action-bar :actions="action"></md-action-bar>
     <md-selector
       title="技能类型"
       v-model="skill.status"
@@ -183,6 +185,7 @@ import {
   Popup,
   CellItem,
   Selector,
+  ActionBar,
   ImageViewer,
   ImageReader,
   Button
@@ -206,6 +209,7 @@ export default {
     [Selector.name]: Selector,
     [ImageViewer.name]: ImageViewer,
     [ImageReader.name]: ImageReader,
+    [ActionBar.name]: ActionBar,
     [Button.name]: Button
   },
   data() {
@@ -256,6 +260,16 @@ export default {
       popupEx: {
         status: false
       },
+      action: [
+        {
+          text: "返回",
+          onClick: this.goBack
+        },
+        {
+          text: "提交",
+          onClick: this.resultPage
+        }
+      ],
       recorder: {
         isWx: isWx(),
         status: false,
@@ -372,11 +386,14 @@ export default {
     },
     resultPage() {
       this.$router.push({ name: "result_page" });
+    },
+    goBack() {
+      this.$router.push({ name: "basic_info" });
     }
   },
   mounted() {
     window.wx.error(err => {
-      alert(err.toString());
+      alert(JSON.stringify(err));
     });
   }
 };
@@ -384,6 +401,10 @@ export default {
 <style lang="stylus" scoped>
 #service_info {
   height: 100vh;
+
+  >>>.md-field {
+    padding-bottom: 50vh;
+  }
 
   p {
     font-size: 24px;

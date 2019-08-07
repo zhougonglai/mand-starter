@@ -61,7 +61,7 @@
           />
         </div>
       </div>
-      <div class="fiel-row between center">
+      <div class="fiel-row between align-center">
         <p>
           注册即代表同意
           <span class="primary" @click="protocol = !protocol"
@@ -84,7 +84,7 @@
       </div>
     </form>
     <md-landscape v-model="protocol" full-screen>
-      <h1>用户协议</h1>
+      <h1 class="text-center">用户协议</h1>
       <p>
         欢迎申请使用【
         武汉奥拉夫网络科技有限公司】有限公司（以下简称“本公司”）提供的服务。本公司通过网络平台：网址【www.nn.com】（以下简称“NN约玩”）向用户提供服务（以下简称“本服务”）。请用户仔细阅读以下全部内容（特别是粗体下划线标注的内容）并选择接受或不接受本协议。除非您接受本协议所有条款，否则您无权使用本协议中所提供的服务。您一经注册或接受本协议中的服务即视为对本协议全部条款已充分理解并完全接受。此后，您不得以未阅读本协议条款内容作任何形式的抗辩。
@@ -481,5 +481,43 @@ export default {
 <style lang="stylus" scoped>
 #sign_up {
   padding: 32px 0;
+
+  >>> .md-landscape-content {
+    padding: 50px;
+
+    ol {
+      margin-top: 16px;
+
+      li {
+        text-indent: 50px;
+        margin-top: 8px;
+        line-height: normal;
+
+        ol {
+          li {
+            text-indent: 100px;
+          }
+        }
+      }
+    }
+
+    p {
+      text-indent: 50px;
+      line-height: normal;
+      margin-top: 16px;
+    }
+
+    h1 {
+      font-size: x-large;
+      line-height: normal;
+      margin-top: 16px;
+    }
+
+    h2 {
+      font-size: large;
+      line-height: normal;
+      margin-top: 16px;
+    }
+  }
 }
 </style>

@@ -96,14 +96,8 @@
           </ul>
         </template>
       </md-cell-item>
-      <md-cell-item>
-        <template slot="children">
-          <md-button type="primary" round @click="gotoServiceInfo"
-            >下一步</md-button
-          >
-        </template>
-      </md-cell-item>
     </md-field>
+    <md-action-bar :actions="action"></md-action-bar>
     <md-selector
       v-model="ageSelector.status"
       max-height="320px"
@@ -129,6 +123,7 @@ import {
   Radio,
   Tag,
   ImageReader,
+  ActionBar,
   Icon,
   Toast
 } from "mand-mobile";
@@ -146,6 +141,7 @@ export default {
     [Radio.name]: Radio,
     [ImageReader.name]: ImageReader,
     [Button.name]: Button,
+    [ActionBar.name]: ActionBar,
     [TabPicker.name]: TabPicker
   },
   data() {
@@ -224,8 +220,14 @@ export default {
         ]
       },
       imageList: [],
+      action: [
+        {
+          text: "下一步",
+          onClick: this.gotoServiceInfo
+        }
+      ],
       gender: "2",
-      fafor: "这里是兴趣爱好的介绍，这里是兴趣爱好的介绍这里是兴趣爱好的。"
+      fafor: ""
     };
   },
   methods: {
@@ -286,6 +288,10 @@ export default {
         margin-left: 14px;
       }
     }
+  }
+
+  >>>.md-field {
+    padding-bottom: 50vh;
   }
 
   .image-reader-list {

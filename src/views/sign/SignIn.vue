@@ -10,14 +10,14 @@
           <input
             type="tel"
             v-if="signIn.accountType"
-            v-model="signIn.phone"
+            v-model.lazy.number.trim="signIn.phone"
             placeholder="请输入手机号"
             :maxlength="11"
           />
           <input
             type="email"
             v-else
-            v-model="signIn.email"
+            v-model.lazy.trim="signIn.email"
             placeholder="请输入邮箱/账号"
           />
         </div>
@@ -26,7 +26,7 @@
         <div class="fiel-item fill">
           <input
             :type="passwordStatus ? 'text' : 'password'"
-            v-model="signIn.password"
+            v-model.lazy="signIn.password"
             placeholder="请输入登录密码"
           />
           <svg
@@ -42,10 +42,10 @@
       </div>
       <div class="fiel-row">
         <div class="fill" @click="changeAccountType">
-          <div class="font-normal">邮箱/账号登录</div>
-          <div class="font-normal gray">可使用NN账户(原雷神账号)登录</div>
+          <div class="line-normal">邮箱/账号登录</div>
+          <div class="line-normal gray">可使用NN账户(原雷神账号)登录</div>
         </div>
-        <div class="right center">
+        <div class="right align-center">
           <md-button type="link" size="small" inline @click="forgetPassword"
             >忘记密码?</md-button
           >
