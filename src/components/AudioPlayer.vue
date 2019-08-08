@@ -28,6 +28,10 @@ export default {
       type: String,
       required: true
     },
+    isWx: {
+      type: Boolean,
+      default: false
+    },
     title: String
   },
   data() {
@@ -41,7 +45,12 @@ export default {
   methods: {
     round,
     playVoice() {
-      this.data.play(),
+      if (this.isWx) {
+        window.wx.playVoice({
+          localId: this.url
+        });
+      } else {
+        this.data.play();
         this.data.addEventListener("ended", () => {
           this.playing = false;
           this.currentTime = 0;
@@ -51,12 +60,13 @@ export default {
             this.ended = false;
           }, 650);
         });
-      this.data.addEventListener("timeupdate", () => {
-        this.currentTime = this.data.currentTime;
-        this.$emit("currentTime", this.data.currentTime);
-      });
-      this.playing = true;
-      this.$emit("playing");
+        this.data.addEventListener("timeupdate", () => {
+          this.currentTime = this.data.currentTime;
+          this.$emit("currentTime", this.data.currentTime);
+        });
+        this.playing = true;
+        this.$emit("playing");
+      }
     }
   }
 };

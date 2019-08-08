@@ -136,7 +136,7 @@
                 url="http://techslides.com/demos/samples/sample.aac"
               />
               <template v-if="recorder.localId">
-                <audio-player title="播放录音" :url="recorder.localId" />
+                <audio-player title="播放录音" isWx :url="recorder.localId" />
               </template>
             </div>
           </div>
