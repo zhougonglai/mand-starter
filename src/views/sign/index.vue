@@ -160,7 +160,7 @@ export default {
   }
 
   >>>.md-tabs {
-    margin-top: 16px;
+    margin-top: 32px;
 
     .md-tab-bar {
       background-color: transparent;
