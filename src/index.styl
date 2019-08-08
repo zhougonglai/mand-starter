@@ -105,6 +105,19 @@ button
 .flex
   display: flex
 
+.row
+  @extend .flex
+  flex-direction: row
+  .col
+    flex 1
+    align-items: center;
+    justify-content: center;
+
+
+.col
+  @extend .flex
+  flex-direction: column
+
 
 .fiel-input,input
   outline: 0;
@@ -147,14 +160,27 @@ button
   color #909399
 
 // n*8
+$n = 8px
 .mt-3
-  margin-top: 24px
-
+  margin-top: 3 * $n
 .mt-2
-  margin-top 16px
-
+  margin-top 2 * $n
 .mt-1
-  margin-top 8px
+  margin-top $n
+.ma-3
+  margin 3 * $n
+.ma-2
+  margin 2 * $n
+.ma-1
+  margin $n
+
+
+.pa-3
+  padding: 3 * $n
+.pa-2
+  padding 2 * $n
+.pa-1
+  padding: $n
 
 .text-center
   text-align: center

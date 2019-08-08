@@ -107,80 +107,42 @@
         brief="请上传您的一段该服务类型的语音介绍，一段好的语音介绍可以提升 200%的接单率(支持mp3/m4a格式的音频建议30s以内)"
       >
         <template slot="children">
-          <md-button
-            type="primary"
-            size="small"
-            class="recorder recorder_start"
-            :inactive="recorder.status"
-            inline
-            round
-            @click="record"
-            >录音</md-button
-          >
-          <md-button
-            type="primary"
-            size="small"
-            class="recorder recorder_stop"
-            :inactive="!recorder.status"
-            inline
-            round
-            @click="stopRecord"
-            >停止录音</md-button
-          >
-          <audio
-            v-if="!recorder.isWx"
-            controls
-            autoplay
-            playsinline
-            ref="audio"
-          />
-          <md-button
-            type="primary"
-            :inactive="!recorder.localId"
-            size="small"
-            class="recorder recorder_player"
-            inline
-            round
-            @click="playRecord"
-            >播放录音</md-button
-          >
-
-          <div
-            class="audio-player"
-            @click="playTest"
-            :class="{ ended: testAudio.ended }"
-          >
-            <div class="audio-bar" :class="{ playing: testAudio.playing }">
-              <div class="bar" />
-              <div class="bar" />
-              <div class="bar" />
+          <div class="row pa-2">
+            <div class="col">
+              <md-button
+                type="primary"
+                size="small"
+                class="recorder recorder_start"
+                :inactive="recorder.status"
+                inline
+                round
+                @click="record"
+                >录音</md-button
+              >
+              <md-button
+                type="primary"
+                size="small"
+                class="recorder recorder_stop mt-2"
+                :inactive="!recorder.status"
+                inline
+                round
+                @click="stopRecord"
+                >停止录音</md-button
+              >
             </div>
-            <div class="audio-content">
-              <div class="audio-title">示例音频</div>
-              <div class="audio-duation">
-                {{
-                  testAudio.data.duration
-                    ? round(testAudio.data.duration) + "s"
-                    : ""
-                }}
-              </div>
+            <div class="col pa-1">
+              <audio-player
+                title="示例音频"
+                url="http://techslides.com/demos/samples/sample.aac"
+              />
+              <template v-if="recorder.localId">
+                <audio-player title="播放录音" :url="recorder.localId" />
+              </template>
             </div>
-            <div
-              class="audio-animate"
-              v-if="testAudio.currentTime"
-              :style="{
-                left:
-                  (testAudio.currentTime / testAudio.data.duration) * 125 + '%'
-              }"
-            ></div>
           </div>
+          <!-- <audio v-if="!recorder.isWx" controls autoplay playsinline ref="audio" /> -->
         </template>
       </md-cell-item>
-      <!-- <md-cell-item>
-        <template slot="children">
-          <md-button type="primary" round @click="resultPage">提交</md-button>
-        </template>
-      </md-cell-item>-->
     </md-field>
 
     <md-action-bar :actions="action"></md-action-bar>
@@ -240,7 +202,8 @@ export default {
     [ImageViewer.name]: ImageViewer,
     [ImageReader.name]: ImageReader,
     [ActionBar.name]: ActionBar,
-    [Button.name]: Button
+    [Button.name]: Button,
+    "audio-player": () => import("@/components/AudioPlayer.vue")
   },
   data() {
     return {
@@ -546,100 +509,6 @@ export default {
     &.popup-center {
       padding: 50px;
       border-radius: radius-normal;
-    }
-  }
-
-  .audio-player {
-    width: 50%;
-    border-radius: 16px;
-    background-color: rgb(241, 241, 241);
-    display: flex;
-    position: relative;
-    padding: 16px;
-
-    &.ended {
-      &::after {
-        position: absolute;
-        top: 0;
-        right: 0;
-        bottom: 0;
-        left: 0;
-        display: block;
-        border-radius: inherit;
-        box-shadow: 0 0 0 0 color-primary;
-        opacity: 0.2;
-        animation: fadeEffect 2s cubic-bezier(0.08, 0.82, 0.17, 1), waveEffect 0.4s cubic-bezier(0.08, 0.82, 0.17, 1);
-        animation-fill-mode: forwards;
-        content: '';
-        pointer-events: none;
-      }
-    }
-
-    .audio-animate {
-      background-color: color-primary;
-      // filter: blur(1px);
-      border-radius: 0 0 8px 8px;
-      transition: all 0.625s ease-out;
-      right: 0;
-      height: 8px;
-      bottom: 0;
-      position: absolute;
-    }
-
-    .audio-bar {
-      height: 50px;
-      width: 50px;
-      flex-shrink: 0;
-      display: flex;
-      align-items: flex-end;
-      justify-content: center;
-      z-index: 99;
-
-      &.playing {
-        .bar {
-          &:nth-child(1) {
-            animation: firstBar 1s infinite;
-          }
-
-          &:nth-child(2) {
-            animation: secondBar 1s infinite;
-          }
-
-          &:nth-child(3) {
-            animation: thirdBar 1s infinite;
-          }
-        }
-      }
-
-      .bar {
-        &:nth-child(1) {
-          width: 8px;
-          height: 10px;
-          background-color: color-primary;
-        }
-
-        &:nth-child(2) {
-          width: 8px;
-          height: 30px;
-          margin: 0 8px;
-          background-color: color-primary;
-        }
-
-        &:nth-child(3) {
-          width: 8px;
-          height: 20px;
-          background-color: color-primary;
-        }
-      }
-    }
-
-    .audio-content {
-      flex: 1;
-      color: color-primary;
-      z-index: 99;
-      display: flex;
-      align-items: center;
-      justify-content: space-evenly;
     }
   }
 }
