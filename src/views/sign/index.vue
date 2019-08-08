@@ -169,6 +169,10 @@ export default {
 
       .md-tab-bar-item {
         font-size: 44px;
+
+        &:not(.is-active) {
+          color: #909399;
+        }
       }
 
       .md-tab-bar-ink {

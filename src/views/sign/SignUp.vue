@@ -66,23 +66,15 @@
           />
         </div>
       </div>
-      <div class="fiel-row between align-center">
-        <p>
-          注册即代表同意
-          <span class="primary" @click="protocol = !protocol"
-            >《NN约玩协议》</span
-          >
+      <div class="fiel-row between align-center mt-2">
+        <p @click="protocol = !protocol" class="line-normal larger gray">
+          注册即代表同意《NN约玩协议》
         </p>
-        <md-button
-          size="small"
-          @click="forgetPassword"
-          class="normal"
-          type="link"
-          inline
-          >忘记密码？</md-button
-        >
+        <div class="line-normal larger primary" @click="forgetPassword">
+          忘记密码？
+        </div>
       </div>
-      <div class="fiel-row">
+      <div class="fiel-row mt-3">
         <md-button type="primary" round @click="gotoBasicInfo"
           >立即注册</md-button
         >
@@ -485,7 +477,7 @@ export default {
 </script>
 <style lang="stylus" scoped>
 #sign_up {
-  padding: 32px 0;
+  padding: 40px 0;
 
   >>> .md-landscape-content {
     padding: 50px;

@@ -28,7 +28,7 @@
         brief="(必填)"
       >
         <template slot="right">
-          <small class="gray"
+          <small class="gray smaller"
             >最多可选择3个标签({{ tags.active.length }}/3)</small
           >
         </template>
@@ -272,16 +272,29 @@ export default {
 #basic_info {
   height: 100vh;
 
+  >>> .md-cell-item-right {
+    color: #606166;
+  }
+
+  >>> .md-cell-item-brief {
+    color: #909399;
+  }
+
   >>> .md-cell-item-children {
+    padding-top: 0;
+
     .md-tag {
       margin-top: 14px;
 
       .default {
         padding: 14px;
+        color: #606166;
+        border-color: #e9e9ed;
       }
 
       .type-fill {
         border: 1px solid transparent;
+        color: #fff;
       }
 
       &+.md-tag {
@@ -292,6 +305,7 @@ export default {
 
   >>>.md-field {
     padding-bottom: 50vh;
+    padding-top: 20px;
   }
 
   .image-reader-list {

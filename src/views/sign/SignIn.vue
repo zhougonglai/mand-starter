@@ -1,7 +1,7 @@
 <template>
   <div id="sign_in">
     <form class="input-fiel">
-      <div class="fiel-row">
+      <div class="fiel-row" v-if="signIn.accountType">
         <div class="fiel-item area_code inline" @click="toggleAreaSelector">
           <div class="code">+{{ areaCode.item.code }}</div>
           <md-icon name="arrow-down" />
@@ -12,14 +12,16 @@
             name="phone"
             autocomplete="tel"
             :required="signIn.accountType"
-            v-if="signIn.accountType"
             v-model.lazy.number.trim="signIn.phone"
             placeholder="请输入手机号"
             :maxlength="11"
           />
+        </div>
+      </div>
+      <div class="fiel-row" v-else>
+        <div class="fiel-item fill">
           <input
             type="text"
-            v-else
             name="email"
             autocomplete="email"
             :required="!signIn.accountType"
@@ -50,18 +52,21 @@
       </div>
       <div class="fiel-row">
         <div class="fill" @click="changeAccountType">
-          <div class="line-normal">
+          <div class="line-normal larger primary">
             {{ signIn.accountType ? "邮箱/账号登录" : "手机号登录" }}
           </div>
-          <div class="line-normal gray">可使用NN账户(原雷神账号)登录</div>
+          <div class="line-normal gray mt-1">可使用NN账户(原雷神账号)登录</div>
         </div>
         <div class="right align-center">
-          <md-button type="link" size="small" inline @click="forgetPassword"
-            >忘记密码?</md-button
-          >
+          <!-- <md-button type="link" size="small" inline @click="forgetPassword"
+            ></md-button
+          >-->
+          <div class="line-normal larger primary" @click="forgetPassword">
+            忘记密码?
+          </div>
         </div>
       </div>
-      <div class="fiel-row">
+      <div class="fiel-row mt-5">
         <md-button type="primary" round @click="login(signIn)"
           >立即登录</md-button
         >
@@ -111,6 +116,6 @@ export default {
 </script>
 <style lang="stylus" scoped>
 #sign_in {
-  padding: 32px 0;
+  padding: 40px 0;
 }
 </style>

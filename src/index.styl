@@ -64,10 +64,12 @@ button
   &.md-button
     height: 80px
     line-height: normal;
+    .md-button-inner
+      font-size 30px
     &.small
       height: 64px
       .md-button-inner
-        font-size 24px
+        font-size 22px
     &.primary
       // background-image: linear-gradient(90deg, #F946F3 0%, #C158FE 100%);
       &::after
@@ -94,10 +96,13 @@ button
   font-size: large
 
 .larger
-  font-size: larger
+  font-size: larger !important
 
 .small
   font-size small
+
+.smaller
+  font-size: smaller;
 
 .text-indent
   text-indent 50px
@@ -160,11 +165,13 @@ button
   color #909399
 
 // n*8
-$n = 8px
+$n = 10px
+.mt-5
+  margin-top: 5 * $n !important
 .mt-3
-  margin-top: 3 * $n
+  margin-top: 3 * $n !important
 .mt-2
-  margin-top 2 * $n
+  margin-top 2 * $n !important
 .mt-1
   margin-top $n
 .ma-3
@@ -173,6 +180,9 @@ $n = 8px
   margin 2 * $n
 .ma-1
   margin $n
+
+.ml-half
+  margin-left: 5px
 
 
 .pa-3
@@ -281,7 +291,7 @@ $n = 8px
     line-height: 80px;
 
     & + .fiel-row {
-      margin-top: 32px;
+      margin-top: 40px;
     }
   }
 
@@ -307,19 +317,26 @@ $n = 8px
 
     input {
       border: none;
-      padding-left: 16px;
+      padding-left: 20px;
       width: 100%;
       height: 100%;
       line-height: 1.5;
       border-radius: 32px;
     }
 
-    button.button.small {
-      width: fit-content;
+    button{
+      &.button{
+        &.small {
+          width: fit-content;
+          // &.link{
+          //   color: #606166;  
+          // }
+        }
+      }
     }
 
     & + .fiel-item {
-      margin-left: 32px;
+      margin-left: 20px;
     }
 
     &.area_code {
@@ -334,6 +351,9 @@ $n = 8px
     i.md-icon {
       flex-basis: 54px;
       text-align: center;
+      font-size: 28px;
+      fill: #c0c3cc;
+      color: #c0c3cc;
     }
 
     svg.icon {

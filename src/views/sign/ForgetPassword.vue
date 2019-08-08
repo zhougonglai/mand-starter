@@ -58,9 +58,10 @@
         <md-button type="primary" round>确认修改</md-button>
       </div>
 
-      <div class="fiel-row justyfy-center">
+      <div class="fiel-row justyfy-center mt-2 larger">
         已有账号?
-        <md-button type="link" @click="toLogin">立即登录></md-button>
+        <!-- <md-button type="link" @click="toLogin"></md-button> -->
+        <div class="primary ml-half" @click="toLogin">立即登录></div>
       </div>
     </form>
 
