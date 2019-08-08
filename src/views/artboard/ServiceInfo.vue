@@ -87,18 +87,21 @@
         no-border
       >
         <template slot="right">
-          <md-button type="link" size="small" @click="popupEx.status = true"
-            >点击查看示例</md-button
+          <small class="smaller" @click="popupEx.status = true"
+            >点击查看示例</small
           >
         </template>
         <template slot="children">
-          <textarea
-            v-model="tlInfo"
-            :rows="3"
-            :maxlength="400"
-            class="fiel-input input-textarea"
-          />
-          <div class="hit">{{ tlInfo.length }} / 400</div>
+          <div class="fill relative textarea">
+            <textarea
+              v-model="skillInfo"
+              :rows="3"
+              :maxlength="400"
+              placeholder="点击填写"
+              class="fiel-input input-textarea"
+            />
+            <div class="hit">{{ skillInfo.length }} / 400</div>
+          </div>
         </template>
       </md-cell-item>
       <md-cell-item
@@ -221,6 +224,7 @@ export default {
           }
         ]
       },
+      skillInfo: "",
       level: {
         status: false,
         active: "",
@@ -433,6 +437,10 @@ export default {
     padding-bottom: 50vh;
   }
 
+  >>>.md-cell-item-children {
+    padding-top: 0;
+  }
+
   p {
     font-size: 24px;
     color: #909399;
@@ -463,6 +471,7 @@ export default {
         border-radius: 8px;
         background-size: cover;
         overflow: hidden;
+        background-color: #F5F5F7;
 
         &.add {
           >>> .md-icon {

@@ -46,16 +46,22 @@
       </md-cell-item>
       <md-cell-item no-border title="兴趣爱好" class="border-bottom-1px">
         <template slot="children">
-          <textarea
-            v-model="fafor"
-            :rows="3"
-            :maxlength="30"
-            class="fiel-input input-textarea"
-          />
-          <div class="hit">{{ fafor.length }} / 30</div>
+          <div class="fill relative textarea">
+            <textarea
+              v-model="fafor"
+              :rows="3"
+              :cols="35"
+              :maxlength="30"
+              class="fiel-input input-textarea"
+            />
+            <div class="hit">{{ fafor.length }} / 30</div>
+          </div>
         </template>
       </md-cell-item>
       <md-cell-item no-border title="形象照" brief="(必填)">
+        <small class="gray small"
+          >至少上传4张，最多上传6张，第一张默认为封面照</small
+        >
         <template slot="children">
           <ul class="image-reader-list">
             <template v-if="imageList.length">
@@ -324,6 +330,7 @@ export default {
       border-radius: 8px;
       background-size: cover;
       overflow: hidden;
+      background-color: #F5F5F7;
 
       &+.image-reader-item {
         margin-left: 2%;
