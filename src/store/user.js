@@ -1,5 +1,6 @@
 import $http from "@/service";
 import CryptoJS from "crypto-js";
+import { Toast } from "mand-mobile";
 
 export default {
   namespaced: true,
@@ -12,15 +13,24 @@ export default {
       { commit, rootState },
       { phone, emailOrAccount, accountType, password }
     ) {
-      const { rtnCode, rtnInfo } = await $http.login({
+      const {
+        rtnCode,
+        rtnInfo: { data, msg }
+      } = await $http.login({
+        channel: "wechat",
         phone: accountType ? phone : "",
+        flag: accountType ? 1 : 2,
         emailOrAccount: accountType ? "" : emailOrAccount,
         password: CryptoJS.MD5(password).toString(),
         countryCode: rootState.global.areaCode.item.code
       });
       if (rtnCode === "000") {
-        commit("SET_INFO", rtnInfo);
-        return rtnInfo;
+        if (data) {
+          commit("SET_INFO", data);
+          return data;
+        } else {
+          Toast.failed(msg);
+        }
       } else {
         throw Error("服务器异常");
       }

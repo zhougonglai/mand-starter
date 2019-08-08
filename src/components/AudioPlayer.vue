@@ -8,7 +8,7 @@
     <div class="audio-content">
       <div class="audio-title" v-text="title" />
       <div class="audio-duation">
-        {{ data.duration ? round(data.duration) + "S" : "" }}
+        {{ data.duration ? round(data.duration) + "s" : "" }}
       </div>
     </div>
     <div

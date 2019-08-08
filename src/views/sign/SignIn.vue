@@ -58,16 +58,13 @@
           <div class="line-normal gray mt-1">可使用NN账户(原雷神账号)登录</div>
         </div>
         <div class="right align-center">
-          <!-- <md-button type="link" size="small" inline @click="forgetPassword"
-            ></md-button
-          >-->
           <div class="line-normal larger primary" @click="forgetPassword">
             忘记密码?
           </div>
         </div>
       </div>
       <div class="fiel-row mt-5">
-        <md-button type="primary" round @click="login(signIn)"
+        <md-button type="primary" round @click="signInSubmit"
           >立即登录</md-button
         >
       </div>
@@ -108,6 +105,9 @@ export default {
     },
     forgetPassword() {
       this.$router.push({ name: "forget_password" });
+    },
+    signInSubmit() {
+      this.login(this.signIn);
     },
     ...mapActions("global", ["toggleAreaSelector"]),
     ...mapActions("user", ["login"])
