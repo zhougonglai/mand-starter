@@ -21,8 +21,8 @@
       <div class="fiel-row">
         <div class="fiel-item fill">
           <input
-            type="text"
-            v-model="signUp.code"
+            type="tel"
+            v-model.trim.lazy="signUp.smsCode"
             placeholder="请输入6位数验证码"
             :maxlength="6"
           />
@@ -31,12 +31,23 @@
             round
             size="small"
             class="button"
-            :loging="sendCode.status"
-            @click="login"
-            >获取短信验证码</md-button
+            :loging="verification.status"
+            :inactive="verification.status"
+            @click="sendverifiCode"
+            >{{
+              verification.status
+                ? `(${verification.time})`
+                : verification.label
+            }}</md-button
           >
         </div>
       </div>
+      <!-- <div class="fiel-row" v-if="!verification.type">
+        <div class="fiel-item fill">
+          <input type="text" v-model="signUp.imgCode" placeholder="请输入4位数验证码" :maxlength="4" />
+          <img @click="imgCode(2)" class="img-code" :src="verification.dataSource" alt="图形验证码" />
+        </div>
+      </div>-->
       <div class="fiel-row">
         <div class="fiel-item fill">
           <input
@@ -61,7 +72,7 @@
         <div class="fiel-item fill">
           <input
             type="text"
-            v-model="signUp.invite"
+            v-model="signUp.invitationCode"
             placeholder="输入邀请码(非必填)"
           />
         </div>
@@ -75,7 +86,7 @@
         </div>
       </div>
       <div class="fiel-row mt-3">
-        <md-button type="primary" round @click="gotoBasicInfo"
+        <md-button type="primary" round @click="registrerSubmit"
           >立即注册</md-button
         >
       </div>
@@ -429,10 +440,36 @@
         本协议之效力、解释、变更、执行与争议解决均适用中华人民共和国法律。因本协议产生之争议，均应依照中华人民共和国法律予以处理，并由本公司住所地人民法院管辖。
       </p>
     </md-landscape>
+    <!-- <md-dialog v-model="imgCoder.status" title="图形验证码">
+      <div class="dialog-banner" slot="header">
+        <img :src="verification.dataSource" alt="图形验证码" />
+      </div>
+      <md-field>
+        <md-input-item title="验证码" v-model="signUp.imgCode" />
+      </md-field>
+    </md-dialog>-->
+    <md-captcha
+      v-model="imgCoder.status"
+      title="图形验证码"
+      system
+      :auto-countdown="false"
+      :count="0"
+      @submit="imgCoderVerify"
+    >
+      <img :src="verification.dataSource" alt="图形验证码" />
+    </md-captcha>
   </div>
 </template>
 <script>
-import { Icon, InputItem, Button, Landscape } from "mand-mobile";
+import {
+  Icon,
+  InputItem,
+  Button,
+  Landscape,
+  Dialog,
+  Captcha,
+  Field
+} from "mand-mobile";
 import { mapState, mapActions } from "vuex";
 
 export default {
@@ -440,38 +477,71 @@ export default {
   components: {
     [Icon.name]: Icon,
     [InputItem.name]: InputItem,
+    [Captcha.name]: Captcha,
     [Button.name]: Button,
-    [Landscape.name]: Landscape
+    [Landscape.name]: Landscape,
+    [Dialog.name]: Dialog,
+    [Field.name]: Field
   },
   data() {
     return {
-      sendCode: {
-        status: false,
-        time: 60
-      },
       protocol: false,
       signUp: {
-        phone: "",
+        phone: undefined,
         password: "",
-        code: "",
-        invite: ""
+        smsCode: undefined,
+        imgCode: "",
+        invitationCode: ""
+      },
+      imgCoder: {
+        status: false
       },
       passwordStatus: false
     };
   },
   computed: {
     ...mapState("global", ["areaCode"]),
-    ...mapState("config", ["config"])
+    ...mapState("config", ["config"]),
+    ...mapState("user", ["verification"])
   },
   methods: {
-    login() {},
     gotoBasicInfo() {
       this.$router.push({ name: "basic_info" });
     },
     forgetPassword() {
       this.$router.push({ name: "forget_password" });
     },
-    ...mapActions("global", ["toggleAreaSelector"])
+    async sendverifiCode() {
+      if (this.signUp.phone) {
+        const code = await this.checkImageShow(this.signUp);
+        if (code === 0) {
+          await this.imgCode(2);
+        } else if (code === 1) {
+          await this.phoneAuthenticateNoLogin(this.signUp);
+        }
+      }
+    },
+    async imgCoderVerify(code) {
+      if (code && code.length === 4) {
+        this.signUp.imgCode = code;
+        const data = await this.phoneAuthenticateNoLogin(this.signUp);
+        console.log(data);
+        this.imgCoder.status = false;
+      }
+    },
+    async registrerSubmit() {
+      const code = await this.register(this.signUp);
+      if (code === 0) {
+        this.gotoBasicInfo();
+      }
+    },
+    ...mapActions("global", ["toggleAreaSelector"]),
+    ...mapActions("user", [
+      "checkImageShow",
+      "imgCode",
+      "register",
+      "phoneAuthenticateNoLogin"
+    ])
   }
 };
 </script>

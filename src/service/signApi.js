@@ -2,6 +2,26 @@ const SIGN_API = {
   login: {
     method: "post",
     url: "/member/login"
+  },
+  register: {
+    method: "post",
+    url: "/member/register"
+  },
+  findPwd: {
+    method: "post",
+    url: "/member/findPwd"
+  },
+  checkImageShow: {
+    method: "get",
+    url: "/verification/checkImageShow"
+  },
+  imgCode: {
+    method: "get",
+    url: "/verification/imgCode"
+  },
+  phoneAuthenticateNoLogin: {
+    method: "post",
+    url: "/verification/phoneAuthenticateNoLogin"
   }
 };
 

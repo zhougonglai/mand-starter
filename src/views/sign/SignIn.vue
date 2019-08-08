@@ -106,8 +106,11 @@ export default {
     forgetPassword() {
       this.$router.push({ name: "forget_password" });
     },
-    signInSubmit() {
-      this.login(this.signIn);
+    async signInSubmit() {
+      const code = await this.login(this.signIn);
+      if (!code) {
+        this.gotoBasicInfo();
+      }
     },
     ...mapActions("global", ["toggleAreaSelector"]),
     ...mapActions("user", ["login"])

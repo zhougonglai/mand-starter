@@ -19,8 +19,8 @@
       <div class="fiel-row">
         <div class="fiel-item fill">
           <input
-            type="text"
-            v-model.lazy="forgetInfo.code"
+            type="tel"
+            v-model.lazy.trim="forgetInfo.smsCode"
             placeholder="请输入6位数验证码"
             :maxlength="6"
           />
@@ -29,8 +29,14 @@
             round
             size="small"
             class="button"
-            :loging="forgetInfo.status"
-            >获取短信验证码</md-button
+            :loging="verification.status"
+            :inactive="verification.status"
+            @click="sendverifiCode"
+            >{{
+              verification.status
+                ? `(${verification.time})`
+                : verification.label
+            }}</md-button
           >
         </div>
       </div>
@@ -55,7 +61,9 @@
       </div>
 
       <div class="fiel-row">
-        <md-button type="primary" round>确认修改</md-button>
+        <md-button type="primary" round @click="confirmChange"
+          >确认修改</md-button
+        >
       </div>
 
       <div class="fiel-row justyfy-center mt-2 larger">
@@ -111,21 +119,42 @@ export default {
     return {
       forgetInfo: {
         phone: "",
-        code: "",
-        status: false,
+        smsCode: "",
         password: ""
       },
       passwordStatus: false
     };
   },
   computed: {
-    ...mapState("global", ["areaCode"])
+    ...mapState("global", ["areaCode"]),
+    ...mapState("user", ["verification"])
   },
   methods: {
     toLogin() {
       this.$router.push({ name: "sign_in" });
     },
-    ...mapActions("global", ["changeAreaCode", "toggleAreaSelector"])
+    async sendverifiCode() {
+      if (this.forgetInfo.phone) {
+        const code = await this.checkImageShow({ ...this.forgetInfo, type: 2 });
+        if (code === 0) {
+          await this.imgCode(2);
+        } else if (code === 1) {
+          await this.phoneAuthenticateNoLogin({ ...this.forgetInfo, type: 3 });
+        }
+      }
+    },
+    async confirmChange() {
+      const code = await this.findPwd(this.forgetInfo);
+      if (code === 0) {
+        this.$router.push({ name: "basic_info" });
+      }
+    },
+    ...mapActions("global", ["changeAreaCode", "toggleAreaSelector"]),
+    ...mapActions("user", [
+      "phoneAuthenticateNoLogin",
+      "checkImageShow",
+      "findPwd"
+    ])
   }
 };
 </script>
