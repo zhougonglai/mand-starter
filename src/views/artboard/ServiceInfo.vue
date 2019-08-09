@@ -4,16 +4,16 @@
       <md-cell-item
         arrow
         title="技能类型"
-        @click="toggetGameList"
+        @click="toggelGameList"
         :addon="gameList.active.name ? gameList.active.name : '请选择'"
       />
       <md-cell-item
         title="段位"
         class="border-bottom-1px"
-        :addon="level.active.text ? level.active.text : '请选择'"
-        @click="levelToggle"
-        arrow
+        :addon="rankList.active.text ? rankList.active.text : '请选择'"
+        @click="toggelRankList"
         no-border
+        arrow
       >
         <template slot="children">
           <p>
@@ -33,13 +33,17 @@
             <li class="image_item">
               <div
                 class="img"
-                :style="{
-                  backgroundImage: `url(${clipImgs.img})`,
-                  backgroundPosition: 'center center',
-                  backgroundRepeat: 'no-repeat',
-                  backgroundSize: 'cover'
-                }"
-                @click="chooseImage"
+                :style="
+                  sampleGraph.server_icon
+                    ? {
+                        backgroundImage: `url(${sampleGraph.server_icon})`,
+                        backgroundPosition: 'center center',
+                        backgroundRepeat: 'no-repeat',
+                        backgroundSize: 'cover'
+                      }
+                    : {}
+                "
+                @click="sampleGraph.server_icon && chooseImage()"
               ></div>
               <div class="descript mt-2">
                 <div class="gray text-center">资料示例图</div>
@@ -109,6 +113,12 @@
         no-border
         brief="请上传您的一段该服务类型的语音介绍，一段好的语音介绍可以提升 200%的接单率(支持mp3/m4a格式的音频建议30s以内)"
       >
+        <template slot="right">
+          <audio-player
+            title="示例音频"
+            url="http://techslides.com/demos/samples/sample.aac"
+          />
+        </template>
         <template slot="children">
           <div class="row pa-2">
             <div class="col">
@@ -117,12 +127,11 @@
                 size="small"
                 class="recorder recorder_start"
                 :inactive="recorder.status"
-                inline
                 round
                 @click="record"
                 >录音</md-button
               >
-              <md-button
+              <!-- <md-button
                 type="primary"
                 size="small"
                 class="recorder recorder_stop mt-2"
@@ -130,14 +139,9 @@
                 inline
                 round
                 @click="stopRecord"
-                >停止录音</md-button
-              >
+              >停止录音</md-button>-->
             </div>
             <div class="col pa-1">
-              <audio-player
-                title="示例音频"
-                url="http://techslides.com/demos/samples/sample.aac"
-              />
               <template v-if="recorder.localId">
                 <audio-player title="播放录音" isWx :url="recorder.localId" />
               </template>
@@ -170,18 +174,25 @@
     </md-selector>
     <md-selector
       title="选择陪玩段位"
-      v-model="level.status"
-      :data="level.list"
-      @choose="levelChoose"
+      v-model="rankList.status"
+      :data="
+        rankList.list.map(item => ({
+          ...item,
+          value: item.rankId,
+          text: item.rankName
+        }))
+      "
+      @choose="activeRankList"
     />
     <md-image-viewer
-      v-model="clipImgs.status"
-      :list="[clipImgs.img]"
+      v-model="examplesPicture"
+      :list="[sampleGraph.server_icon]"
       :has-dots="false"
-      :initial-index="clipImgs.active"
     />
     <md-popup v-model="popupEx.status">
-      <div class="popup popup-center">{{ tlInfo }}</div>
+      <div class="popup popup-center">
+        <img :src="sampleGraph.skill_icon" />
+      </div>
     </md-popup>
   </div>
 </template>
@@ -243,11 +254,7 @@ export default {
           }
         ]
       },
-      clipImgs: {
-        status: false,
-        img:
-          "http://img-hxy021.didistatic.com/static/strategymis/insurancePlatform_spu/uploads/27fb7f097ca218d743f816836bc7ea4a"
-      },
+      examplesPicture: false,
       serviceInfo: {
         img: {
           dataUrl: undefined,
@@ -287,7 +294,7 @@ export default {
     };
   },
   computed: {
-    ...mapState("user", ["gameList"])
+    ...mapState("user", ["gameList", "rankList", "sampleGraph"])
   },
   methods: {
     levelChoose(level) {
@@ -297,7 +304,7 @@ export default {
       this.level.status = !this.level.status;
     },
     chooseImage() {
-      this.clipImgs.status = true;
+      this.examplesPicture = true;
     },
     onReaderSelect() {
       Toast.loading("图片读取中...");
@@ -416,17 +423,28 @@ export default {
     goBack() {
       this.$router.push({ name: "basic_info" });
     },
-    ...mapActions("user", ["getgameList", "toggetGameList", "activeGameList"]),
+    ...mapActions("user", [
+      "getgameList",
+      "toggelGameList",
+      "toggelRankList",
+      "activeGameList",
+      "activeRankList"
+    ]),
     round
   },
   created() {
     this.getgameList();
+    this.$nextTick(() => {
+      Toast.hide();
+    });
   },
   mounted() {
     window.wx.error(err => {
-      alert(JSON.stringify(err));
+      alert(JSON.stringify(err) + "需要重新配置微信签名");
     });
-    this.testAudio.data.load();
+    window.wx.ready(() => {
+      this.testAudio.data.load();
+    });
   }
 };
 </script>
@@ -516,7 +534,10 @@ export default {
     width: 80vw;
 
     &.popup-center {
-      padding: 50px;
+      img {
+        width: 100%;
+      }
+
       border-radius: radius-normal;
     }
   }

@@ -6,6 +6,7 @@ export default {
   namespaced: true,
   state: {
     info: {},
+    sampleGraph: {},
     gameList: {
       status: false,
       active: "",
@@ -26,10 +27,15 @@ export default {
   },
   getters: {},
   actions: {
-    toggetGameList: ({ commit }) => commit("GAMELIST_TOGGER"),
+    toggelGameList: ({ commit }) => commit("GAMELIST_TOGGEL"),
     activeGameList: ({ commit, dispatch }, active) => {
       commit("GAMELIST_ACTIVE", active);
       dispatch("getrankList");
+      dispatch("getSampleGraph");
+    },
+    toggelRankList: ({ commit }) => commit("RANKLIST_TOGGEL"),
+    activeRankList: ({ commit }, active) => {
+      commit("RANKLIST_ACTIVE", active);
     },
     async login(
       { commit, rootState },
@@ -229,11 +235,12 @@ export default {
       );
       return rtnInfo;
     },
-    async getgameList({ commit }) {
+    async getgameList({ commit, dispatch }) {
       const { rtnCode, rtnInfo } = await $http.gameList();
       if (rtnCode === "000") {
         if (rtnInfo.code === 0) {
           commit("SET_GAMELIST", rtnInfo.data);
+          dispatch("activeGameList", rtnInfo.data[0]);
         }
       }
       return rtnInfo;
@@ -251,6 +258,20 @@ export default {
         }
       }
       return code;
+    },
+    async getSampleGraph({ state: { gameList }, commit }) {
+      const {
+        rtnCode,
+        rtnInfo: { code, data }
+      } = await $http.sampleGraph({
+        gameId: gameList.active.id
+      });
+      if (rtnCode === "000") {
+        if (code === 0) {
+          commit("SET_SAMPLEGRAPH", data);
+        }
+      }
+      return code;
     }
   },
   mutations: {
@@ -260,7 +281,7 @@ export default {
     SET_GAMELIST({ gameList }, list) {
       gameList.list = list;
     },
-    GAMELIST_TOGGER({ gameList }) {
+    GAMELIST_TOGGEL({ gameList }) {
       gameList.status = !gameList.status;
     },
     GAMELIST_ACTIVE({ gameList }, active) {
@@ -268,6 +289,15 @@ export default {
     },
     SET_RANKLIST({ rankList }, list) {
       rankList.list = list;
+    },
+    RANKLIST_TOGGEL({ rankList }) {
+      rankList.status = !rankList.status;
+    },
+    RANKLIST_ACTIVE({ rankList }, active) {
+      rankList.active = active;
+    },
+    SET_SAMPLEGRAPH(state, result) {
+      state.sampleGraph = result;
     },
     VERIFICATION_COUNT({ verification }, time) {
       verification.time = time;

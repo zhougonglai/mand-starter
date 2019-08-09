@@ -7,13 +7,13 @@ import playerApi from "./playerApi";
 import gameApi from "./gameApi";
 
 const instance = axios.create({
-  baseURL: "http://192.168.3.66:8085",
+  baseURL: "/baseUrl",
   timeout: 6000
 });
 
 instance.interceptors.request.use(
   config => {
-    Toast.loading("加载中", 6000, false);
+    Toast.loading("加载中", 0, false);
     return config;
   },
   () => {

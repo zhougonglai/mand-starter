@@ -6,5 +6,9 @@ export default {
   rankList: {
     method: "get",
     url: "/game/rankList"
+  },
+  sampleGraph: {
+    method: "get",
+    url: "/playerGame/examplesPicture"
   }
 };
