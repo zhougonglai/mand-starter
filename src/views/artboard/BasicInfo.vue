@@ -107,7 +107,7 @@
     <md-selector
       v-model="ageSelector.status"
       max-height="320px"
-      title="选择陪玩年龄"
+      title="选择年龄"
       :data="ageSelector.list"
       @choose="ageChoose"
     />
@@ -133,7 +133,8 @@ import {
   Icon,
   Toast
 } from "mand-mobile";
-import { citys, numList } from "@/utils";
+import { citys, numList, UUIDGeneratorBrowser } from "@/utils";
+import { mapActions } from "vuex";
 
 export default {
   name: "basic-info",
@@ -193,39 +194,76 @@ export default {
           },
           {
             value: 2,
-            text: "颜值担当"
+            text: "萝莉"
           },
           {
             value: 3,
-            text: "成熟稳重"
+            text: "大叔"
           },
           {
             value: 4,
-            text: "风情万种范"
-          },
-          {
-            value: 5,
-            text: "御姐"
-          },
-          {
-            value: 6,
-            text: "话多不高冷"
-          },
-          {
-            value: 7,
-            text: "御姐"
-          },
-          {
-            value: 8,
             text: "颜值担当"
           },
           {
+            value: 5,
+            text: "阳光帅气"
+          },
+          {
+            value: 6,
+            text: "认真专业"
+          },
+          {
+            value: 7,
+            text: "成熟稳重"
+          },
+          {
+            value: 8,
+            text: "小狼狗"
+          },
+          {
             value: 9,
-            text: "成熟又稳重"
+            text: "逗比闲聊"
+          },
+          {
+            value: 10,
+            text: "电竞大神"
+          },
+          {
+            value: 11,
+            text: "人美声甜"
+          },
+          {
+            value: 12,
+            text: "强势辅助"
+          },
+          {
+            value: 13,
+            text: "叔音易撩"
+          },
+          {
+            value: 14,
+            text: "活泼精灵"
+          },
+          {
+            value: 15,
+            text: "沉着冷静"
+          },
+          {
+            value: 16,
+            text: "温文尔雅"
+          },
+          {
+            value: 17,
+            text: "乖巧粘人"
+          },
+          {
+            value: 18,
+            text: "皮中带稳"
           }
         ]
       },
       imageList: [],
+      remoteList: [],
       action: [
         {
           text: "下一步",
@@ -261,16 +299,33 @@ export default {
     onReaderSelect() {
       Toast.loading("图片读取中...");
     },
-    onReaderComplete(name, { dataUrl, file }) {
+    async onReaderComplete(name, { dataUrl, blob, file }) {
       Toast.hide();
-      this.imageList.push({ file, dataUrl });
+      const uuid = UUIDGeneratorBrowser();
+      const index = this.imageList.push({
+        name: file.name,
+        uuid,
+        file,
+        blob,
+        dataUrl,
+        url: ""
+      });
+      const { code, data } = await this.fileUpload(file);
+      if (code === 0) {
+        this.imageList[
+          this.imageList.findIndex(item => item.uuid === uuid)
+        ].url = data[0];
+      } else {
+        this.imageList.splice(index - 1, 1);
+      }
     },
     cityPicker({ values }) {
       this.citySelector.active = values;
     },
     gotoServiceInfo() {
       this.$router.push({ name: "service_info" });
-    }
+    },
+    ...mapActions("user", ["fileUpload"])
   }
 };
 </script>
@@ -290,7 +345,8 @@ export default {
     padding-top: 0;
 
     .md-tag {
-      margin-top: 14px;
+      margin-top: 10px;
+      margin-left: 10px;
 
       .default {
         padding: 14px;
@@ -301,10 +357,6 @@ export default {
       .type-fill {
         border: 1px solid transparent;
         color: #fff;
-      }
-
-      &+.md-tag {
-        margin-left: 14px;
       }
     }
   }

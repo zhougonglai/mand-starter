@@ -1,7 +1,11 @@
 <template>
   <div id="sign">
     <div class="logo">
-      <img src="@/assets/images/login_logo.png" alt="nn约玩" />
+      <img
+        src="@/assets/logo@2x.png"
+        srcset="@/assets/logo@2x.png 2x, @/assets/logo@3x.png 3x"
+        alt="nn约玩"
+      />
     </div>
     <md-tabs v-model="current" @change="paneChange">
       <md-tab-pane
@@ -97,66 +101,6 @@ export default {
     align-items: center;
     justify-content: center;
     margin-top: 10vh;
-  }
-
-  .selector-item-body {
-    display: flex;
-    align-items: center;
-
-    &.selected {
-      .selector-item-content {
-        color: color-primary;
-      }
-    }
-
-    &.disabled {
-      opacity: 0.3;
-    }
-
-    .selector-item-left {
-      flex-shrink: 0;
-      margin-right: 32px;
-
-      .holder {
-        display: block;
-        width: 88px;
-        height: 88px;
-        border-radius: 44px;
-        background-color: #e6e6e6;
-        font-size: 32px;
-        font-weight: 500;
-        color: color-primary;
-        text-align: center;
-        line-height: 88px;
-      }
-    }
-
-    .selector-item-right {
-      flex-shrink: 0;
-      width: 88px;
-      height: 88px;
-
-      .icon-ico {
-      }
-    }
-
-    .selector-item-content {
-      flex: 1;
-      color: #111a34;
-      font-size: 32px;
-      line-height: 1.2;
-
-      .selector-item-title {
-        line-height: 1.2;
-      }
-
-      .selector-item-brief {
-        color: #858b9c;
-        font-size: 24px;
-        line-height: 1.4;
-        margin-top: 8px;
-      }
-    }
   }
 
   >>>.md-tabs {

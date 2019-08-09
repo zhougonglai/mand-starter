@@ -18,7 +18,7 @@ export default {
         rtnCode,
         rtnInfo: { data }
       } = await fetch(
-        `http://qq156471181.vicp.cc/baseUrl/wx/getWxConfig?url=${encodeURIComponent(
+        `http://ywm.nnn.com/baseUrl/wx/getWxConfig?url=${encodeURIComponent(
           location.href
         )}`
       ).then(res => res.json());
@@ -32,7 +32,7 @@ export default {
     },
     async getWxUserInfo(_, openId) {
       const res = await fetch(
-        `http://qq156471181.vicp.cc/baseUrl/wx/user-info?openId=${openId}`
+        `http://ywm.nnn.com/baseUrl/wx/user-info?openId=${openId}`
       ).then(res => res.json());
       return res;
     }

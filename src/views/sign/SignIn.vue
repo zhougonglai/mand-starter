@@ -38,6 +38,8 @@
             :type="passwordStatus ? 'text' : 'password'"
             v-model.lazy="signIn.password"
             placeholder="请输入登录密码"
+            :minlength="6"
+            :maxlength="18"
           />
           <svg
             class="icon"
@@ -64,7 +66,12 @@
         </div>
       </div>
       <div class="fiel-row mt-5">
-        <md-button type="primary" round @click="signInSubmit"
+        <md-button
+          type="primary"
+          round
+          @click="signInSubmit"
+          :inactive="waiting"
+          :loading="waiting"
           >立即登录</md-button
         >
       </div>
@@ -90,7 +97,8 @@ export default {
         emailOrAccount: "",
         password: ""
       },
-      passwordStatus: false
+      passwordStatus: false,
+      waiting: false
     };
   },
   computed: {
@@ -107,7 +115,9 @@ export default {
       this.$router.push({ name: "forget_password" });
     },
     async signInSubmit() {
+      this.waiting = true;
       const code = await this.login(this.signIn);
+      this.waiting = false;
       if (!code) {
         this.gotoBasicInfo();
       }

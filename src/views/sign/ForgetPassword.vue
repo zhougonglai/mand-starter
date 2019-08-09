@@ -20,24 +20,25 @@
         <div class="fiel-item fill">
           <input
             type="tel"
-            v-model.lazy.trim="forgetInfo.smsCode"
+            v-model.trim="forgetInfo.smsCode"
             placeholder="请输入6位数验证码"
             :maxlength="6"
           />
           <md-button
-            type="link"
             round
+            type="link"
             size="small"
             class="button"
             :loging="verification.status"
             :inactive="verification.status"
             @click="sendverifiCode"
-            >{{
-              verification.status
-                ? `(${verification.time})`
-                : verification.label
-            }}</md-button
           >
+            {{
+              verification.status
+                ? `(${verification.time}s)`
+                : verification.label
+            }}
+          </md-button>
         </div>
       </div>
 
@@ -146,11 +147,16 @@ export default {
     async confirmChange() {
       const code = await this.findPwd(this.forgetInfo);
       if (code === 0) {
+        await this.login({
+          ...this.forgetInfo,
+          accountType: true
+        });
         this.$router.push({ name: "basic_info" });
       }
     },
     ...mapActions("global", ["changeAreaCode", "toggleAreaSelector"]),
     ...mapActions("user", [
+      "login",
       "phoneAuthenticateNoLogin",
       "checkImageShow",
       "findPwd"
@@ -163,6 +169,7 @@ export default {
   height: 100vh;
   display: flex;
   padding: 10vw;
+  box-sizing: border-box;
 
   .selector-item-body {
     display: flex;

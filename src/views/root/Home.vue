@@ -150,7 +150,7 @@ export default {
         window.wx.updateAppMessageShareData({
           title: "分享给朋友/分享到QQ",
           desc: "描述描述描述",
-          link: "http://qq156471181.vicp.cc/binding",
+          link: "http://ywm.nnn.com/binding",
           imgUrl: "https://www.leigod.com/images/leishen_logo725.png",
           success() {
             alert("转发成功");
@@ -162,7 +162,7 @@ export default {
       window.wx.ready(() => {
         window.wx.updateTimelineShareData({
           title: "分享到朋友圈/分享到QQ空间",
-          link: "http://qq156471181.vicp.cc/binding",
+          link: "http://ywm.nnn.com/binding",
           imgUrl: "https://www.leigod.com/images/leishen_logo725.png",
           success() {
             alert("转发成功");

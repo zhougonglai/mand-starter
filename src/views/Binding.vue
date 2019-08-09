@@ -1,7 +1,11 @@
 <template>
   <div id="binding">
     <div class="logo-top">
-      <img src="@/assets/images/login_logo.png" alt="logo" class="logo" />
+      <img
+        src="@/assets/logo@2x.png"
+        srcset="@/assets/logo@2x.png 2x, @/assets/logo@3x.png 3x"
+        alt="nn约玩"
+      />
       <h1 class="logo-title">欢迎入驻NN约玩</h1>
     </div>
     <div class="info-board">
@@ -63,14 +67,14 @@ export default {
                   window.wx.updateAppMessageShareData({
                     title: "分享给朋友/分享到QQ",
                     desc: "描述描述描述",
-                    link: "http://qq156471181.vicp.cc/binding",
+                    link: "http://ywm.nnn.com/binding",
                     imgUrl: "http://139.224.119.40/img/head-logo.png"
                   });
                 }
                 if (updateTimelineShareData) {
                   window.wx.updateTimelineShareData({
                     title: "分享到朋友圈/分享到QQ空间",
-                    link: "http://qq156471181.vicp.cc/binding",
+                    link: "http://ywm.nnn.com/binding",
                     imgUrl: "http://139.224.119.40/img/head-logo.png"
                   });
                 }

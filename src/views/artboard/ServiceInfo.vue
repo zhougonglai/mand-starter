@@ -2,10 +2,10 @@
   <div id="service_info">
     <md-field>
       <md-cell-item
-        title="技能类型"
-        :addon="skill.active.text ? skill.active.text : '请选择'"
         arrow
-        @click="skillToggle"
+        title="技能类型"
+        @click="toggetGameList"
+        :addon="gameList.active.name ? gameList.active.name : '请选择'"
       />
       <md-cell-item
         title="段位"
@@ -151,10 +151,23 @@
     <md-action-bar :actions="action"></md-action-bar>
     <md-selector
       title="技能类型"
-      v-model="skill.status"
-      :data="skill.list"
-      @choose="skillChoose"
-    />
+      v-model="gameList.status"
+      max-height="calc(100vh - 1.2rem)"
+      :data="gameList.list"
+      @choose="activeGameList"
+    >
+      <template slot-scope="{ option }">
+        <div class="selector-item-body">
+          <div class="selector-item-left">
+            <img :src="option.unselectIcon" />
+          </div>
+          <div class="selector-item-content">
+            <p calss="selector-item-title text-center" v-text="option.name" />
+          </div>
+          <div class="selector-item-right" />
+        </div>
+      </template>
+    </md-selector>
     <md-selector
       title="选择陪玩段位"
       v-model="level.status"
@@ -187,6 +200,7 @@ import {
 } from "mand-mobile";
 import RecordRTC from "recordrtc";
 import { isWx, round } from "@/utils";
+import { mapActions, mapState } from "vuex";
 
 const isEdge =
   navigator.userAgent.indexOf("Edge") !== -1 &&
@@ -210,20 +224,6 @@ export default {
   },
   data() {
     return {
-      skill: {
-        status: false,
-        active: "",
-        list: [
-          {
-            value: 1,
-            text: "英雄联盟"
-          },
-          {
-            value: 2,
-            text: "丛林精英"
-          }
-        ]
-      },
       skillInfo: "",
       level: {
         status: false,
@@ -286,13 +286,10 @@ export default {
         "这里是兴趣爱好的介绍，这里是兴趣爱好的介绍这里是兴趣爱好的。这里是兴趣爱好的介绍，这里是兴趣爱好的介绍这里是兴趣爱好的。这里是兴趣爱好的介绍，这里是兴趣爱好的介绍这里是兴趣爱好的。这里是兴趣爱好的介绍。"
     };
   },
+  computed: {
+    ...mapState("user", ["gameList"])
+  },
   methods: {
-    skillChoose(skill) {
-      this.skill.active = skill;
-    },
-    skillToggle() {
-      this.skill.status = !this.skill.status;
-    },
     levelChoose(level) {
       this.level.active = level;
     },
@@ -419,7 +416,11 @@ export default {
     goBack() {
       this.$router.push({ name: "basic_info" });
     },
+    ...mapActions("user", ["getgameList", "toggetGameList", "activeGameList"]),
     round
+  },
+  created() {
+    this.getgameList();
   },
   mounted() {
     window.wx.error(err => {
@@ -445,7 +446,6 @@ export default {
     font-size: 24px;
     color: #909399;
     letter-spacing: 0;
-    text-align: justify;
     line-height: 40px;
   }
 

@@ -6,6 +6,16 @@ export default {
   namespaced: true,
   state: {
     info: {},
+    gameList: {
+      status: false,
+      active: "",
+      list: []
+    },
+    rankList: {
+      status: false,
+      active: "",
+      list: []
+    },
     verification: {
       label: "获取短信验证码",
       time: 60,
@@ -16,6 +26,11 @@ export default {
   },
   getters: {},
   actions: {
+    toggetGameList: ({ commit }) => commit("GAMELIST_TOGGER"),
+    activeGameList: ({ commit, dispatch }, active) => {
+      commit("GAMELIST_ACTIVE", active);
+      dispatch("getrankList");
+    },
     async login(
       { commit, rootState },
       { phone, emailOrAccount, accountType, password }
@@ -109,7 +124,7 @@ export default {
     },
     /**
      * 短信验证
-     * @param {number} type 0: ,1, 2,注册, 3,忘记密码
+     * @param {number} type { 0:注册, 3:忘记密码}
      * */
     async phoneAuthenticateNoLogin(
       {
@@ -175,11 +190,84 @@ export default {
       } else {
         throw Error("服务器异常");
       }
+    },
+    async fileUpload(
+      {
+        state: { info }
+      },
+      fileName
+    ) {
+      const { rtnInfo } = await $http.fileUpload(
+        {
+          fileName
+        },
+        true,
+        {
+          headers: {
+            Authorization: info.token
+          }
+        }
+      );
+      return rtnInfo;
+    },
+    async base64Upload(
+      {
+        state: { info }
+      },
+      base64
+    ) {
+      const { rtnInfo } = await $http.base64Upload(
+        {
+          fileName: base64
+        },
+        false,
+        {
+          headers: {
+            Authorization: info.token
+          }
+        }
+      );
+      return rtnInfo;
+    },
+    async getgameList({ commit }) {
+      const { rtnCode, rtnInfo } = await $http.gameList();
+      if (rtnCode === "000") {
+        if (rtnInfo.code === 0) {
+          commit("SET_GAMELIST", rtnInfo.data);
+        }
+      }
+      return rtnInfo;
+    },
+    async getrankList({ state: { gameList }, commit }) {
+      const {
+        rtnCode,
+        rtnInfo: { code, data }
+      } = await $http.rankList({
+        gameId: gameList.active.id
+      });
+      if (rtnCode === "000") {
+        if (code === 0) {
+          commit("SET_RANKLIST", data);
+        }
+      }
+      return code;
     }
   },
   mutations: {
     SET_INFO(state, result) {
       state.info = result;
+    },
+    SET_GAMELIST({ gameList }, list) {
+      gameList.list = list;
+    },
+    GAMELIST_TOGGER({ gameList }) {
+      gameList.status = !gameList.status;
+    },
+    GAMELIST_ACTIVE({ gameList }, active) {
+      gameList.active = active;
+    },
+    SET_RANKLIST({ rankList }, list) {
+      rankList.list = list;
     },
     VERIFICATION_COUNT({ verification }, time) {
       verification.time = time;

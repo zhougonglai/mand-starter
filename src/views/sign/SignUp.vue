@@ -22,7 +22,7 @@
         <div class="fiel-item fill">
           <input
             type="tel"
-            v-model.trim.lazy="signUp.smsCode"
+            v-model.trim="signUp.smsCode"
             placeholder="请输入6位数验证码"
             :maxlength="6"
           />
@@ -34,27 +34,24 @@
             :loging="verification.status"
             :inactive="verification.status"
             @click="sendverifiCode"
-            >{{
+          >
+            {{
               verification.status
                 ? `(${verification.time})`
                 : verification.label
-            }}</md-button
-          >
+            }}
+          </md-button>
         </div>
       </div>
-      <!-- <div class="fiel-row" v-if="!verification.type">
-        <div class="fiel-item fill">
-          <input type="text" v-model="signUp.imgCode" placeholder="请输入4位数验证码" :maxlength="4" />
-          <img @click="imgCode(2)" class="img-code" :src="verification.dataSource" alt="图形验证码" />
-        </div>
-      </div>-->
       <div class="fiel-row">
         <div class="fiel-item fill">
           <input
             name="password"
             autocomplete="now-password"
             :type="passwordStatus ? 'text' : 'password'"
-            v-model="signUp.password"
+            v-model.lazy.trim="signUp.password"
+            :minlength="6"
+            :maxlength="18"
             placeholder="请输入6-18位的新密码，不含空格"
           />
           <svg

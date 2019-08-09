@@ -2,6 +2,9 @@ import axios from "axios";
 import { Toast } from "mand-mobile";
 
 import signApi from "./signApi";
+import uploadApi from "./uploadApi";
+import playerApi from "./playerApi";
+import gameApi from "./gameApi";
 
 const instance = axios.create({
   baseURL: "http://192.168.3.66:8085",
@@ -10,7 +13,7 @@ const instance = axios.create({
 
 instance.interceptors.request.use(
   config => {
-    Toast.loading("加载中", 3000, false);
+    Toast.loading("加载中", 6000, false);
     return config;
   },
   () => {
@@ -32,15 +35,17 @@ instance.interceptors.response.use(
 
 const Http = {};
 
-for (let key in signApi) {
-  let api = signApi[key];
+const APIS = Object.assign({}, signApi, uploadApi, playerApi, gameApi);
+
+for (let key in APIS) {
+  let api = APIS[key];
 
   Http[key] = async function(params, isFormData = false, config = {}) {
     let newParams = {};
 
     if (params && isFormData) {
       newParams = new FormData();
-      for (let key in newParams) {
+      for (let key in params) {
         newParams.append(key, params[key]);
       }
     } else {
