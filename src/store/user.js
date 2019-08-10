@@ -1,11 +1,133 @@
 import $http from "@/service";
 import CryptoJS from "crypto-js";
 import { Toast } from "mand-mobile";
+import { citys, numList } from "@/utils";
 
 export default {
   namespaced: true,
   state: {
     info: {},
+    ageSelector: {
+      status: false,
+      age: "",
+      list: numList(18, 200).map(i => ({ value: i, text: `${i}岁` }))
+    },
+    citySelector: {
+      status: false,
+      active: [],
+      list: {
+        name: "province",
+        label: "请选择",
+        options: citys.map(({ children, ...others }) => ({
+          ...others,
+          children: {
+            name: "city",
+            label: "请选择",
+            options: children.map(({ children, ...$others }) =>
+              children
+                ? {
+                    ...$others,
+                    children: {
+                      name: "block",
+                      label: "请选择",
+                      options: children
+                    }
+                  }
+                : { ...$others }
+            )
+          }
+        }))
+      }
+    },
+    tags: {
+      active: [],
+      list: [
+        {
+          value: 1,
+          text: "御姐"
+        },
+        {
+          value: 2,
+          text: "萝莉"
+        },
+        {
+          value: 3,
+          text: "大叔"
+        },
+        {
+          value: 4,
+          text: "颜值担当"
+        },
+        {
+          value: 5,
+          text: "阳光帅气"
+        },
+        {
+          value: 6,
+          text: "认真专业"
+        },
+        {
+          value: 7,
+          text: "成熟稳重"
+        },
+        {
+          value: 8,
+          text: "小狼狗"
+        },
+        {
+          value: 9,
+          text: "逗比闲聊"
+        },
+        {
+          value: 10,
+          text: "电竞大神"
+        },
+        {
+          value: 11,
+          text: "人美声甜"
+        },
+        {
+          value: 12,
+          text: "强势辅助"
+        },
+        {
+          value: 13,
+          text: "叔音易撩"
+        },
+        {
+          value: 14,
+          text: "活泼精灵"
+        },
+        {
+          value: 15,
+          text: "沉着冷静"
+        },
+        {
+          value: 16,
+          text: "温文尔雅"
+        },
+        {
+          value: 17,
+          text: "乖巧粘人"
+        },
+        {
+          value: 18,
+          text: "皮中带稳"
+        }
+      ]
+    },
+    images: [],
+    basicInfo: {
+      gender: "1",
+      hobby: ""
+    },
+    serviceInfo: {
+      img: {
+        dataUrl: undefined,
+        url: undefined,
+        file: undefined
+      }
+    },
     sampleGraph: {},
     gameList: {
       status: false,
@@ -272,6 +394,10 @@ export default {
         }
       }
       return code;
+    },
+    async playerInformationAdd({ state: { basicInfo } }) {
+      const { rtnInfo } = await $http.playerInformationAdd(basicInfo);
+      return rtnInfo;
     }
   },
   mutations: {

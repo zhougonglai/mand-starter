@@ -3,8 +3,8 @@
     <md-field>
       <md-cell-item title="性别" brief="(必填)">
         <template slot="right">
-          <md-radio name="2" v-model="gender" label="男" inline />
-          <md-radio name="1" v-model="gender" label="女" inline />
+          <md-radio name="1" v-model="basicInfo.gender" label="男" inline />
+          <md-radio name="2" v-model="basicInfo.gender" label="女" inline />
         </template>
       </md-cell-item>
       <md-cell-item
@@ -32,11 +32,11 @@
             >最多可选择3个标签({{ tags.active.length }}/3)</small
           >
         </template>
-        <template slot="children">
+        <template slot="children" v-if="tags.active">
           <md-tag
             size="large"
             shape="circle"
-            :type="tags.active.includes(tag.value) ? 'fill' : 'ghost'"
+            :type="tags.active.includes(tag.text) ? 'fill' : 'ghost'"
             v-for="tag in tags.list"
             :key="tag.value"
             @click.native="tagChoose(tag)"
@@ -48,13 +48,13 @@
         <template slot="children">
           <div class="fill relative textarea">
             <textarea
-              v-model="fafor"
+              v-model="basicInfo.hobby"
               :rows="3"
               :cols="35"
               :maxlength="30"
               class="fiel-input input-textarea"
             />
-            <div class="hit">{{ fafor.length }} / 30</div>
+            <div class="hit">{{ basicInfo.hobby.length }} / 30</div>
           </div>
         </template>
       </md-cell-item>
@@ -64,10 +64,10 @@
         >
         <template slot="children">
           <ul class="image-reader-list">
-            <template v-if="imageList.length">
+            <template v-if="images.length">
               <li
                 class="image-reader-item"
-                v-for="(image, index) in imageList"
+                v-for="(image, index) in images"
                 :key="index"
                 :style="{
                   backgroundImage: `url(${image.dataUrl})`,
@@ -89,7 +89,7 @@
                 </md-tag>
               </li>
             </template>
-            <li class="image-reader-item add" v-if="imageList.length < 6">
+            <li class="image-reader-item add" v-if="images.length < 6">
               <md-image-reader
                 is-multiple
                 :amount="6"
@@ -133,8 +133,8 @@ import {
   Icon,
   Toast
 } from "mand-mobile";
-import { citys, numList, UUIDGeneratorBrowser } from "@/utils";
-import { mapActions } from "vuex";
+import { UUIDGeneratorBrowser } from "@/utils";
+import { mapActions, mapState } from "vuex";
 
 export default {
   name: "basic-info",
@@ -153,126 +153,22 @@ export default {
   },
   data() {
     return {
-      ageSelector: {
-        status: false,
-        age: "",
-        list: numList(18, 200).map(i => ({ value: i, text: `${i}岁` }))
-      },
-      citySelector: {
-        status: false,
-        active: [],
-        list: {
-          name: "province",
-          label: "请选择",
-          options: citys.map(({ children, ...others }) => ({
-            ...others,
-            children: {
-              name: "city",
-              label: "请选择",
-              options: children.map(({ children, ...$others }) =>
-                children
-                  ? {
-                      ...$others,
-                      children: {
-                        name: "block",
-                        label: "请选择",
-                        options: children
-                      }
-                    }
-                  : { ...$others }
-              )
-            }
-          }))
-        }
-      },
-      tags: {
-        active: [],
-        list: [
-          {
-            value: 1,
-            text: "御姐"
-          },
-          {
-            value: 2,
-            text: "萝莉"
-          },
-          {
-            value: 3,
-            text: "大叔"
-          },
-          {
-            value: 4,
-            text: "颜值担当"
-          },
-          {
-            value: 5,
-            text: "阳光帅气"
-          },
-          {
-            value: 6,
-            text: "认真专业"
-          },
-          {
-            value: 7,
-            text: "成熟稳重"
-          },
-          {
-            value: 8,
-            text: "小狼狗"
-          },
-          {
-            value: 9,
-            text: "逗比闲聊"
-          },
-          {
-            value: 10,
-            text: "电竞大神"
-          },
-          {
-            value: 11,
-            text: "人美声甜"
-          },
-          {
-            value: 12,
-            text: "强势辅助"
-          },
-          {
-            value: 13,
-            text: "叔音易撩"
-          },
-          {
-            value: 14,
-            text: "活泼精灵"
-          },
-          {
-            value: 15,
-            text: "沉着冷静"
-          },
-          {
-            value: 16,
-            text: "温文尔雅"
-          },
-          {
-            value: 17,
-            text: "乖巧粘人"
-          },
-          {
-            value: 18,
-            text: "皮中带稳"
-          }
-        ]
-      },
-      imageList: [],
-      remoteList: [],
       action: [
         {
           text: "下一步",
           onClick: this.gotoServiceInfo
         }
-      ],
-      gender: "2",
-      fafor: ""
+      ]
     };
+  },
+  computed: {
+    ...mapState("user", [
+      "basicInfo",
+      "tags",
+      "images",
+      "ageSelector",
+      "citySelector"
+    ])
   },
   methods: {
     toggleAgeSelector() {
@@ -285,16 +181,16 @@ export default {
       this.ageSelector.age = age;
     },
     tagChoose(tag) {
-      if (this.tags.active.includes(tag.value)) {
-        this.tags.active.splice(this.tags.active.indexOf(tag.value), 1);
+      if (this.tags.active.includes(tag.text)) {
+        this.tags.active.splice(this.tags.active.indexOf(tag.text), 1);
       } else {
         if (this.tags.active.length < 3) {
-          this.tags.active.push(tag.value);
+          this.tags.active.push(tag.text);
         }
       }
     },
     onDeleteImage(image, index) {
-      this.imageList.splice(index, 1);
+      this.images.splice(index, 1);
     },
     onReaderSelect() {
       Toast.loading("图片读取中...");
@@ -302,7 +198,7 @@ export default {
     async onReaderComplete(name, { dataUrl, blob, file }) {
       Toast.hide();
       const uuid = UUIDGeneratorBrowser();
-      const index = this.imageList.push({
+      const index = this.images.push({
         name: file.name,
         uuid,
         file,
@@ -312,11 +208,10 @@ export default {
       });
       const { code, data } = await this.fileUpload(file);
       if (code === 0) {
-        this.imageList[
-          this.imageList.findIndex(item => item.uuid === uuid)
-        ].url = data[0];
+        this.images[this.images.findIndex(item => item.uuid === uuid)].url =
+          data[0];
       } else {
-        this.imageList.splice(index - 1, 1);
+        this.images.splice(index - 1, 1);
       }
     },
     cityPicker({ values }) {
@@ -325,7 +220,7 @@ export default {
     gotoServiceInfo() {
       this.$router.push({ name: "service_info" });
     },
-    ...mapActions("user", ["fileUpload"])
+    ...mapActions("user", ["fileUpload", "playerInformationAdd"])
   }
 };
 </script>
@@ -345,8 +240,8 @@ export default {
     padding-top: 0;
 
     .md-tag {
-      margin-top: 10px;
-      margin-left: 10px;
+      margin-top: 20px;
+      margin-left: 20px;
 
       .default {
         padding: 14px;

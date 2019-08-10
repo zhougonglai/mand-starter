@@ -15,10 +15,22 @@
         no-border
         arrow
       >
-        <template slot="children">
+        <template
+          slot="children"
+          v-if="gameList.active.id === '847e9dff77ba495da3cc8176e6bc4a5d'"
+        >
           <p>
             说明：积分在1-1599的请选择初级段位，积分在1600-1700的请
             选择中级段位；积分在1800以上的请选择高级段位
+          </p>
+        </template>
+        <template
+          slot="children"
+          v-if="gameList.active.id === '84aea6416dfc4e7e958056bbb0138876'"
+        >
+          <p>
+            KD值 ≤ 1的请选择初级段位； 1＜KD值 ≤ 2的请选择中级段位； KD值 ＞
+            2的请选择高级段位
           </p>
         </template>
       </md-cell-item>
@@ -114,39 +126,31 @@
         brief="请上传您的一段该服务类型的语音介绍，一段好的语音介绍可以提升 200%的接单率(支持mp3/m4a格式的音频建议30s以内)"
       >
         <template slot="right">
-          <audio-player
-            title="示例音频"
-            url="http://techslides.com/demos/samples/sample.aac"
-          />
+          <div class="right-content">
+            <audio-player
+              url="http://techslides.com/demos/samples/sample.aac"
+            />
+            <p class="gray text-center">示例音频</p>
+          </div>
         </template>
         <template slot="children">
-          <div class="row pa-2">
-            <div class="col">
-              <md-button
-                type="primary"
-                size="small"
-                class="recorder recorder_start"
-                :inactive="recorder.status"
-                round
-                @click="record"
-                >录音</md-button
-              >
-              <!-- <md-button
-                type="primary"
-                size="small"
-                class="recorder recorder_stop mt-2"
-                :inactive="!recorder.status"
-                inline
-                round
-                @click="stopRecord"
-              >停止录音</md-button>-->
-            </div>
-            <div class="col pa-1">
-              <template v-if="recorder.localId">
-                <audio-player title="播放录音" isWx :url="recorder.localId" />
-              </template>
-            </div>
-          </div>
+          <md-button
+            type="primary"
+            size="small"
+            class="recorder recorder_start"
+            :inactive="recorder.status"
+            round
+            @click="record"
+            >{{ recorder.localId ? "重新录制" : "开始录音" }}</md-button
+          >
+          <template v-if="recorder.localId">
+            <audio-player
+              class="mt-2"
+              title="播放录音"
+              :isWx="isWx"
+              :url="recorder.localId"
+            />
+          </template>
           <!-- <audio v-if="!recorder.isWx" controls autoplay playsinline ref="audio" /> -->
         </template>
       </md-cell-item>
@@ -194,6 +198,71 @@
         <img :src="sampleGraph.skill_icon" />
       </div>
     </md-popup>
+    <md-popup
+      v-model="recorder.status"
+      position="bottom"
+      :mask-closable="false"
+    >
+      <md-popup-title-bar
+        title-align="left"
+        ok-text="完成"
+        large-radius
+        @confirm="stopRecord"
+      />
+      <div class="popup-content popup-bottom">
+        <p>录制中</p>
+        <svg
+          width="55"
+          height="80"
+          viewBox="0 0 55 80"
+          xmlns="http://www.w3.org/2000/svg"
+          fill="#C158FE"
+        >
+          <g transform="matrix(1 0 0 -1 0 80)">
+            <rect width="10" height="20" rx="3">
+              <animate
+                attributeName="height"
+                begin="0s"
+                dur="4.3s"
+                values="20;45;57;80;64;32;66;45;64;23;66;13;64;56;34;34;2;23;76;79;20"
+                calcMode="linear"
+                repeatCount="indefinite"
+              />
+            </rect>
+            <rect x="15" width="10" height="80" rx="3">
+              <animate
+                attributeName="height"
+                begin="0s"
+                dur="2s"
+                values="80;55;33;5;75;23;73;33;12;14;60;80"
+                calcMode="linear"
+                repeatCount="indefinite"
+              />
+            </rect>
+            <rect x="30" width="10" height="50" rx="3">
+              <animate
+                attributeName="height"
+                begin="0s"
+                dur="1.4s"
+                values="50;34;78;23;56;23;34;76;80;54;21;50"
+                calcMode="linear"
+                repeatCount="indefinite"
+              />
+            </rect>
+            <rect x="45" width="10" height="30" rx="3">
+              <animate
+                attributeName="height"
+                begin="0s"
+                dur="2s"
+                values="30;45;13;80;56;72;45;76;34;23;67;30"
+                calcMode="linear"
+                repeatCount="indefinite"
+              />
+            </rect>
+          </g>
+        </svg>
+      </div>
+    </md-popup>
   </div>
 </template>
 <script>
@@ -207,6 +276,7 @@ import {
   ActionBar,
   ImageViewer,
   ImageReader,
+  PopupTitleBar,
   Button
 } from "mand-mobile";
 import RecordRTC from "recordrtc";
@@ -231,36 +301,14 @@ export default {
     [ImageReader.name]: ImageReader,
     [ActionBar.name]: ActionBar,
     [Button.name]: Button,
+    [PopupTitleBar.name]: PopupTitleBar,
     "audio-player": () => import("@/components/AudioPlayer.vue")
   },
   data() {
     return {
       skillInfo: "",
-      level: {
-        status: false,
-        active: "",
-        list: [
-          {
-            value: 1,
-            text: "低级段位"
-          },
-          {
-            value: 1600,
-            text: "中级段位"
-          },
-          {
-            value: 1800,
-            text: "高级段位"
-          }
-        ]
-      },
+      isWx: isWx(),
       examplesPicture: false,
-      serviceInfo: {
-        img: {
-          dataUrl: undefined,
-          file: undefined
-        }
-      },
       popupEx: {
         status: false
       },
@@ -280,21 +328,15 @@ export default {
         mediaRecorder: null,
         mediaSteam: null,
         blob: null,
-        localId: ""
-      },
-      testAudio: {
-        playing: false,
-        data: new Audio("http://techslides.com/demos/samples/sample.aac"),
-        duration: 0,
-        currentTime: 0,
-        ended: false
+        localId: "",
+        url: undefined
       },
       tlInfo:
         "这里是兴趣爱好的介绍，这里是兴趣爱好的介绍这里是兴趣爱好的。这里是兴趣爱好的介绍，这里是兴趣爱好的介绍这里是兴趣爱好的。这里是兴趣爱好的介绍，这里是兴趣爱好的介绍这里是兴趣爱好的。这里是兴趣爱好的介绍。"
     };
   },
   computed: {
-    ...mapState("user", ["gameList", "rankList", "sampleGraph"])
+    ...mapState("user", ["gameList", "rankList", "serviceInfo", "sampleGraph"])
   },
   methods: {
     levelChoose(level) {
@@ -309,10 +351,16 @@ export default {
     onReaderSelect() {
       Toast.loading("图片读取中...");
     },
-    onReaderComplete(name, { dataUrl, file }) {
+    async onReaderComplete(name, { dataUrl, file }) {
       Toast.hide();
       this.serviceInfo.img.dataUrl = dataUrl;
       this.serviceInfo.img.file = file;
+      const { code, data } = await this.fileUpload(file);
+      if (code === 0) {
+        this.serviceInfo.img.url = data[0];
+      } else {
+        this.serviceInfo.img = {};
+      }
     },
     uploadVoice() {
       window.wx.uploadVoice({
@@ -320,6 +368,7 @@ export default {
         isShowProgressTips: 1,
         success: res => {
           console.log("serverId>>> : ", res.serverId);
+          this.serviceInfo.serverId = res.serverId;
         }
       });
     },
@@ -361,6 +410,7 @@ export default {
             };
             if (isSafari || isEdge) {
               config.recorderType = RecordRTC.StereoAudioRecorder;
+              this.recorder.localId = undefined;
             }
             this.recorder.mediaSteam = stream;
             this.recorder.mediaRecorder = new RecordRTC(stream, config);
@@ -390,7 +440,9 @@ export default {
           const url = URL.createObjectURL(
             this.recorder.mediaRecorder.getBlob()
           );
-          this.replaceAudio(url);
+          this.recorder.mediaSteam.stop();
+          this.recorder.localId = url;
+          console.log("url", url);
         });
       }
     },
@@ -401,21 +453,6 @@ export default {
       window.wx.playVoice({
         localId: this.recorder.localId
       });
-    },
-    playTest() {
-      this.testAudio.data.play();
-      this.testAudio.data.addEventListener("ended", () => {
-        this.testAudio.playing = false;
-        this.testAudio.currentTime = 0;
-        this.testAudio.ended = true;
-        setTimeout(() => {
-          this.testAudio.ended = false;
-        }, 650);
-      });
-      this.testAudio.data.addEventListener("timeupdate", () => {
-        this.testAudio.currentTime = this.testAudio.data.currentTime;
-      });
-      this.testAudio.playing = true;
     },
     resultPage() {
       this.$router.push({ name: "result_page" });
@@ -442,9 +479,6 @@ export default {
     window.wx.error(err => {
       alert(JSON.stringify(err) + "需要重新配置微信签名");
     });
-    window.wx.ready(() => {
-      this.testAudio.data.load();
-    });
   }
 };
 </script>
@@ -458,6 +492,10 @@ export default {
 
   >>>.md-cell-item-children {
     padding-top: 0;
+  }
+
+  .right-content {
+    width: 25vw;
   }
 
   p {
@@ -539,6 +577,27 @@ export default {
       }
 
       border-radius: radius-normal;
+    }
+  }
+
+  .popup-content {
+    background-color: #FFF;
+    position: relative;
+    font-size: font-minor-large;
+    background: color-bg-base;
+    box-sizing: border-box;
+    text-align: center;
+
+    &.popup-bottom {
+      width: 100%;
+      padding: 0 0 150px;
+
+      p {
+        margin-bottom: 100px;
+        font-size: 64px;
+        font-weight: 200;
+        color: #999;
+      }
     }
   }
 }

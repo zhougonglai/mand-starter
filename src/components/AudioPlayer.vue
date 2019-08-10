@@ -1,15 +1,15 @@
 <template>
   <div class="audio-player" @click="playVoice" :class="{ ended }">
+    <div class="audio-content">
+      <div class="audio-title" v-if="title" v-text="title" />
+      <div class="audio-duation">
+        {{ data.duration ? round(data.duration) + "s" : "" }}
+      </div>
+    </div>
     <div class="audio-bar" :class="{ playing }">
       <div class="bar" />
       <div class="bar" />
       <div class="bar" />
-    </div>
-    <div class="audio-content">
-      <div class="audio-title" v-text="title" />
-      <div class="audio-duation">
-        {{ data.duration ? round(data.duration) + "s" : "" }}
-      </div>
     </div>
     <div
       class="audio-animate"
@@ -74,7 +74,8 @@ export default {
 <style lang="stylus" scoped>
 .audio-player {
   width: -webkit-fill-available;
-  border-radius: 16px;
+  min-height: 40px;
+  border-radius: 4px;
   background-color: rgb(241, 241, 241);
   display: flex;
   position: relative;
@@ -101,7 +102,7 @@ export default {
   .audio-animate {
     background-color: color-primary;
     // filter: blur(1px);
-    border-radius: 0 0 8px 8px;
+    border-radius: 0 0 4px 4px;
     transition: all 0.625s ease-out;
     right: 0;
     height: 8px;
@@ -110,8 +111,8 @@ export default {
   }
 
   .audio-bar {
-    height: 50px;
-    width: 50px;
+    height: inherit;
+    width: 40px;
     flex-shrink: 0;
     display: flex;
     align-items: flex-end;
@@ -161,7 +162,7 @@ export default {
     color: color-primary;
     z-index: 99;
     display: flex;
-    align-items: center;
+    align-items: flex-end;
     justify-content: space-evenly;
   }
 }

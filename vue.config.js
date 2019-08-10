@@ -11,7 +11,8 @@ const config = {
     }
   },
   devServer: {
-    proxy: "http://ywm.nnn.com/"
+    proxy: "http://ywm.nnn.com/",
+    compress: true
   },
 
   pwa: {
