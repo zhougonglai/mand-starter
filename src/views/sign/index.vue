@@ -52,6 +52,7 @@
 <script>
 import { Tabs, TabPane, Selector } from "mand-mobile";
 import { mapState, mapActions } from "vuex";
+import { isWx, wxConfig } from "@/utils";
 
 export default {
   name: "sign",
@@ -82,10 +83,54 @@ export default {
     paneChange({ name }) {
       this.$router.push({ name });
     },
-    ...mapActions("global", ["changeAreaCode"])
+    ...mapActions("global", ["changeAreaCode"]),
+    ...mapActions("config", ["getWxConfig"])
   },
   created() {
     this.current = this.$route.name;
+  },
+  mounted() {
+    if (isWx()) {
+      this.getWxConfig().then(data => {
+        if (data) {
+          wxConfig(data);
+          console.log("nnplayer_version: ", process.env.VUE_APP_VERSION);
+          window.wx.ready(() => {
+            window.wx.checkJsApi({
+              jsApiList: [
+                "updateAppMessageShareData",
+                "updateTimelineShareData"
+              ],
+              success: ({
+                checkResult: {
+                  updateAppMessageShareData,
+                  updateTimelineShareData
+                }
+                // errMsg
+              }) => {
+                if (updateAppMessageShareData) {
+                  window.wx.updateAppMessageShareData({
+                    title: "分享给朋友/分享到QQ",
+                    desc: "描述描述描述",
+                    link: "http://ywm.nnn.com/sign/in",
+                    imgUrl: "http://139.224.119.40/img/head-logo.png"
+                  });
+                }
+                if (updateTimelineShareData) {
+                  window.wx.updateTimelineShareData({
+                    title: "分享到朋友圈/分享到QQ空间",
+                    link: "http://ywm.nnn.com/sign/in",
+                    imgUrl: "http://139.224.119.40/img/head-logo.png"
+                  });
+                }
+              }
+            });
+          });
+        } else {
+          alert("微信配置获取失败");
+        }
+      });
+    }
   }
 };
 </script>

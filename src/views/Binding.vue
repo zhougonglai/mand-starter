@@ -27,8 +27,6 @@
 </template>
 <script>
 import { Button } from "mand-mobile";
-import { mapActions } from "vuex";
-import { isWx, wxConfig } from "@/utils";
 
 export default {
   name: "binding",
@@ -41,50 +39,6 @@ export default {
     },
     gotoSignIn() {
       this.$router.push("/sign/in");
-    },
-    ...mapActions("config", ["getWxConfig"])
-  },
-  mounted() {
-    if (isWx()) {
-      this.getWxConfig().then(data => {
-        if (data) {
-          wxConfig(data);
-          console.log("nnplayer_version: ", process.env.VUE_APP_VERSION);
-          window.wx.ready(() => {
-            window.wx.checkJsApi({
-              jsApiList: [
-                "updateAppMessageShareData",
-                "updateTimelineShareData"
-              ],
-              success: ({
-                checkResult: {
-                  updateAppMessageShareData,
-                  updateTimelineShareData
-                }
-                // errMsg
-              }) => {
-                if (updateAppMessageShareData) {
-                  window.wx.updateAppMessageShareData({
-                    title: "分享给朋友/分享到QQ",
-                    desc: "描述描述描述",
-                    link: "http://ywm.nnn.com/binding",
-                    imgUrl: "http://139.224.119.40/img/head-logo.png"
-                  });
-                }
-                if (updateTimelineShareData) {
-                  window.wx.updateTimelineShareData({
-                    title: "分享到朋友圈/分享到QQ空间",
-                    link: "http://ywm.nnn.com/binding",
-                    imgUrl: "http://139.224.119.40/img/head-logo.png"
-                  });
-                }
-              }
-            });
-          });
-        } else {
-          alert("微信配置获取失败");
-        }
-      });
     }
   }
 };
