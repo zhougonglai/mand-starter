@@ -118,6 +118,8 @@ export default {
     },
     images: [],
     basicInfo: {
+      QQNO: undefined,
+      phone: undefined,
       gender: "1",
       hobby: ""
     },
@@ -126,7 +128,10 @@ export default {
         dataUrl: undefined,
         url: undefined,
         file: undefined
-      }
+      },
+      skillInfo: "",
+      voiceUrl: "",
+      serverId: undefined
     },
     sampleGraph: {},
     gameList: {
@@ -395,8 +400,47 @@ export default {
       }
       return code;
     },
-    async playerInformationAdd({ state: { basicInfo } }) {
-      const { rtnInfo } = await $http.playerInformationAdd(basicInfo);
+    async playerInformationAdd({
+      state: {
+        info,
+        tags,
+        images,
+        basicInfo,
+        ageSelector,
+        citySelector,
+        serviceInfo,
+        gameList,
+        rankList
+      }
+    }) {
+      const { rtnInfo } = await $http.playerInformationAdd(
+        {
+          ...basicInfo,
+          isPlayer: info.isPlayerApply,
+          age: ageSelector.active.value,
+          personalityLables: tags.active,
+          province: citySelector.active[0],
+          city: citySelector.active[1],
+          area: citySelector.active[2],
+          images: images.map(image => image.url),
+          gameInfoParameter: [
+            {
+              duration: null,
+              gameType: gameList.active.id,
+              pictureUrl: serviceInfo.img.url,
+              rank: rankList.active.value,
+              skills: serviceInfo.skillInfo,
+              voiceUrl: serviceInfo.voiceUrl
+            }
+          ]
+        },
+        false,
+        {
+          headers: {
+            Authorization: info.token
+          }
+        }
+      );
       return rtnInfo;
     }
   },

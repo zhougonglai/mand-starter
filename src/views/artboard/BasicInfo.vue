@@ -1,32 +1,67 @@
 <template>
   <div id="basic_info">
     <md-field>
-      <md-cell-item title="性别" brief="(必填)">
+      <md-input-item
+        type="tel"
+        clearable
+        v-model="basicInfo.QQNO"
+        placeholder="请输入QQ号码"
+        align="right"
+      >
+        <template slot="left">
+          <span class="text-dark text-title">QQ号码</span>
+          <small class="gray xx-small ml-1">(必填)</small>
+        </template>
+      </md-input-item>
+      <md-input-item
+        type="text"
+        readonly
+        v-model="info.phone"
+        placeholder="请输入手机号"
+        align="right"
+      >
+        <template slot="left">
+          <span class="text-dark text-title">手机号</span>
+          <small class="gray xx-small ml-1">(必填)</small>
+        </template>
+      </md-input-item>
+      <md-cell-item>
+        <template slot="left">
+          <span class="text-dark text-title">性别</span>
+          <small class="gray xx-small ml-1">(必填)</small>
+        </template>
         <template slot="right">
           <md-radio name="1" v-model="basicInfo.gender" label="男" inline />
           <md-radio name="2" v-model="basicInfo.gender" label="女" inline />
         </template>
       </md-cell-item>
       <md-cell-item
-        title="所在城市"
         :addon="
           citySelector.active.length ? citySelector.active.join('-') : '请选择'
         "
         arrow
         @click="toggleCitySelector"
-      />
+      >
+        <template slot="left">
+          <span class="text-dark text-title">所在城市</span>
+          <small class="gray xx-small ml-1">(必填)</small>
+        </template>
+      </md-cell-item>
       <md-cell-item
-        title="年龄"
         :addon="ageSelector.age.text ? ageSelector.age.text : '请选择'"
         arrow
         @click="toggleAgeSelector"
-      />
-      <md-cell-item
-        no-border
-        class="border-bottom-1px"
-        title="个性标签"
-        brief="(必填)"
       >
+        <template slot="left">
+          <span class="text-dark text-title">年龄</span>
+          <small class="gray xx-small ml-1">(必填)</small>
+        </template>
+      </md-cell-item>
+      <md-cell-item no-border class="border-bottom-1px">
+        <template slot="left">
+          <span class="text-dark text-title">个性标签</span>
+          <small class="gray xx-small ml-1">(必填)</small>
+        </template>
         <template slot="right">
           <small class="gray smaller"
             >最多可选择3个标签({{ tags.active.length }}/3)</small
@@ -44,7 +79,10 @@
           >
         </template>
       </md-cell-item>
-      <md-cell-item no-border title="兴趣爱好" class="border-bottom-1px">
+      <md-cell-item no-border class="border-bottom-1px">
+        <template slot="left">
+          <span class="text-dark text-title">兴趣爱好</span>
+        </template>
         <template slot="children">
           <div class="fill relative textarea">
             <textarea
@@ -58,10 +96,14 @@
           </div>
         </template>
       </md-cell-item>
-      <md-cell-item no-border title="形象照" brief="(必填)">
-        <small class="gray small"
-          >至少上传4张，最多上传6张，第一张默认为封面照</small
-        >
+      <md-cell-item no-border>
+        <template slot="left">
+          <span class="text-dark text-title">形象照</span>
+          <small class="gray xx-small ml-1">(必填)</small>
+          <div class="gray small">
+            至少上传4张，最多上传6张，第一张默认为封面照
+          </div>
+        </template>
         <template slot="children">
           <ul class="image-reader-list">
             <template v-if="images.length">
@@ -124,6 +166,7 @@ import {
   Selector,
   TabPicker,
   CellItem,
+  InputItem,
   Button,
   Field,
   Radio,
@@ -142,6 +185,7 @@ export default {
     [Field.name]: Field,
     [Selector.name]: Selector,
     [CellItem.name]: CellItem,
+    [InputItem.name]: InputItem,
     [Tag.name]: Tag,
     [Icon.name]: Icon,
     [Toast.name]: Toast,
@@ -163,6 +207,7 @@ export default {
   },
   computed: {
     ...mapState("user", [
+      "info",
       "basicInfo",
       "tags",
       "images",
@@ -227,6 +272,10 @@ export default {
 <style lang="stylus" scoped>
 #basic_info {
   height: 100vh;
+
+  .text-title {
+    font-size: 32px;
+  }
 
   >>> .md-cell-item-right {
     color: #606166;

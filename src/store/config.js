@@ -35,6 +35,12 @@ export default {
         `http://ywm.nnn.com/baseUrl/wx/user-info?openId=${openId}`
       ).then(res => res.json());
       return res;
+    },
+    async getWxMedia(_, serviceId) {
+      const res = await fetch(
+        `http://ywm.nnn.com/baseUrl/wx/media-download?mediaId=${serviceId}`
+      ).then(res => res.json());
+      return res;
     }
   },
   mutations: {

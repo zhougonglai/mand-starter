@@ -110,13 +110,13 @@
         <template slot="children">
           <div class="fill relative textarea">
             <textarea
-              v-model="skillInfo"
+              v-model="serviceInfo.skillInfo"
               :rows="3"
               :maxlength="400"
               placeholder="点击填写"
               class="fiel-input input-textarea"
             />
-            <div class="hit">{{ skillInfo.length }} / 400</div>
+            <div class="hit">{{ serviceInfo.skillInfo.length }} / 400</div>
           </div>
         </template>
       </md-cell-item>
@@ -125,14 +125,11 @@
         no-border
         brief="请上传您的一段该服务类型的语音介绍，一段好的语音介绍可以提升 200%的接单率(支持mp3/m4a格式的音频建议30s以内)"
       >
-        <template slot="right">
+        <!-- <template slot="right">
           <div class="right-content">
-            <audio-player
-              url="http://techslides.com/demos/samples/sample.aac"
-            />
             <p class="gray text-center">示例音频</p>
           </div>
-        </template>
+        </template>-->
         <template slot="children">
           <md-button
             type="primary"
@@ -144,12 +141,15 @@
             >{{ recorder.localId ? "重新录制" : "开始录音" }}</md-button
           >
           <template v-if="recorder.localId">
-            <audio-player
-              class="mt-2"
-              title="播放录音"
-              :isWx="isWx"
-              :url="recorder.localId"
-            />
+            <div class="mt-5">
+              <p class="text-title">录制的音频</p>
+              <audio-player
+                class="half-width mt-2"
+                title="播放录音"
+                :isWx="isWx"
+                :url="recorder.localId"
+              />
+            </div>
           </template>
           <!-- <audio v-if="!recorder.isWx" controls autoplay playsinline ref="audio" /> -->
         </template>
@@ -280,7 +280,7 @@ import {
   Button
 } from "mand-mobile";
 import RecordRTC from "recordrtc";
-import { isWx, round } from "@/utils";
+import { isWx, round, wxConfig } from "@/utils";
 import { mapActions, mapState } from "vuex";
 
 const isEdge =
@@ -306,7 +306,6 @@ export default {
   },
   data() {
     return {
-      skillInfo: "",
       isWx: isWx(),
       examplesPicture: false,
       popupEx: {
@@ -369,6 +368,9 @@ export default {
         success: res => {
           console.log("serverId>>> : ", res.serverId);
           this.serviceInfo.serverId = res.serverId;
+          this.getWxMedia(res.serverId).then(({ rtnInfo: { data } }) => {
+            this.serviceInfo.voiceUrl = data;
+          });
         }
       });
     },
@@ -454,18 +456,23 @@ export default {
         localId: this.recorder.localId
       });
     },
-    resultPage() {
+    async resultPage() {
+      await this.playerInformationAdd();
+
       this.$router.push({ name: "result_page" });
     },
     goBack() {
       this.$router.push({ name: "basic_info" });
     },
+    ...mapActions("config", ["getWxConfig", "getWxMedia"]),
     ...mapActions("user", [
+      "fileUpload",
       "getgameList",
       "toggelGameList",
       "toggelRankList",
       "activeGameList",
-      "activeRankList"
+      "activeRankList",
+      "playerInformationAdd"
     ]),
     round
   },
@@ -474,6 +481,38 @@ export default {
     this.$nextTick(() => {
       Toast.hide();
     });
+    if (isWx()) {
+      window.wx.checkJsApi({
+        jsApiList: [
+          "startRecord",
+          // 停止录音
+          "stopRecord",
+          // 上传录音
+          "uploadVoice",
+          // 监听录音自动停止
+          "onVoiceRecordEnd",
+          // 播放语音
+          "playVoice",
+          // 暂停播放
+          "pauseVoice",
+          // 停止播放
+          "stopVoice",
+          // 监听语音播放完毕
+          "onVoicePlayEnd"
+        ],
+        success: () => {
+          alert("权限OK");
+        },
+        fail: res => {
+          alert(JSON.stringify(res));
+          this.getWxConfig().then(data => {
+            if (data) {
+              wxConfig(data);
+            }
+          });
+        }
+      });
+    }
   },
   mounted() {
     window.wx.error(err => {
