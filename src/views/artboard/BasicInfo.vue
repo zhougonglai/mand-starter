@@ -1,3 +1,10 @@
+<!--
+ * @Description: 基本信息
+ * @Author: John Zhou
+ * @Date: 2019-08-10 21:01:19
+ * @LastEditTime: 2019-08-11 18:27:02
+ * @LastEditors: John Zhou
+ -->
 <template>
   <div id="basic_info">
     <md-field>
@@ -48,7 +55,7 @@
         </template>
       </md-cell-item>
       <md-cell-item
-        :addon="ageSelector.age.text ? ageSelector.age.text : '请选择'"
+        :addon="ageSelector.active.text ? ageSelector.active.text : '请选择'"
         arrow
         @click="toggleAgeSelector"
       >

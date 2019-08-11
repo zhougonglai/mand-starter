@@ -1,7 +1,14 @@
+/*
+ * @Description: In User Settings Edit
+ * @Author: John Zhou
+ * @Date: 2019-08-10 21:01:19
+ * @LastEditTime: 2019-08-11 18:25:55
+ * @LastEditors: John Zhou
+ */
 import $http from "@/service";
+import { citys, numList } from "@/utils";
 import CryptoJS from "crypto-js";
 import { Toast } from "mand-mobile";
-import { citys, numList } from "@/utils";
 
 export default {
   namespaced: true,
@@ -9,7 +16,7 @@ export default {
     info: {},
     ageSelector: {
       status: false,
-      age: "",
+      active: {},
       list: numList(18, 200).map(i => ({ value: i, text: `${i}岁` }))
     },
     citySelector: {

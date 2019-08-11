@@ -1,3 +1,10 @@
+<!--
+ * @Author: John Zhou
+ * @LastEditors: John Zhou
+ * @Description: 服务信息
+ * @Date: 2019-08-10 21:01:19
+ * @LastEditTime: 2019-08-11 18:27:15
+ -->
 <template>
   <div id="service_info">
     <md-field>
