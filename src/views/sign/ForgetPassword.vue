@@ -2,8 +2,8 @@
   <div id="forget_password">
     <form class="input-fiel">
       <div class="fiel-row">
-        <div class="fiel-item area_code inline" @click="toggleAreaSelector">
-          <div class="code">+{{ areaCode.item.code }}</div>
+        <div class="fiel-item area_code inline" @click="changeAreaCode">
+          <div class="code">+{{ areaCode.active.code }}</div>
           <md-icon name="arrow-down" />
         </div>
         <div class="fiel-item fill">
@@ -73,40 +73,40 @@
         <div class="primary ml-half" @click="toLogin">立即登录></div>
       </div>
     </form>
-
-    <md-selector
-      v-model="areaCode.status"
-      title="选择手机区号"
-      :default-value="86"
-      :data="areaCode.list"
-      @choose="changeAreaCode"
-      max-height="calc(100vh - 1.2rem)"
-    >
-      <template slot-scope="{ option }">
+    <div v-if="areaCode.status" class="full-screen">
+      <md-scroll-view
+        ref="scrollView"
+        :scrolling-x="false"
+        @scroll="$_onScroll"
+      >
         <div
-          class="selector-item-body"
-          :class="{ selected: option.code === areaCode.item.code }"
+          v-for="group in areaCode.list"
+          :key="group.name"
+          class="scroll-view-category"
         >
-          <div class="selector-item-left">
-            <span class="holder" v-text="option.group" />
-          </div>
-          <div class="selector-item-content">
-            <p class="selector-item-title">
-              <small class="gray">({{ option.iso_code }})</small>
-              <span v-text="option.name" />
-            </p>
-            <p class="selector-item-brief" v-text="option.code" />
-          </div>
-          <div class="selector-item-right flex justyfy-center align-center">
-            <img :src="option.ico" class="icon-ico" :alt="option.name" />
+          <p class="scroll-view-category-title">{{ group.name }}</p>
+          <div
+            v-for="country in group.items"
+            :key="country.code"
+            :class="{
+              active: areaCode.active && country.code === areaCode.active.code
+            }"
+            @click="setCountry(country)"
+            class="scroll-view-list"
+          >
+            <img class="item-icon" :src="country.ico" :alt="country.name" />
+            <p class="scroll-view-item">{{ country.name }}</p>
           </div>
         </div>
-      </template>
-    </md-selector>
+      </md-scroll-view>
+      <p v-if="activeBlockIndex > 0" class="scroll-view-striky-title">
+        {{ areaCode.list[activeBlockIndex - 1].name }}
+      </p>
+    </div>
   </div>
 </template>
 <script>
-import { Icon, Button, Selector } from "mand-mobile";
+import { Icon, Button, Selector, ScrollView } from "mand-mobile";
 import { mapState, mapActions } from "vuex";
 
 export default {
@@ -114,6 +114,7 @@ export default {
   components: {
     [Icon.name]: Icon,
     [Button.name]: Button,
+    [ScrollView.name]: ScrollView,
     [Selector.name]: Selector
   },
   data() {
@@ -123,14 +124,47 @@ export default {
         smsCode: "",
         password: ""
       },
+      scrollY: 0,
+      dimensions: [],
       passwordStatus: false
     };
   },
   computed: {
+    activeBlockIndex() {
+      let activeIndex = -1;
+      this.dimensions.forEach((dimension, index) => {
+        if (this.scrollY >= dimension[0] && this.scrollY <= dimension[1]) {
+          activeIndex = index + 1;
+        }
+      });
+      return activeIndex;
+    },
     ...mapState("global", ["areaCode"]),
     ...mapState("user", ["verification"])
   },
   methods: {
+    $_onScroll({ scrollTop }) {
+      this.scrollY = scrollTop;
+    },
+    $_initScrollBlock() {
+      const blocks = this.$el.querySelectorAll(".scroll-view-category");
+      let offset = 0;
+      Array.prototype.slice.call(blocks).forEach((block, index) => {
+        const innerHeight = block.clientHeight;
+        this.$set(this.dimensions, index, [offset, offset + innerHeight]);
+        offset += innerHeight;
+      });
+    },
+    changeAreaCode() {
+      this.areaCode.status = true;
+      this.$nextTick(() => {
+        this.$_initScrollBlock();
+      });
+    },
+    setCountry(country) {
+      this.areaCode.active = country;
+      this.areaCode.status = false;
+    },
     toLogin() {
       this.$router.push({ name: "sign_in" });
     },
@@ -154,13 +188,15 @@ export default {
         this.$router.push({ name: "basic_info" });
       }
     },
-    ...mapActions("global", ["changeAreaCode", "toggleAreaSelector"]),
     ...mapActions("user", [
       "login",
       "phoneAuthenticateNoLogin",
       "checkImageShow",
       "findPwd"
     ])
+  },
+  mounted() {
+    this.$_initScrollBlock();
   }
 };
 </script>
@@ -170,6 +206,49 @@ export default {
   display: flex;
   padding: 10vw;
   box-sizing: border-box;
+  position: relative;
+
+  .full-screen {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #fff;
+
+    .scroll-view-striky-title {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+    }
+
+    .scroll-view-category-title, .scroll-view-striky-title {
+      padding: 10px 20px;
+      font-size: 32px;
+      background-color: #f0f0f0;
+    }
+
+    .scroll-view-list {
+      display: flex;
+      align-items: center;
+      border-bottom: 0.5px solid #efefef;
+
+      &.active {
+        color: color-primary;
+      }
+
+      .item-icon {
+        padding: 30px;
+      }
+    }
+
+    .scroll-view-item {
+      padding-left: 30px;
+      font-size: 32px;
+      flex: 1;
+    }
+  }
 
   .selector-item-body {
     display: flex;

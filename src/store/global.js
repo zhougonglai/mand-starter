@@ -1,20 +1,32 @@
 import { countryCode } from "@/utils";
 
+const cuntryListCreator = ([hotCuntry, list]) => {
+  return [
+    {
+      name: "Hot",
+      items: hotCuntry
+    }
+  ].concat(
+    list.map(({ group, country }) => ({
+      name: group,
+      items: country
+    }))
+  );
+};
+
 export default {
   namespaced: true,
   state: {
     areaCode: {
       status: false,
-      item: {
+      active: {
         code: 86,
         group: "Z",
         ico: "https://picture.leigod.com/mobile_area_code/1_5/cn.png",
         iso_code: "cn",
         name: "中国"
       },
-      list: countryCode.list_country
-        .map(({ country }) => country)
-        .reduce((a, b) => a.concat(b))
+      list: cuntryListCreator(Object.values(countryCode))
     }
   },
   getters: {},

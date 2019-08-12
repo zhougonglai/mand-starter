@@ -160,11 +160,15 @@
       :data="ageSelector.list"
       @choose="ageChoose"
     />
-    <md-tab-picker
+    <md-picker
+      v-if="citySelector.list.length"
+      ref="citySelector"
       v-model="citySelector.status"
-      title="选择地理位置"
       :data="citySelector.list"
-      @change="cityPicker"
+      :cols="3"
+      is-cascade
+      title="选择地理位置"
+      @confirm="cityPicker"
     />
   </div>
 </template>
@@ -172,6 +176,7 @@
 import {
   Selector,
   TabPicker,
+  Picker,
   CellItem,
   InputItem,
   Button,
@@ -200,7 +205,8 @@ export default {
     [ImageReader.name]: ImageReader,
     [Button.name]: Button,
     [ActionBar.name]: ActionBar,
-    [TabPicker.name]: TabPicker
+    [TabPicker.name]: TabPicker,
+    [Picker.name]: Picker
   },
   data() {
     return {
@@ -230,7 +236,7 @@ export default {
       this.citySelector.status = !this.citySelector.status;
     },
     ageChoose(age) {
-      this.ageSelector.age = age;
+      this.ageSelector.active = age;
     },
     tagChoose(tag) {
       if (this.tags.active.includes(tag.text)) {
@@ -266,8 +272,8 @@ export default {
         this.images.splice(index - 1, 1);
       }
     },
-    cityPicker({ values }) {
-      this.citySelector.active = values;
+    cityPicker(columns) {
+      this.citySelector.active = columns.map(column => column.value);
     },
     gotoServiceInfo() {
       this.$router.push({ name: "service_info" });

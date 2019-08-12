@@ -1,5 +1,5 @@
 <template>
-  <div class="audio-player" @click="playVoice" :class="{ ended }">
+  <!-- <div class="audio-player" @click="playVoice" :class="{ ended }">
     <div class="audio-content">
       <div class="audio-title" v-if="title" v-text="title" />
       <div class="audio-duation">
@@ -16,10 +16,16 @@
       v-if="currentTime"
       :style="{ left: (currentTime / data.duration) * 110 + '%' }"
     />
-  </div>
+  </div>-->
+  <md-button type="primary" round size="small" @click="playVoice">
+    <div class="audio-title" v-if="title" v-text="title" />
+    <div class="audio-title" v-else>{{ round(duration) }}s</div>
+    <img class="audio-volume" :src="require('@/assets/images/volume.svg')" />
+  </md-button>
 </template>
 <script>
 import { round } from "@/utils";
+import { Button } from "mand-mobile";
 
 export default {
   name: "audio-player",
@@ -34,10 +40,14 @@ export default {
     },
     title: String
   },
+  components: {
+    [Button.name]: Button
+  },
   data() {
     return {
       playing: false,
       data: new Audio(this.url),
+      duration: 0,
       currentTime: 0,
       ended: false
     };
@@ -68,10 +78,24 @@ export default {
         this.$emit("playing");
       }
     }
+  },
+  mounted() {
+    // if (!this.wx) {
+    //   }
+    this.data.load();
+    this.data.addEventListener("loadedmetadata", () => {
+      this.duration = this.data.duration;
+    });
   }
 };
 </script>
 <style lang="stylus" scoped>
+.audio-volume {
+  width: 32px;
+  height: 32px;
+  margin-left: 16px;
+}
+
 .audio-player {
   width: -webkit-fill-available;
   min-height: 40px;

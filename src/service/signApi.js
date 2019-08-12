@@ -3,6 +3,10 @@ const SIGN_API = {
     method: "post",
     url: "/member/login"
   },
+  autoLogin: {
+    method: "post",
+    url: "/member/login-openId"
+  },
   register: {
     method: "post",
     url: "/member/register"

@@ -132,32 +132,44 @@
         no-border
         brief="请上传您的一段该服务类型的语音介绍，一段好的语音介绍可以提升 200%的接单率(支持mp3/m4a格式的音频建议30s以内)"
       >
-        <!-- <template slot="right">
+        <template slot="right">
           <div class="right-content">
+            <audio-player
+              class="mt-2"
+              url="http://ywm.nnn.com/voicesamples.m4a"
+            />
             <p class="gray text-center">示例音频</p>
           </div>
-        </template>-->
+        </template>
         <template slot="children">
-          <md-button
-            type="primary"
-            size="small"
-            class="recorder recorder_start"
-            :inactive="recorder.status"
-            round
-            @click="record"
-            >{{ recorder.localId ? "重新录制" : "开始录音" }}</md-button
-          >
-          <template v-if="recorder.localId">
-            <div class="mt-5">
-              <p class="text-title">录制的音频</p>
+          <div class="row gute-3">
+            <div class="col">
+              <md-button
+                type="primary"
+                size="small"
+                class="recorder recorder_start"
+                :inactive="recorder.status"
+                round
+                plain
+                @click="record"
+                >{{ recorder.localId ? "重新录制" : "开始录音" }}</md-button
+              >
+            </div>
+            <div class="col" v-if="recorder.localId">
               <audio-player
-                class="half-width mt-2"
+                class="quarter ml-5"
                 title="播放录音"
                 :isWx="isWx"
                 :url="recorder.localId"
               />
             </div>
-          </template>
+          </div>
+          <!-- <template v-if="recorder.localId">
+            <div class="mt-5">
+              <p class="text-title">录制的音频</p>
+              <audio-player class="quarter mt-2" title="播放录音" :isWx="isWx" :url="recorder.localId" />
+            </div>
+          </template>-->
           <!-- <audio v-if="!recorder.isWx" controls autoplay playsinline ref="audio" /> -->
         </template>
       </md-cell-item>
@@ -376,7 +388,9 @@ export default {
           console.log("serverId>>> : ", res.serverId);
           this.serviceInfo.serverId = res.serverId;
           this.getWxMedia(res.serverId).then(({ rtnInfo: { data } }) => {
-            this.serviceInfo.voiceUrl = data;
+            if (data) {
+              this.serviceInfo.voiceUrl = data;
+            }
           });
         }
       });
@@ -437,7 +451,6 @@ export default {
       if (isWx()) {
         window.wx.stopRecord({
           success: res => {
-            alert("停止录音", res);
             this.recorder.localId = res.localId;
             this.recorder.status = false;
             this.uploadVoice();
@@ -451,7 +464,6 @@ export default {
           );
           this.recorder.mediaSteam.stop();
           this.recorder.localId = url;
-          console.log("url", url);
         });
       }
     },
@@ -464,9 +476,15 @@ export default {
       });
     },
     async resultPage() {
-      await this.playerInformationAdd();
-
-      this.$router.push({ name: "result_page" });
+      const rtnInfo = await this.playerInformationAdd();
+      if (rtnInfo) {
+        const {
+          data: { playerDetailsStatus }
+        } = await this.playerStatus();
+        if (playerDetailsStatus) {
+          this.$router.push({ name: "result_page" });
+        }
+      }
     },
     goBack() {
       this.$router.push({ name: "basic_info" });
@@ -475,6 +493,7 @@ export default {
     ...mapActions("user", [
       "fileUpload",
       "getgameList",
+      "playerStatus",
       "toggelGameList",
       "toggelRankList",
       "activeGameList",
@@ -541,7 +560,11 @@ export default {
   }
 
   .right-content {
-    width: 25vw;
+    width: 20vw;
+
+    >>>.md-button {
+      background-color: #909399;
+    }
   }
 
   p {
@@ -600,6 +623,8 @@ export default {
   }
 
   >>>.recorder {
+    width: 25vw;
+
     &+.recorder {
       margin-left: 16px;
     }

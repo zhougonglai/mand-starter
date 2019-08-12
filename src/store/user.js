@@ -14,6 +14,7 @@ export default {
   namespaced: true,
   state: {
     info: {},
+    playerStatus: {},
     ageSelector: {
       status: false,
       active: {},
@@ -22,29 +23,7 @@ export default {
     citySelector: {
       status: false,
       active: [],
-      list: {
-        name: "province",
-        label: "请选择",
-        options: citys.map(({ children, ...others }) => ({
-          ...others,
-          children: {
-            name: "city",
-            label: "请选择",
-            options: children.map(({ children, ...$others }) =>
-              children
-                ? {
-                    ...$others,
-                    children: {
-                      name: "block",
-                      label: "请选择",
-                      options: children
-                    }
-                  }
-                : { ...$others }
-            )
-          }
-        }))
-      }
+      list: [citys]
     },
     tags: {
       active: [],
@@ -173,18 +152,20 @@ export default {
     },
     async login(
       { commit, rootState },
-      { phone, emailOrAccount, accountType, password }
+      { phone, emailOrAccount, accountType, password, wechat }
     ) {
+      const params = new URLSearchParams(location.search);
       const {
         rtnCode,
         rtnInfo: { code, data, msg }
       } = await $http.login({
-        channel: "wechat",
+        channel: params.get("channel"),
         phone: accountType ? phone : "",
         flag: accountType ? 1 : 2,
         emailOrAccount: accountType ? "" : emailOrAccount,
         password: CryptoJS.MD5(password).toString(),
-        countryCode: rootState.global.areaCode.item.code
+        countryCode: rootState.global.areaCode.active.code,
+        weChatOpenId: wechat ? params.get("openId") : ""
       });
       if (rtnCode === "000") {
         if (code) {
@@ -197,13 +178,24 @@ export default {
         throw Error("服务器异常");
       }
     },
+    async autoLogin() {
+      const params = new URLSearchParams(location.search);
+      const { rtnCode, rtnInfo } = await $http.autoLogin({
+        openId: params.get("openId")
+      });
+      if (rtnCode === "000") {
+        return rtnInfo;
+      } else {
+        return;
+      }
+    },
     async findPwd({ rootState }, { phone, smsCode, password }) {
       const {
         rtnCode,
         rtnInfo: { code, msg }
       } = await $http.findPwd({
         channel: "wechat",
-        countryCode: rootState.global.areaCode.item.code,
+        countryCode: rootState.global.areaCode.active.code,
         smsCode,
         phone,
         password: CryptoJS.MD5(password).toString()
@@ -229,7 +221,7 @@ export default {
         rtnInfo: { code }
       } = await $http.checkImageShow({
         phone,
-        countryCode: rootState.global.areaCode.item.code,
+        countryCode: rootState.global.areaCode.active.code,
         type
       });
       if (rtnCode === "000") {
@@ -280,7 +272,7 @@ export default {
       } = await $http.phoneAuthenticateNoLogin({
         phone,
         imgCode,
-        countryCode: rootState.global.areaCode.item.code,
+        countryCode: rootState.global.areaCode.active.code,
         type
       });
       if (rtnCode === "000") {
@@ -312,7 +304,7 @@ export default {
         rtnInfo: { code, data, msg }
       } = await $http.register({
         channel: "wechat",
-        countryCode: rootState.global.areaCode.item.code,
+        countryCode: rootState.global.areaCode.active.code,
         imgCode,
         invitationCode,
         phone,
@@ -449,11 +441,27 @@ export default {
         }
       );
       return rtnInfo;
+    },
+    async playerStatus({ state: { info }, commit }) {
+      const { rtnCode, rtnInfo } = await $http.playerStatus({}, false, {
+        headers: {
+          Authorization: info.token
+        }
+      });
+      if (rtnCode === "000") {
+        commit("SET_STATUS", rtnInfo.data);
+        return rtnInfo;
+      } else {
+        return false;
+      }
     }
   },
   mutations: {
     SET_INFO(state, result) {
       state.info = result;
+    },
+    SET_STATUS(state, status) {
+      state.playerStatus = status;
     },
     SET_GAMELIST({ gameList }, list) {
       gameList.list = list;

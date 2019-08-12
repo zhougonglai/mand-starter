@@ -7585,20 +7585,6 @@ export const countryCode = {
       group: "A",
       country: [
         {
-          code: 853,
-          name: "中国澳门",
-          group: "A",
-          ico: "https://picture.leigod.com/mobile_area_code/1_5/mo.png",
-          iso_code: "mo"
-        },
-        {
-          code: 61,
-          name: "澳大利亚",
-          group: "A",
-          ico: "https://picture.leigod.com/mobile_area_code/1_5/au.png",
-          iso_code: "au"
-        },
-        {
           code: 20,
           group: "A",
           ico: "https://picture.leigod.com/mobile_area_code/1_5/eg.png",
@@ -8424,13 +8410,6 @@ export const countryCode = {
       group: "M",
       country: [
         {
-          code: 1,
-          name: "美国",
-          group: "M",
-          ico: "https://picture.leigod.com/mobile_area_code/1_5/us.png",
-          iso_code: "us"
-        },
-        {
           code: 51,
           group: "M",
           ico: "https://picture.leigod.com/mobile_area_code/1_5/pe.png",
@@ -8670,13 +8649,6 @@ export const countryCode = {
       group: "R",
       country: [
         {
-          code: 81,
-          name: "日本",
-          group: "R",
-          ico: "https://picture.leigod.com/mobile_area_code/1_5/jp.png",
-          iso_code: "jp"
-        },
-        {
           code: 41,
           group: "R",
           ico: "https://picture.leigod.com/mobile_area_code/1_5/ch.png",
@@ -8862,13 +8834,6 @@ export const countryCode = {
           name: "泰国"
         },
         {
-          code: 886,
-          name: "中国台湾",
-          group: "T",
-          ico: "https://picture.leigod.com/mobile_area_code/1_5/tw.png",
-          iso_code: "tw"
-        },
-        {
           code: 90,
           group: "T",
           ico: "https://picture.leigod.com/mobile_area_code/1_5/tr.png",
@@ -8990,13 +8955,6 @@ export const countryCode = {
     {
       group: "X",
       country: [
-        {
-          code: 852,
-          name: "中国香港",
-          group: "X",
-          ico: "https://picture.leigod.com/mobile_area_code/1_5/hk.png",
-          iso_code: "hk"
-        },
         {
           code: 30,
           group: "X",
@@ -9147,13 +9105,6 @@ export const countryCode = {
     {
       group: "Z",
       country: [
-        {
-          code: 86,
-          name: "中国",
-          group: "Z",
-          ico: "https://picture.leigod.com/mobile_area_code/1_5/cn.png",
-          iso_code: "cn"
-        },
         {
           code: 44,
           group: "Z",

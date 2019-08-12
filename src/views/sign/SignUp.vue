@@ -3,7 +3,7 @@
     <form class="input-fiel">
       <div class="fiel-row">
         <div class="fiel-item area_code inline" @click="toggleAreaSelector">
-          <div class="code">+{{ areaCode.item.code }}</div>
+          <div class="code">+{{ areaCode.active.code }}</div>
           <md-icon name="arrow-down" />
         </div>
         <div class="fiel-item fill">
@@ -453,7 +453,11 @@
       :count="0"
       @submit="imgCoderVerify"
     >
-      <img :src="verification.dataSource" alt="图形验证码" />
+      <img
+        @click="imgCodeRefrash"
+        :src="verification.dataSource"
+        alt="图形验证码"
+      />
     </md-captcha>
   </div>
 </template>
@@ -508,11 +512,15 @@ export default {
     forgetPassword() {
       this.$router.push({ name: "forget_password" });
     },
+    imgCodeRefrash() {
+      this.imgCode(2);
+    },
     async sendverifiCode() {
       if (this.signUp.phone) {
         const code = await this.checkImageShow(this.signUp);
         if (code === 0) {
           await this.imgCode(2);
+          this.imgCoder.status = true;
         } else if (code === 1) {
           await this.phoneAuthenticateNoLogin(this.signUp);
         }
@@ -521,8 +529,7 @@ export default {
     async imgCoderVerify(code) {
       if (code && code.length === 4) {
         this.signUp.imgCode = code;
-        const data = await this.phoneAuthenticateNoLogin(this.signUp);
-        console.log(data);
+        await this.phoneAuthenticateNoLogin(this.signUp);
         this.imgCoder.status = false;
       }
     },
