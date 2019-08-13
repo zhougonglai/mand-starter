@@ -16,8 +16,18 @@ const config = {
   },
 
   pwa: {
+    assetsVersion: "2019/8/13-1",
+    themeColor: "#C158FE",
+    msTileColor: "#111A34",
     workboxOptions: {
-      importWorkboxFrom: "local"
+      importWorkboxFrom: "local",
+      cacheId: "nnplayer",
+      skipWaiting: true,
+      cleanupOutdatedCaches: true,
+      clientsClaim: true,
+      exclude: ["index.html"],
+      navigateFallback: "/sign/in",
+      navigateFallbackWhitelist: [/^\/sign/]
     }
   }
 };

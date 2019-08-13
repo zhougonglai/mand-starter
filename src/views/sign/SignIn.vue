@@ -13,7 +13,7 @@
             name="phone"
             autocomplete="tel"
             :required="signIn.accountType"
-            v-model.lazy.number.trim="signIn.phone"
+            v-model.number.trim="signIn.phone"
             placeholder="请输入手机号"
             minlength="6"
             maxlength="11"
@@ -142,13 +142,13 @@ export default {
       } else {
         if (!this.$refs.emailOrAccount.validity.valid) {
           if (this.$refs.emailOrAccount.validity.tooShort) {
-            Toast.info("手机号太短");
+            Toast.info("邮箱太短");
             return;
           } else if (this.$refs.emailOrAccount.validity.tooLong) {
-            Toast.info("手机号太长");
+            Toast.info("邮箱太长");
             return;
           } else if (this.$refs.emailOrAccount.validity.valueMissing) {
-            Toast.info("手机号必填");
+            Toast.info("邮箱必填");
             return;
           } else if (this.$refs.emailOrAccount.validity.typeMismatch) {
             Toast.info("请填写邮箱");

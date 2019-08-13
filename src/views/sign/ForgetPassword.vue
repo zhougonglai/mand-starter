@@ -8,10 +8,12 @@
         </div>
         <div class="fiel-item fill">
           <input
+            ref="phone"
             type="tel"
-            v-model.lazy.trim="forgetInfo.phone"
+            v-model.trim.number="forgetInfo.phone"
             placeholder="请输入手机号"
-            :maxlength="11"
+            minlength="6"
+            maxlength="11"
           />
         </div>
       </div>
@@ -22,7 +24,7 @@
             type="tel"
             v-model.trim="forgetInfo.smsCode"
             placeholder="请输入6位数验证码"
-            :maxlength="6"
+            maxlength="6"
           />
           <md-button
             round
@@ -106,7 +108,7 @@
   </div>
 </template>
 <script>
-import { Icon, Button, Selector, ScrollView } from "mand-mobile";
+import { Icon, Button, Selector, ScrollView, Toast } from "mand-mobile";
 import { mapState, mapActions } from "vuex";
 
 export default {
@@ -179,6 +181,18 @@ export default {
       }
     },
     async confirmChange() {
+      if (!this.$refs.phone.validity.valid) {
+        if (this.$refs.phone.validity.tooShort) {
+          Toast.info("手机号太短");
+          return;
+        } else if (this.$refs.phone.validity.tooLong) {
+          Toast.info("手机号太长");
+          return;
+        } else if (this.$refs.phone.validity.valueMissing) {
+          Toast.info("手机号必填");
+          return;
+        }
+      }
       const code = await this.findPwd(this.forgetInfo);
       if (code === 0) {
         await this.login({
