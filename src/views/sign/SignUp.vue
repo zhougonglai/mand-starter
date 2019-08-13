@@ -445,17 +445,20 @@
     </md-landscape>
     <md-captcha
       v-model="imgCoder.status"
-      title="图形验证码"
+      title="请输入图形验证码"
       system
       :auto-countdown="false"
       :count="0"
       @submit="imgCoderVerify"
     >
-      <img
-        @click="imgCodeRefrash"
-        :src="verification.dataSource"
-        alt="图形验证码"
-      />
+      <div class="fill flex align-center justyfy-center">
+        <img
+          @click="imgCodeRefrash"
+          :src="verification.dataSource"
+          alt="图形验证码"
+        />
+        <md-icon @click="imgCodeRefrash" name="refresh" class="ml-2" />
+      </div>
     </md-captcha>
   </div>
 </template>
