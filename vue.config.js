@@ -23,7 +23,6 @@ const config = {
       importWorkboxFrom: "local",
       cacheId: "nnplayer",
       skipWaiting: true,
-      cleanupOutdatedCaches: true,
       clientsClaim: true,
       exclude: ["index.html"],
       navigateFallback: "/sign/in",
@@ -34,13 +33,10 @@ const config = {
 
 const routers = {
   "/": "nn约玩",
-  "/search": "找陪玩",
-  "/account": "我的",
-  "/binding": "绑定NN约玩账号",
   "/sign/in": "登录",
   "/sign/up": "注册",
-  "/basicinfo": "基本信息",
-  "/serviceinfo": "服务信息"
+  "/basic_info": "基本信息",
+  "/service_info": "服务信息"
 };
 
 const pluginOptions = {
@@ -63,5 +59,5 @@ const pluginOptions = {
 
 module.exports =
   process.env.NODE_ENV === "production"
-    ? config
-    : Object.assign({}, config, { pluginOptions });
+    ? Object.assign({}, config, { pluginOptions })
+    : config;

@@ -48,35 +48,6 @@
         {{ areaCode.list[activeBlockIndex - 1].name }}
       </p>
     </div>
-    <!-- <md-selector
-      v-model="areaCode.status"
-      title="选择手机区号"
-      :default-value="86"
-      :data="areaCode.list"
-      @choose="changeAreaCode"
-      max-height="calc(100vh - 1.2rem)"
-    >
-      <template slot-scope="{ option }">
-        <div
-          class="selector-item-body"
-          :class="{ selected: option.code === areaCode.item.code }"
-        >
-          <div class="selector-item-left">
-            <span class="holder" v-text="option.group" />
-          </div>
-          <div class="selector-item-content">
-            <p class="selector-item-title">
-              <small class="gray">({{ option.iso_code }})</small>
-              <span v-text="option.name" />
-            </p>
-            <p class="selector-item-brief" v-text="option.code" />
-          </div>
-          <div class="selector-item-right flex justyfy-center align-center">
-            <img :src="option.ico" class="icon-ico" :alt="option.name" />
-          </div>
-        </div>
-      </template>
-    </md-selector>-->
   </div>
 </template>
 <script>
@@ -174,17 +145,17 @@ export default {
               }) => {
                 if (updateAppMessageShareData) {
                   window.wx.updateAppMessageShareData({
-                    title: "分享给朋友/分享到QQ",
-                    desc: "描述描述描述",
+                    title: "入驻NN游戏陪玩，瓜分百万现金奖励",
+                    desc: "开心玩，轻松赚，千万用户量的陪玩平台",
                     link: "http://ywm.nnn.com/sign/in",
-                    imgUrl: "http://139.224.119.40/img/head-logo.png"
+                    imgUrl: "http://ywm.nnn.com/nnlogoshare.jpg"
                   });
                 }
                 if (updateTimelineShareData) {
                   window.wx.updateTimelineShareData({
-                    title: "分享到朋友圈/分享到QQ空间",
+                    title: "入驻NN游戏陪玩，瓜分百万现金奖励",
                     link: "http://ywm.nnn.com/sign/in",
-                    imgUrl: "http://139.224.119.40/img/head-logo.png"
+                    imgUrl: "http://ywm.nnn.com/nnlogoshare.jpg"
                   });
                 }
               }
