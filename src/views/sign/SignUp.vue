@@ -10,25 +10,29 @@
           <input
             type="tel"
             name="tel"
+            ref="phone"
             required
             autocomplete="tel"
-            v-model="signUp.phone"
+            v-model.trim.number="signUp.phone"
             placeholder="请输入手机号"
-            :maxlength="11"
+            minlength="6"
+            maxlength="11"
           />
         </div>
       </div>
       <div class="fiel-row">
         <div class="fiel-item fill">
           <input
+            required
+            ref="smsCode"
             type="tel"
-            v-model.trim="signUp.smsCode"
+            v-model.trim.number="signUp.smsCode"
             placeholder="请输入6位数验证码"
-            :maxlength="6"
+            maxlength="6"
           />
           <md-button
-            type="link"
             round
+            type="link"
             size="small"
             class="button"
             :loging="verification.status"
@@ -46,12 +50,14 @@
       <div class="fiel-row">
         <div class="fiel-item fill">
           <input
+            required
+            ref="password"
             name="password"
             autocomplete="now-password"
             :type="passwordStatus ? 'text' : 'password'"
-            v-model.lazy.trim="signUp.password"
-            :minlength="6"
-            :maxlength="18"
+            v-model.trim="signUp.password"
+            minlength="6"
+            maxlength="18"
             placeholder="请输入6-18位的新密码，不含空格"
           />
           <svg
@@ -69,14 +75,14 @@
         <div class="fiel-item fill">
           <input
             type="text"
-            v-model="signUp.invitationCode"
+            v-model.trim="signUp.invitationCode"
             placeholder="输入邀请码(非必填)"
           />
         </div>
       </div>
       <div class="fiel-row between align-center mt-2">
         <p @click="protocol = !protocol" class="line-normal larger gray">
-          注册即代表同意《NN约玩协议》
+          注册即代表同意《用户协议》
         </p>
         <div class="line-normal larger primary" @click="forgetPassword">
           忘记密码？
@@ -259,7 +265,7 @@
           </ol>
         </li>
         <li>
-          3、用户不得利用NN约玩进行如下行为：
+          4、用户不得利用NN约玩进行如下行为：
           <ol>
             <li>1)发布虚假信息或盗用他人头像或资料，冒充他人名义；</li>
             <li>2) 强制、诱导其他用户关注、点击链接页面或分享信息；</li>
@@ -277,16 +283,16 @@
           </ol>
         </li>
         <li>
-          4、用户须对利用NN约玩账号传送信息的真实性、合法性、准确性、有效性等负责，并保证该信息不得违反公序良俗。与用户所传播信息相关的任何法律责任由用户自行承担，与本公司和NN约玩无关。如因此给本公司或第三方造成损害的，用户应当依法予以赔偿。
+          5、用户须对利用NN约玩账号传送信息的真实性、合法性、准确性、有效性等负责，并保证该信息不得违反公序良俗。与用户所传播信息相关的任何法律责任由用户自行承担，与本公司和NN约玩无关。如因此给本公司或第三方造成损害的，用户应当依法予以赔偿。
         </li>
         <li>
-          5、用户在NN约玩的内容消费（内容消费特指：聊天室礼物打赏、动态礼物打赏、消息礼物打赏、属于礼物打赏等）行为，皆完全基于您的自主、自愿行为；内容消费行为一旦发生概不退款；由用户自行对内容消费负责；本公司不承担任何责任。
+          6、用户在NN约玩的内容消费（内容消费特指：聊天室礼物打赏、动态礼物打赏、消息礼物打赏、属于礼物打赏等）行为，皆完全基于您的自主、自愿行为；内容消费行为一旦发生概不退款；由用户自行对内容消费负责；本公司不承担任何责任。
         </li>
         <li>
-          6、本公司提供的服务中可能包括广告，用户同意在使用过程中显示本公司和第三方供应商、合作伙伴提供的广告。除法律法规明确规定外，用户应自行对基于该广告信息而进行的交易负责。对用户因依该广告信息进行的交易或前述广告商提供的内容或遭受的损失或损害，本公司及NN约玩不承担任何责任。
+          7、本公司提供的服务中可能包括广告，用户同意在使用过程中显示本公司和第三方供应商、合作伙伴提供的广告。除法律法规明确规定外，用户应自行对基于该广告信息而进行的交易负责。对用户因依该广告信息进行的交易或前述广告商提供的内容或遭受的损失或损害，本公司及NN约玩不承担任何责任。
         </li>
         <li>
-          7、用户在NN约玩产生的收入（如有）应自行向税务机关依法纳税，因用户偷税漏税相关的任何法律责任由用户自行承担，与本公司和NN约玩无关。如因此给本公司或第三方造成损害的，用户应当依法予以赔偿。
+          8、用户在NN约玩产生的收入（如有）应自行向税务机关依法纳税，因用户偷税漏税相关的任何法律责任由用户自行承担，与本公司和NN约玩无关。如因此给本公司或第三方造成损害的，用户应当依法予以赔偿。
         </li>
       </ol>
       <h2>七、虚拟货币及支付</h2>
@@ -437,14 +443,6 @@
         本协议之效力、解释、变更、执行与争议解决均适用中华人民共和国法律。因本协议产生之争议，均应依照中华人民共和国法律予以处理，并由本公司住所地人民法院管辖。
       </p>
     </md-landscape>
-    <!-- <md-dialog v-model="imgCoder.status" title="图形验证码">
-      <div class="dialog-banner" slot="header">
-        <img :src="verification.dataSource" alt="图形验证码" />
-      </div>
-      <md-field>
-        <md-input-item title="验证码" v-model="signUp.imgCode" />
-      </md-field>
-    </md-dialog>-->
     <md-captcha
       v-model="imgCoder.status"
       title="图形验证码"
@@ -464,6 +462,7 @@
 <script>
 import {
   Icon,
+  Toast,
   InputItem,
   Button,
   Landscape,
@@ -534,6 +533,33 @@ export default {
       }
     },
     async registrerSubmit() {
+      if (!this.$refs.phone.validity.valid) {
+        if (this.$refs.phone.validity.tooShort) {
+          Toast.info("手机号太短");
+          return;
+        } else if (this.$refs.phone.validity.tooLong) {
+          Toast.info("手机号太长");
+          return;
+        } else if (this.$refs.phone.validity.valueMissing) {
+          Toast.info("手机号不能为空");
+          return;
+        }
+      } else if (!this.$refs.smsCode.validity.valid) {
+        if (this.signUp.smsCode.length !== 6) {
+          Toast.info("请填写验证码");
+          return;
+        }
+      } else if (!this.$refs.password.validity.valid) {
+        if (this.$refs.password.validity.tooShort) {
+          Toast.info("密码太短");
+          return;
+        } else if (this.$refs.password.validity.tooLong) {
+          Toast.info("密码太长");
+          return;
+        } else if (this.$refs.password.validity.valueMissing) {
+          Toast.info("密码不能为空");
+        }
+      }
       const code = await this.register(this.signUp);
       if (code === 0) {
         this.gotoBasicInfo();

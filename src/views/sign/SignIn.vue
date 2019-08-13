@@ -127,9 +127,7 @@ export default {
     },
     async signInSubmit() {
       if (this.signIn.accountType) {
-        console.log("phone");
         if (!this.$refs.phone.validity.valid) {
-          console.log(this.$refs.phone.validity);
           if (this.$refs.phone.validity.tooShort) {
             Toast.info("手机号太短");
             return;
@@ -142,9 +140,7 @@ export default {
           }
         }
       } else {
-        console.log("email");
         if (!this.$refs.emailOrAccount.validity.valid) {
-          console.log(this.$refs.emailOrAccount.validity);
           if (this.$refs.emailOrAccount.validity.tooShort) {
             Toast.info("手机号太短");
             return;
