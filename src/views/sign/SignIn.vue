@@ -188,8 +188,33 @@ export default {
       "login",
       "playerStatus",
       "playerInfoStatus",
-      "playerGameApply"
+      "playerGameApply",
+      "exchangeCode",
+      "autoLogin"
     ])
+  },
+
+  created() {
+    this.exchangeCode().then(res => {
+      if (res.code === 0) {
+        //说明拿到openId和用户信息
+        const openId = res.data.openId;
+        var loginData = {
+          openId
+        };
+        window.localStorage.setItem("openId", res.data.openId);
+        this.autoLogin(loginData).then(autoRes => {
+          if (autoRes.code === 0) {
+            //成功,重定向到主页面.同时存token
+            this.$router.push({ name: "service_info" });
+          } else {
+            this.$router.push({ name: "sign_in" });
+          }
+        });
+      } else {
+        this.$router.push({ name: "sign_in" });
+      }
+    });
   }
 };
 </script>

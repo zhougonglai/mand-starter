@@ -7,6 +7,10 @@ const SIGN_API = {
     method: "post",
     url: "/member/login-openId"
   },
+  exchangeCode: {
+    method: "get",
+    url: "/wx/exchange-openId"
+  },
   register: {
     method: "post",
     url: "/member/register"

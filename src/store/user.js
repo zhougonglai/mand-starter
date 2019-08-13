@@ -168,7 +168,7 @@ export default {
         emailOrAccount: accountType ? "" : emailOrAccount,
         password: CryptoJS.MD5(password).toString(),
         countryCode: rootState.global.areaCode.active.code,
-        weChatOpenId: wechat ? params.get("openId") : ""
+        weChatOpenId: wechat ? window.localStorage.getItem("openId") : ""
       });
       if (rtnCode === "000") {
         if (code) {
@@ -181,10 +181,22 @@ export default {
         throw Error("服务器异常");
       }
     },
-    async autoLogin() {
+    async exchangeCode() {
       const params = new URLSearchParams(location.search);
+      const { rtnCode, rtnInfo } = await $http.exchangeCode({
+        code: params.get("code")
+      });
+      if (rtnCode === "000") {
+        return rtnInfo;
+      } else {
+        return;
+      }
+    },
+    async autoLogin({ commit, rootState }, { openId }) {
+      //不让提交...只能放个a...
+      console.log(commit, rootState);
       const { rtnCode, rtnInfo } = await $http.autoLogin({
-        openId: params.get("openId")
+        openId: openId
       });
       if (rtnCode === "000") {
         return rtnInfo;
