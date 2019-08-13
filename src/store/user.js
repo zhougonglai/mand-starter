@@ -16,7 +16,7 @@ export default {
     info: {},
     gameApply: [],
     playerStatus: {},
-    infoStatus: {},
+    reasons: "",
     ageSelector: {
       status: false,
       active: {},
@@ -124,12 +124,12 @@ export default {
     sampleGraph: {},
     gameList: {
       status: false,
-      active: "",
+      active: {},
       list: []
     },
     rankList: {
       status: false,
-      active: "",
+      active: {},
       list: []
     },
     verification: {
@@ -429,7 +429,7 @@ export default {
           images: images.map(image => image.url),
           gameInfoParameter: [
             {
-              duration: null,
+              duration: "",
               gameType: gameList.active.id,
               pictureUrl: serviceInfo.img.url,
               rank: rankList.active.value,
@@ -445,6 +445,9 @@ export default {
           }
         }
       );
+      if (rtnInfo.code !== 0) {
+        Toast.info(rtnInfo.msg);
+      }
       return rtnInfo;
     },
     async playerStatus({ state: { info }, commit }) {
@@ -480,7 +483,7 @@ export default {
         }
       });
       if (rtnCode === "000") {
-        commit("SET_GAME_APPLY", rtnInfo.data);
+        await commit("SET_GAME_APPLY", rtnInfo.data);
         return rtnInfo;
       } else {
         return false;
@@ -494,11 +497,79 @@ export default {
     SET_STATUS(state, status) {
       state.playerStatus = status;
     },
-    SET_INFO_STATUS(state, status) {
-      state.infoStatus = status;
+    SET_INFO_STATUS(
+      state,
+      {
+        age,
+        area,
+        city,
+        isPlayer,
+        province,
+        gameInfoParameter: [
+          { gameId, gameType, pictureUrl, rank, rankName, skills, voiceUrl }
+        ],
+        gender,
+        hobby,
+        images,
+        personalityLable,
+        qQNO,
+        reasons
+      }
+    ) {
+      state.basicInfo.QQNO = qQNO;
+      state.basicInfo.gender = gender.toString();
+      state.basicInfo.hobby = hobby;
+      state.ageSelector.active.text = age.toString();
+      state.ageSelector.active.value = age.toString();
+      state.info.isPlayerApply = isPlayer;
+      state.tags.active = personalityLable.split(", ");
+      state.citySelector.active = [province, city, area];
+      state.images = images.map(url => ({ url }));
+      state.reasons = reasons;
+      state.gameList.active.value = gameId;
+      state.gameList.active.text = gameType;
+      state.rankList.active.value = rank;
+      state.rankList.active.text = rankName;
+      state.serviceInfo.skillInfo = skills;
+      state.serviceInfo.voiceUrl = voiceUrl;
+      state.serviceInfo.img.url = pictureUrl;
     },
-    SET_GAME_APPLY(state, apply) {
-      state.gameApply = apply;
+    SET_GAME_APPLY(
+      state,
+      {
+        age,
+        area,
+        city,
+        isPlayer,
+        province,
+        gameInfoParameter: [
+          { gameId, gameType, pictureUrl, rank, rankName, skills, voiceUrl }
+        ],
+        gender,
+        hobby,
+        images,
+        personalityLable,
+        qQNO,
+        reasons
+      }
+    ) {
+      // state.gameApply = apply;
+      state.basicInfo.QQNO = qQNO;
+      state.basicInfo.gender = gender;
+      state.basicInfo.hobby = hobby;
+      state.ageSelector.active.text = age;
+      state.info.isPlayerApply = isPlayer;
+      state.tags.active = personalityLable.split(", ");
+      state.citySelector.active = [province, city, area];
+      state.images = images.map(url => ({ url }));
+      state.reasons = reasons;
+      state.gameList.active.value = gameId;
+      state.gameList.active.text = gameType;
+      state.rankList.active.value = rank;
+      state.rankList.active.text = rankName;
+      state.serviceInfo.skillInfo = skills;
+      state.serviceInfo.voiceUrl = voiceUrl;
+      state.serviceInfo.img.url = pictureUrl;
     },
     SET_GAMELIST({ gameList }, list) {
       gameList.list = list;

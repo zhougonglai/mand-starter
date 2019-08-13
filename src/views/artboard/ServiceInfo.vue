@@ -72,11 +72,11 @@
             <li class="image_item">
               <div
                 class="img"
-                :class="{ add: !serviceInfo.img.dataUrl }"
+                :class="{ add: !serviceInfo.img.url }"
                 :style="
-                  serviceInfo.img.dataUrl
+                  serviceInfo.img.url
                     ? {
-                        backgroundImage: `url(${serviceInfo.img.dataUrl})`,
+                        backgroundImage: `url(${serviceInfo.img.url})`,
                         backgroundPosition: 'center center',
                         backgroundRepeat: 'no-repeat',
                         backgroundSize: 'cover'
@@ -88,7 +88,7 @@
                   @select="onReaderSelect"
                   @complete="onReaderComplete"
                 />
-                <template v-if="!serviceInfo.img.dataUrl">
+                <template v-if="!serviceInfo.img.url">
                   <md-icon name="camera" size="md" color="#ccc" />
                   <p>添加图片</p>
                 </template>
@@ -119,11 +119,11 @@
             <textarea
               v-model="serviceInfo.skillInfo"
               :rows="3"
-              :maxlength="400"
+              :maxlength="300"
               placeholder="点击填写"
               class="fiel-input input-textarea"
             />
-            <div class="hit">{{ serviceInfo.skillInfo.length }} / 400</div>
+            <div class="hit">{{ serviceInfo.skillInfo.length }} / 300</div>
           </div>
         </template>
       </md-cell-item>
@@ -408,7 +408,7 @@ export default {
             });
           },
           cancel: () => {
-            Toast.info("用户主动取消了录音");
+            Toast.info("此次录音已取消");
           }
         });
         this.recorder.status = true;
@@ -536,11 +536,7 @@ export default {
           // 监听语音播放完毕
           "onVoicePlayEnd"
         ],
-        success: () => {
-          alert("权限OK");
-        },
-        fail: res => {
-          alert(JSON.stringify(res));
+        fail: () => {
           this.getWxConfig().then(data => {
             if (data) {
               wxConfig(data);
@@ -551,9 +547,7 @@ export default {
     }
   },
   mounted() {
-    window.wx.error(err => {
-      alert(JSON.stringify(err) + "需要重新配置微信签名");
-    });
+    // window.wx.error(err => {});
   }
 };
 </script>

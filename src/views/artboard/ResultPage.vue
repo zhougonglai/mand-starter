@@ -23,7 +23,7 @@
         <div>官网：yuewan.nn.com</div>
       </template>
       <template v-if="playerStatus.playerStatus === 1">
-        <div>{{ gameApply[0].reasons }}</div>
+        <div>{{ reasons }}</div>
       </template>
       <template v-if="playerStatus.playerStatus === 2">
         <div>审核结果将在1-3个工作日通知到您~</div>
@@ -31,7 +31,7 @@
     </div>
     <div
       class="result-actions"
-      v-if="playerStatus.playerStatus === 1 && gameApply.length"
+      v-if="playerStatus.playerStatus === 1 && reasons"
     >
       <md-button type="primary" round @click="goBasicInfo">修改信息</md-button>
     </div>
@@ -57,13 +57,13 @@ export default {
       text: ["审核通过", "审核失败", "提交成功"]
     };
   },
+  computed: {
+    ...mapState("user", ["playerStatus", "reasons"])
+  },
   methods: {
     goBasicInfo() {
       this.$router.push({ name: "basic_info" });
     }
-  },
-  computed: {
-    ...mapState("user", ["playerStatus", "gameApply"])
   }
 };
 </script>

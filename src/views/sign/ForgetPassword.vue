@@ -71,7 +71,6 @@
 
       <div class="fiel-row justyfy-center mt-2 larger">
         已有账号?
-        <!-- <md-button type="link" @click="toLogin"></md-button> -->
         <div class="primary ml-half" @click="toLogin">立即登录></div>
       </div>
     </form>

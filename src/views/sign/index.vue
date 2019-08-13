@@ -48,6 +48,7 @@
         {{ areaCode.list[activeBlockIndex - 1].name }}
       </p>
     </div>
+    <span v-text="VUE_APP_VERSION" class="app_version" />
   </div>
 </template>
 <script>
@@ -68,6 +69,7 @@ export default {
     return {
       current: "sign_in",
       scrollY: 0,
+      VUE_APP_VERSION: process.env.VUE_APP_VERSION,
       dimensions: [],
       signPane: [
         {
@@ -123,6 +125,7 @@ export default {
   },
   created() {
     this.current = this.$route.name;
+    console.log(process.env.VUE_APP_VERSION);
   },
   mounted() {
     if (isWx()) {
@@ -177,6 +180,17 @@ export default {
   flex-direction: column;
   padding: 0 10vw;
   position: relative;
+
+  .app_version {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    background-color: #C5CAD5;
+    color: #858B9C;
+    padding: 5px 0 0 10px;
+    font-size: xx-small;
+    border-radius: 25px 0 0;
+  }
 
   .full-screen {
     position: absolute;

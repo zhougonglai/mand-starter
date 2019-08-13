@@ -7,9 +7,7 @@
  -->
 <template>
   <div id="basic_info">
-    <div v-if="gameApplyStatus" class="popup top">
-      {{ gameApply[0].reasons }}
-    </div>
+    <div v-if="reasons" class="popup top">{{ reasons }}</div>
     <md-field>
       <md-input-item
         ref="qqNo"
@@ -119,12 +117,15 @@
         <template slot="children">
           <ul class="image-reader-list">
             <template v-if="images.length">
+              <!-- 表单填写用 dataUrl,表单回显用 url -->
               <li
                 class="image-reader-item"
                 v-for="(image, index) in images"
                 :key="index"
                 :style="{
-                  backgroundImage: `url(${image.dataUrl})`,
+                  backgroundImage: `url(${
+                    image.dataUrl ? image.dataUrl : image.url
+                  })`,
                   backgroundPosition: 'center center',
                   backgroundRepeat: 'no-repeat',
                   backgroundSize: 'cover'
@@ -222,14 +223,13 @@ export default {
           text: "下一步",
           onClick: this.gotoServiceInfo
         }
-      ],
-      gameApplyStatus: false
+      ]
     };
   },
   computed: {
     ...mapState("user", [
       "info",
-      "gameApply",
+      "reasons",
       "basicInfo",
       "tags",
       "images",
@@ -308,9 +308,6 @@ export default {
       this.$router.push({ name: "service_info" });
     },
     ...mapActions("user", ["fileUpload", "playerInformationAdd"])
-  },
-  created() {
-    this.gameApplyStatus = !!this.gameApply.length;
   }
 };
 </script>

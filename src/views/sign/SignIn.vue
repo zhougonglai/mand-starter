@@ -158,7 +158,7 @@ export default {
       }
       if (!this.$refs.password.validity.valid) {
         if (this.$refs.password.validity.tooShort) {
-          Toast.info("密码太短");
+          Toast.info("账号或密码错误");
           return;
         } else if (this.$refs.password.validity.tooLong) {
           Toast.info("密码太长");
@@ -175,7 +175,9 @@ export default {
         const {
           data: { playerDetailsStatus }
         } = await this.playerStatus();
-        await this.playerGameApply();
+        if (playerDetailsStatus !== 3) {
+          await this.playerInfoStatus();
+        }
         this.$router.push({
           name: playerDetailsStatus === 3 ? "basic_info" : "result_page"
         });

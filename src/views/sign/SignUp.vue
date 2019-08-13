@@ -84,14 +84,18 @@
         <p @click="protocol = !protocol" class="line-normal larger gray">
           注册即代表同意《用户协议》
         </p>
-        <div class="line-normal larger primary" @click="forgetPassword">
+        <!-- <div class="line-normal larger primary" @click="forgetPassword">
           忘记密码？
-        </div>
+        </div>-->
       </div>
       <div class="fiel-row mt-3">
         <md-button type="primary" round @click="registrerSubmit"
           >立即注册</md-button
         >
+      </div>
+      <div class="fiel-row justyfy-center mt-2 larger">
+        已有账号?
+        <div class="primary ml-half" @click="toLogin">立即登录></div>
       </div>
     </form>
     <md-landscape v-model="protocol" full-screen>
@@ -510,6 +514,9 @@ export default {
   methods: {
     gotoBasicInfo() {
       this.$router.push({ name: "basic_info" });
+    },
+    toLogin() {
+      this.$router.push({ name: "sign_in" });
     },
     forgetPassword() {
       this.$router.push({ name: "forget_password" });
