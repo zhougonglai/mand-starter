@@ -14,7 +14,9 @@ export default {
   namespaced: true,
   state: {
     info: {},
+    gameApply: [],
     playerStatus: {},
+    infoStatus: {},
     ageSelector: {
       status: false,
       active: {},
@@ -143,6 +145,7 @@ export default {
     toggelGameList: ({ commit }) => commit("GAMELIST_TOGGEL"),
     activeGameList: ({ commit, dispatch }, active) => {
       commit("GAMELIST_ACTIVE", active);
+      dispatch("activeRankList", {});
       dispatch("getrankList");
       dispatch("getSampleGraph");
     },
@@ -159,7 +162,7 @@ export default {
         rtnCode,
         rtnInfo: { code, data, msg }
       } = await $http.login({
-        channel: params.get("channel"),
+        channel: params.has("channel") ? params.get("channel") : "",
         phone: accountType ? phone : "",
         flag: accountType ? 1 : 2,
         emailOrAccount: accountType ? "" : emailOrAccount,
@@ -190,11 +193,12 @@ export default {
       }
     },
     async findPwd({ rootState }, { phone, smsCode, password }) {
+      const params = new URLSearchParams(location.search);
       const {
         rtnCode,
         rtnInfo: { code, msg }
       } = await $http.findPwd({
-        channel: "wechat",
+        channel: params.has("channel") ? params.get("channel") : "",
         countryCode: rootState.global.areaCode.active.code,
         smsCode,
         phone,
@@ -299,11 +303,12 @@ export default {
       { rootState, commit },
       { smsCode, imgCode, invitationCode, password, phone }
     ) {
+      const params = new URLSearchParams(location.search);
       const {
         rtnCode,
         rtnInfo: { code, data, msg }
       } = await $http.register({
-        channel: "wechat",
+        channel: params.has("channel") ? params.get("channel") : "",
         countryCode: rootState.global.areaCode.active.code,
         imgCode,
         invitationCode,
@@ -454,6 +459,32 @@ export default {
       } else {
         return false;
       }
+    },
+    async playerInfoStatus({ state: { info }, commit }) {
+      const { rtnCode, rtnInfo } = await $http.playerInfoStatus({}, false, {
+        headers: {
+          Authorization: info.token
+        }
+      });
+      if (rtnCode === "000") {
+        commit("SET_INFO_STATUS", rtnInfo.data);
+        return rtnInfo;
+      } else {
+        return false;
+      }
+    },
+    async playerGameApply({ state: { info }, commit }) {
+      const { rtnCode, rtnInfo } = await $http.playerGameApply({}, false, {
+        headers: {
+          Authorization: info.token
+        }
+      });
+      if (rtnCode === "000") {
+        commit("SET_GAME_APPLY", rtnInfo.data);
+        return rtnInfo;
+      } else {
+        return false;
+      }
     }
   },
   mutations: {
@@ -462,6 +493,12 @@ export default {
     },
     SET_STATUS(state, status) {
       state.playerStatus = status;
+    },
+    SET_INFO_STATUS(state, status) {
+      state.infoStatus = status;
+    },
+    SET_GAME_APPLY(state, apply) {
+      state.gameApply = apply;
     },
     SET_GAMELIST({ gameList }, list) {
       gameList.list = list;

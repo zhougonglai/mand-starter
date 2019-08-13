@@ -10,6 +10,14 @@ const PLAYER_API = {
   playerInformationAdd: {
     method: "post",
     url: "/playerApply/playerInformationAdd"
+  },
+  playerInfoStatus: {
+    method: "get",
+    url: "/playerApply/playerApplyInfoShow"
+  },
+  playerGameApply: {
+    method: "get",
+    url: "/playerGame/playerGameApply"
   }
 };
 

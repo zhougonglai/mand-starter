@@ -476,6 +476,16 @@ export default {
       });
     },
     async resultPage() {
+      if (!this.rankList.active.value) {
+        Toast.info("需要选择段位");
+        return;
+      } else if (!this.serviceInfo.img.dataUrl) {
+        Toast.info("需要上传服务截图");
+        return;
+      } else if (!this.serviceInfo.skillInfo) {
+        Toast.info("需要填写技能介绍");
+        return;
+      }
       const rtnInfo = await this.playerInformationAdd();
       if (rtnInfo) {
         const {

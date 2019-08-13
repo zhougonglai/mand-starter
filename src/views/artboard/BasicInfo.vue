@@ -7,8 +7,12 @@
  -->
 <template>
   <div id="basic_info">
+    <div v-if="gameApplyStatus" class="popup top">
+      {{ gameApply[0].reasons }}
+    </div>
     <md-field>
       <md-input-item
+        ref="qqNo"
         type="tel"
         clearable
         v-model="basicInfo.QQNO"
@@ -23,6 +27,7 @@
       <md-input-item
         type="text"
         readonly
+        ref="phone"
         v-model="info.phone"
         placeholder="请输入手机号"
         align="right"
@@ -176,6 +181,7 @@
 import {
   Selector,
   TabPicker,
+  Popup,
   Picker,
   CellItem,
   InputItem,
@@ -195,6 +201,7 @@ export default {
   name: "basic-info",
   components: {
     [Field.name]: Field,
+    [Popup.name]: Popup,
     [Selector.name]: Selector,
     [CellItem.name]: CellItem,
     [InputItem.name]: InputItem,
@@ -215,12 +222,14 @@ export default {
           text: "下一步",
           onClick: this.gotoServiceInfo
         }
-      ]
+      ],
+      gameApplyStatus: false
     };
   },
   computed: {
     ...mapState("user", [
       "info",
+      "gameApply",
       "basicInfo",
       "tags",
       "images",
@@ -272,19 +281,52 @@ export default {
         this.images.splice(index - 1, 1);
       }
     },
+    hidePopUp() {},
     cityPicker(columns) {
       this.citySelector.active = columns.map(column => column.value);
     },
     gotoServiceInfo() {
+      if (
+        !this.basicInfo.QQNO ||
+        !new RegExp("[1-9][0-9]{4,}").test(this.basicInfo.QQNO)
+      ) {
+        Toast.info("请填写正确的QQ号码");
+        return;
+      } else if (!this.citySelector.active.length) {
+        Toast.info("请选择所在城市");
+        return;
+      } else if (!this.ageSelector.active.value) {
+        Toast.info("请填写您的年龄");
+        return;
+      } else if (!this.tags.active.length) {
+        Toast.info("请填写您的个性标签");
+        return;
+      } else if (!this.images.length || this.images.length < 4) {
+        Toast.info("至少上传4张照片");
+        return;
+      }
       this.$router.push({ name: "service_info" });
     },
     ...mapActions("user", ["fileUpload", "playerInformationAdd"])
+  },
+  created() {
+    this.gameApplyStatus = !!this.gameApply.length;
   }
 };
 </script>
 <style lang="stylus" scoped>
 #basic_info {
   height: 100vh;
+
+  .popup {
+    padding: 20px;
+    font-size: 28px;
+    color: #FFFFFF;
+
+    &.top {
+      background-color: #FD4A53;
+    }
+  }
 
   .text-title {
     font-size: 32px;

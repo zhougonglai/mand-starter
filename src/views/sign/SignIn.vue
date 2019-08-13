@@ -9,12 +9,14 @@
         <div class="fiel-item fill">
           <input
             type="tel"
+            ref="phone"
             name="phone"
             autocomplete="tel"
             :required="signIn.accountType"
             v-model.lazy.number.trim="signIn.phone"
             placeholder="请输入手机号"
-            :maxlength="11"
+            minlength="6"
+            maxlength="11"
           />
         </div>
       </div>
@@ -23,6 +25,7 @@
           <input
             type="text"
             name="email"
+            ref="email"
             autocomplete="email"
             :required="!signIn.accountType"
             v-model.lazy.trim="signIn.emailOrAccount"
@@ -34,9 +37,11 @@
         <div class="fiel-item fill">
           <input
             name="password"
+            ref="password"
             autocomplete="current-password"
             :type="passwordStatus ? 'text' : 'password'"
             v-model.lazy="signIn.password"
+            required
             placeholder="请输入登录密码"
             :minlength="6"
             :maxlength="18"
@@ -66,7 +71,7 @@
         </div>
       </div>
       <div class="border-top-1px border-bottom-1px py-2 mt-2">
-        <md-agree v-model="signIn.wecat">绑定微信账号</md-agree>
+        <md-agree v-model="signIn.wechat">绑定微信账号</md-agree>
       </div>
       <div class="fiel-row mt-5">
         <md-button
@@ -82,7 +87,7 @@
   </div>
 </template>
 <script>
-import { Agree, Icon, InputItem, Button } from "mand-mobile";
+import { Agree, Icon, InputItem, Button, Toast } from "mand-mobile";
 import { mapState, mapActions } from "vuex";
 
 export default {
@@ -97,6 +102,7 @@ export default {
     return {
       signIn: {
         wechat: false,
+        // { true = '手机', false = 'email'}
         accountType: true,
         phone: "",
         emailOrAccount: "",
@@ -120,6 +126,52 @@ export default {
       this.$router.push({ name: "forget_password" });
     },
     async signInSubmit() {
+      if (this.signIn.accountType) {
+        console.log("phone");
+        if (!this.$refs.phone.validity.valid) {
+          console.log(this.$refs.phone.validity);
+          if (this.$refs.phone.validity.tooShort) {
+            Toast.info("手机号太短");
+            return;
+          } else if (this.$refs.phone.validity.tooLong) {
+            Toast.info("手机号太长");
+            return;
+          } else if (this.$refs.phone.validity.valueMissing) {
+            Toast.info("手机号必填");
+            return;
+          }
+        }
+      } else {
+        console.log("email");
+        if (!this.$refs.emailOrAccount.validity.valid) {
+          console.log(this.$refs.emailOrAccount.validity);
+          if (this.$refs.emailOrAccount.validity.tooShort) {
+            Toast.info("手机号太短");
+            return;
+          } else if (this.$refs.emailOrAccount.validity.tooLong) {
+            Toast.info("手机号太长");
+            return;
+          } else if (this.$refs.emailOrAccount.validity.valueMissing) {
+            Toast.info("手机号必填");
+            return;
+          } else if (this.$refs.emailOrAccount.validity.typeMismatch) {
+            Toast.info("请填写邮箱");
+            return;
+          }
+        }
+      }
+      if (!this.$refs.password.validity.valid) {
+        if (this.$refs.password.validity.tooShort) {
+          Toast.info("密码太短");
+          return;
+        } else if (this.$refs.password.validity.tooLong) {
+          Toast.info("密码太长");
+          return;
+        } else if (this.$refs.password.validity.valueMissing) {
+          Toast.info("密码必填");
+          return;
+        }
+      }
       this.waiting = true;
       const code = await this.login(this.signIn);
       this.waiting = false;
@@ -127,16 +179,19 @@ export default {
         const {
           data: { playerDetailsStatus }
         } = await this.playerStatus();
+        await this.playerGameApply();
         this.$router.push({
-          name:
-            playerDetailsStatus === 1 || playerDetailsStatus === 3
-              ? "basic_info"
-              : "result_page"
+          name: playerDetailsStatus === 3 ? "basic_info" : "result_page"
         });
       }
     },
     ...mapActions("global", ["toggleAreaSelector"]),
-    ...mapActions("user", ["login", "playerStatus"])
+    ...mapActions("user", [
+      "login",
+      "playerStatus",
+      "playerInfoStatus",
+      "playerGameApply"
+    ])
   }
 };
 </script>
