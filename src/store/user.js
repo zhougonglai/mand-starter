@@ -20,8 +20,11 @@ export default {
     openId: "",
     ageSelector: {
       status: false,
-      active: {},
-      list: numList(18, 200).map(i => ({ value: i, text: `${i}岁` }))
+      active: {
+        text: "23",
+        value: "23"
+      },
+      list: numList(14, 46).map(i => ({ value: i, text: `${i}岁` }))
     },
     citySelector: {
       status: false,
@@ -145,9 +148,12 @@ export default {
   actions: {
     toggelGameList: ({ commit }) => commit("GAMELIST_TOGGEL"),
     resetVerification: ({ commit }) => commit("SET_VERIFICATION"),
-    activeGameList: ({ commit, dispatch }, active) => {
+    activeGameList: ({ commit, dispatch }, { refresh, ...active }) => {
       dispatch("activeRankList", {});
       commit("GAMELIST_ACTIVE", active);
+      if (refresh) {
+        console.log("refresh 段位");
+      }
     },
     toggelRankList: ({ commit }) => commit("RANKLIST_TOGGEL"),
     activeRankList: ({ commit }, active) => {

@@ -7506,14 +7506,41 @@ export const citys = [
   {
     value: "香港",
     label: "香港",
-    children: [{ value: "香港", label: "香港" }]
+    children: [
+      {
+        value: "香港",
+        label: "香港",
+        children: [
+          {
+            value: "香港",
+            label: "香港"
+          }
+        ]
+      }
+    ]
   },
   {
     value: "澳门",
     label: "澳门",
-    children: [{ value: "澳门", label: "澳门" }]
+    children: [
+      {
+        value: "澳门",
+        label: "澳门",
+        children: [{ value: "澳门", label: "澳门" }]
+      }
+    ]
   },
-  { value: "台湾", label: "台湾", children: [{ value: "台湾", label: "台湾" }] }
+  {
+    value: "台湾",
+    label: "台湾",
+    children: [
+      {
+        value: "台湾",
+        label: "台湾",
+        children: [{ value: "台湾", label: "台湾" }]
+      }
+    ]
+  }
 ];
 
 export const numList = (n = 0, length = 10, to) => {

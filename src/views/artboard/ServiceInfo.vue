@@ -130,7 +130,7 @@
       <md-cell-item
         title="语音介绍"
         no-border
-        brief="请上传您的一段该服务类型的语音介绍，一段好的语音介绍可以提升 200%的接单率(支持mp3/m4a格式的音频建议30s以内)"
+        brief="请上传您的一段该技能类型的语音介绍，一段好的语音介绍可以提升 200%的接单率(支持mp3/m4a格式的音频建议30s以内)"
       >
         <template slot="right">
           <div class="right-content">
@@ -152,30 +152,22 @@
                 round
                 plain
                 @click="record"
-                >{{ recorder.localId ? "重新录制" : "开始录音" }}</md-button
+                >{{ serviceInfo.voiceUrl ? "重新录制" : "开始录音" }}</md-button
               >
             </div>
-            <div class="col" v-if="recorder.localId">
+            <div class="col" v-if="serviceInfo.voiceUrl">
               <audio-player
-                class="quarter ml-5"
+                class="ml-5"
                 title="播放录音"
-                :isWx="isWx"
-                :url="recorder.localId"
+                :url="serviceInfo.voiceUrl"
               />
             </div>
           </div>
-          <!-- <template v-if="recorder.localId">
-            <div class="mt-5">
-              <p class="text-title">录制的音频</p>
-              <audio-player class="quarter mt-2" title="播放录音" :isWx="isWx" :url="recorder.localId" />
-            </div>
-          </template>-->
-          <!-- <audio v-if="!recorder.isWx" controls autoplay playsinline ref="audio" /> -->
         </template>
       </md-cell-item>
     </md-field>
 
-    <md-action-bar :actions="action"></md-action-bar>
+    <md-action-bar :actions="action" />
     <md-selector
       title="技能类型"
       v-model="gameList.status"
@@ -391,7 +383,6 @@ export default {
         localId: this.recorder.localId,
         isShowProgressTips: 1,
         success: res => {
-          console.log("serverId>>> : ", res.serverId);
           this.serviceInfo.serverId = res.serverId;
           this.getWxMedia(res.serverId).then(({ rtnInfo: { data } }) => {
             if (data) {
