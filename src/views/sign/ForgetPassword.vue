@@ -1,5 +1,8 @@
 <template>
   <div id="forget_password">
+    <div class="app-header">
+      <div class="app-header-title">找回密码</div>
+    </div>
     <form class="input-fiel">
       <div class="fiel-row">
         <div class="fiel-item area_code inline" @click="changeAreaCode">
@@ -8,22 +11,24 @@
         </div>
         <div class="fiel-item fill">
           <input
+            required
             ref="phone"
             type="tel"
-            v-model.trim.number="forgetInfo.phone"
+            v-model.number.trim.lazy="forgetInfo.phone"
             placeholder="请输入手机号"
-            minlength="6"
-            maxlength="11"
+            :maxlength="areaCode.active.code === 86 && 11"
           />
         </div>
       </div>
-
       <div class="fiel-row">
         <div class="fiel-item fill">
           <input
-            type="tel"
+            required
+            ref="smsCode"
+            type="text"
             v-model.trim="forgetInfo.smsCode"
             placeholder="请输入6位数验证码"
+            minlength="6"
             maxlength="6"
           />
           <md-button
@@ -47,6 +52,8 @@
       <div class="fiel-row">
         <div class="fiel-item fill">
           <input
+            required
+            ref="password"
             :type="passwordStatus ? 'text' : 'password'"
             v-model="forgetInfo.password"
             placeholder="请输入6-18位的新密码，不含空格"
@@ -75,6 +82,7 @@
       </div>
     </form>
     <div v-if="areaCode.status" class="full-screen">
+      <md-icon name="close" class="close" @click.native="areaCodeClose" />
       <md-scroll-view
         ref="scrollView"
         :scrolling-x="false"
@@ -162,6 +170,9 @@ export default {
         this.$_initScrollBlock();
       });
     },
+    areaCodeClose() {
+      this.areaCode.status = false;
+    },
     setCountry(country) {
       this.areaCode.active = country;
       this.areaCode.status = false;
@@ -191,6 +202,28 @@ export default {
           Toast.info("手机号必填");
           return;
         }
+      } else if (!this.$refs.password.validity.valid) {
+        if (this.$refs.password.validity.tooShort) {
+          Toast.info("密码太短");
+          return;
+        } else if (this.$refs.password.validity.tooLong) {
+          Toast.info("密码太长");
+          return;
+        } else if (this.$refs.password.validity.valueMissing) {
+          Toast.info("密码必填");
+          return;
+        }
+      } else if (!this.$refs.smsCode.validity.valid) {
+        if (
+          this.$refs.smsCode.validity.tooShort ||
+          this.$refs.smsCode.validity.tooLong
+        ) {
+          Toast.info("请输入完整的验证码");
+          return;
+        } else if (this.$refs.password.validity.valueMissing) {
+          Toast.info("请输入验证码");
+          return;
+        }
       }
       const code = await this.findPwd(this.forgetInfo);
       if (code === 0) {
@@ -217,7 +250,7 @@ export default {
 #forget_password {
   height: 100vh;
   display: flex;
-  padding: 10vw;
+  flex-direction: column;
   box-sizing: border-box;
   position: relative;
 
@@ -228,6 +261,17 @@ export default {
     right: 0;
     bottom: 0;
     background-color: #fff;
+
+    .close {
+      position: absolute;
+      top: 25px;
+      right: 25px;
+      z-index: 999;
+      padding: 25px;
+      background-color: #909399;
+      color: #fff;
+      border-radius: 50%;
+    }
 
     .scroll-view-striky-title {
       position: absolute;
@@ -261,6 +305,11 @@ export default {
       font-size: 32px;
       flex: 1;
     }
+  }
+
+  form.input-fiel {
+    padding: 0 10vw;
+    box-sizing: border-box;
   }
 
   .selector-item-body {

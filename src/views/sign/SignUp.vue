@@ -81,12 +81,9 @@
         </div>
       </div>
       <div class="fiel-row between align-center mt-2">
-        <p @click="protocol = !protocol" class="line-normal larger gray">
-          注册即代表同意《用户协议》
+        <p class="line-normal larger gray">
+          注册即代表同意<span @click="protocol = !protocol">《用户协议》</span>
         </p>
-        <!-- <div class="line-normal larger primary" @click="forgetPassword">
-          忘记密码？
-        </div>-->
       </div>
       <div class="fiel-row mt-3">
         <md-button type="primary" round @click="registrerSubmit"
@@ -507,7 +504,7 @@ export default {
     };
   },
   computed: {
-    ...mapState("global", ["areaCode"]),
+    ...mapState("global", ["areaCode", "sign"]),
     ...mapState("config", ["config"]),
     ...mapState("user", ["verification"])
   },
@@ -516,7 +513,9 @@ export default {
       this.$router.push({ name: "basic_info" });
     },
     toLogin() {
-      this.$router.push({ name: "sign_in" });
+      this.$router.push({ name: "sign_in" }, () => {
+        this.sign.current = "sign_in";
+      });
     },
     forgetPassword() {
       this.$router.push({ name: "forget_password" });

@@ -17,6 +17,7 @@ export default {
     gameApply: [],
     playerStatus: {},
     reasons: "",
+    openId: "",
     ageSelector: {
       status: false,
       active: {},
@@ -143,11 +144,13 @@ export default {
   getters: {},
   actions: {
     toggelGameList: ({ commit }) => commit("GAMELIST_TOGGEL"),
-    activeGameList: ({ commit, dispatch }, active) => {
+    activeGameList: ({ commit, dispatch, state: { playerStatus } }, active) => {
       commit("GAMELIST_ACTIVE", active);
-      dispatch("activeRankList", {});
-      dispatch("getrankList");
       dispatch("getSampleGraph");
+      if (playerStatus.playerStatus === 3) {
+        dispatch("activeRankList", {});
+        dispatch("getrankList");
+      }
     },
     toggelRankList: ({ commit }) => commit("RANKLIST_TOGGEL"),
     activeRankList: ({ commit }, active) => {
@@ -181,25 +184,30 @@ export default {
         throw Error("服务器异常");
       }
     },
-    async exchangeCode() {
+    async exchangeCode({ state }) {
       const params = new URLSearchParams(location.search);
       const { rtnCode, rtnInfo } = await $http.exchangeCode({
-        code: params.get("code")
+        code: params.has("code") ? params.get("code") : ""
       });
       if (rtnCode === "000") {
+        state.openId = rtnInfo.data.openId;
         return rtnInfo;
       } else {
         return;
       }
     },
-    async autoLogin({ commit, rootState }, { openId }) {
-      //不让提交...只能放个a...
-      console.log(commit, rootState);
-      const { rtnCode, rtnInfo } = await $http.autoLogin({
-        openId: openId
+    async autoLogin({ state: { openId }, commit }) {
+      const {
+        rtnCode,
+        rtnInfo: { code, data }
+      } = await $http.autoLogin({
+        openId
       });
       if (rtnCode === "000") {
-        return rtnInfo;
+        if (code === 0) {
+          commit("SET_INFO", data);
+        }
+        return { data, code };
       } else {
         return;
       }
@@ -286,7 +294,7 @@ export default {
         rtnCode,
         rtnInfo: { code, msg }
       } = await $http.phoneAuthenticateNoLogin({
-        phone,
+        phone: phone.toString(),
         imgCode,
         countryCode: rootState.global.areaCode.active.code,
         type

@@ -129,6 +129,10 @@ button
 
 .flex
   display: flex
+.inline-flex
+  display inline-flex
+.inline-block
+  display inline-block
 
 .row
   @extend .flex
@@ -187,6 +191,9 @@ button
 .justyfy-center
   justify-content: center
 
+.justyfy-end
+  justify-content: flex-end
+
 .align-center
   align-items: center;
 
@@ -242,6 +249,8 @@ button
 
 .text-center
   text-align: center
+.text-end
+  text-align: end
 
 .clear-fix
   &::after
@@ -422,6 +431,15 @@ button
       display: inline-flex;
     }
   }
+}
+
+.app-header{
+  .app-header-title{
+    font-size: 36px;
+    color: #606166;
+    text-align: center;
+    font-weight: bold;
+  }  
 }
 
 .selector-item-body {

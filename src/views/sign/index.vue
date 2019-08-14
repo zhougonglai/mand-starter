@@ -7,7 +7,7 @@
         alt="nn约玩"
       />
     </div>
-    <md-tabs v-model="current" @change="paneChange">
+    <md-tabs v-model="sign.current" @change="paneChange">
       <md-tab-pane
         class="content"
         v-for="pane in signPane"
@@ -15,10 +15,11 @@
         :name="pane.name"
         :label="pane.label"
       >
-        <router-view v-if="current === pane.name" />
+        <router-view v-if="sign.current === pane.name" />
       </md-tab-pane>
     </md-tabs>
     <div v-if="areaCode.status" class="full-screen">
+      <md-icon name="close" class="close" @click.native="areaCodeClose" />
       <md-scroll-view
         ref="scrollView"
         :scrolling-x="false"
@@ -52,13 +53,21 @@
   </div>
 </template>
 <script>
-import { Tabs, TabPane, Landscape, Selector, ScrollView } from "mand-mobile";
+import {
+  Icon,
+  Tabs,
+  TabPane,
+  Landscape,
+  Selector,
+  ScrollView
+} from "mand-mobile";
 import { mapState, mapActions } from "vuex";
 import { isWx, wxConfig } from "@/utils";
 
 export default {
   name: "sign",
   components: {
+    [Icon.name]: Icon,
     [Tabs.name]: Tabs,
     [TabPane.name]: TabPane,
     [Selector.name]: Selector,
@@ -67,7 +76,6 @@ export default {
   },
   data() {
     return {
-      current: "sign_in",
       scrollY: 0,
       VUE_APP_VERSION: process.env.VUE_APP_VERSION,
       dimensions: [],
@@ -93,7 +101,7 @@ export default {
       });
       return activeIndex;
     },
-    ...mapState("global", ["areaCode"])
+    ...mapState("global", ["areaCode", "sign"])
   },
   methods: {
     changeAreaCode() {
@@ -102,9 +110,15 @@ export default {
         this.$_initScrollBlock();
       });
     },
+    areaCodeClose() {
+      this.areaCode.status = false;
+    },
     setCountry(country) {
       this.areaCode.active = country;
       this.areaCode.status = false;
+    },
+    setPane(name) {
+      console.log(name);
     },
     paneChange({ name }) {
       this.$router.push({ name });
@@ -124,8 +138,7 @@ export default {
     ...mapActions("config", ["getWxConfig"])
   },
   created() {
-    this.current = this.$route.name;
-    console.log(process.env.VUE_APP_VERSION);
+    this.sign.current = this.$route.name;
   },
   mounted() {
     if (isWx()) {
@@ -187,7 +200,7 @@ export default {
     right: 0;
     background-color: #C5CAD5;
     color: #858B9C;
-    padding: 5px 0 0 10px;
+    padding: 5px 10px 0 10px;
     font-size: xx-small;
     border-radius: 25px 0 0;
   }
@@ -199,6 +212,17 @@ export default {
     right: 0;
     bottom: 0;
     background-color: #fff;
+
+    .close {
+      position: absolute;
+      top: 25px;
+      right: 25px;
+      z-index: 999;
+      padding: 25px;
+      background-color: #909399;
+      color: #fff;
+      border-radius: 50%;
+    }
 
     .scroll-view-striky-title {
       position: absolute;
@@ -217,18 +241,19 @@ export default {
       display: flex;
       align-items: center;
       border-bottom: 0.5px solid #efefef;
+      height: 80px;
 
       &.active {
         color: color-primary;
       }
 
       .item-icon {
-        padding: 30px;
+        padding: 10px;
       }
     }
 
     .scroll-view-item {
-      padding-left: 30px;
+      padding-left: 20px;
       font-size: 32px;
       flex: 1;
     }

@@ -17,6 +17,9 @@ const cuntryListCreator = ([hotCuntry, list]) => {
 export default {
   namespaced: true,
   state: {
+    sign: {
+      current: "sign_in"
+    },
     areaCode: {
       status: false,
       active: {

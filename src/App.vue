@@ -20,7 +20,6 @@ svg.icon {
   display: flex;
   align-items: center;
   justify-content: center;
-  border-bottom: 1px solid #e5e5e5;
 
   .logo {
     height: 74px;

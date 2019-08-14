@@ -13,10 +13,9 @@
             name="phone"
             autocomplete="tel"
             :required="signIn.accountType"
-            v-model.number.trim="signIn.phone"
+            v-model.number.trim.lazy="signIn.phone"
             placeholder="请输入手机号"
-            minlength="6"
-            maxlength="11"
+            :maxlength="areaCode.active.code === 86 && 11"
           />
         </div>
       </div>
@@ -25,10 +24,10 @@
           <input
             type="text"
             name="email"
-            ref="email"
-            autocomplete="email"
+            ref="emailOrAccount"
+            autocomplete="email, phone"
             :required="!signIn.accountType"
-            v-model.lazy.trim="signIn.emailOrAccount"
+            v-model.trim="signIn.emailOrAccount"
             placeholder="请输入邮箱/账号"
           />
         </div>
@@ -40,11 +39,9 @@
             ref="password"
             autocomplete="current-password"
             :type="passwordStatus ? 'text' : 'password'"
-            v-model.lazy="signIn.password"
+            v-model.trim="signIn.password"
             required
             placeholder="请输入登录密码"
-            :minlength="6"
-            :maxlength="18"
           />
           <svg
             class="icon"
@@ -64,8 +61,11 @@
           </div>
           <div class="line-normal gray mt-1">可使用雷神账号登录</div>
         </div>
-        <div class="right align-center">
-          <div class="line-normal larger primary" @click="forgetPassword">
+        <div class="fill justyfy-end flex">
+          <div
+            class="line-normal larger primary inline-flex"
+            @click="forgetPassword"
+          >
             忘记密码?
           </div>
         </div>
@@ -75,11 +75,11 @@
       </div>
       <div class="fiel-row mt-5">
         <md-button
-          type="primary"
           round
-          @click="signInSubmit"
-          :inactive="waiting"
+          type="primary"
           :loading="waiting"
+          :inactive="waiting"
+          @click="signInSubmit"
           >立即登录</md-button
         >
       </div>
@@ -142,30 +142,12 @@ export default {
       } else {
         if (!this.$refs.emailOrAccount.validity.valid) {
           if (this.$refs.emailOrAccount.validity.tooShort) {
-            Toast.info("邮箱太短");
-            return;
-          } else if (this.$refs.emailOrAccount.validity.tooLong) {
-            Toast.info("邮箱太长");
+            Toast.info("邮箱/账号太短");
             return;
           } else if (this.$refs.emailOrAccount.validity.valueMissing) {
-            Toast.info("邮箱必填");
-            return;
-          } else if (this.$refs.emailOrAccount.validity.typeMismatch) {
-            Toast.info("请填写邮箱");
+            Toast.info("邮箱/账号必填");
             return;
           }
-        }
-      }
-      if (!this.$refs.password.validity.valid) {
-        if (this.$refs.password.validity.tooShort) {
-          Toast.info("账号或密码错误");
-          return;
-        } else if (this.$refs.password.validity.tooLong) {
-          Toast.info("密码太长");
-          return;
-        } else if (this.$refs.password.validity.valueMissing) {
-          Toast.info("密码必填");
-          return;
         }
       }
       this.waiting = true;
@@ -193,28 +175,22 @@ export default {
       "autoLogin"
     ])
   },
-
-  created() {
-    this.exchangeCode().then(res => {
-      if (res.code === 0) {
-        //说明拿到openId和用户信息
-        const openId = res.data.openId;
-        var loginData = {
-          openId
-        };
-        window.localStorage.setItem("openId", res.data.openId);
-        this.autoLogin(loginData).then(autoRes => {
-          if (autoRes.code === 0) {
-            //成功,重定向到主页面.同时存token
-            this.$router.push({ name: "service_info" });
-          } else {
-            this.$router.push({ name: "sign_in" });
-          }
+  async created() {
+    const { code } = await this.exchangeCode();
+    if (code === 0) {
+      const { code } = await this.autoLogin();
+      if (code === 0) {
+        const {
+          data: { playerDetailsStatus }
+        } = await this.playerStatus();
+        if (playerDetailsStatus !== 3) {
+          await this.playerInfoStatus();
+        }
+        this.$router.push({
+          name: playerDetailsStatus === 3 ? "basic_info" : "result_page"
         });
-      } else {
-        this.$router.push({ name: "sign_in" });
       }
-    });
+    }
   }
 };
 </script>
