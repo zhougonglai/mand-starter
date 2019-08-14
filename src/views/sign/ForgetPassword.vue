@@ -112,10 +112,34 @@
         {{ areaCode.list[activeBlockIndex - 1].name }}
       </p>
     </div>
+    <md-captcha
+      v-model="imgCoder.status"
+      title="请输入图形验证码"
+      system
+      :auto-countdown="false"
+      :count="0"
+      @submit="imgCoderVerify"
+    >
+      <div class="fill flex align-center justyfy-center">
+        <img
+          @click="imgCodeRefrash"
+          :src="verification.dataSource"
+          alt="图形验证码"
+        />
+        <md-icon @click="imgCodeRefrash" name="refresh" class="ml-2" />
+      </div>
+    </md-captcha>
   </div>
 </template>
 <script>
-import { Icon, Button, Selector, ScrollView, Toast } from "mand-mobile";
+import {
+  Icon,
+  Button,
+  Selector,
+  ScrollView,
+  Toast,
+  Captcha
+} from "mand-mobile";
 import { mapState, mapActions } from "vuex";
 
 export default {
@@ -123,18 +147,23 @@ export default {
   components: {
     [Icon.name]: Icon,
     [Button.name]: Button,
+    [Captcha.name]: Captcha,
     [ScrollView.name]: ScrollView,
     [Selector.name]: Selector
   },
   data() {
     return {
       forgetInfo: {
+        imgCode: "",
         phone: "",
         smsCode: "",
         password: ""
       },
       scrollY: 0,
       dimensions: [],
+      imgCoder: {
+        status: false
+      },
       passwordStatus: false
     };
   },
@@ -173,6 +202,9 @@ export default {
     areaCodeClose() {
       this.areaCode.status = false;
     },
+    imgCodeRefrash() {
+      this.imgCode(2);
+    },
     setCountry(country) {
       this.areaCode.active = country;
       this.areaCode.status = false;
@@ -185,9 +217,17 @@ export default {
         const code = await this.checkImageShow({ ...this.forgetInfo, type: 2 });
         if (code === 0) {
           await this.imgCode(2);
+          this.imgCoder.status = true;
         } else if (code === 1) {
           await this.phoneAuthenticateNoLogin({ ...this.forgetInfo, type: 3 });
         }
+      }
+    },
+    async imgCoderVerify(code) {
+      if (code && code.length === 4) {
+        this.forgetInfo.imgCode = code;
+        await this.phoneAuthenticateNoLogin({ ...this.forgetInfo, type: 3 });
+        this.imgCoder.status = false;
       }
     },
     async confirmChange() {
@@ -227,15 +267,17 @@ export default {
       }
       const code = await this.findPwd(this.forgetInfo);
       if (code === 0) {
-        await this.login({
-          ...this.forgetInfo,
-          accountType: true
-        });
-        this.$router.push({ name: "basic_info" });
+        this.$router.push({ name: "sign_in", query: this.forgetInfo });
+        // await this.login({
+        //   ...this.forgetInfo,
+        //   accountType: true
+        // });
+        // this.$router.push({ name: "basic_info" });
       }
     },
     ...mapActions("user", [
       "login",
+      "imgCode",
       "phoneAuthenticateNoLogin",
       "checkImageShow",
       "findPwd"

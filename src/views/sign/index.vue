@@ -19,7 +19,7 @@
       </md-tab-pane>
     </md-tabs>
     <div v-if="areaCode.status" class="full-screen">
-      <md-icon name="close" class="close" @click.native="areaCodeClose" />
+      <md-icon name="close" class="close" @click.native="toggleAreaSelector" />
       <md-scroll-view
         ref="scrollView"
         :scrolling-x="false"
@@ -110,12 +110,9 @@ export default {
         this.$_initScrollBlock();
       });
     },
-    areaCodeClose() {
-      this.areaCode.status = false;
-    },
     setCountry(country) {
       this.areaCode.active = country;
-      this.areaCode.status = false;
+      this.toggleAreaSelector();
     },
     setPane(name) {
       console.log(name);
@@ -135,10 +132,13 @@ export default {
         offset += innerHeight;
       });
     },
-    ...mapActions("config", ["getWxConfig"])
+    ...mapActions("global", ["toggleAreaSelector"]),
+    ...mapActions("config", ["getWxConfig"]),
+    ...mapActions("user", ["resetVerification"])
   },
   created() {
     this.sign.current = this.$route.name;
+    this.resetVerification();
   },
   mounted() {
     if (isWx()) {

@@ -17,7 +17,7 @@
       <md-cell-item
         title="段位"
         class="border-bottom-1px"
-        :addon="rankList.active.text ? rankList.active.text : '请选择'"
+        :addon="rankList.active.rankName ? rankList.active.rankName : '请选择'"
         @click="toggelRankList"
         no-border
         arrow
@@ -42,7 +42,7 @@
         </template>
       </md-cell-item>
       <md-cell-item
-        title="服务截图"
+        title="技能截图"
         class="border-bottom-1px"
         no-border
         brief="请上传清晰游戏显示（游戏昵称和段位信息）界面的截图"
@@ -94,7 +94,7 @@
                 </template>
               </div>
               <div class="descript mt-2">
-                <div class="gray text-center">上传服务截图</div>
+                <div class="gray text-center">上传技能截图</div>
                 <div class="gray mt-2 text-center">
                   点击{{ serviceInfo.img.dataUrl ? "更换" : "上传" }}
                 </div>
@@ -181,7 +181,8 @@
       v-model="gameList.status"
       max-height="calc(100vh - 1.2rem)"
       :data="gameList.list"
-      @choose="activeGameList"
+      @choose="activeGame"
+      @cancel="toggelGameList"
     >
       <template slot-scope="{ option }">
         <div class="selector-item-body">
@@ -206,8 +207,10 @@
         }))
       "
       @choose="activeRankList"
+      @cancel="toggelRankList"
     />
     <md-image-viewer
+      v-if="sampleGraph.server_icon"
       v-model="examplesPicture"
       :list="[sampleGraph.server_icon]"
       :has-dots="false"
@@ -363,6 +366,9 @@ export default {
     levelToggle() {
       this.level.status = !this.level.status;
     },
+    activeGame(game) {
+      this.activeGameList({ ...game, refresh: true });
+    },
     chooseImage() {
       this.examplesPicture = true;
     },
@@ -479,7 +485,7 @@ export default {
       if (!this.rankList.active.value) {
         Toast.info("需要选择段位");
         return;
-      } else if (!this.serviceInfo.img.dataUrl) {
+      } else if (!this.serviceInfo.img.url) {
         Toast.info("需要上传服务截图");
         return;
       } else if (!this.serviceInfo.skillInfo) {

@@ -3,7 +3,7 @@
     <div class="result-image">
       <img
         :src="
-          playerStatus && playerStatus.playerStatus
+          'playerStatus' in playerStatus
             ? img[playerStatus.playerStatus]
             : require('@/assets/images/success.svg')
         "
@@ -11,7 +11,7 @@
     </div>
     <div class="result-title">
       {{
-        playerStatus && playerStatus.playerStatus
+        "playerStatus" in playerStatus
           ? text[playerStatus.playerStatus]
           : "提交成功"
       }}

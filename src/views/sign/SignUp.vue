@@ -8,10 +8,10 @@
         </div>
         <div class="fiel-item fill">
           <input
+            required
             type="tel"
             name="tel"
             ref="phone"
-            required
             autocomplete="tel"
             v-model.trim.number="signUp.phone"
             placeholder="请输入手机号"
@@ -82,7 +82,8 @@
       </div>
       <div class="fiel-row between align-center mt-2">
         <p class="line-normal larger gray">
-          注册即代表同意<span @click="protocol = !protocol">《用户协议》</span>
+          注册即代表同意
+          <span @click="protocol = !protocol">《用户协议》</span>
         </p>
       </div>
       <div class="fiel-row mt-3">
@@ -99,7 +100,7 @@
       <h1 class="text-center">用户协议</h1>
       <p>
         欢迎申请使用【
-        武汉奥拉夫网络科技有限公司】有限公司（以下简称“本公司”）提供的服务。本公司通过网络平台：网址【www.nn.com】（以下简称“NN约玩”）向用户提供服务（以下简称“本服务”）。请用户仔细阅读以下全部内容（特别是粗体下划线标注的内容）并选择接受或不接受本协议。除非您接受本协议所有条款，否则您无权使用本协议中所提供的服务。您一经注册或接受本协议中的服务即视为对本协议全部条款已充分理解并完全接受。此后，您不得以未阅读本协议条款内容作任何形式的抗辩。
+        武汉奥拉夫网络科技有限公司】有限公司（以下简称“本公司”）提供的服务。本公司通过网络平台：网址【yuewan.nn.com】（以下简称“NN约玩”）向用户提供服务（以下简称“本服务”）。请用户仔细阅读以下全部内容（特别是粗体下划线标注的内容）并选择接受或不接受本协议。除非您接受本协议所有条款，否则您无权使用本协议中所提供的服务。您一经注册或接受本协议中的服务即视为对本协议全部条款已充分理解并完全接受。此后，您不得以未阅读本协议条款内容作任何形式的抗辩。
       </p>
       <h2>一、服务相关定义</h2>
       <ol>
@@ -443,6 +444,7 @@
       <p>
         本协议之效力、解释、变更、执行与争议解决均适用中华人民共和国法律。因本协议产生之争议，均应依照中华人民共和国法律予以处理，并由本公司住所地人民法院管辖。
       </p>
+      <div class="fill mt-2 text-end">武汉奥拉夫网络科技有限公司</div>
     </md-landscape>
     <md-captcha
       v-model="imgCoder.status"
@@ -513,9 +515,7 @@ export default {
       this.$router.push({ name: "basic_info" });
     },
     toLogin() {
-      this.$router.push({ name: "sign_in" }, () => {
-        this.sign.current = "sign_in";
-      });
+      this.$router.push({ name: "sign_in" });
     },
     forgetPassword() {
       this.$router.push({ name: "forget_password" });
@@ -581,6 +581,9 @@ export default {
       "register",
       "phoneAuthenticateNoLogin"
     ])
+  },
+  created() {
+    this.sign.current = "sign_up";
   }
 };
 </script>

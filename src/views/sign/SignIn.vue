@@ -113,7 +113,7 @@ export default {
     };
   },
   computed: {
-    ...mapState("global", ["areaCode"])
+    ...mapState("global", ["areaCode", "sign"])
   },
   methods: {
     gotoBasicInfo() {
@@ -176,20 +176,26 @@ export default {
     ])
   },
   async created() {
-    const { code } = await this.exchangeCode();
-    if (code === 0) {
-      const { code } = await this.autoLogin();
+    this.sign.current = "sign_in";
+    const query = new window.URLSearchParams(location.search);
+    if (query.has("code")) {
+      const { code } = await this.exchangeCode();
       if (code === 0) {
-        const {
-          data: { playerDetailsStatus }
-        } = await this.playerStatus();
-        if (playerDetailsStatus !== 3) {
-          await this.playerInfoStatus();
+        const { code } = await this.autoLogin();
+        if (code === 0) {
+          const {
+            data: { playerDetailsStatus }
+          } = await this.playerStatus();
+          if (playerDetailsStatus !== 3) {
+            await this.playerInfoStatus();
+          }
+          this.$router.push({
+            name: playerDetailsStatus === 3 ? "basic_info" : "result_page"
+          });
         }
-        this.$router.push({
-          name: playerDetailsStatus === 3 ? "basic_info" : "result_page"
-        });
       }
+    } else if (query.has("phone")) {
+      this.signIn.phone = query.get("phone");
     }
   }
 };

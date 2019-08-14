@@ -144,13 +144,10 @@ export default {
   getters: {},
   actions: {
     toggelGameList: ({ commit }) => commit("GAMELIST_TOGGEL"),
-    activeGameList: ({ commit, dispatch, state: { playerStatus } }, active) => {
+    resetVerification: ({ commit }) => commit("SET_VERIFICATION"),
+    activeGameList: ({ commit, dispatch }, active) => {
+      dispatch("activeRankList", {});
       commit("GAMELIST_ACTIVE", active);
-      dispatch("getSampleGraph");
-      if (playerStatus.playerStatus === 3) {
-        dispatch("activeRankList", {});
-        dispatch("getrankList");
-      }
     },
     toggelRankList: ({ commit }) => commit("RANKLIST_TOGGEL"),
     activeRankList: ({ commit }, active) => {
@@ -386,12 +383,16 @@ export default {
       );
       return rtnInfo;
     },
-    async getgameList({ commit, dispatch }) {
+    async getgameList({ commit, dispatch, state: { playerStatus } }) {
       const { rtnCode, rtnInfo } = await $http.gameList();
       if (rtnCode === "000") {
         if (rtnInfo.code === 0) {
           commit("SET_GAMELIST", rtnInfo.data);
-          dispatch("activeGameList", rtnInfo.data[0]);
+          if (playerStatus.playerStatus === 3) {
+            dispatch("activeGameList", { ...rtnInfo.data[0] });
+          }
+          dispatch("getrankList");
+          dispatch("getSampleGraph");
         }
       }
       return rtnInfo;
@@ -514,6 +515,15 @@ export default {
     SET_INFO(state, result) {
       state.info = result;
     },
+    SET_VERIFICATION(state) {
+      state.verification = {
+        label: "获取短信验证码",
+        time: 60,
+        status: false,
+        dataSource: undefined,
+        type: 1
+      };
+    },
     SET_STATUS(state, status) {
       state.playerStatus = status;
     },
@@ -547,9 +557,11 @@ export default {
       state.images = images.map(url => ({ url }));
       state.reasons = reasons;
       state.gameList.active.value = gameId;
-      state.gameList.active.text = gameType;
+      state.gameList.active.id = gameId;
+      state.gameList.active.name = gameType;
       state.rankList.active.value = rank;
-      state.rankList.active.text = rankName;
+      state.rankList.active.id = rank;
+      state.rankList.active.rankName = rankName;
       state.serviceInfo.skillInfo = skills;
       state.serviceInfo.voiceUrl = voiceUrl;
       state.serviceInfo.img.url = pictureUrl;
