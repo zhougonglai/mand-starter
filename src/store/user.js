@@ -26,7 +26,7 @@ export default {
     ageSelector: {
       status: false,
       active: {
-        text: "23",
+        text: "23岁",
         value: "23"
       },
       list: numList(14, 46).map(i => ({ value: i, text: `${i}岁` }))
@@ -570,7 +570,7 @@ export default {
       state.basicInfo.QQNO = qQNO;
       state.basicInfo.gender = gender.toString();
       state.basicInfo.hobby = hobby;
-      state.ageSelector.active.text = age.toString();
+      state.ageSelector.active.text = age + "岁";
       state.ageSelector.active.value = age.toString();
       state.info.isPlayerApply = isPlayer;
       state.tags.active = personalityLable.split(", ");

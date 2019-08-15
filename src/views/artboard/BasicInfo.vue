@@ -58,7 +58,9 @@
         </template>
       </md-cell-item>
       <md-cell-item
-        :addon="ageSelector.active.text ? ageSelector.active.text : '请选择'"
+        :addon="
+          ageSelector.active.value ? `${ageSelector.active.value}岁` : '请选择'
+        "
         arrow
         @click="toggleAgeSelector"
       >
@@ -163,6 +165,7 @@
     <md-action-bar :actions="action"></md-action-bar>
     <md-selector
       v-model="ageSelector.status"
+      :default-value="ageSelector.active.value"
       max-height="320px"
       title="选择年龄"
       :data="ageSelector.list"
