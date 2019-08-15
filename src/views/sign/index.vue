@@ -145,7 +145,6 @@ export default {
       this.getWxConfig().then(data => {
         if (data) {
           wxConfig(data);
-          console.log("nnplayer_version: ", process.env.VUE_APP_VERSION);
           window.wx.ready(() => {
             window.wx.checkJsApi({
               jsApiList: [

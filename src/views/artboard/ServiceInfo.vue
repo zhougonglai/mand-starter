@@ -510,7 +510,7 @@ export default {
     round
   },
   created() {
-    this.getgameList();
+    this.getgameList(true);
     this.$nextTick(() => {
       Toast.hide();
     });

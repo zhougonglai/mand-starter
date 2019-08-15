@@ -15,7 +15,12 @@ export default {
   state: {
     info: {},
     gameApply: [],
-    playerStatus: {},
+    playerStatus: {
+      //  陪玩资料审核状态：0已通过，1被驳回，2审核中
+      playerDetailsStatus: "",
+      //  陪玩状态 ：0审核通过（已经成为陪玩），1被驳回（不是陪玩），2审核中（不是陪玩）
+      playerStatus: ""
+    },
     reasons: "",
     openId: "",
     ageSelector: {
@@ -149,10 +154,13 @@ export default {
     toggelGameList: ({ commit }) => commit("GAMELIST_TOGGEL"),
     resetVerification: ({ commit }) => commit("SET_VERIFICATION"),
     activeGameList: ({ commit, dispatch }, { refresh, ...active }) => {
-      dispatch("activeRankList", {});
-      commit("GAMELIST_ACTIVE", active);
       if (refresh) {
-        console.log("refresh 段位");
+        commit("GAMELIST_ACTIVE", active);
+      }
+      dispatch("getrankList");
+      dispatch("getSampleGraph");
+      if (refresh) {
+        dispatch("activeRankList", {});
       }
     },
     toggelRankList: ({ commit }) => commit("RANKLIST_TOGGEL"),
@@ -394,11 +402,10 @@ export default {
       if (rtnCode === "000") {
         if (rtnInfo.code === 0) {
           commit("SET_GAMELIST", rtnInfo.data);
-          if (playerStatus.playerStatus === 3) {
-            dispatch("activeGameList", { ...rtnInfo.data[0] });
-          }
-          dispatch("getrankList");
-          dispatch("getSampleGraph");
+          dispatch("activeGameList", {
+            ...rtnInfo.data[0],
+            refresh: playerStatus.playerStatus === 3
+          });
         }
       }
       return rtnInfo;
