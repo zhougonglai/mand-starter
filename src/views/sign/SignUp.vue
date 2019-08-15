@@ -13,7 +13,7 @@
             name="tel"
             ref="phone"
             autocomplete="tel"
-            v-model.trim.number.lazy="signUp.phone"
+            v-model.trim.number="signUp.phone"
             placeholder="请输入手机号"
             :maxlength="areaCode.active.code === 86 && 11"
           />
@@ -481,6 +481,7 @@ import {
   Field
 } from "mand-mobile";
 import { mapState, mapActions } from "vuex";
+import { clearInterval } from "timers";
 
 export default {
   name: "sign-up",
@@ -601,6 +602,12 @@ export default {
   },
   created() {
     this.sign.current = "sign_up";
+    if (this.verification.timer) {
+      clearInterval(this.verification.timer);
+      this.verification.timer = 0;
+      this.verification.status = false;
+      this.verification.time = 60;
+    }
   }
 };
 </script>

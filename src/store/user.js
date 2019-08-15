@@ -144,6 +144,7 @@ export default {
     verification: {
       label: "获取短信验证码",
       time: 60,
+      timer: 0,
       status: false,
       dataSource: undefined,
       type: 1 // 1: 短信验证码 , 0 : 图形验证码
@@ -314,8 +315,12 @@ export default {
         if (code) {
           Toast.info(msg);
         } else {
+          if (verification.timer) {
+            clearInterval(verification.timer);
+            verification.timer = 0;
+          }
           commit("VERIFICATION_TOGGER");
-          let timer = setInterval(() => {
+          const timer = setInterval(() => {
             if (verification.time > 1) {
               commit("VERIFICATION_COUNT", verification.time - 1);
             } else {
@@ -324,6 +329,7 @@ export default {
               commit("VERIFICATION_COUNT", 60);
             }
           }, 1000);
+          commit("VERIFICATION_TIMER", timer);
         }
         return code;
       } else {
@@ -533,6 +539,7 @@ export default {
       state.verification = {
         label: "获取短信验证码",
         time: 60,
+        timer: 0,
         status: false,
         dataSource: undefined,
         type: 1
@@ -641,6 +648,13 @@ export default {
     },
     VERIFICATION_COUNT({ verification }, time) {
       verification.time = time;
+    },
+    VERIFICATION_TIMER({ verification }, timer) {
+      verification.timer = timer;
+    },
+    VERIFICATION_CLEAR({ verification }) {
+      clearInterval(verification.timer);
+      verification.timer = 0;
     },
     VERIFICATION_TOGGER({ verification }) {
       verification.status = !verification.status;

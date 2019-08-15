@@ -13,7 +13,7 @@
             name="phone"
             autocomplete="tel"
             :required="signIn.accountType"
-            v-model.number.trim.lazy="signIn.phone"
+            v-model.number.trim="signIn.phone"
             placeholder="请输入手机号"
             :maxlength="areaCode.active.code === 86 && 11"
           />

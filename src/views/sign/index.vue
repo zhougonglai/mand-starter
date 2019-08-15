@@ -133,12 +133,10 @@ export default {
       });
     },
     ...mapActions("global", ["toggleAreaSelector"]),
-    ...mapActions("config", ["getWxConfig"]),
-    ...mapActions("user", ["resetVerification"])
+    ...mapActions("config", ["getWxConfig"])
   },
   created() {
     this.sign.current = this.$route.name;
-    this.resetVerification();
   },
   mounted() {
     if (isWx()) {

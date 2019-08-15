@@ -14,7 +14,7 @@
             required
             ref="phone"
             type="tel"
-            v-model.number.trim.lazy="forgetInfo.phone"
+            v-model.number.trim="forgetInfo.phone"
             placeholder="请输入手机号"
             :maxlength="areaCode.active.code === 86 && 11"
           />
@@ -289,6 +289,14 @@ export default {
       "checkImageShow",
       "findPwd"
     ])
+  },
+  created() {
+    if (this.verification.timer) {
+      clearInterval(this.verification.timer);
+      this.verification.timer = 0;
+      this.verification.status = false;
+      this.verification.time = 60;
+    }
   },
   mounted() {
     this.$_initScrollBlock();
