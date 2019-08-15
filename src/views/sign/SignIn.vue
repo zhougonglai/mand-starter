@@ -155,14 +155,24 @@ export default {
       this.waiting = false;
       if (!code) {
         const {
-          data: { playerDetailsStatus }
+          data: { playerDetailsStatus, playerStatus }
         } = await this.playerStatus();
-        if (playerDetailsStatus !== 3) {
+        if (playerDetailsStatus === 3) {
+          // 已经是陪玩或者 初次申请者
+          this.$router.push({
+            name: "basic_info"
+          });
+        } else if (playerStatus === 0) {
+          this.$router.push({
+            name: "result_page"
+          });
+        } else {
+          // 已经提交申请中的陪玩
           await this.playerInfoStatus();
+          this.$router.push({
+            name: "result_page"
+          });
         }
-        this.$router.push({
-          name: playerDetailsStatus === 3 ? "basic_info" : "result_page"
-        });
       }
     },
     ...mapActions("global", ["toggleAreaSelector"]),
@@ -184,14 +194,24 @@ export default {
         const { code } = await this.autoLogin();
         if (code === 0) {
           const {
-            data: { playerDetailsStatus }
+            data: { playerDetailsStatus, playerStatus }
           } = await this.playerStatus();
-          if (playerDetailsStatus !== 3) {
+          if (playerDetailsStatus === 3) {
+            // 已经是陪玩或者 初次申请者
+            this.$router.push({
+              name: "basic_info"
+            });
+          } else if (playerStatus === 0) {
+            this.$router.push({
+              name: "result_page"
+            });
+          } else {
+            // 已经提交申请中的陪玩
             await this.playerInfoStatus();
+            this.$router.push({
+              name: "result_page"
+            });
           }
-          this.$router.push({
-            name: playerDetailsStatus === 3 ? "basic_info" : "result_page"
-          });
         }
       }
     } else if (query.has("phone")) {

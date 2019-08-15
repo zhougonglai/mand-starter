@@ -16,7 +16,7 @@ export default {
     info: {},
     gameApply: [],
     playerStatus: {
-      //  陪玩资料审核状态：0已通过，1被驳回，2审核中
+      //  陪玩资料审核状态：0已通过，1被驳回，2审核中, 3初次申请
       playerDetailsStatus: "",
       //  陪玩状态 ：0审核通过（已经成为陪玩），1被驳回（不是陪玩），2审核中（不是陪玩）
       playerStatus: ""

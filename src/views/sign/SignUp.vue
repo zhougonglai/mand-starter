@@ -26,7 +26,7 @@
             required
             ref="smsCode"
             type="tel"
-            v-model.trim.number="signUp.smsCode"
+            v-model.trim="signUp.smsCode"
             placeholder="请输入6位数验证码"
             maxlength="6"
           />
@@ -570,15 +570,17 @@ export default {
         }
       }
       const code = await this.register(this.signUp);
+      await this.playerStatus();
       if (code === 0) {
         this.gotoBasicInfo();
       }
     },
     ...mapActions("global", ["toggleAreaSelector"]),
     ...mapActions("user", [
-      "checkImageShow",
       "imgCode",
       "register",
+      "playerStatus",
+      "checkImageShow",
       "phoneAuthenticateNoLogin"
     ])
   },
