@@ -71,7 +71,12 @@ export default {
         if (this.data.networkState === 0 || this.data.networkState === 3) {
           this.data = new Audio(this.url);
           this.data.load();
-          console.log("reload resource");
+          console.log(
+            "reload resource",
+            this.data,
+            this.data.url,
+            this.data.duration
+          );
         }
         this.data.play();
         this.data.addEventListener("ended", () => {

@@ -561,7 +561,7 @@ export default {
   }
 
   .right-content {
-    width: 20vw;
+    min-width: 20vw;
 
     >>>.md-button {
       background-color: #909399;

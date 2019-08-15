@@ -150,6 +150,11 @@ export default {
           }
         }
       }
+      if (!this.$refs.password.validity.valid) {
+        if (this.$refs.password.validity.valueMissing) {
+          Toast.info("密码不能为空");
+        }
+      }
       this.waiting = true;
       const code = await this.login(this.signIn);
       this.waiting = false;
