@@ -50,15 +50,14 @@
         <div class="fiel-item fill">
           <input
             required
-            ref="password"
-            name="password"
-            autocomplete="now-password"
-            :type="passwordStatus ? 'text' : 'password'"
-            v-model.trim="signUp.password"
-            pattern="/^[0-9A-Za-z!@#$%^&*()\[\]_+,.?/<>|]{6,18}$/"
             minlength="6"
             maxlength="18"
+            ref="password"
+            name="password"
             placeholder="请输入6-18位的新密码，不含空格"
+            autocomplete="new-password"
+            :type="passwordStatus ? 'text' : 'password'"
+            v-model.trim="signUp.password"
           />
           <svg
             class="icon"
@@ -571,17 +570,24 @@ export default {
         } else if (this.$refs.password.validity.valueMissing) {
           Toast.info("密码不能为空");
           return;
-        } else if (this.$refs.password.validity.patternMismatch) {
-          Toast.info("密码格式错误");
-          return;
         }
       }
-      this.waiting = true;
-      const code = await this.register(this.signUp);
-      this.waiting = false;
-      if (code === 0) {
-        await this.playerStatus();
-        this.gotoBasicInfo();
+      if (
+        // eslint-disable-next-line
+        new RegExp(/^[0-9A-Za-z!@#$%^&*()\[\]_+,.?/<>|]{6,18}$/).test(
+          this.signUp.password
+        )
+      ) {
+        this.waiting = true;
+        const code = await this.register(this.signUp);
+        this.waiting = false;
+        if (code === 0) {
+          await this.playerStatus();
+          this.gotoBasicInfo();
+        }
+      } else {
+        Toast.info("密码格式错误");
+        return;
       }
     },
     ...mapActions("global", ["toggleAreaSelector"]),

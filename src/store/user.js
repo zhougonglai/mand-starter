@@ -117,7 +117,7 @@ export default {
     basicInfo: {
       QQNO: undefined,
       phone: undefined,
-      gender: "1",
+      gender: "2",
       hobby: ""
     },
     serviceInfo: {
@@ -190,7 +190,7 @@ export default {
         } else {
           commit("SET_INFO", data);
         }
-        return code;
+        return { code, data, msg };
       } else {
         throw Error("服务器异常");
       }
@@ -573,6 +573,7 @@ export default {
       state.gameList.active.value = gameId;
       state.gameList.active.id = gameId;
       state.gameList.active.name = gameType;
+      state.gameList.active.type = 0; // 服务端没给
       state.rankList.active.value = rank;
       state.rankList.active.id = rank;
       state.rankList.active.rankName = rankName;

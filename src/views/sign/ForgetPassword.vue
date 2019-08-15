@@ -53,9 +53,12 @@
         <div class="fiel-item fill">
           <input
             required
+            minlength="6"
+            maxlength="18"
             ref="password"
+            autocomplete="new-password"
             :type="passwordStatus ? 'text' : 'password'"
-            v-model="forgetInfo.password"
+            v-model.trim="forgetInfo.password"
             placeholder="请输入6-18位的新密码，不含空格"
           />
           <svg
@@ -203,7 +206,7 @@ export default {
       this.areaCode.status = false;
     },
     imgCodeRefrash() {
-      this.imgCode(2);
+      this.imgCode(3);
     },
     setCountry(country) {
       this.areaCode.active = country;
@@ -216,7 +219,7 @@ export default {
       if (this.forgetInfo.phone) {
         const code = await this.checkImageShow({ ...this.forgetInfo, type: 2 });
         if (code === 0) {
-          await this.imgCode(2);
+          await this.imgCode(3);
           this.imgCoder.status = true;
         } else if (code === 1) {
           await this.phoneAuthenticateNoLogin({ ...this.forgetInfo, type: 3 });
@@ -265,18 +268,22 @@ export default {
           return;
         }
       }
-      const code = await this.findPwd(this.forgetInfo);
-      if (code === 0) {
-        this.$router.push({ name: "sign_in", query: this.forgetInfo });
-        // await this.login({
-        //   ...this.forgetInfo,
-        //   accountType: true
-        // });
-        // this.$router.push({ name: "basic_info" });
+      if (
+        // eslint-disable-next-line
+        new RegExp(/^[0-9A-Za-z!@#$%^&*()\[\]_+,.?/<>|]{6,18}$/).test(
+          this.forgetInfo.password
+        )
+      ) {
+        const code = await this.findPwd(this.forgetInfo);
+        if (code === 0) {
+          this.$router.push({ name: "sign_in", query: this.forgetInfo });
+        }
+      } else {
+        Toast.info("密码格式错误");
+        return;
       }
     },
     ...mapActions("user", [
-      "login",
       "imgCode",
       "phoneAuthenticateNoLogin",
       "checkImageShow",

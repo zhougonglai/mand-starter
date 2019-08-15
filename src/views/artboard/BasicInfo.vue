@@ -147,9 +147,11 @@
             <li class="image-reader-item add" v-if="images.length < 6">
               <md-image-reader
                 is-multiple
+                :size="8192"
                 :amount="6"
                 @select="onReaderSelect"
                 @complete="onReaderComplete"
+                @error="fileError"
               />
               <md-icon name="camera" size="md" color="#CCC"></md-icon>
               <p>添加图片</p>
@@ -261,6 +263,15 @@ export default {
     },
     onReaderSelect() {
       Toast.loading("图片读取中...");
+    },
+    fileError(name, { code }) {
+      const errorMessage = {
+        "100": "浏览器不支持",
+        "101": "图片超过8M",
+        "102": "图片读取失败",
+        "103": "图片数量超过限制"
+      };
+      Toast.failed(errorMessage[code]);
     },
     async onReaderComplete(name, { dataUrl, blob, file }) {
       Toast.hide();

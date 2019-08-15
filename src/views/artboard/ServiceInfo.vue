@@ -45,7 +45,11 @@
         title="技能截图"
         class="border-bottom-1px"
         no-border
-        brief="请上传清晰游戏显示（游戏昵称和段位信息）界面的截图"
+        :brief="
+          gameList.active.type === 2
+            ? '请上传真人正面清晰照片'
+            : '请上传清晰游戏显示（游戏昵称和段位信息）界面的截图'
+        "
       >
         <template slot="children">
           <ul class="image_box">
@@ -85,6 +89,8 @@
                 "
               >
                 <md-image-reader
+                  :size="8192"
+                  @error="fileError"
                   @select="onReaderSelect"
                   @complete="onReaderComplete"
                 />
@@ -367,6 +373,15 @@ export default {
     onReaderSelect() {
       Toast.loading("图片读取中...");
     },
+    fileError(name, { code }) {
+      const errorMessage = {
+        "100": "浏览器不支持",
+        "101": "图片超过8M",
+        "102": "图片读取失败",
+        "103": "图片数量超过限制"
+      };
+      Toast.failed(errorMessage[code]);
+    },
     async onReaderComplete(name, { dataUrl, file }) {
       Toast.hide();
       this.serviceInfo.img.dataUrl = dataUrl;
@@ -510,7 +525,14 @@ export default {
     round
   },
   created() {
-    this.getgameList(true);
+    this.getgameList(true).then(({ data }) => {
+      // 游戏类型文案 补偿
+      if (!this.gameList.active.type) {
+        this.gameList.active.type = data.find(
+          ({ id }) => id === this.gameList.active.id
+        ).type;
+      }
+    });
     this.$nextTick(() => {
       Toast.hide();
     });
@@ -542,9 +564,6 @@ export default {
         }
       });
     }
-  },
-  mounted() {
-    // window.wx.error(err => {});
   }
 };
 </script>

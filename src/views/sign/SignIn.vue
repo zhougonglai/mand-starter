@@ -156,7 +156,12 @@ export default {
         }
       }
       this.waiting = true;
-      const code = await this.login(this.signIn);
+      // setTimeout(() => {
+      //   if (this.waiting) {
+      //     this.waiting = false;
+      //   }
+      // }, 6000);
+      const { code } = await this.login(this.signIn);
       this.waiting = false;
       if (!code) {
         const {
