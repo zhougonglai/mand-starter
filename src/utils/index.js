@@ -188,8 +188,8 @@ export const citys = [
     label: "河北省",
     children: [
       {
-        value: "石家庄",
-        label: "石家庄",
+        value: "石家庄市",
+        label: "石家庄市",
         children: [
           { value: "长安区", label: "长安区" },
           { value: "桥西区", label: "桥西区" },
@@ -237,8 +237,8 @@ export const citys = [
         ]
       },
       {
-        value: "唐山",
-        label: "唐山",
+        value: "唐山市",
+        label: "唐山市",
         children: [
           { value: "路北区", label: "路北区" },
           { value: "路南区", label: "路南区" },
@@ -269,8 +269,8 @@ export const citys = [
         ]
       },
       {
-        value: "秦皇岛",
-        label: "秦皇岛",
+        value: "秦皇岛市",
+        label: "秦皇岛市",
         children: [
           { value: "海港区", label: "海港区" },
           { value: "山海关区", label: "山海关区" },
@@ -288,8 +288,8 @@ export const citys = [
         ]
       },
       {
-        value: "邯郸",
-        label: "邯郸",
+        value: "邯郸市",
+        label: "邯郸市",
         children: [
           { value: "邯山区", label: "邯山区" },
           { value: "丛台区", label: "丛台区" },
@@ -327,8 +327,8 @@ export const citys = [
         ]
       },
       {
-        value: "邢台",
-        label: "邢台",
+        value: "邢台市",
+        label: "邢台市",
         children: [
           { value: "桥东区", label: "桥东区" },
           { value: "桥西区", label: "桥西区" },
@@ -370,8 +370,8 @@ export const citys = [
         ]
       },
       {
-        value: "保定",
-        label: "保定",
+        value: "保定市",
+        label: "保定市",
         children: [
           { value: "竞秀区", label: "竞秀区" },
           { value: "莲池区", label: "莲池区" },
@@ -421,8 +421,8 @@ export const citys = [
         ]
       },
       {
-        value: "张家口",
-        label: "张家口",
+        value: "张家口市",
+        label: "张家口市",
         children: [
           { value: "桥东区", label: "桥东区" },
           { value: "桥西区", label: "桥西区" },
@@ -458,8 +458,8 @@ export const citys = [
         ]
       },
       {
-        value: "承德",
-        label: "承德",
+        value: "承德市",
+        label: "承德市",
         children: [
           { value: "双桥区", label: "双桥区" },
           { value: "双滦区", label: "双滦区" },
@@ -484,8 +484,8 @@ export const citys = [
         ]
       },
       {
-        value: "沧州",
-        label: "沧州",
+        value: "沧州市",
+        label: "沧州市",
         children: [
           { value: "运河区", label: "运河区" },
           { value: "新华区", label: "新华区" },
@@ -521,8 +521,8 @@ export const citys = [
         ]
       },
       {
-        value: "廊坊",
-        label: "廊坊",
+        value: "廊坊市",
+        label: "廊坊市",
         children: [
           { value: "广阳区", label: "广阳区" },
           { value: "安次区", label: "安次区" },
@@ -546,8 +546,8 @@ export const citys = [
         ]
       },
       {
-        value: "衡水",
-        label: "衡水",
+        value: "衡水市",
+        label: "衡水市",
         children: [
           { value: "桃城区", label: "桃城区" },
           { value: "冀州区", label: "冀州区" },
@@ -578,8 +578,8 @@ export const citys = [
     label: "山西省",
     children: [
       {
-        value: "太原",
-        label: "太原",
+        value: "太原市",
+        label: "太原市",
         children: [
           { value: "小店区", label: "小店区" },
           { value: "迎泽区", label: "迎泽区" },
@@ -603,8 +603,8 @@ export const citys = [
         ]
       },
       {
-        value: "大同",
-        label: "大同",
+        value: "大同市",
+        label: "大同市",
         children: [
           { value: "平城区", label: "平城区" },
           { value: "云冈区", label: "云冈区" },
@@ -630,8 +630,8 @@ export const citys = [
         ]
       },
       {
-        value: "朔州",
-        label: "朔州",
+        value: "朔州市",
+        label: "朔州市",
         children: [
           { value: "朔城区", label: "朔城区" },
           { value: "平鲁区", label: "平鲁区" },
@@ -645,8 +645,8 @@ export const citys = [
         ]
       },
       {
-        value: "忻州",
-        label: "忻 州",
+        value: "忻州市",
+        label: "忻州市",
         children: [
           { value: "忻府区", label: "忻府区" },
           { value: "定襄县", label: "定襄县" },
@@ -677,8 +677,8 @@ export const citys = [
         ]
       },
       {
-        value: "阳泉",
-        label: "阳泉",
+        value: "阳泉市",
+        label: "阳泉市",
         children: [
           { value: "城区", label: "城区" },
           { value: "矿区", label: "矿区" },
@@ -691,8 +691,8 @@ export const citys = [
         ]
       },
       {
-        value: "吕梁",
-        label: "吕梁",
+        value: "吕梁市",
+        label: "吕梁市",
         children: [
           { value: "离石区", label: "离石区" },
           { value: "文水县", label: "文水县" },
@@ -722,8 +722,8 @@ export const citys = [
         ]
       },
       {
-        value: "晋中",
-        label: "晋中",
+        value: "晋中市",
+        label: "晋中市",
         children: [
           { value: "榆次区", label: "榆次区" },
           { value: "榆社县", label: "榆社县" },
@@ -748,8 +748,8 @@ export const citys = [
         ]
       },
       {
-        value: "长治",
-        label: "长治",
+        value: "长治市",
+        label: "长治市",
         children: [
           { value: "潞州区", label: "潞州区" },
           { value: "潞城区", label: "潞城区" },
@@ -777,8 +777,8 @@ export const citys = [
         ]
       },
       {
-        value: "晋城",
-        label: "晋城",
+        value: "晋城市",
+        label: "晋城市",
         children: [
           { value: "城区", label: "城区" },
           { value: "沁水县", label: "沁水县" },
@@ -792,8 +792,8 @@ export const citys = [
         ]
       },
       {
-        value: "临汾",
-        label: "临汾",
+        value: "临汾市",
+        label: "临汾市",
         children: [
           { value: "尧都区", label: "尧都区" },
           { value: "曲沃县", label: "曲沃县" },
@@ -830,8 +830,8 @@ export const citys = [
         ]
       },
       {
-        value: "运城",
-        label: "运城",
+        value: "运城市",
+        label: "运城市",
         children: [
           { value: "盐湖区", label: "盐湖区" },
           { value: "临猗县", label: "临猗县" },
@@ -867,8 +867,8 @@ export const citys = [
     label: "内蒙古自治区",
     children: [
       {
-        value: "呼和浩特",
-        label: "呼和浩特",
+        value: "呼和浩特市",
+        label: "呼和浩特市",
         children: [
           { value: "回民区", label: "回民区" },
           { value: "新城区", label: "新城区" },
@@ -888,8 +888,8 @@ export const citys = [
         ]
       },
       {
-        value: "包头",
-        label: "包头",
+        value: "包头市",
+        label: "包头市",
         children: [
           { value: "昆都仑区", label: "昆都仑区" },
           { value: "东河区", label: "东河区" },
@@ -912,8 +912,8 @@ export const citys = [
         ]
       },
       {
-        value: "乌海",
-        label: "乌海",
+        value: "乌海市",
+        label: "乌海市",
         children: [
           { value: "海勃湾区", label: "海勃湾区" },
           { value: "海南区", label: "海南区" },
@@ -924,8 +924,8 @@ export const citys = [
         ]
       },
       {
-        value: "赤峰",
-        label: "赤峰",
+        value: "赤峰市",
+        label: "赤峰市",
         children: [
           { value: "红山区", label: "红山区" },
           { value: "元宝山区", label: "元宝山区" },
@@ -951,8 +951,8 @@ export const citys = [
         ]
       },
       {
-        value: "通辽",
-        label: "通辽",
+        value: "通辽市",
+        label: "通辽市",
         children: [
           { value: "科尔沁区", label: "科尔沁区" },
           { value: "霍林郭勒市", label: "霍林郭勒市" },
@@ -971,8 +971,8 @@ export const citys = [
         ]
       },
       {
-        value: "鄂尔多斯",
-        label: "鄂尔多斯",
+        value: "鄂尔多斯市",
+        label: "鄂尔多斯市",
         children: [
           { value: "康巴什区", label: "康巴什区" },
           { value: "东胜区", label: "东胜区" },
@@ -992,8 +992,8 @@ export const citys = [
         ]
       },
       {
-        value: "呼伦贝尔",
-        label: "呼伦贝尔",
+        value: "呼伦贝尔市",
+        label: "呼伦贝尔市",
         children: [
           { value: "海拉尔区", label: "海拉尔区" },
           { value: "扎 赉诺尔区", label: "扎赉诺尔区" },
@@ -1027,8 +1027,8 @@ export const citys = [
         ]
       },
       {
-        value: "巴彦淖尔",
-        label: "巴彦淖尔",
+        value: "巴彦淖尔市",
+        label: "巴彦淖尔市",
         children: [
           { value: "临河区", label: "临河区" },
           { value: "五原县", label: "五原县" },
@@ -1046,8 +1046,8 @@ export const citys = [
         ]
       },
       {
-        value: "乌兰察布",
-        label: "乌兰察布",
+        value: "乌兰察布市",
+        label: "乌兰察布市",
         children: [
           { value: "集宁区", label: "集宁区" },
           { value: "丰镇市", label: "丰镇市" },
@@ -1072,8 +1072,8 @@ export const citys = [
         ]
       },
       {
-        value: "兴安盟",
-        label: "兴安盟",
+        value: "兴安盟市",
+        label: "兴安盟市",
         children: [
           { value: "乌兰浩特市", label: "乌兰浩特市" },
           { value: "阿尔山市", label: "阿尔山市" },
@@ -1090,8 +1090,8 @@ export const citys = [
         ]
       },
       {
-        value: "锡林郭勒",
-        label: "锡林郭勒",
+        value: "锡林郭勒市",
+        label: "锡林郭勒市",
         children: [
           { value: "锡林浩特市", label: "锡林浩特市" },
           { value: "二连浩特市", label: "二连浩特市" },
@@ -1117,8 +1117,8 @@ export const citys = [
         ]
       },
       {
-        value: "阿拉善盟",
-        label: "阿拉善盟",
+        value: "阿拉善盟市",
+        label: "阿拉善盟市",
         children: [
           { value: "阿拉善左旗", label: "阿拉善左旗" },
           { value: "阿拉善右旗", label: "阿拉善右旗" },
@@ -1135,8 +1135,8 @@ export const citys = [
     label: "辽宁省",
     children: [
       {
-        value: "沈阳",
-        label: "沈阳",
+        value: "沈阳市",
+        label: "沈阳市",
         children: [
           { value: "和平区", label: "和平区" },
           { value: "沈河区", label: "沈河区" },
@@ -1166,8 +1166,8 @@ export const citys = [
         ]
       },
       {
-        value: "大连",
-        label: "大连",
+        value: "大连市",
+        label: "大连市",
         children: [
           { value: "中山区", label: "中山区" },
           { value: "西岗区", label: "西岗区" },
@@ -1191,8 +1191,8 @@ export const citys = [
         ]
       },
       {
-        value: "鞍山",
-        label: "鞍山",
+        value: "鞍山市",
+        label: "鞍山市",
         children: [
           { value: "铁东区", label: "铁东区" },
           { value: "铁西区", label: "铁西区" },
@@ -1210,8 +1210,8 @@ export const citys = [
         ]
       },
       {
-        value: "抚顺",
-        label: "抚顺",
+        value: "抚顺市",
+        label: "抚顺市",
         children: [
           { value: "新抚区", label: "新抚区" },
           { value: "顺城区", label: "顺城区" },
@@ -1229,8 +1229,8 @@ export const citys = [
         ]
       },
       {
-        value: "本溪",
-        label: "本溪",
+        value: "本溪市",
+        label: "本溪市",
         children: [
           { value: "平山区", label: "平山区" },
           { value: "溪湖区", label: "溪湖区" },
@@ -1247,8 +1247,8 @@ export const citys = [
         ]
       },
       {
-        value: "丹东",
-        label: "丹东",
+        value: "丹东市",
+        label: "丹东市",
         children: [
           { value: "元宝区", label: "元宝区" },
           { value: "振兴区", label: "振兴区" },
@@ -1262,8 +1262,8 @@ export const citys = [
         ]
       },
       {
-        value: "锦州",
-        label: "锦州",
+        value: "锦州市",
+        label: "锦州市",
         children: [
           { value: "古塔区", label: "古塔区" },
           { value: "凌河区", label: "凌河区" },
@@ -1281,8 +1281,8 @@ export const citys = [
         ]
       },
       {
-        value: "营口",
-        label: "营口",
+        value: "营口市",
+        label: "营口市",
         children: [
           { value: "站前区", label: "站前区" },
           { value: "西市区", label: "西市区" },
@@ -1296,8 +1296,8 @@ export const citys = [
         ]
       },
       {
-        value: "阜新",
-        label: "阜新",
+        value: "阜新市",
+        label: "阜新市",
         children: [
           { value: "海州区", label: "海州区" },
           { value: "新邱区", label: "新邱区" },
@@ -1316,8 +1316,8 @@ export const citys = [
         ]
       },
       {
-        value: "辽阳",
-        label: "辽阳",
+        value: "辽阳市",
+        label: "辽阳市",
         children: [
           { value: "白塔区", label: "白塔区" },
           { value: "文圣区", label: "文圣区" },
@@ -1335,8 +1335,8 @@ export const citys = [
         ]
       },
       {
-        value: "盘锦",
-        label: "盘锦",
+        value: "盘锦市",
+        label: "盘锦市",
         children: [
           { value: "双台子区", label: "双台子区" },
           { value: "兴隆台区", label: "兴隆台区" },
@@ -1348,8 +1348,8 @@ export const citys = [
         ]
       },
       {
-        value: "铁岭",
-        label: "铁岭",
+        value: "铁岭市",
+        label: "铁岭市",
         children: [
           { value: "银州区", label: "银州区" },
           { value: "清河区", label: "清河区" },
@@ -1367,8 +1367,8 @@ export const citys = [
         ]
       },
       {
-        value: "朝阳",
-        label: "朝阳",
+        value: "朝阳市",
+        label: "朝阳市",
         children: [
           { value: "双塔区", label: "双塔区" },
           { value: "龙城区", label: "龙城区" },
@@ -1386,8 +1386,8 @@ export const citys = [
         ]
       },
       {
-        value: "葫芦岛",
-        label: "葫芦岛",
+        value: "葫芦岛市",
+        label: "葫芦岛市",
         children: [
           { value: "连山区", label: "连山区" },
           { value: "龙港区", label: "龙港区" },
@@ -1407,8 +1407,8 @@ export const citys = [
     label: "吉林省",
     children: [
       {
-        value: "长春",
-        label: "长春",
+        value: "长春市",
+        label: "长春市",
         children: [
           { value: "南关区", label: "南关区" },
           { value: "朝阳区", label: "朝阳区" },
@@ -1432,8 +1432,8 @@ export const citys = [
         ]
       },
       {
-        value: "吉林",
-        label: "吉林",
+        value: "吉林市",
+        label: "吉林市",
         children: [
           { value: "船营区", label: "船营区" },
           { value: "龙潭区", label: "龙潭区" },
@@ -1453,8 +1453,8 @@ export const citys = [
         ]
       },
       {
-        value: "四平",
-        label: "四平",
+        value: "四平市",
+        label: "四平市",
         children: [
           { value: "铁西区", label: "铁西区" },
           { value: "铁东区", label: "铁东区" },
@@ -1466,10 +1466,14 @@ export const citys = [
           { value: "伊通满族自治县", label: "伊通满族自治县" }
         ]
       },
-      { value: "公主岭", label: "公主岭" },
       {
-        value: "辽源",
-        label: "辽源",
+        value: "公主岭",
+        label: "公主岭",
+        children: [{ value: "公主岭", label: "公主岭" }]
+      },
+      {
+        value: "辽源市",
+        label: "辽源市",
         children: [
           { value: "龙山区", label: "龙山区" },
           { value: "西安区", label: "西安区" },
@@ -1481,8 +1485,8 @@ export const citys = [
         ]
       },
       {
-        value: "通化",
-        label: "通化",
+        value: "通化市",
+        label: "通化市",
         children: [
           { value: "东昌区", label: "东昌区" },
           { value: "二道江区", label: "二道江区" },
@@ -1500,8 +1504,8 @@ export const citys = [
         ]
       },
       {
-        value: "白山",
-        label: "白山",
+        value: "白山市",
+        label: "白山市",
         children: [
           { value: "浑江区", label: "浑江区" },
           { value: "江源区", label: "江源区" },
@@ -1518,8 +1522,8 @@ export const citys = [
         ]
       },
       {
-        value: "白城",
-        label: "白城",
+        value: "白城市",
+        label: "白城市",
         children: [
           { value: "洮北区", label: "洮北区" },
           { value: "洮南市", label: "洮南市" },
@@ -1532,8 +1536,8 @@ export const citys = [
         ]
       },
       {
-        value: "松原",
-        label: "松原",
+        value: "松原市",
+        label: "松原市",
         children: [
           { value: "宁江区", label: "宁江区" },
           { value: "扶余市", label: "扶余市" },
@@ -1546,8 +1550,8 @@ export const citys = [
         ]
       },
       {
-        value: "延边",
-        label: "延边",
+        value: "延边市",
+        label: "延边市",
         children: [
           { value: "延吉市", label: "延吉市" },
           { value: "图们市", label: "图们市" },
@@ -1572,8 +1576,8 @@ export const citys = [
     label: "黑龙江省",
     children: [
       {
-        value: "哈尔滨",
-        label: "哈尔滨",
+        value: "哈尔滨市",
+        label: "哈尔滨市",
         children: [
           { value: "道里区", label: "道里区" },
           { value: "南岗区", label: "南岗区" },
@@ -1611,8 +1615,8 @@ export const citys = [
         ]
       },
       {
-        value: "齐齐哈尔",
-        label: "齐齐哈尔",
+        value: "齐齐哈尔市",
+        label: "齐齐哈尔市",
         children: [
           { value: "龙沙区", label: "龙沙区" },
           { value: "建华区", label: "建华区" },
@@ -1648,8 +1652,8 @@ export const citys = [
         ]
       },
       {
-        value: "牡丹江",
-        label: "牡丹江",
+        value: "牡丹江市",
+        label: "牡丹江市",
         children: [
           { value: "东安区", label: "东安区" },
           { value: "阳明区", label: "阳明区" },
@@ -1673,8 +1677,8 @@ export const citys = [
         ]
       },
       {
-        value: "佳木斯",
-        label: "佳木斯",
+        value: "佳木斯市",
+        label: "佳木斯市",
         children: [
           { value: "前进区", label: "前进区" },
           { value: "向阳区", label: "向阳区" },
@@ -1698,8 +1702,8 @@ export const citys = [
         ]
       },
       {
-        value: "大庆",
-        label: "大庆",
+        value: "大庆市",
+        label: "大庆市",
         children: [
           { value: "萨尔图区", label: "萨尔图区" },
           { value: "龙凤区", label: "龙凤区" },
@@ -1722,8 +1726,8 @@ export const citys = [
         ]
       },
       {
-        value: "鸡西",
-        label: "鸡西",
+        value: "鸡西市",
+        label: "鸡西市",
         children: [
           { value: "鸡冠区", label: "鸡冠区" },
           { value: "城子河区", label: "城子河区" },
@@ -1743,8 +1747,8 @@ export const citys = [
         ]
       },
       {
-        value: "双鸭山",
-        label: "双鸭山",
+        value: "双鸭山市",
+        label: "双鸭山市",
         children: [
           { value: "尖山区", label: "尖山区" },
           { value: "岭东区", label: "岭东区" },
@@ -1763,8 +1767,8 @@ export const citys = [
         ]
       },
       {
-        value: "伊春",
-        label: "伊春",
+        value: "伊春市",
+        label: "伊春市",
         children: [
           { value: "伊春区", label: "伊春区" },
           { value: "南岔区", label: "南岔区" },
@@ -1801,8 +1805,8 @@ export const citys = [
         ]
       },
       {
-        value: "七台河",
-        label: "七台河",
+        value: "七台河市",
+        label: "七台河市",
         children: [
           { value: "新兴区", label: "新兴区" },
           { value: "桃山区", label: "桃山区" },
@@ -1815,8 +1819,8 @@ export const citys = [
         ]
       },
       {
-        value: "鹤岗",
-        label: "鹤岗",
+        value: "鹤岗市",
+        label: "鹤岗市",
         children: [
           { value: "兴山区", label: "兴山区" },
           { value: "向阳区", label: "向阳区" },
@@ -1835,8 +1839,8 @@ export const citys = [
         ]
       },
       {
-        value: "黑河",
-        label: "黑河",
+        value: "黑河市",
+        label: "黑河市",
         children: [
           { value: "爱辉区", label: "爱辉区" },
           { value: "北安市", label: "北安市" },
@@ -1850,8 +1854,8 @@ export const citys = [
         ]
       },
       {
-        value: "绥化",
-        label: "绥化",
+        value: "绥化市",
+        label: "绥化市",
         children: [
           { value: "北林区", label: "北林区" },
           { value: "望奎县", label: "望奎县" },
@@ -1875,8 +1879,8 @@ export const citys = [
         ]
       },
       {
-        value: "大兴安岭",
-        label: "大兴安岭",
+        value: "大兴安岭市",
+        label: "大兴安岭市",
         children: [
           { value: "加格达奇区", label: "加格达奇区" },
           { value: "松岭区", label: "松岭区" },
@@ -1943,8 +1947,8 @@ export const citys = [
     label: "江苏省",
     children: [
       {
-        value: "南京",
-        label: "南京",
+        value: "南京市",
+        label: "南京市",
         children: [
           { value: "玄武区", label: "玄武区" },
           { value: "秦淮区", label: "秦淮区" },
@@ -1969,8 +1973,8 @@ export const citys = [
         ]
       },
       {
-        value: "无锡",
-        label: "无锡",
+        value: "无锡市",
+        label: "无锡市",
         children: [
           { value: "滨湖区", label: "滨湖区" },
           { value: "梁溪区", label: "梁溪区" },
@@ -1988,8 +1992,8 @@ export const citys = [
         ]
       },
       {
-        value: "徐州",
-        label: "徐州",
+        value: "徐州市",
+        label: "徐州市",
         children: [
           { value: "云龙区", label: "云龙区" },
           { value: "鼓楼区", label: "鼓楼区" },
@@ -2013,8 +2017,8 @@ export const citys = [
         ]
       },
       {
-        value: "常州",
-        label: "常州",
+        value: "常州市",
+        label: "常州市",
         children: [
           { value: "天宁区", label: "天宁区" },
           { value: "钟楼区", label: "钟楼区" },
@@ -2028,8 +2032,8 @@ export const citys = [
         ]
       },
       {
-        value: "苏州",
-        label: "苏州",
+        value: "苏州市",
+        label: "苏州市",
         children: [
           { value: "姑苏区", label: "姑苏区" },
           { value: "虎丘区", label: "虎丘区" },
@@ -2049,8 +2053,8 @@ export const citys = [
         ]
       },
       {
-        value: "南通",
-        label: "南通",
+        value: "南通市",
+        label: "南通市",
         children: [
           { value: "崇川区", label: "崇川区" },
           { value: "港闸区", label: "港闸区" },
@@ -2069,8 +2073,8 @@ export const citys = [
         ]
       },
       {
-        value: "连云港",
-        label: "连云港",
+        value: "连云港市",
+        label: "连云港市",
         children: [
           { value: "连云区", label: "连云区" },
           { value: "海州区", label: "海州区" },
@@ -2084,8 +2088,8 @@ export const citys = [
         ]
       },
       {
-        value: "淮安",
-        label: "淮安",
+        value: "淮安市",
+        label: "淮安市",
         children: [
           { value: "清江浦区", label: "清江浦区" },
           { value: "淮安区", label: "淮安区" },
@@ -2103,8 +2107,8 @@ export const citys = [
         ]
       },
       {
-        value: "盐城",
-        label: "盐城",
+        value: "盐城市",
+        label: "盐城市",
         children: [
           { value: "亭湖区", label: "亭湖区" },
           { value: "盐都区", label: "盐都区" },
@@ -2124,8 +2128,8 @@ export const citys = [
         ]
       },
       {
-        value: "扬州",
-        label: "扬州",
+        value: "扬州市",
+        label: "扬州市",
         children: [
           { value: "广陵区", label: "广陵区" },
           { value: "邗江区", label: "邗江区" },
@@ -2139,8 +2143,8 @@ export const citys = [
         ]
       },
       {
-        value: "镇江",
-        label: "镇江",
+        value: "镇江市",
+        label: "镇江市",
         children: [
           { value: "京口区", label: "京口区" },
           { value: "润州区", label: "润州区" },
@@ -2154,8 +2158,8 @@ export const citys = [
         ]
       },
       {
-        value: "泰州",
-        label: "泰州",
+        value: "泰州市",
+        label: "泰州市",
         children: [
           { value: "海陵区", label: "海陵区" },
           { value: "高港区", label: "高港区" },
@@ -2169,8 +2173,8 @@ export const citys = [
         ]
       },
       {
-        value: "宿迁",
-        label: "宿迁",
+        value: "宿迁市",
+        label: "宿迁市",
         children: [
           { value: "宿城区", label: "宿城区" },
           { value: "宿豫区", label: "宿豫区" },
@@ -2189,8 +2193,8 @@ export const citys = [
     label: "浙江省",
     children: [
       {
-        value: "杭州",
-        label: "杭州",
+        value: "杭州市",
+        label: "杭州市",
         children: [
           { value: "上城区", label: "上城区" },
           { value: "下城区", label: "下城区" },
@@ -2220,8 +2224,8 @@ export const citys = [
         ]
       },
       {
-        value: "宁波",
-        label: "宁波",
+        value: "宁波市",
+        label: "宁波市",
         children: [
           { value: "海曙区", label: "海曙区" },
           { value: "江北区", label: "江北区" },
@@ -2245,8 +2249,8 @@ export const citys = [
         ]
       },
       {
-        value: "温州",
-        label: "温州",
+        value: "温州市",
+        label: "温州市",
         children: [
           { value: "鹿城区", label: "鹿城区" },
           { value: "龙湾区", label: "龙湾区" },
@@ -2271,8 +2275,8 @@ export const citys = [
         ]
       },
       {
-        value: "绍兴",
-        label: "绍兴",
+        value: "绍兴市",
+        label: "绍兴市",
         children: [
           { value: "越城区", label: "越城区" },
           { value: "柯桥区", label: "柯桥区" },
@@ -2286,8 +2290,8 @@ export const citys = [
         ]
       },
       {
-        value: "湖州",
-        label: "湖州",
+        value: "湖州市",
+        label: "湖州市",
         children: [
           { value: "吴兴区", label: "吴兴区" },
           { value: "南浔区", label: "南浔区" },
@@ -2300,8 +2304,8 @@ export const citys = [
         ]
       },
       {
-        value: "嘉兴",
-        label: "嘉兴",
+        value: "嘉兴市",
+        label: "嘉兴市",
         children: [
           { value: "南湖区", label: "南湖区" },
           { value: "秀洲区", label: "秀洲区" },
@@ -2319,8 +2323,8 @@ export const citys = [
         ]
       },
       {
-        value: "金华",
-        label: "金华",
+        value: "金华市",
+        label: "金华市",
         children: [
           { value: "婺城区", label: "婺城区" },
           { value: "金东区", label: "金东 区" },
@@ -2340,8 +2344,8 @@ export const citys = [
         ]
       },
       {
-        value: "衢州",
-        label: "衢州",
+        value: "衢州市",
+        label: "衢州市",
         children: [
           { value: "柯城区", label: "柯城区" },
           { value: "衢江区", label: "衢江区" },
@@ -2355,8 +2359,8 @@ export const citys = [
         ]
       },
       {
-        value: "台州",
-        label: "台州",
+        value: "台州市",
+        label: "台州市",
         children: [
           { value: "椒江区", label: "椒江区" },
           { value: "黄岩区", label: "黄岩区" },
@@ -2376,8 +2380,8 @@ export const citys = [
         ]
       },
       {
-        value: "丽水",
-        label: "丽水",
+        value: "丽水市",
+        label: "丽水市",
         children: [
           { value: "莲都区", label: "莲都区" },
           { value: "龙泉市", label: "龙泉市" },
@@ -2397,8 +2401,8 @@ export const citys = [
         ]
       },
       {
-        value: "舟山",
-        label: "舟山",
+        value: "舟山市",
+        label: "舟山市",
         children: [
           { value: "定海区", label: "定海区" },
           { value: "普陀区", label: "普陀区" },
@@ -2416,8 +2420,8 @@ export const citys = [
     label: "安徽省",
     children: [
       {
-        value: "合肥",
-        label: "合肥",
+        value: "合肥市",
+        label: "合肥市",
         children: [
           { value: "瑶海区", label: "瑶海区" },
           { value: "庐阳区", label: "庐阳区" },
@@ -2437,8 +2441,8 @@ export const citys = [
         ]
       },
       {
-        value: "芜湖",
-        label: "芜湖",
+        value: "芜湖市",
+        label: "芜湖市",
         children: [
           { value: "镜湖区", label: "镜湖区" },
           { value: "弋江区", label: "弋江区" },
@@ -2457,8 +2461,8 @@ export const citys = [
         ]
       },
       {
-        value: "蚌埠",
-        label: "蚌埠",
+        value: "蚌埠市",
+        label: "蚌埠市",
         children: [
           { value: "龙子湖区", label: "龙子湖区" },
           { value: "蚌山区", label: "蚌山区" },
@@ -2476,8 +2480,8 @@ export const citys = [
         ]
       },
       {
-        value: "淮南",
-        label: "淮南",
+        value: "淮南市",
+        label: "淮南市",
         children: [
           { value: "大通区", label: "大通区" },
           { value: "田家庵区", label: "田家庵区" },
@@ -2495,8 +2499,8 @@ export const citys = [
         ]
       },
       {
-        value: "马鞍山",
-        label: "马鞍山",
+        value: "马鞍山市",
+        label: "马鞍山市",
         children: [
           { value: "花山区", label: "花山区" },
           { value: "雨山区", label: "雨山区" },
@@ -2510,8 +2514,8 @@ export const citys = [
         ]
       },
       {
-        value: "淮北",
-        label: "淮北",
+        value: "淮北市",
+        label: "淮北市",
         children: [
           { value: "相山区", label: "相山区" },
           { value: "杜集区", label: "杜集区" },
@@ -2523,8 +2527,8 @@ export const citys = [
         ]
       },
       {
-        value: "铜陵",
-        label: "铜陵",
+        value: "铜陵市",
+        label: "铜陵市",
         children: [
           { value: "铜官区", label: "铜官区" },
           { value: "郊区", label: "郊区" },
@@ -2536,8 +2540,8 @@ export const citys = [
         ]
       },
       {
-        value: "安庆",
-        label: "安庆",
+        value: "安庆市",
+        label: "安庆市",
         children: [
           { value: "迎江区", label: "迎江区" },
           { value: "大观区", label: "大观区" },
@@ -2561,8 +2565,8 @@ export const citys = [
         ]
       },
       {
-        value: "黄山",
-        label: "黄山",
+        value: "黄山市",
+        label: "黄山市",
         children: [
           { value: "屯溪区", label: "屯溪区" },
           { value: "黄山区", label: "黄山区" },
@@ -2580,8 +2584,8 @@ export const citys = [
         ]
       },
       {
-        value: "阜阳",
-        label: "阜阳",
+        value: "阜阳市",
+        label: "阜阳市",
         children: [
           { value: "颍州区", label: "颍州区" },
           { value: "颍泉区", label: "颍泉区" },
@@ -2600,8 +2604,8 @@ export const citys = [
         ]
       },
       {
-        value: "宿州",
-        label: "宿州",
+        value: "宿州市",
+        label: "宿州市",
         children: [
           { value: "埇桥区", label: "埇桥区" },
           { value: "萧县", label: "萧县" },
@@ -2614,8 +2618,8 @@ export const citys = [
         ]
       },
       {
-        value: "滁州",
-        label: "滁州",
+        value: "滁州市",
+        label: "滁州市",
         children: [
           { value: "琅琊区", label: "琅琊区" },
           { value: "南谯区", label: "南谯区" },
@@ -2634,8 +2638,8 @@ export const citys = [
         ]
       },
       {
-        value: "六安",
-        label: "六安",
+        value: "六安市",
+        label: "六安市",
         children: [
           { value: "金安区", label: "金安区" },
           { value: "裕安区", label: "裕安区" },
@@ -2653,8 +2657,8 @@ export const citys = [
         ]
       },
       {
-        value: "宣城",
-        label: "宣城",
+        value: "宣城市",
+        label: "宣城市",
         children: [
           { value: "宣州区", label: "宣州区" },
           { value: "郎溪县", label: "郎溪县" },
@@ -2672,8 +2676,8 @@ export const citys = [
         ]
       },
       {
-        value: "池州",
-        label: "池州",
+        value: "池州市",
+        label: "池州市",
         children: [
           { value: "贵池区", label: "贵池区" },
           { value: "青阳县", label: "青阳县" },
@@ -2685,8 +2689,8 @@ export const citys = [
         ]
       },
       {
-        value: "亳州",
-        label: "亳州",
+        value: "亳州市",
+        label: "亳州市",
         children: [
           { value: "谯城区", label: "谯城区" },
           { value: "蒙城县", label: "蒙城县" },
@@ -2704,8 +2708,8 @@ export const citys = [
     label: "福建省",
     children: [
       {
-        value: "福州",
-        label: "福州",
+        value: "福州市",
+        label: "福州市",
         children: [
           { value: "鼓楼区", label: "鼓楼区" },
           { value: "台江区", label: "台江区" },
@@ -2732,8 +2736,8 @@ export const citys = [
         ]
       },
       {
-        value: "厦门",
-        label: "厦门",
+        value: "厦门市",
+        label: "厦门市",
         children: [
           { value: "思明区", label: "思明区" },
           { value: "海沧区", label: "海沧区" },
@@ -2747,8 +2751,8 @@ export const citys = [
         ]
       },
       {
-        value: "漳州",
-        label: "漳州",
+        value: "漳州市",
+        label: "漳州市",
         children: [
           { value: "芗城区", label: "芗城区" },
           { value: "龙文区", label: "龙文区" },
@@ -2784,8 +2788,8 @@ export const citys = [
         ]
       },
       {
-        value: "泉州",
-        label: "泉州",
+        value: "泉州市",
+        label: "泉州市",
         children: [
           { value: "丰泽区", label: "丰泽区" },
           { value: "鲤城区", label: "鲤城区" },
@@ -2817,8 +2821,8 @@ export const citys = [
         ]
       },
       {
-        value: "三明",
-        label: "三明",
+        value: "三明市",
+        label: "三明市",
         children: [
           { value: "梅列区", label: "梅列区" },
           { value: "三元区", label: "三元区" },
@@ -2844,8 +2848,8 @@ export const citys = [
         ]
       },
       {
-        value: "莆田",
-        label: "莆田",
+        value: "莆田市",
+        label: "莆田市",
         children: [
           { value: "城厢区", label: "城厢区" },
           { value: "涵江区", label: "涵江区" },
@@ -2858,8 +2862,8 @@ export const citys = [
         ]
       },
       {
-        value: "南平",
-        label: "南平",
+        value: "南平市",
+        label: "南平市",
         children: [
           { value: "延平区", label: "延平区" },
           { value: "建阳区", label: "建阳区" },
@@ -2883,8 +2887,8 @@ export const citys = [
         ]
       },
       {
-        value: "龙岩",
-        label: "龙岩",
+        value: "龙岩市",
+        label: "龙岩市",
         children: [
           { value: "新罗区", label: "新罗区" },
           { value: "永定区", label: "永定区" },
@@ -2902,8 +2906,8 @@ export const citys = [
         ]
       },
       {
-        value: "宁德",
-        label: "宁德",
+        value: "宁德市",
+        label: "宁德市",
         children: [
           { value: "蕉城区", label: "蕉城区" },
           { value: "东侨经济技术开发区", label: "东侨经济技术开发区" },
@@ -2938,8 +2942,8 @@ export const citys = [
     label: "江西省",
     children: [
       {
-        value: "南昌",
-        label: "南昌",
+        value: "南昌市",
+        label: "南昌市",
         children: [
           { value: "东湖区", label: "东湖区" },
           { value: "西湖区", label: "西湖区" },
@@ -2959,8 +2963,8 @@ export const citys = [
         ]
       },
       {
-        value: "九江",
-        label: "九江",
+        value: "九江市",
+        label: "九江市",
         children: [
           { value: "浔阳区", label: "浔阳区" },
           { value: "濂溪区", label: "濂溪区" },
@@ -2990,8 +2994,8 @@ export const citys = [
         ]
       },
       {
-        value: "上饶",
-        label: "上饶",
+        value: "上饶市",
+        label: "上饶市",
         children: [
           { value: "信州区", label: "信州区" },
           { value: "广丰区", label: "广丰区" },
@@ -3017,8 +3021,8 @@ export const citys = [
         ]
       },
       {
-        value: "抚州",
-        label: "抚州",
+        value: "抚州市",
+        label: "抚州市",
         children: [
           { value: "临川区", label: "临川区" },
           { value: "东乡区", label: "东乡区" },
@@ -3043,8 +3047,8 @@ export const citys = [
         ]
       },
       {
-        value: "宜春",
-        label: "宜春",
+        value: "宜春市",
+        label: "宜春市",
         children: [
           { value: "袁州区", label: "袁州区" },
           { value: "高安市", label: "高安市" },
@@ -3068,8 +3072,8 @@ export const citys = [
         ]
       },
       {
-        value: "吉安",
-        label: "吉安",
+        value: "吉安市",
+        label: "吉安市",
         children: [
           { value: "吉州区", label: "吉州区" },
           { value: "青原区", label: "青原区" },
@@ -3099,8 +3103,8 @@ export const citys = [
         ]
       },
       {
-        value: "赣州",
-        label: "赣州",
+        value: "赣州市",
+        label: "赣州市",
         children: [
           { value: "章贡区", label: "章贡区" },
           { value: "南康区", label: "南康区" },
@@ -3138,8 +3142,8 @@ export const citys = [
         ]
       },
       {
-        value: "景德镇",
-        label: "景德镇",
+        value: "景德镇市",
+        label: "景德镇市",
         children: [
           { value: "珠山区", label: "珠山区" },
           { value: "昌江区", label: "昌江区" },
@@ -3151,8 +3155,8 @@ export const citys = [
         ]
       },
       {
-        value: "萍乡",
-        label: "萍乡",
+        value: "萍乡市",
+        label: "萍乡市",
         children: [
           { value: "安源区", label: "安源区" },
           { value: "湘东区", label: "湘东区" },
@@ -3165,16 +3169,16 @@ export const citys = [
         ]
       },
       {
-        value: "新余",
-        label: "新余",
+        value: "新余市",
+        label: "新余市",
         children: [
           { value: "渝水区", label: "渝水 区" },
           { value: "分宜县", label: "分宜县" }
         ]
       },
       {
-        value: "鹰潭",
-        label: "鹰潭",
+        value: "鹰潭市",
+        label: "鹰潭市",
         children: [
           { value: "月湖区", label: "月湖区" },
           { value: "余江区", label: "余江区" },
@@ -3191,8 +3195,8 @@ export const citys = [
     label: "山东省",
     children: [
       {
-        value: "济南",
-        label: "济南",
+        value: "济南市",
+        label: "济南市",
         children: [
           { value: "历下区", label: "历下区" },
           { value: "市中区", label: "市中区" },
@@ -3216,8 +3220,8 @@ export const citys = [
         ]
       },
       {
-        value: "青岛",
-        label: "青岛",
+        value: "青岛市",
+        label: "青岛市",
         children: [
           { value: "市南区", label: "市南区" },
           { value: "市北区", label: "市北区" },
@@ -3241,8 +3245,8 @@ export const citys = [
         ]
       },
       {
-        value: " 淄博",
-        label: "淄博",
+        value: " 淄博市",
+        label: "淄博市",
         children: [
           { value: "张店区", label: "张店区" },
           { value: "淄川区", label: "淄川区" },
@@ -3261,8 +3265,8 @@ export const citys = [
         ]
       },
       {
-        value: "枣庄",
-        label: "枣庄",
+        value: "枣庄市",
+        label: "枣庄市",
         children: [
           { value: "薛城区", label: "薛城区" },
           { value: "市中区", label: "市中区" },
@@ -3276,8 +3280,8 @@ export const citys = [
         ]
       },
       {
-        value: "东营",
-        label: "东营",
+        value: "东营市",
+        label: "东营市",
         children: [
           { value: "东营区", label: "东营区" },
           { value: "河口区", label: "河口区" },
@@ -3290,8 +3294,8 @@ export const citys = [
         ]
       },
       {
-        value: "烟台",
-        label: "烟台",
+        value: "烟台市",
+        label: "烟台市",
         children: [
           { value: "莱山区", label: "莱山区" },
           { value: "芝罘区", label: "芝罘区" },
@@ -3317,8 +3321,8 @@ export const citys = [
         ]
       },
       {
-        value: "潍坊",
-        label: "潍坊",
+        value: "潍坊市",
+        label: "潍坊市",
         children: [
           { value: "奎文区", label: "奎文区" },
           { value: "潍城区", label: "潍城区" },
@@ -3344,8 +3348,8 @@ export const citys = [
         ]
       },
       {
-        value: "济宁",
-        label: "济宁",
+        value: "济宁市",
+        label: "济宁市",
         children: [
           { value: "任城区", label: "任城区" },
           { value: "兖州区", label: "兖州区" },
@@ -3370,8 +3374,8 @@ export const citys = [
         ]
       },
       {
-        value: "泰安",
-        label: "泰安",
+        value: "泰安市",
+        label: "泰安市",
         children: [
           { value: "泰山区", label: "泰山区" },
           { value: "岱岳区", label: "岱岳区" },
@@ -3385,8 +3389,8 @@ export const citys = [
         ]
       },
       {
-        value: "威海",
-        label: "威海",
+        value: "威海市",
+        label: "威海市",
         children: [
           { value: "环翠区", label: "环翠区" },
           { value: "文登区", label: "文登区" },
@@ -3398,8 +3402,8 @@ export const citys = [
         ]
       },
       {
-        value: "日照",
-        label: "日照",
+        value: "日照市",
+        label: "日照市",
         children: [
           { value: "东港区", label: "东港区" },
           { value: "岚山区", label: "岚山区" },
@@ -3411,8 +3415,8 @@ export const citys = [
         ]
       },
       {
-        value: "滨州",
-        label: "滨州",
+        value: "滨州市",
+        label: "滨州市",
         children: [
           { value: "滨城区", label: "滨城区" },
           { value: "沾化区", label: "沾化区" },
@@ -3430,8 +3434,8 @@ export const citys = [
         ]
       },
       {
-        value: "德州",
-        label: "德州",
+        value: "德州市",
+        label: "德州市",
         children: [
           { value: "德城 区", label: "德城区" },
           { value: "陵城区", label: "陵城区" },
@@ -3456,8 +3460,8 @@ export const citys = [
         ]
       },
       {
-        value: "聊城",
-        label: "聊城",
+        value: "聊城市",
+        label: "聊城市",
         children: [
           { value: "东昌府区", label: "东昌府区" },
           { value: "临清市", label: "临清市" },
@@ -3476,8 +3480,8 @@ export const citys = [
         ]
       },
       {
-        value: "临沂",
-        label: "临沂",
+        value: "临沂市",
+        label: "临沂市",
         children: [
           { value: "兰山区", label: "兰山区" },
           { value: "河东区", label: "河东区" },
@@ -3503,8 +3507,8 @@ export const citys = [
         ]
       },
       {
-        value: "菏泽",
-        label: "菏泽",
+        value: "菏泽市",
+        label: "菏泽市",
         children: [
           { value: "牡丹区", label: "牡丹区" },
           { value: "定陶区", label: "定陶区" },
@@ -3524,8 +3528,8 @@ export const citys = [
         ]
       },
       {
-        value: "莱芜",
-        label: "莱芜",
+        value: "莱芜市",
+        label: "莱芜市",
         children: [
           { value: "莱城区", label: "莱城区" },
           { value: "钢城区", label: "钢城区" }
@@ -3538,8 +3542,8 @@ export const citys = [
     label: "河南省",
     children: [
       {
-        value: "郑州",
-        label: "郑州",
+        value: "郑州市",
+        label: "郑州市",
         children: [
           { value: "中原区", label: "中原区" },
           { value: "郑东新区", label: "郑东新区" },
@@ -3569,8 +3573,8 @@ export const citys = [
         ]
       },
       {
-        value: "开封",
-        label: "开封",
+        value: "开封市",
+        label: "开封市",
         children: [
           { value: "龙亭区", label: "龙亭区" },
           { value: "鼓楼区", label: "鼓楼区" },
@@ -3590,8 +3594,8 @@ export const citys = [
         ]
       },
       {
-        value: "洛阳",
-        label: "洛阳",
+        value: "洛阳市",
+        label: "洛阳市",
         children: [
           { value: "涧西区", label: "涧西区" },
           { value: "西工区", label: "西工区" },
@@ -3623,8 +3627,8 @@ export const citys = [
         ]
       },
       {
-        value: "平顶山",
-        label: "平顶山",
+        value: "平顶山市",
+        label: "平顶山市",
         children: [
           { value: "新华区", label: "新华区" },
           { value: "卫东区", label: "卫东区" },
@@ -3648,8 +3652,8 @@ export const citys = [
         ]
       },
       {
-        value: "安阳",
-        label: "安阳",
+        value: "安阳市",
+        label: "安阳市",
         children: [
           { value: "文峰 区", label: "文峰区" },
           { value: "北关区", label: "北关区" },
@@ -3669,8 +3673,8 @@ export const citys = [
         ]
       },
       {
-        value: "鹤壁",
-        label: "鹤壁",
+        value: "鹤壁市",
+        label: "鹤壁市",
         children: [
           { value: "鹤山区", label: "鹤山区" },
           { value: "山城区", label: "山城区" },
@@ -3683,8 +3687,8 @@ export const citys = [
         ]
       },
       {
-        value: "新乡",
-        label: "新乡",
+        value: "新乡市",
+        label: "新乡市",
         children: [
           { value: "红旗区", label: "红旗区" },
           { value: "卫滨区", label: "卫滨区" },
@@ -3710,8 +3714,8 @@ export const citys = [
         ]
       },
       {
-        value: "焦作",
-        label: "焦作",
+        value: "焦作市",
+        label: "焦作市",
         children: [
           { value: "山阳区", label: "山阳区" },
           { value: "中站区", label: "中站区" },
@@ -3735,8 +3739,8 @@ export const citys = [
         ]
       },
       {
-        value: "濮阳",
-        label: "濮阳",
+        value: "濮阳市",
+        label: "濮阳市",
         children: [
           { value: "华龙区", label: "华龙区" },
           { value: "濮阳县", label: "濮阳县" },
@@ -3750,8 +3754,8 @@ export const citys = [
         ]
       },
       {
-        value: "许昌",
-        label: "许昌",
+        value: "许昌市",
+        label: "许昌市",
         children: [
           { value: "魏都区", label: "魏都区" },
           { value: "建安区", label: "建安区" },
@@ -3765,8 +3769,8 @@ export const citys = [
         ]
       },
       {
-        value: "漯河",
-        label: "漯河",
+        value: "漯河市",
+        label: "漯河市",
         children: [
           { value: "郾城区", label: "郾城区" },
           { value: "源汇区", label: "源汇区" },
@@ -3779,8 +3783,8 @@ export const citys = [
         ]
       },
       {
-        value: "三门峡",
-        label: "三门峡",
+        value: "三门峡市",
+        label: "三门峡市",
         children: [
           { value: "湖滨区", label: "湖滨区" },
           { value: "陕州区", label: "陕州区" },
@@ -3794,8 +3798,8 @@ export const citys = [
         ]
       },
       {
-        value: "商丘",
-        label: "商丘",
+        value: "商丘市",
+        label: "商丘市",
         children: [
           { value: "睢阳区", label: "睢阳区" },
           { value: "梁园区", label: "梁园区" },
@@ -3815,8 +3819,8 @@ export const citys = [
         ]
       },
       {
-        value: "周口",
-        label: "周口",
+        value: "周口市",
+        label: "周口市",
         children: [
           { value: "川汇区", label: "川汇区" },
           { value: "项城市", label: "项城市" },
@@ -3840,8 +3844,8 @@ export const citys = [
         ]
       },
       {
-        value: "驻马店",
-        label: "驻马店",
+        value: "驻马店市",
+        label: "驻马店市",
         children: [
           { value: "驿城区", label: "驿城区" },
           { value: "新蔡县", label: "新蔡县" },
@@ -3865,8 +3869,8 @@ export const citys = [
         ]
       },
       {
-        value: "南阳",
-        label: "南阳",
+        value: "南阳市",
+        label: "南阳市",
         children: [
           { value: "宛城区", label: "宛城区" },
           { value: "卧龙区", label: "卧龙区" },
@@ -3896,8 +3900,8 @@ export const citys = [
         ]
       },
       {
-        value: "信阳",
-        label: "信阳",
+        value: "信阳市",
+        label: "信阳市",
         children: [
           { value: "浉河区", label: "浉河区" },
           { value: "平桥区", label: "平桥区" },
@@ -3920,7 +3924,11 @@ export const citys = [
           { value: "息县", label: "息县" }
         ]
       },
-      { value: "济源", label: "济源" }
+      {
+        value: "济源市",
+        label: "济源市",
+        children: [{ value: "济源市", label: "济源市" }]
+      }
     ]
   },
   {
@@ -3928,8 +3936,8 @@ export const citys = [
     label: "湖北省",
     children: [
       {
-        value: "武汉",
-        label: "武汉",
+        value: "武汉市",
+        label: "武汉市",
         children: [
           { value: "江岸区", label: "江岸区" },
           { value: "江汉区", label: "江汉区" },
@@ -3959,8 +3967,8 @@ export const citys = [
         ]
       },
       {
-        value: "黄石",
-        label: "黄石",
+        value: "黄石市",
+        label: "黄石市",
         children: [
           { value: "大冶市", label: "大冶市" },
           { value: "阳新县", label: "阳新县" },
@@ -3974,8 +3982,8 @@ export const citys = [
         ]
       },
       {
-        value: "十堰",
-        label: "十堰",
+        value: "十堰市",
+        label: "十堰市",
         children: [
           { value: "茅箭区", label: "茅箭区" },
           { value: "张湾区", label: "张湾区" },
@@ -3995,8 +4003,8 @@ export const citys = [
         ]
       },
       {
-        value: "宜昌",
-        label: "宜昌",
+        value: "宜昌市",
+        label: "宜昌市",
         children: [
           { value: "远安县", label: "远安县" },
           { value: "兴山县", label: "兴山县" },
@@ -4026,8 +4034,8 @@ export const citys = [
         ]
       },
       {
-        value: "襄阳",
-        label: "襄阳",
+        value: "襄阳市",
+        label: "襄阳市",
         children: [
           { value: "襄城区", label: "襄城区" },
           { value: "樊城区", label: "樊城区" },
@@ -4047,8 +4055,8 @@ export const citys = [
         ]
       },
       {
-        value: "鄂州",
-        label: "鄂州",
+        value: "鄂州市",
+        label: "鄂州市",
         children: [
           { value: "梁子湖区", label: "梁子湖区" },
           { value: "华容区", label: "华容区" },
@@ -4059,8 +4067,8 @@ export const citys = [
         ]
       },
       {
-        value: "荆门",
-        label: "荆门",
+        value: "荆门市",
+        label: "荆门市",
         children: [
           { value: "东宝区", label: "东宝区" },
           { value: "掇刀区", label: "掇刀区" },
@@ -4073,8 +4081,8 @@ export const citys = [
         ]
       },
       {
-        value: "孝感",
-        label: "孝感",
+        value: "孝感市",
+        label: "孝感市",
         children: [
           { value: "孝南区", label: "孝南区" },
           { value: "汉川市", label: "汉川市" },
@@ -4092,8 +4100,8 @@ export const citys = [
         ]
       },
       {
-        value: "荆州",
-        label: "荆州",
+        value: "荆州市",
+        label: "荆州市",
         children: [
           { value: "荆州区", label: "荆州区" },
           { value: "沙市区", label: "沙市区" },
@@ -4112,8 +4120,8 @@ export const citys = [
         ]
       },
       {
-        value: "黄冈",
-        label: "黄冈",
+        value: "黄冈市",
+        label: "黄冈市",
         children: [
           { value: "黄州区", label: "黄州区" },
           { value: "麻城市", label: "麻城市" },
@@ -4138,8 +4146,8 @@ export const citys = [
         ]
       },
       {
-        value: "咸宁",
-        label: "咸宁",
+        value: "咸宁市",
+        label: "咸宁市",
         children: [
           { value: "咸安区", label: "咸安区" },
           { value: "通山县", label: "通山县" },
@@ -4153,8 +4161,8 @@ export const citys = [
         ]
       },
       {
-        value: "随州",
-        label: "随州",
+        value: "随州市",
+        label: "随州市",
         children: [
           { value: "曾都区", label: "曾都区" },
           { value: "随县", label: "随县" },
@@ -4162,8 +4170,8 @@ export const citys = [
         ]
       },
       {
-        value: "恩施",
-        label: "恩施",
+        value: "恩施市",
+        label: "恩施市",
         children: [
           { value: "恩施市", label: "恩施市" },
           { value: "利川市", label: "利川市" },
@@ -4181,12 +4189,25 @@ export const citys = [
           { value: "鹤峰县", label: "鹤峰县" }
         ]
       },
-      { value: "仙桃", label: "仙桃" },
-      { value: "潜江", label: "潜江" },
-      { value: "天门", label: "天门" },
       {
-        value: "神农架",
-        label: "神农架"
+        value: "仙桃市",
+        label: "仙桃市",
+        children: [{ value: "仙桃市", label: "仙桃市" }]
+      },
+      {
+        value: "潜江市",
+        label: "潜江市",
+        children: [{ value: "潜江市", label: "潜江市" }]
+      },
+      {
+        value: "天门市",
+        label: "天门市",
+        children: [{ value: "天门市", label: "天门市" }]
+      },
+      {
+        value: "神农架市",
+        label: "神农架市",
+        children: [{ value: "神农架市", label: "神农架市" }]
       }
     ]
   },
@@ -4195,8 +4216,8 @@ export const citys = [
     label: "湖南省",
     children: [
       {
-        value: "长沙",
-        label: "长沙",
+        value: "长沙市",
+        label: "长沙市",
         children: [
           { value: "芙蓉区", label: "芙蓉区" },
           { value: "天心 区", label: "天心区" },
@@ -4216,8 +4237,8 @@ export const citys = [
         ]
       },
       {
-        value: "株洲",
-        label: "株洲",
+        value: "株洲市",
+        label: "株洲市",
         children: [
           { value: "天元区", label: "天元区" },
           { value: "芦淞区", label: "芦淞区" },
@@ -4237,8 +4258,8 @@ export const citys = [
         ]
       },
       {
-        value: "湘潭",
-        label: "湘潭",
+        value: "湘潭市",
+        label: "湘潭市",
         children: [
           { value: "雨湖区", label: "雨湖区" },
           { value: "岳塘区", label: "岳塘区" },
@@ -4251,8 +4272,8 @@ export const citys = [
         ]
       },
       {
-        value: "衡阳",
-        label: "衡阳",
+        value: "衡阳市",
+        label: "衡阳市",
         children: [
           { value: "雁峰区", label: "雁峰区" },
           { value: "石鼓区", label: "石鼓区" },
@@ -4278,8 +4299,8 @@ export const citys = [
         ]
       },
       {
-        value: "邵阳",
-        label: "邵阳",
+        value: "邵阳市",
+        label: "邵阳市",
         children: [
           { value: "双清区", label: "双清区" },
           { value: "大祥区", label: "大祥区" },
@@ -4305,8 +4326,8 @@ export const citys = [
         ]
       },
       {
-        value: "岳阳",
-        label: "岳阳",
+        value: "岳阳市",
+        label: "岳阳市",
         children: [
           { value: "岳阳楼区", label: "岳阳楼区" },
           { value: "岳阳经济技术开发区", label: "岳阳经济技术开发区" },
@@ -4330,8 +4351,8 @@ export const citys = [
         ]
       },
       {
-        value: "常德",
-        label: "常德",
+        value: "常德市",
+        label: "常德市",
         children: [
           { value: "武陵区", label: "武陵区" },
           { value: "鼎城区", label: "鼎城区" },
@@ -4351,8 +4372,8 @@ export const citys = [
         ]
       },
       {
-        value: "张家界",
-        label: "张家界",
+        value: "张家界市",
+        label: "张家界市",
         children: [
           { value: "永定区", label: "永定区" },
           { value: "武陵源区", label: "武陵源区" },
@@ -4364,8 +4385,8 @@ export const citys = [
         ]
       },
       {
-        value: "益阳",
-        label: "益阳",
+        value: "益阳市",
+        label: "益阳市",
         children: [
           { value: "安化县", label: "安化县" },
           { value: "桃江县", label: "桃江县" },
@@ -4383,8 +4404,8 @@ export const citys = [
         ]
       },
       {
-        value: "娄底",
-        label: "娄底",
+        value: "娄底市",
+        label: "娄底市",
         children: [
           { value: "娄星区", label: "娄星区" },
           { value: "冷水江市", label: "冷水江市" },
@@ -4397,8 +4418,8 @@ export const citys = [
         ]
       },
       {
-        value: "郴州",
-        label: "郴州",
+        value: "郴州市",
+        label: "郴州市",
         children: [
           { value: "北湖区", label: "北湖区" },
           { value: "苏仙区", label: "苏仙区" },
@@ -4423,8 +4444,8 @@ export const citys = [
         ]
       },
       {
-        value: "永州",
-        label: "永州",
+        value: "永州市",
+        label: "永州市",
         children: [
           { value: "零陵区", label: "零陵区" },
           { value: "冷水滩区", label: "冷水滩区" },
@@ -4449,8 +4470,8 @@ export const citys = [
         ]
       },
       {
-        value: "怀化",
-        label: "怀化",
+        value: "怀化市",
+        label: "怀化市",
         children: [
           { value: "鹤城区", label: "鹤城区" },
           { value: "中方县", label: "中方县" },
@@ -4480,8 +4501,8 @@ export const citys = [
         ]
       },
       {
-        value: "湘西",
-        label: "湘西",
+        value: "湘西市",
+        label: "湘西市",
         children: [
           { value: "吉首市", label: "吉首市" },
           { value: "泸溪县", label: "泸溪县" },
@@ -4506,8 +4527,8 @@ export const citys = [
     label: "广东省",
     children: [
       {
-        value: "广州",
-        label: "广州",
+        value: "广州市",
+        label: "广州市",
         children: [
           { value: "越秀区", label: "越秀区" },
           { value: "荔湾区", label: "荔湾区" },
@@ -4532,8 +4553,8 @@ export const citys = [
         ]
       },
       {
-        value: "深圳",
-        label: "深圳",
+        value: "深圳市",
+        label: "深圳市",
         children: [
           { value: "福田区", label: "福田区" },
           { value: "罗湖区", label: "罗湖区" },
@@ -4553,8 +4574,8 @@ export const citys = [
         ]
       },
       {
-        value: "珠海",
-        label: "珠海",
+        value: "珠海市",
+        label: "珠海市",
         children: [
           { value: "香洲区", label: "香洲区" },
           { value: "斗门区", label: "斗门区" },
@@ -4565,8 +4586,8 @@ export const citys = [
         ]
       },
       {
-        value: "汕头",
-        label: "汕头",
+        value: "汕头市",
+        label: "汕头市",
         children: [
           { value: "金平区", label: "金平区" },
           { value: "龙湖区", label: "龙湖区" },
@@ -4584,8 +4605,8 @@ export const citys = [
         ]
       },
       {
-        value: "佛山",
-        label: "佛山",
+        value: "佛山市",
+        label: "佛山市",
         children: [
           { value: "禅城区", label: "禅城区" },
           { value: "高明区", label: "高明区" },
@@ -4598,8 +4619,8 @@ export const citys = [
         ]
       },
       {
-        value: "韶关",
-        label: "韶关",
+        value: "韶关市",
+        label: "韶关市",
         children: [
           { value: "浈江区", label: "浈江区" },
           { value: "武江区", label: " 武江区" },
@@ -4623,8 +4644,8 @@ export const citys = [
         ]
       },
       {
-        value: "湛江",
-        label: "湛江",
+        value: "湛江市",
+        label: "湛江市",
         children: [
           { value: "赤坎区", label: "赤坎区" },
           { value: "霞山区", label: "霞山区" },
@@ -4644,8 +4665,8 @@ export const citys = [
         ]
       },
       {
-        value: "肇庆",
-        label: "肇庆",
+        value: "肇庆市",
+        label: "肇庆市",
         children: [
           { value: "端州区", label: "端州区" },
           { value: "鼎湖区", label: "鼎湖区" },
@@ -4664,8 +4685,8 @@ export const citys = [
         ]
       },
       {
-        value: "江门",
-        label: "江门",
+        value: "江门市",
+        label: "江门市",
         children: [
           { value: "江海区", label: "江海区" },
           { value: "蓬江区", label: "蓬江区" },
@@ -4683,8 +4704,8 @@ export const citys = [
         ]
       },
       {
-        value: "茂名",
-        label: "茂名",
+        value: "茂名市",
+        label: "茂名市",
         children: [
           { value: "茂南区", label: "茂南区" },
           { value: "电白区", label: "电白区" },
@@ -4697,8 +4718,8 @@ export const citys = [
         ]
       },
       {
-        value: "惠州",
-        label: "惠州",
+        value: "惠州市",
+        label: "惠州市",
         children: [
           { value: "惠城区", label: "惠城区" },
           { value: "惠阳区", label: "惠阳区" },
@@ -4711,8 +4732,8 @@ export const citys = [
         ]
       },
       {
-        value: "梅州",
-        label: "梅州",
+        value: "梅州市",
+        label: "梅州市",
         children: [
           { value: "梅江区", label: "梅江区" },
           { value: "梅县区", label: "梅县区" },
@@ -4731,8 +4752,8 @@ export const citys = [
         ]
       },
       {
-        value: "汕尾",
-        label: "汕尾",
+        value: "汕尾市",
+        label: "汕尾市",
         children: [
           { value: "城区", label: "城区" },
           { value: "陆丰市", label: "陆丰市" },
@@ -4744,8 +4765,8 @@ export const citys = [
         ]
       },
       {
-        value: "河源",
-        label: "河源",
+        value: "河源市",
+        label: "河源市",
         children: [
           { value: "源城区", label: "源城区" },
           { value: "龙川县", label: "龙川县" },
@@ -4759,8 +4780,8 @@ export const citys = [
         ]
       },
       {
-        value: "阳江",
-        label: "阳江",
+        value: "阳江市",
+        label: "阳江市",
         children: [
           { value: "江城区", label: "江城区" },
           { value: "阳东区", label: "阳东区" },
@@ -4772,8 +4793,8 @@ export const citys = [
         ]
       },
       {
-        value: "清远",
-        label: "清远",
+        value: "清远市",
+        label: "清远市",
         children: [
           { value: "清城区", label: "清城区" },
           { value: "清新区", label: "清新区" },
@@ -4791,11 +4812,19 @@ export const citys = [
           { value: "连南瑶族自治县", label: "连南瑶族自治县" }
         ]
       },
-      { value: "东莞", label: "东莞" },
-      { value: "中山", label: "中山" },
       {
-        value: "潮州",
-        label: "潮州",
+        value: "东莞市",
+        label: "东莞市",
+        children: [{ value: "东莞市", label: "东莞市" }]
+      },
+      {
+        value: "中山市",
+        label: "中山市",
+        children: [{ value: "中山市", label: "中山市" }]
+      },
+      {
+        value: "潮州市",
+        label: "潮州市",
         children: [
           { value: "湘桥区", label: "湘桥区" },
           { value: "潮安县", label: "潮安县" },
@@ -4806,8 +4835,8 @@ export const citys = [
         ]
       },
       {
-        value: "揭阳",
-        label: "揭阳",
+        value: "揭阳市",
+        label: "揭阳市",
         children: [
           { value: "榕城区", label: "榕城区" },
           { value: "揭 东区", label: "揭东区" },
@@ -4820,8 +4849,8 @@ export const citys = [
         ]
       },
       {
-        value: "云浮",
-        label: "云浮",
+        value: "云浮市",
+        label: "云浮市",
         children: [
           { value: "云城区", label: "云城区" },
           { value: "云安区", label: "云安区" },
@@ -4840,8 +4869,8 @@ export const citys = [
     label: "广西省",
     children: [
       {
-        value: "南宁",
-        label: "南宁",
+        value: "南宁市",
+        label: "南宁市",
         children: [
           { value: "青秀区", label: "青秀区" },
           { value: "兴宁区", label: "兴宁区" },
@@ -4867,8 +4896,8 @@ export const citys = [
         ]
       },
       {
-        value: "柳州",
-        label: "柳州",
+        value: "柳州市",
+        label: "柳州市",
         children: [
           { value: "柳北区", label: "柳北区" },
           { value: "柳南区", label: "柳南区" },
@@ -4892,8 +4921,8 @@ export const citys = [
         ]
       },
       {
-        value: "桂林",
-        label: "桂林",
+        value: "桂林市",
+        label: "桂林市",
         children: [
           { value: "象山区", label: "象山区" },
           { value: "秀峰区", label: "秀峰区" },
@@ -4930,8 +4959,8 @@ export const citys = [
         ]
       },
       {
-        value: "梧州",
-        label: "梧州",
+        value: "梧州市",
+        label: "梧州市",
         children: [
           { value: "长洲区", label: "长洲区" },
           { value: "万秀区", label: "万秀区" },
@@ -4949,8 +4978,8 @@ export const citys = [
         ]
       },
       {
-        value: "北海",
-        label: "北海",
+        value: "北海市",
+        label: "北海市",
         children: [
           { value: "海城区", label: "海城区" },
           { value: "银海区", label: "银海区" },
@@ -4962,8 +4991,8 @@ export const citys = [
         ]
       },
       {
-        value: "防城港",
-        label: "防城港",
+        value: "防城港市",
+        label: "防城港市",
         children: [
           { value: "港口区", label: "港口区" },
           { value: "防城区", label: "防城区" },
@@ -4975,8 +5004,8 @@ export const citys = [
         ]
       },
       {
-        value: "钦州",
-        label: "钦州",
+        value: "钦州市",
+        label: "钦州市",
         children: [
           { value: "钦南区", label: "钦南区" },
           { value: "钦北区", label: "钦北区" },
@@ -4988,8 +5017,8 @@ export const citys = [
         ]
       },
       {
-        value: "贵港",
-        label: "贵港",
+        value: "贵港市",
+        label: "贵港市",
         children: [
           { value: "港北区", label: "港北区" },
           { value: "港南区", label: "港南区" },
@@ -5002,8 +5031,8 @@ export const citys = [
         ]
       },
       {
-        value: "玉林",
-        label: "玉林",
+        value: "玉林市",
+        label: "玉林市",
         children: [
           { value: "玉州区", label: "玉州区" },
           { value: "福绵区", label: "福绵区" },
@@ -5021,8 +5050,8 @@ export const citys = [
         ]
       },
       {
-        value: "百色",
-        label: "百色",
+        value: "百色市",
+        label: "百色市",
         children: [
           { value: "右江区", label: "右江区" },
           { value: "靖西市", label: "靖西市" },
@@ -5048,8 +5077,8 @@ export const citys = [
         ]
       },
       {
-        value: "贺州",
-        label: "贺州",
+        value: "贺州市",
+        label: "贺州市",
         children: [
           { value: "八步区", label: "八步区" },
           { value: "平桂区", label: "平桂区" },
@@ -5062,8 +5091,8 @@ export const citys = [
         ]
       },
       {
-        value: "河池",
-        label: "河池",
+        value: "河池市",
+        label: "河池市",
         children: [
           { value: "宜州区", label: "宜州区" },
           { value: "金城江区", label: "金城江区" },
@@ -5088,8 +5117,8 @@ export const citys = [
         ]
       },
       {
-        value: "来宾",
-        label: "来宾",
+        value: "来宾市",
+        label: "来宾市",
         children: [
           { value: "兴宾区", label: "兴宾区" },
           { value: "合山市", label: "合山市" },
@@ -5103,8 +5132,8 @@ export const citys = [
         ]
       },
       {
-        value: "崇左",
-        label: "崇左",
+        value: "崇左市",
+        label: "崇左市",
         children: [
           { value: "江洲区", label: "江洲区" },
           { value: "凭祥市", label: "凭祥市" },
@@ -5128,8 +5157,8 @@ export const citys = [
     label: "海南省",
     children: [
       {
-        value: "海口",
-        label: "海口",
+        value: "海口市",
+        label: "海口市",
         children: [
           { value: "秀英区", label: "秀英区" },
           { value: "龙华区", label: "龙华区" },
@@ -5141,8 +5170,8 @@ export const citys = [
         ]
       },
       {
-        value: "三亚",
-        label: "三亚",
+        value: "三亚市",
+        label: "三亚市",
         children: [
           { value: "崖州区", label: "崖州区" },
           { value: "天涯区", label: "天涯区" },
@@ -5153,38 +5182,91 @@ export const citys = [
           { value: "海棠区", label: "海棠区" }
         ]
       },
-      { value: "三沙", label: "三沙" },
-      { value: "儋州", label: "儋州" },
+      {
+        value: "三沙市",
+        label: "三沙市",
+        children: [{ value: "三沙市", label: "三沙市" }]
+      },
+      {
+        value: "儋州市",
+        label: "儋州市",
+        children: [{ value: "儋州市", label: "儋州市" }]
+      },
       {
         value: "定安县",
-        label: "定安县"
+        label: "定安县",
+        children: [{ value: "定安县", label: "定安县" }]
       },
-      { value: " 屯昌县", label: "屯昌县" },
-      { value: "澄迈县", label: "澄迈县" },
+      {
+        value: " 屯昌县",
+        label: "屯昌县",
+        children: [{ value: "屯昌县", label: "屯昌县" }]
+      },
+      {
+        value: "澄迈县",
+        label: "澄迈县",
+        children: [{ value: "澄迈县", label: "澄迈县" }]
+      },
       {
         value: "临高县",
-        label: "临高县"
+        label: "临高县",
+        children: [{ value: "临高县", label: "临高县" }]
       },
-      { value: "五指山", label: "五指山" },
-      { value: "文昌", label: "文昌" },
-      { value: "琼海", label: "琼海" },
+      {
+        value: "五指山",
+        label: "五指山",
+        children: [{ value: "五指山", label: "五指山" }]
+      },
+      {
+        value: "文昌",
+        label: "文昌",
+        children: [{ value: "文昌", label: "文昌" }]
+      },
+      {
+        value: "琼海",
+        label: "琼海",
+        children: [{ value: "琼海", label: "琼海" }]
+      },
       {
         value: "万宁",
-        label: "万宁"
+        label: "万宁",
+        children: [{ value: "万宁", label: "万宁" }]
       },
-      { value: "东方", label: "东方" },
-      { value: "白沙县", label: "白沙县" },
+      {
+        value: "东方",
+        label: "东方",
+        children: [{ value: "东方", label: "东方" }]
+      },
+      {
+        value: "白沙县",
+        label: "白沙县",
+        children: [{ value: "白沙县", label: "白沙县" }]
+      },
       {
         value: "昌江县",
-        label: "昌江县"
+        label: "昌江县",
+        children: [{ value: "昌江县", label: "昌江县" }]
       },
-      { value: "乐东县", label: "乐东县" },
-      { value: "陵水县", label: "陵水县" },
+      {
+        value: "乐东县",
+        label: "乐东县",
+        children: [{ value: "乐东县", label: "乐东县" }]
+      },
+      {
+        value: "陵水县",
+        label: "陵水县",
+        children: [{ value: "陵水县", label: "陵水县" }]
+      },
       {
         value: "保亭县",
-        label: "保亭县"
+        label: "保亭县",
+        children: [{ value: "保亭县", label: "保亭县" }]
       },
-      { value: "琼中县", label: "琼中县" },
+      {
+        value: "琼中县",
+        label: "琼中县",
+        children: [{ value: "琼中县", label: "琼中县" }]
+      },
       {
         value: "洋浦经济开发区",
         label: "洋浦经济开发区",
@@ -5290,8 +5372,8 @@ export const citys = [
     label: "四川省",
     children: [
       {
-        value: "成都",
-        label: "成都",
+        value: "成都市",
+        label: "成都市",
         children: [
           { value: "锦江区", label: "锦江区" },
           { value: "青羊区", label: "青羊区" },
@@ -5339,8 +5421,8 @@ export const citys = [
         ]
       },
       {
-        value: "绵阳",
-        label: "绵阳",
+        value: "绵阳市",
+        label: "绵阳市",
         children: [
           { value: "涪城区", label: "涪城区" },
           { value: "游仙区", label: "游仙区" },
@@ -5360,8 +5442,8 @@ export const citys = [
         ]
       },
       {
-        value: "自贡",
-        label: "自贡",
+        value: "自贡市",
+        label: "自贡市",
         children: [
           { value: "自流井区", label: "自流井区" },
           { value: "贡井区", label: "贡井区" },
@@ -5375,8 +5457,8 @@ export const citys = [
         ]
       },
       {
-        value: "攀枝花",
-        label: "攀枝花",
+        value: "攀枝花市",
+        label: "攀枝花市",
         children: [
           { value: "东区", label: "东区" },
           { value: "西区", label: "西区" },
@@ -5389,8 +5471,8 @@ export const citys = [
         ]
       },
       {
-        value: "泸州",
-        label: "泸州",
+        value: "泸州市",
+        label: "泸州市",
         children: [
           { value: "江阳区", label: "江阳区" },
           { value: "龙马潭区", label: "龙马潭区" },
@@ -5408,8 +5490,8 @@ export const citys = [
         ]
       },
       {
-        value: "德阳",
-        label: "德阳",
+        value: "德阳市",
+        label: "德阳市",
         children: [
           { value: "旌阳区", label: "旌阳区" },
           { value: "罗江区", label: "罗江区" },
@@ -5423,8 +5505,8 @@ export const citys = [
         ]
       },
       {
-        value: "广元",
-        label: "广元",
+        value: "广元市",
+        label: "广元市",
         children: [
           { value: "利州区", label: "利州区" },
           { value: "昭化区", label: "昭化区" },
@@ -5442,8 +5524,8 @@ export const citys = [
         ]
       },
       {
-        value: "遂宁",
-        label: "遂宁",
+        value: "遂宁市",
+        label: "遂宁市",
         children: [
           { value: "船山区", label: "船山区" },
           { value: "安居区", label: "安居区" },
@@ -5456,8 +5538,8 @@ export const citys = [
         ]
       },
       {
-        value: "内江",
-        label: "内江",
+        value: "内江市",
+        label: "内江市",
         children: [
           { value: "市中区", label: "市中区" },
           { value: "东兴区", label: "东兴区" },
@@ -5470,8 +5552,8 @@ export const citys = [
         ]
       },
       {
-        value: "乐山",
-        label: "乐山",
+        value: "乐山市",
+        label: "乐山市",
         children: [
           { value: "市中区", label: "市中区" },
           { value: "沙湾区", label: "沙湾区" },
@@ -5496,8 +5578,8 @@ export const citys = [
         ]
       },
       {
-        value: "资阳",
-        label: "资阳",
+        value: "资阳市",
+        label: "资阳市",
         children: [
           { value: "雁江区", label: "雁江区" },
           { value: "安岳县", label: "安岳县" },
@@ -5508,8 +5590,8 @@ export const citys = [
         ]
       },
       {
-        value: "宜宾",
-        label: "宜宾",
+        value: "宜宾市",
+        label: "宜宾市",
         children: [
           { value: "叙州区", label: "叙州区" },
           { value: "翠屏区", label: "翠屏区" },
@@ -5533,8 +5615,8 @@ export const citys = [
         ]
       },
       {
-        value: "南充",
-        label: "南充",
+        value: "南充市",
+        label: "南充市",
         children: [
           { value: "顺庆区", label: "顺庆区" },
           { value: "高坪区", label: "高坪区" },
@@ -5554,8 +5636,8 @@ export const citys = [
         ]
       },
       {
-        value: "达州",
-        label: "达州",
+        value: "达州市",
+        label: "达州市",
         children: [
           { value: "通川区", label: "通川区" },
           { value: "达川区", label: "达川区" },
@@ -5573,8 +5655,8 @@ export const citys = [
         ]
       },
       {
-        value: "雅安",
-        label: "雅安",
+        value: "雅安市",
+        label: "雅安市",
         children: [
           { value: "雨城区", label: "雨城区" },
           { value: "名山区", label: "名山区" },
@@ -5593,8 +5675,8 @@ export const citys = [
         ]
       },
       {
-        value: "阿坝",
-        label: "阿坝",
+        value: "阿坝市",
+        label: "阿坝市",
         children: [
           { value: "马尔康市", label: "马尔康市" },
           { value: "金川县", label: "金川县" },
@@ -5624,8 +5706,8 @@ export const citys = [
         ]
       },
       {
-        value: "甘孜",
-        label: "甘孜",
+        value: "甘孜市",
+        label: "甘孜市",
         children: [
           { value: "康定市", label: "康定市" },
           { value: "泸定县", label: "泸定县" },
@@ -5663,8 +5745,8 @@ export const citys = [
         ]
       },
       {
-        value: "凉山",
-        label: "凉山",
+        value: "凉山市",
+        label: "凉山市",
         children: [
           { value: "西昌市", label: "西昌 市" },
           { value: "德昌县", label: "德昌县" },
@@ -5701,8 +5783,8 @@ export const citys = [
         ]
       },
       {
-        value: "广安",
-        label: "广安",
+        value: "广安市",
+        label: "广安市",
         children: [
           { value: "广安区", label: "广安区" },
           { value: "前锋区", label: "前锋区" },
@@ -5716,8 +5798,8 @@ export const citys = [
         ]
       },
       {
-        value: "巴中",
-        label: "巴中",
+        value: "巴中市",
+        label: "巴中市",
         children: [
           { value: "巴州区", label: "巴州区" },
           { value: "恩阳区", label: "恩阳区" },
@@ -5730,8 +5812,8 @@ export const citys = [
         ]
       },
       {
-        value: "眉山",
-        label: "眉山",
+        value: "眉山市",
+        label: "眉山市",
         children: [
           { value: "东坡区", label: "东坡区" },
           { value: "彭山区", label: "彭山区" },
@@ -5751,8 +5833,8 @@ export const citys = [
     label: "贵州省",
     children: [
       {
-        value: "贵阳",
-        label: "贵阳",
+        value: "贵阳市",
+        label: "贵阳市",
         children: [
           { value: "观山湖区", label: "观山湖区" },
           { value: "南明区", label: "南明区" },
@@ -5776,8 +5858,8 @@ export const citys = [
         ]
       },
       {
-        value: "遵义",
-        label: "遵义",
+        value: "遵义市",
+        label: "遵义市",
         children: [
           { value: "汇川区", label: "汇川区" },
           { value: "红花岗区", label: "红花岗区" },
@@ -5808,8 +5890,8 @@ export const citys = [
         ]
       },
       {
-        value: "六盘水",
-        label: "六盘水",
+        value: "六盘水市",
+        label: "六盘水市",
         children: [
           { value: "钟山区", label: "钟山区" },
           { value: "盘州市", label: "盘州市" },
@@ -5821,8 +5903,8 @@ export const citys = [
         ]
       },
       {
-        value: "安顺",
-        label: "安顺",
+        value: "安顺市",
+        label: "安顺市",
         children: [
           { value: "西秀区", label: "西秀区" },
           { value: "平坝区", label: "平坝区" },
@@ -5839,8 +5921,8 @@ export const citys = [
         ]
       },
       {
-        value: "毕节",
-        label: "毕节",
+        value: "毕节市",
+        label: "毕节市",
         children: [
           { value: "七星关区", label: "七星关区" },
           { value: "赫章县", label: "赫章县" },
@@ -5859,8 +5941,8 @@ export const citys = [
         ]
       },
       {
-        value: "铜仁",
-        label: "铜仁",
+        value: "铜仁市",
+        label: "铜仁市",
         children: [
           { value: "碧江区", label: "碧江区" },
           { value: "万山区", label: "万山区" },
@@ -5884,8 +5966,8 @@ export const citys = [
         ]
       },
       {
-        value: "黔东南",
-        label: "黔东南",
+        value: "黔东南市",
+        label: "黔东南市",
         children: [
           { value: "凯里市", label: "凯里市" },
           { value: "镇远县", label: "镇远县" },
@@ -5921,8 +6003,8 @@ export const citys = [
         ]
       },
       {
-        value: "黔南",
-        label: "黔南",
+        value: "黔南市",
+        label: "黔南市",
         children: [
           { value: "都匀市", label: "都匀市" },
           { value: "福泉市", label: "福泉市" },
@@ -5948,8 +6030,8 @@ export const citys = [
         ]
       },
       {
-        value: "黔西南",
-        label: "黔西南",
+        value: "黔西南市",
+        label: "黔西南市",
         children: [
           { value: "兴义市", label: "兴义市" },
           { value: "兴仁市", label: "兴仁市" },
@@ -5974,8 +6056,8 @@ export const citys = [
     label: "云南省",
     children: [
       {
-        value: "昆明",
-        label: "昆明",
+        value: "昆明市",
+        label: "昆明市",
         children: [
           { value: "呈贡区", label: "呈贡区" },
           { value: "盘龙区", label: "盘龙区" },
@@ -6006,8 +6088,8 @@ export const citys = [
         ]
       },
       {
-        value: "曲靖",
-        label: "曲靖",
+        value: "曲靖市",
+        label: "曲靖市",
         children: [
           { value: "麒麟区", label: "麒麟区" },
           { value: "沾益区", label: "沾益区" },
@@ -6027,8 +6109,8 @@ export const citys = [
         ]
       },
       {
-        value: "玉溪",
-        label: "玉溪",
+        value: "玉溪市",
+        label: "玉溪市",
         children: [
           { value: "红塔区", label: "红塔区" },
           { value: "江川区", label: "江川区" },
@@ -6054,8 +6136,8 @@ export const citys = [
         ]
       },
       {
-        value: "昭通",
-        label: "昭通",
+        value: "昭通市",
+        label: "昭通市",
         children: [
           { value: "昭阳区", label: "昭阳区" },
           { value: "水富市", label: "水富市" },
@@ -6080,8 +6162,8 @@ export const citys = [
         ]
       },
       {
-        value: "保山",
-        label: "保山",
+        value: "保山市",
+        label: "保山市",
         children: [
           { value: "隆阳区", label: "隆阳区" },
           { value: "腾冲市", label: "腾冲 市" },
@@ -6094,8 +6176,8 @@ export const citys = [
         ]
       },
       {
-        value: "丽江",
-        label: "丽江",
+        value: "丽江市",
+        label: "丽江市",
         children: [
           { value: "古城区", label: "古城区" },
           { value: "永胜县", label: "永胜县" },
@@ -6108,8 +6190,8 @@ export const citys = [
         ]
       },
       {
-        value: "普洱",
-        label: "普洱",
+        value: "普洱市",
+        label: "普洱市",
         children: [
           { value: " 思茅区", label: "思茅区" },
           {
@@ -6142,8 +6224,8 @@ export const citys = [
         ]
       },
       {
-        value: "临沧",
-        label: "临沧",
+        value: "临沧市",
+        label: "临沧市",
         children: [
           { value: "临翔区", label: "临翔区" },
           { value: "凤庆县", label: "凤庆县" },
@@ -6162,8 +6244,8 @@ export const citys = [
         ]
       },
       {
-        value: "德宏",
-        label: "德宏",
+        value: "德宏市",
+        label: "德宏市",
         children: [
           { value: "芒市", label: "芒市" },
           { value: "瑞丽市", label: "瑞丽市" },
@@ -6176,8 +6258,8 @@ export const citys = [
         ]
       },
       {
-        value: "怒江",
-        label: "怒江",
+        value: "怒江市",
+        label: "怒江市",
         children: [
           { value: "泸水市", label: "泸水市" },
           { value: "福 贡县", label: "福贡县" },
@@ -6189,8 +6271,8 @@ export const citys = [
         ]
       },
       {
-        value: "迪庆",
-        label: "迪庆",
+        value: "迪庆市",
+        label: "迪庆市",
         children: [
           { value: "香格里拉市", label: "香格里拉市" },
           { value: "德钦县", label: "德钦县" },
@@ -6201,8 +6283,8 @@ export const citys = [
         ]
       },
       {
-        value: "大理",
-        label: "大理",
+        value: "大理市",
+        label: "大理市",
         children: [
           { value: "大理市", label: "大理市" },
           { value: "祥云县", label: "祥云县" },
@@ -6231,8 +6313,8 @@ export const citys = [
         ]
       },
       {
-        value: "楚雄",
-        label: "楚雄",
+        value: "楚雄市",
+        label: "楚雄市",
         children: [
           { value: "楚雄市", label: "楚雄市" },
           { value: "双柏县", label: "双柏县" },
@@ -6256,8 +6338,8 @@ export const citys = [
         ]
       },
       {
-        value: "红河",
-        label: "红河",
+        value: "红河市",
+        label: "红河市",
         children: [
           { value: "蒙自市", label: "蒙自市" },
           { value: "个旧市", label: "个旧市" },
@@ -6287,8 +6369,8 @@ export const citys = [
         ]
       },
       {
-        value: "文山",
-        label: "文山",
+        value: "文山市",
+        label: "文山市",
         children: [
           { value: "文山市", label: "文山市" },
           { value: "砚山县", label: "砚山县" },
@@ -6325,8 +6407,8 @@ export const citys = [
     label: "西藏自治区",
     children: [
       {
-        value: "拉萨",
-        label: "拉萨",
+        value: "拉萨市",
+        label: "拉萨市",
         children: [
           { value: "城关区", label: "城关区" },
           { value: "堆龙德庆区", label: "堆龙德庆区" },
@@ -6345,8 +6427,8 @@ export const citys = [
         ]
       },
       {
-        value: "日喀则",
-        label: "日喀则",
+        value: "日喀则市",
+        label: "日喀则市",
         children: [
           { value: "桑珠孜区", label: "桑珠孜区" },
           { value: "南木林县", label: "南木林县" },
@@ -6384,8 +6466,8 @@ export const citys = [
         ]
       },
       {
-        value: "昌都",
-        label: "昌都",
+        value: "昌都市",
+        label: "昌都市",
         children: [
           { value: "卡若区", label: "卡若区" },
           { value: "察雅县", label: "察雅县" },
@@ -6410,8 +6492,8 @@ export const citys = [
         ]
       },
       {
-        value: "林芝",
-        label: "林芝",
+        value: "林芝市",
+        label: "林芝市",
         children: [
           { value: "巴宜区", label: "巴宜区" },
           { value: "米林县", label: "米林县" },
@@ -6429,8 +6511,8 @@ export const citys = [
         ]
       },
       {
-        value: "山南",
-        label: "山南",
+        value: "山南市",
+        label: "山南市",
         children: [
           { value: "乃东区", label: "乃东区" },
           { value: "扎囊县", label: "扎囊县" },
@@ -6456,8 +6538,8 @@ export const citys = [
         ]
       },
       {
-        value: "那曲",
-        label: "那曲",
+        value: "那曲市",
+        label: "那曲市",
         children: [
           { value: "色尼区", label: "色尼区" },
           { value: "申扎县", label: "申扎县" },
@@ -6481,8 +6563,8 @@ export const citys = [
         ]
       },
       {
-        value: "阿里",
-        label: "阿里",
+        value: "阿里市",
+        label: "阿里市",
         children: [
           { value: "噶尔县", label: "噶尔县" },
           { value: "普兰县", label: "普兰县" },
@@ -6506,8 +6588,8 @@ export const citys = [
     label: "陕西省",
     children: [
       {
-        value: "西安",
-        label: "西安",
+        value: "西安市",
+        label: "西安市",
         children: [
           { value: "未央区", label: "未央区" },
           { value: "新城区", label: "新城区" },
@@ -6537,8 +6619,8 @@ export const citys = [
         ]
       },
       {
-        value: "宝鸡",
-        label: "宝鸡",
+        value: "宝鸡市",
+        label: "宝鸡市",
         children: [
           { value: "渭滨区", label: "渭滨区" },
           { value: "金台区", label: "金台区" },
@@ -6577,8 +6659,8 @@ export const citys = [
         ]
       },
       {
-        value: "咸阳",
-        label: "咸阳",
+        value: "咸阳市",
+        label: "咸阳市",
         children: [
           { value: "秦都区", label: "秦都区" },
           { value: "杨陵区", label: "杨陵区" },
@@ -6609,8 +6691,8 @@ export const citys = [
         ]
       },
       {
-        value: "铜川",
-        label: "铜川",
+        value: "铜川市",
+        label: "铜川市",
         children: [
           { value: "王益区", label: "王益区" },
           { value: "印台区", label: "印台区" },
@@ -6622,8 +6704,8 @@ export const citys = [
         ]
       },
       {
-        value: "渭南",
-        label: "渭南",
+        value: "渭南市",
+        label: "渭南市",
         children: [
           { value: "临渭区", label: "临渭区" },
           { value: "华州区", label: "华州区" },
@@ -6648,8 +6730,8 @@ export const citys = [
         ]
       },
       {
-        value: "延安",
-        label: "延安",
+        value: "延安市",
+        label: "延安市",
         children: [
           { value: "宝塔区", label: "宝塔区" },
           { value: "安塞区", label: "安塞区" },
@@ -6679,8 +6761,8 @@ export const citys = [
         ]
       },
       {
-        value: "榆林",
-        label: "榆林",
+        value: "榆林市",
+        label: "榆林市",
         children: [
           { value: "榆阳区", label: "榆阳区" },
           { value: "横山区", label: "横山区" },
@@ -6706,8 +6788,8 @@ export const citys = [
         ]
       },
       {
-        value: "汉中",
-        label: "汉中",
+        value: "汉中市",
+        label: "汉中市",
         children: [
           { value: "汉台区", label: "汉台区" },
           { value: "南郑区", label: "南郑区" },
@@ -6732,8 +6814,8 @@ export const citys = [
         ]
       },
       {
-        value: "安康",
-        label: "安康",
+        value: "安康市",
+        label: "安康市",
         children: [
           { value: "汉滨区", label: "汉滨区" },
           {
@@ -6758,8 +6840,8 @@ export const citys = [
         ]
       },
       {
-        value: "商洛",
-        label: "商洛",
+        value: "商洛市",
+        label: "商洛市",
         children: [
           { value: "商州区", label: "商州区" },
           { value: "洛南县", label: "洛南县" },
@@ -6783,8 +6865,8 @@ export const citys = [
     label: "甘肃省",
     children: [
       {
-        value: "兰州",
-        label: "兰州",
+        value: "兰州市",
+        label: "兰州市",
         children: [
           { value: "城关区", label: "城关区" },
           { value: "七里河区", label: "七里河区" },
@@ -6803,18 +6885,22 @@ export const citys = [
           { value: "榆中县", label: "榆中县" }
         ]
       },
-      { value: "嘉峪关", label: "嘉峪关" },
       {
-        value: "金昌",
-        label: "金昌",
+        value: "嘉峪关市",
+        label: "嘉峪关市",
+        children: [{ value: "嘉峪关市", label: "嘉峪关市" }]
+      },
+      {
+        value: "金昌市",
+        label: "金昌市",
         children: [
           { value: "金川区", label: "金川区" },
           { value: "永昌县", label: "永昌县" }
         ]
       },
       {
-        value: "白银",
-        label: "白银",
+        value: "白银市",
+        label: "白银市",
         children: [
           { value: "白银区", label: "白银区" },
           { value: "平川区", label: "平川区" },
@@ -6827,8 +6913,8 @@ export const citys = [
         ]
       },
       {
-        value: "天水",
-        label: "天水",
+        value: "天水市",
+        label: "天水市",
         children: [
           { value: "秦州区", label: "秦州区" },
           { value: "麦积区", label: "麦积区" },
@@ -6846,8 +6932,8 @@ export const citys = [
         ]
       },
       {
-        value: "武威",
-        label: "武威",
+        value: "武威市",
+        label: "武威市",
         children: [
           { value: "凉州区", label: "凉州区" },
           { value: "民勤县", label: "民勤县" },
@@ -6859,8 +6945,8 @@ export const citys = [
         ]
       },
       {
-        value: "张掖",
-        label: "张掖",
+        value: "张掖市",
+        label: "张掖市",
         children: [
           { value: "甘州区", label: "甘州区" },
           { value: "民乐县", label: "民乐县" },
@@ -6877,8 +6963,8 @@ export const citys = [
         ]
       },
       {
-        value: "平凉",
-        label: "平凉",
+        value: "平凉市",
+        label: "平凉市",
         children: [
           { value: "崆峒区", label: "崆峒区" },
           { value: "泾川县", label: "泾川县" },
@@ -6896,8 +6982,8 @@ export const citys = [
         ]
       },
       {
-        value: "酒泉",
-        label: "酒泉",
+        value: "酒泉市",
+        label: "酒泉市",
         children: [
           { value: "肃州区", label: "肃州区" },
           { value: "玉门市", label: "玉门市" },
@@ -6915,8 +7001,8 @@ export const citys = [
         ]
       },
       {
-        value: "庆阳",
-        label: "庆阳",
+        value: "庆阳市",
+        label: "庆阳市",
         children: [
           { value: "西峰区", label: "西峰区" },
           { value: "庆城县", label: "庆城县" },
@@ -6935,8 +7021,8 @@ export const citys = [
         ]
       },
       {
-        value: "定西",
-        label: "定西",
+        value: "定西市",
+        label: "定西市",
         children: [
           { value: "安定区", label: "安定区" },
           { value: "通渭县", label: "通渭县" },
@@ -6954,8 +7040,8 @@ export const citys = [
         ]
       },
       {
-        value: "陇南",
-        label: "陇南",
+        value: "陇南市",
+        label: "陇南市",
         children: [
           { value: "武都区", label: "武都区" },
           { value: "成县", label: "成县" },
@@ -6975,8 +7061,8 @@ export const citys = [
         ]
       },
       {
-        value: "临夏",
-        label: "临夏",
+        value: "临夏市",
+        label: "临夏市",
         children: [
           { value: "临夏市", label: "临夏市" },
           { value: "临夏县", label: "临夏县" },
@@ -6998,8 +7084,8 @@ export const citys = [
         ]
       },
       {
-        value: "甘南",
-        label: "甘南",
+        value: "甘南市",
+        label: "甘南市",
         children: [
           { value: "夏河县", label: "夏河县" },
           { value: "玛曲县", label: "玛曲县" },
@@ -7024,8 +7110,8 @@ export const citys = [
     label: "青海省",
     children: [
       {
-        value: "西宁",
-        label: "西宁",
+        value: "西宁市",
+        label: "西宁市",
         children: [
           { value: "城中区", label: "城中区" },
           { value: "城东区", label: "城东区" },
@@ -7043,8 +7129,8 @@ export const citys = [
         ]
       },
       {
-        value: "海东",
-        label: "海东",
+        value: "海东市",
+        label: "海东市",
         children: [
           { value: "乐都区", label: "乐都区" },
           { value: "平安区", label: "平安区" },
@@ -7061,8 +7147,8 @@ export const citys = [
         ]
       },
       {
-        value: "海北",
-        label: "海北",
+        value: "海北市",
+        label: "海北市",
         children: [
           { value: "海晏县", label: "海晏县" },
           { value: "祁连县", label: "祁连县" },
@@ -7074,8 +7160,8 @@ export const citys = [
         ]
       },
       {
-        value: "黄南",
-        label: "黄南",
+        value: "黄南市",
+        label: "黄南市",
         children: [
           { value: "同仁县", label: "同仁县" },
           { value: "尖扎县", label: "尖扎县" },
@@ -7087,8 +7173,8 @@ export const citys = [
         ]
       },
       {
-        value: "海南",
-        label: "海南",
+        value: "海南市",
+        label: "海南市",
         children: [
           { value: "共和县", label: "共和县" },
           { value: "同德县", label: "同德县" },
@@ -7101,8 +7187,8 @@ export const citys = [
         ]
       },
       {
-        value: "果洛",
-        label: "果洛",
+        value: "果洛市",
+        label: "果洛市",
         children: [
           { value: "玛沁县", label: "玛沁县" },
           { value: "班玛县", label: "班玛县" },
@@ -7116,8 +7202,8 @@ export const citys = [
         ]
       },
       {
-        value: "玉树",
-        label: "玉树",
+        value: "玉树市",
+        label: "玉树市",
         children: [
           { value: "玉树市", label: "玉树市" },
           { value: "杂多县", label: "杂多县" },
@@ -7131,8 +7217,8 @@ export const citys = [
         ]
       },
       {
-        value: "海西",
-        label: "海西",
+        value: "海西市",
+        label: "海西市",
         children: [
           { value: "德令哈市", label: "德令哈市" },
           { value: "格尔木市", label: "格尔木市" },
@@ -7152,8 +7238,8 @@ export const citys = [
     label: "宁夏回族自治区",
     children: [
       {
-        value: "银川",
-        label: "银川",
+        value: "银川市",
+        label: "银川市",
         children: [
           { value: "兴庆区", label: "兴庆区" },
           { value: "金凤区", label: "金凤区" },
@@ -7167,8 +7253,8 @@ export const citys = [
         ]
       },
       {
-        value: "石嘴山",
-        label: "石嘴山",
+        value: "石嘴山市",
+        label: "石嘴山市",
         children: [
           { value: "大武口区", label: "大武口区" },
           { value: "惠农区", label: "惠农区" },
@@ -7179,8 +7265,8 @@ export const citys = [
         ]
       },
       {
-        value: "吴忠",
-        label: "吴忠",
+        value: "吴忠市",
+        label: "吴忠市",
         children: [
           { value: "利通区", label: "利通区" },
           { value: "红寺堡区", label: "红寺堡区" },
@@ -7193,8 +7279,8 @@ export const citys = [
         ]
       },
       {
-        value: "固原",
-        label: "固原",
+        value: "固原市",
+        label: "固原市",
         children: [
           { value: "原州区", label: "原州区" },
           { value: "西吉县", label: "西吉县" },
@@ -7207,8 +7293,8 @@ export const citys = [
         ]
       },
       {
-        value: "中卫",
-        label: "中卫",
+        value: "中卫市",
+        label: "中卫市",
         children: [
           { value: "沙坡头区", label: "沙坡头区" },
           { value: "中宁县", label: "中宁县" },
@@ -7225,8 +7311,8 @@ export const citys = [
     label: "新疆维吾尔自治区",
     children: [
       {
-        value: "乌鲁木齐",
-        label: "乌鲁木齐",
+        value: "乌鲁木齐市",
+        label: "乌鲁木齐市",
         children: [
           { value: "水磨沟区", label: "水磨沟区" },
           { value: "天山区", label: "天山区" },
@@ -7245,8 +7331,8 @@ export const citys = [
         ]
       },
       {
-        value: "克拉玛依",
-        label: "克拉玛依",
+        value: "克拉玛依市",
+        label: "克拉玛依市",
         children: [
           { value: "克拉玛依区", label: "克拉玛依区" },
           { value: "独山子区", label: "独山子区" },
@@ -7258,8 +7344,8 @@ export const citys = [
         ]
       },
       {
-        value: "吐鲁番",
-        label: "吐鲁番",
+        value: "吐鲁番市",
+        label: "吐鲁番市",
         children: [
           { value: "高昌区", label: "高昌区" },
           { value: "鄯善县", label: "鄯善县" },
@@ -7270,8 +7356,8 @@ export const citys = [
         ]
       },
       {
-        value: "哈密",
-        label: "哈密",
+        value: "哈密市",
+        label: "哈密市",
         children: [
           { value: "伊州区", label: "伊州区" },
           { value: "伊吾县", label: "伊吾县" },
@@ -7282,8 +7368,8 @@ export const citys = [
         ]
       },
       {
-        value: "阿克苏",
-        label: "阿克苏",
+        value: "阿克苏市",
+        label: "阿克苏市",
         children: [
           { value: "阿克苏市", label: "阿克苏市" },
           { value: "温宿县", label: "温宿县" },
@@ -7303,8 +7389,8 @@ export const citys = [
         ]
       },
       {
-        value: "喀什",
-        label: "喀什",
+        value: "喀什市",
+        label: "喀什市",
         children: [
           { value: "喀什市", label: "喀什市" },
           { value: "疏附县", label: "疏附县" },
@@ -7333,8 +7419,8 @@ export const citys = [
         ]
       },
       {
-        value: "和田",
-        label: "和田",
+        value: "和田市",
+        label: "和田市",
         children: [
           { value: "和田市", label: "和田市" },
           { value: "和田县", label: "和田县" },
@@ -7353,8 +7439,8 @@ export const citys = [
         ]
       },
       {
-        value: "昌吉",
-        label: "昌吉",
+        value: "昌吉市",
+        label: "昌吉市",
         children: [
           { value: "昌吉市", label: "昌吉市" },
           { value: "阜康市", label: "阜康市" },
@@ -7372,8 +7458,8 @@ export const citys = [
         ]
       },
       {
-        value: "博尔塔 拉",
-        label: "博尔塔拉",
+        value: "博尔塔拉市",
+        label: "博尔塔拉市",
         children: [
           { value: "博乐市", label: "博乐市" },
           { value: "阿拉山口市", label: "阿拉山口市" },
@@ -7385,8 +7471,8 @@ export const citys = [
         ]
       },
       {
-        value: "巴音",
-        label: "巴音",
+        value: "巴音市",
+        label: "巴音市",
         children: [
           { value: "库尔勒市", label: "库尔勒市" },
           { value: "焉耆回族自治县", label: "焉耆回族自治县" },
@@ -7406,8 +7492,8 @@ export const citys = [
         ]
       },
       {
-        value: "克孜勒",
-        label: "克孜勒",
+        value: "克孜勒市",
+        label: "克孜勒市",
         children: [
           { value: "阿图什市", label: "阿图什市" },
           { value: "阿克陶县", label: "阿克陶县" },
@@ -7419,8 +7505,8 @@ export const citys = [
         ]
       },
       {
-        value: "伊犁",
-        label: "伊犁",
+        value: "伊犁市",
+        label: "伊犁市",
         children: [
           { value: "伊宁市", label: "伊宁 市" },
           { value: "奎屯市", label: "奎屯市" },
@@ -7449,8 +7535,8 @@ export const citys = [
         ]
       },
       {
-        value: "塔城",
-        label: "塔城",
+        value: "塔城市",
+        label: "塔城市",
         children: [
           { value: "塔城市", label: "塔城市" },
           { value: "乌苏市", label: "乌苏市" },
@@ -7468,8 +7554,8 @@ export const citys = [
         ]
       },
       {
-        value: "阿勒泰",
-        label: "阿勒泰",
+        value: "阿勒泰市",
+        label: "阿勒泰市",
         children: [
           { value: "阿勒泰市", label: "阿勒泰市" },
           { value: "布尔津县", label: "布尔津县" },
@@ -7486,21 +7572,51 @@ export const citys = [
           { value: "吉木乃县", label: "吉 木乃县" }
         ]
       },
-      { value: "石河子", label: "石河子" },
-      { value: "阿拉尔", label: "阿拉尔" },
       {
-        value: "图木舒克",
-        label: "图木舒克"
+        value: "石河子市",
+        label: "石河子市",
+        children: [{ value: "石河子市", label: "石河子市" }]
       },
-      { value: "五家渠", label: "五家渠" },
-      { value: "北屯", label: "北屯" },
       {
-        value: "铁门关",
-        label: "铁门关"
+        value: "阿拉尔市",
+        label: "阿拉尔市",
+        children: [{ value: "阿拉尔市", label: "阿拉尔市" }]
       },
-      { value: "双河", label: "双河" },
-      { value: "可克达拉", label: "可克达拉" },
-      { value: "昆玉", label: "昆玉" }
+      {
+        value: "图木舒克市",
+        label: "图木舒克市",
+        children: [{ value: "图木舒克市", label: "图木舒克市" }]
+      },
+      {
+        value: "五家渠市",
+        label: "五家渠市",
+        children: [{ value: "五家渠市", label: "五家渠市" }]
+      },
+      {
+        value: "北屯市",
+        label: "北屯市",
+        children: [{ value: "北屯市", label: "北屯市" }]
+      },
+      {
+        value: "铁门关市",
+        label: "铁门关市",
+        children: [{ value: "铁门关市", label: "铁门关市" }]
+      },
+      {
+        value: "双河市",
+        label: "双河市",
+        children: [{ value: "双河市", label: "双河市" }]
+      },
+      {
+        value: "可克达拉市",
+        label: "可克达拉市",
+        children: [{ value: "可克达拉市", label: "可克达拉市" }]
+      },
+      {
+        value: "昆玉市",
+        label: "昆玉市",
+        children: [{ value: "昆玉市", label: "昆玉市" }]
+      }
     ]
   },
   {
@@ -7510,12 +7626,7 @@ export const citys = [
       {
         value: "香港",
         label: "香港",
-        children: [
-          {
-            value: "香港",
-            label: "香港"
-          }
-        ]
+        children: [{ value: "香港", label: "香港" }]
       }
     ]
   },

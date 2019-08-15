@@ -350,6 +350,7 @@ export default {
 
       if (rtnCode === "000") {
         if (code) {
+          Toast.hide();
           Toast.failed(msg);
         } else {
           commit("SET_INFO", data);

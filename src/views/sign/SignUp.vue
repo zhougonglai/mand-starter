@@ -13,10 +13,9 @@
             name="tel"
             ref="phone"
             autocomplete="tel"
-            v-model.trim.number="signUp.phone"
+            v-model.trim.number.lazy="signUp.phone"
             placeholder="请输入手机号"
-            minlength="6"
-            maxlength="11"
+            :maxlength="areaCode.active.code === 86 && 11"
           />
         </div>
       </div>
@@ -56,6 +55,7 @@
             autocomplete="now-password"
             :type="passwordStatus ? 'text' : 'password'"
             v-model.trim="signUp.password"
+            pattern="/^[0-9A-Za-z!@#$%^&*()\[\]_+,.?/<>|]{6,18}$/"
             minlength="6"
             maxlength="18"
             placeholder="请输入6-18位的新密码，不含空格"
@@ -87,7 +87,12 @@
         </p>
       </div>
       <div class="fiel-row mt-3">
-        <md-button type="primary" round @click="registrerSubmit"
+        <md-button
+          type="primary"
+          round
+          :loading="waiting"
+          :inactive="waiting"
+          @click="registrerSubmit"
           >立即注册</md-button
         >
       </div>
@@ -492,6 +497,7 @@ export default {
   data() {
     return {
       protocol: false,
+      waiting: false,
       signUp: {
         phone: undefined,
         password: "",
@@ -543,10 +549,7 @@ export default {
     },
     async registrerSubmit() {
       if (!this.$refs.phone.validity.valid) {
-        if (this.$refs.phone.validity.tooShort) {
-          Toast.info("手机号太短");
-          return;
-        } else if (this.$refs.phone.validity.tooLong) {
+        if (this.$refs.phone.validity.tooLong) {
           Toast.info("手机号太长");
           return;
         } else if (this.$refs.phone.validity.valueMissing) {
@@ -567,11 +570,17 @@ export default {
           return;
         } else if (this.$refs.password.validity.valueMissing) {
           Toast.info("密码不能为空");
+          return;
+        } else if (this.$refs.password.validity.patternMismatch) {
+          Toast.info("密码格式错误");
+          return;
         }
       }
+      this.waiting = true;
       const code = await this.register(this.signUp);
-      await this.playerStatus();
+      this.waiting = false;
       if (code === 0) {
+        await this.playerStatus();
         this.gotoBasicInfo();
       }
     },
