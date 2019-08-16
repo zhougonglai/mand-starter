@@ -7,8 +7,7 @@ import playerApi from "./playerApi";
 import gameApi from "./gameApi";
 
 const instance = axios.create({
-  baseURL: "/baseUrl",
-  timeout: 6000
+  baseURL: "/baseUrl"
 });
 
 instance.interceptors.request.use(

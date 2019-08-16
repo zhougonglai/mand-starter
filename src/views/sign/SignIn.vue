@@ -15,6 +15,7 @@
             :required="signIn.accountType"
             v-model.number.trim="signIn.phone"
             pattern="^[0-9]*$"
+            @blur="inputBlur"
             placeholder="请输入手机号"
             :maxlength="areaCode.active.code === 86 && 11"
           />
@@ -117,6 +118,7 @@ export default {
     ...mapState("global", ["areaCode", "sign"])
   },
   methods: {
+    inputBlur() {},
     gotoBasicInfo() {
       this.$router.push({ name: "basic_info" });
     },

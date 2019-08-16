@@ -119,20 +119,12 @@
         </template>
         <template slot="children">
           <ul class="image-reader-list">
-            <template v-if="images.length">
+            <template v-if="images.filter(({ url }) => url).length">
               <!-- 表单填写用 dataUrl,表单回显用 url -->
               <li
                 class="image-reader-item"
-                v-for="(image, index) in images"
+                v-for="(image, index) in images.filter(({ url }) => url)"
                 :key="index"
-                :style="{
-                  backgroundImage: `url(${
-                    image.dataUrl ? image.dataUrl : image.url
-                  })`,
-                  backgroundPosition: 'center center',
-                  backgroundRepeat: 'no-repeat',
-                  backgroundSize: 'cover'
-                }"
               >
                 <md-tag
                   class="image-reader-item-del"
@@ -145,13 +137,22 @@
                 >
                   <md-icon name="close" />
                 </md-tag>
+                <img
+                  :src="image.url"
+                  class="image-file"
+                  @click="viewImage(index)"
+                />
               </li>
             </template>
-            <li class="image-reader-item add" v-if="images.length < 6">
+            <li
+              class="image-reader-item add"
+              v-if="images.filter(({ url }) => url).length < 6"
+            >
               <md-image-reader
                 is-multiple
                 :size="8192"
                 :amount="6"
+                :mime="['jpg', 'jpeg', 'png']"
                 @select="onReaderSelect"
                 @complete="onReaderComplete"
                 @error="fileError"
@@ -172,15 +173,21 @@
       :data="ageSelector.list"
       @choose="ageChoose"
     />
+    <md-image-viewer
+      v-model="viewImages.status"
+      :list="images.filter(({ url }) => url).map(({ url }) => url)"
+      :initial-index="viewImages.active"
+      :has-dots="false"
+    />
     <md-picker
       v-if="citySelector.list.length"
-      ref="citySelector"
       v-model="citySelector.status"
       :data="citySelector.list"
+      @confirm="cityPicker"
+      title="选择地理位置"
+      ref="citySelector"
       :cols="3"
       is-cascade
-      title="选择地理位置"
-      @confirm="cityPicker"
     />
   </div>
 </template>
@@ -196,6 +203,7 @@ import {
   Field,
   Radio,
   Tag,
+  ImageViewer,
   ImageReader,
   ActionBar,
   Icon,
@@ -217,6 +225,7 @@ export default {
     [Toast.name]: Toast,
     [Radio.name]: Radio,
     [ImageReader.name]: ImageReader,
+    [ImageViewer.name]: ImageViewer,
     [Button.name]: Button,
     [ActionBar.name]: ActionBar,
     [TabPicker.name]: TabPicker,
@@ -224,6 +233,10 @@ export default {
   },
   data() {
     return {
+      viewImages: {
+        status: false,
+        active: 0
+      },
       action: [
         {
           text: "下一步",
@@ -268,6 +281,10 @@ export default {
     onReaderSelect() {
       Toast.loading("图片读取中...");
     },
+    viewImage(index) {
+      this.viewImages.active = index;
+      this.viewImages.status = true;
+    },
     fileError(name, { code }) {
       const errorMessage = {
         "100": "浏览器不支持",
@@ -288,26 +305,26 @@ export default {
         dataUrl,
         url: ""
       });
-      const { code, data } = await this.fileUpload(file);
-      if (code === 0) {
+      const res = await this.fileUpload(file);
+      if (res && res.data && res.data[0] && res.code === 0) {
         this.images[this.images.findIndex(item => item.uuid === uuid)].url =
-          data[0];
+          res.data[0];
       } else {
+        console.log("上传失败, 删除: 第", index);
         this.images.splice(index - 1, 1);
       }
     },
     hobbyInput() {
+      // 表情包过滤
       const ranges = [
         "\ud83c[\udf00-\udfff]",
         "\ud83d[\udc00-\ude4f]",
         "\ud83d[\ude80-\udeff]"
       ];
-
       this.basicInfo.hobby = this.basicInfo.hobby.replace(
         new RegExp(ranges.join("|"), "g"),
         ""
       );
-      console.log(this.basicInfo.hobby);
     },
     cityPicker(columns) {
       this.citySelector.active = columns.map(column => column.value);
@@ -315,9 +332,9 @@ export default {
     gotoServiceInfo() {
       if (
         !this.basicInfo.QQNO ||
-        !new RegExp("[1-9][0-9]{4,}").test(this.basicInfo.QQNO)
+        !new RegExp(/^[1-9][0-9]{4,14}$/).test(this.basicInfo.QQNO)
       ) {
-        Toast.info("请填写正确的QQ号码");
+        Toast.info("QQ号格式错误");
         return;
       } else if (!this.citySelector.active.length) {
         Toast.info("请选择所在城市");
@@ -328,7 +345,10 @@ export default {
       } else if (!this.tags.active.length) {
         Toast.info("请填写您的个性标签");
         return;
-      } else if (!this.images.length || this.images.length < 4) {
+      } else if (
+        !this.images.filter(({ url }) => url).length ||
+        this.images.filter(({ url }) => url).length < 4
+      ) {
         Toast.info("至少上传4张照片");
         return;
       }
@@ -397,8 +417,8 @@ export default {
     .image-reader-item {
       position: relative;
       width: 23%;
-      padding-bottom: 23%;
-      margin-top: 2%;
+      height: 22vw;
+      margin-top: 15px;
       background: #FFF;
       box-shadow: 0 5px 20px rgba(197, 202, 213, 0.25);
       box-sizing: border-box;
@@ -406,9 +426,14 @@ export default {
       background-size: cover;
       overflow: hidden;
       background-color: #F5F5F7;
+      display: flex;
 
       &+.image-reader-item {
-        margin-left: 2%;
+        margin-left: 15px;
+      }
+
+      .image-file {
+        width: 100%;
       }
 
       &:nth-of-type(5n) {

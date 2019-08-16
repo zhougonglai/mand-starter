@@ -58,6 +58,19 @@
             }
             document.documentElement.style.fontSize = (ww * 100) / 750 + "px";
           }
+          if (
+            document.activeElement.tagName === "INPUT" ||
+            document.activeElement.tagName === "TEXTAREA" ||
+            document.activeElement.getAttribute("contenteditable") == "true"
+          ) {
+            window.setTimeout(function() {
+              if ("scrollIntoView" in document.activeElement) {
+                document.activeElement.scrollIntoView();
+              } else {
+                document.activeElement.scrollIntoViewIfNeeded();
+              }
+            }, 0);
+          }
         }
 
         resize();
@@ -77,9 +90,13 @@
     <div id="app"></div>
     <!-- built files will be auto injected -->
 
-    <script src="//cdn.jsdelivr.net/npm/eruda"></script>
+    <!-- <script src="//cdn.jsdelivr.net/npm/eruda"></script>
     <script>
       eruda.init();
+    </script> -->
+    <script src="http://wechatfe.github.io/vconsole/lib/vconsole.min.js?v=3.3.0"></script>
+    <script>
+      window.vConsole = new window.VConsole();
     </script>
   </body>
 </html>

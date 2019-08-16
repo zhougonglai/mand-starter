@@ -25,8 +25,9 @@
     :loading="playing"
   >
     <div class="audio-title" v-if="title" v-text="title" />
-    <div class="audio-title" v-else>
-      {{ currentTime ? round(currentTime) : round(duration) }}s
+    <div class="audio-title" v-else-if="currentTime">
+      {{ round(currentTime) }}s
+      <!-- <template v-if="duration">{{round(duration)}}s</template> -->
     </div>
     <img class="audio-volume" :src="require('@/assets/images/volume.svg')" />
   </md-button>
@@ -54,7 +55,7 @@ export default {
   data() {
     return {
       playing: false,
-      data: undefined,
+      data: new Audio(this.url),
       duration: 0,
       currentTime: 0,
       ended: false
@@ -68,16 +69,6 @@ export default {
           localId: this.url
         });
       } else {
-        if (this.data.networkState === 0 || this.data.networkState === 3) {
-          this.data = new Audio(this.url);
-          this.data.load();
-          console.log(
-            "reload resource",
-            this.data,
-            this.data.url,
-            this.data.duration
-          );
-        }
         this.data.play();
         this.data.addEventListener("ended", () => {
           this.playing = false;
@@ -98,12 +89,8 @@ export default {
     }
   },
   mounted() {
-    this.$nextTick(() => {
-      this.data = new Audio(this.url);
-      this.data.load();
-      this.data.addEventListener("loadedmetadata", () => {
-        this.duration = this.data.duration;
-      });
+    this.data.addEventListener("loadedmetadata", () => {
+      this.duration = this.data.duration;
     });
   }
 };

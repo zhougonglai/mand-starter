@@ -467,7 +467,7 @@ export default {
           province: citySelector.active[0],
           city: citySelector.active[1],
           area: citySelector.active[2],
-          images: images.map(image => image.url),
+          images: images.filter(({ url }) => url).map(image => image.url),
           gameInfoParameter: [
             {
               duration: "",

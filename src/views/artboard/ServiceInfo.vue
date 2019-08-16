@@ -74,21 +74,9 @@
               </div>
             </li>
             <li class="image_item">
-              <div
-                class="img"
-                :class="{ add: !serviceInfo.img.url }"
-                :style="
-                  serviceInfo.img.url
-                    ? {
-                        backgroundImage: `url(${serviceInfo.img.url})`,
-                        backgroundPosition: 'center center',
-                        backgroundRepeat: 'no-repeat',
-                        backgroundSize: 'cover'
-                      }
-                    : {}
-                "
-              >
+              <div class="img">
                 <md-image-reader
+                  :mime="['jpg', 'jpeg', 'png']"
                   :size="8192"
                   @error="fileError"
                   @select="onReaderSelect"
@@ -98,6 +86,7 @@
                   <md-icon name="camera" size="md" color="#ccc" />
                   <p>添加图片</p>
                 </template>
+                <img v-else class="image-file" :src="serviceInfo.img.url" />
               </div>
               <div class="descript mt-2">
                 <div class="gray text-center">上传技能截图</div>
@@ -124,6 +113,7 @@
           <div class="fill relative textarea">
             <textarea
               v-model="serviceInfo.skillInfo"
+              @change="skillInput"
               :rows="3"
               :maxlength="300"
               placeholder="点击填写"
@@ -386,9 +376,10 @@ export default {
       Toast.hide();
       this.serviceInfo.img.dataUrl = dataUrl;
       this.serviceInfo.img.file = file;
-      const { code, data } = await this.fileUpload(file);
-      if (code === 0) {
-        this.serviceInfo.img.url = data[0];
+      const res = await this.fileUpload(file);
+      console.log("file uplaod", res);
+      if (res.code === 0) {
+        this.serviceInfo.img.url = res.data[0];
       } else {
         this.serviceInfo.img = {};
       }
@@ -479,6 +470,18 @@ export default {
         });
       }
     },
+    // 过滤部分表情包
+    skillInput() {
+      const ranges = [
+        "\ud83c[\udf00-\udfff]",
+        "\ud83d[\udc00-\ude4f]",
+        "\ud83d[\ude80-\udeff]"
+      ];
+      this.serviceInfo.skillInfo = this.serviceInfo.skillInfo.replace(
+        new RegExp(ranges.join("|"), "g"),
+        ""
+      );
+    },
     replaceAudio(src) {
       this.$refs.audio.src = src;
     },
@@ -492,7 +495,7 @@ export default {
         Toast.info("需要选择段位");
         return;
       } else if (!this.serviceInfo.img.url) {
-        Toast.info("需要上传服务截图");
+        Toast.info("需要上传技能截图");
         return;
       } else if (!this.serviceInfo.skillInfo) {
         Toast.info("需要填写技能介绍");
@@ -500,10 +503,8 @@ export default {
       }
       const rtnInfo = await this.playerInformationAdd();
       if (rtnInfo.code === 0) {
-        const {
-          data: { playerDetailsStatus }
-        } = await this.playerStatus();
-        if (playerDetailsStatus) {
+        const res = await this.playerStatus();
+        if (res) {
           this.$router.push({ name: "result_page" });
         }
       }
@@ -580,7 +581,7 @@ export default {
   }
 
   .right-content {
-    min-width: 20vw;
+    min-width: 25vw;
 
     >>>.md-button {
       background-color: #909399;
@@ -617,6 +618,10 @@ export default {
         background-size: cover;
         overflow: hidden;
         background-color: #F5F5F7;
+
+        img.image-file {
+          width: 100%;
+        }
 
         &.add {
           >>> .md-icon {
