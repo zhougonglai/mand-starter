@@ -333,6 +333,8 @@ export default {
       ],
       recorder: {
         isWx: isWx(),
+        timer: 0,
+        time: 30,
         status: false,
         mediaRecorder: null,
         mediaSteam: null,
@@ -377,7 +379,6 @@ export default {
       this.serviceInfo.img.dataUrl = dataUrl;
       this.serviceInfo.img.file = file;
       const res = await this.fileUpload(file);
-      console.log("file uplaod", res);
       if (res.code === 0) {
         this.serviceInfo.img.url = res.data[0];
       } else {
@@ -402,13 +403,23 @@ export default {
       if (isWx()) {
         window.wx.startRecord({
           success: () => {
-            window.wx.onVoiceRecordEnd({
-              complete: res => {
-                Toast.info(`最多只能录制1分钟,${JSON.stringify(res)}`);
-                this.recorder.localId = res.localId;
-                this.uploadVoice();
-              }
-            });
+            if (this.recorder.timer) {
+              clearInterval(this.recorder.timer);
+              this.recorder.timer = 0;
+            }
+            this.recorder.timer = setInterval(
+              time => {
+                if (time < 30) {
+                  this.recorder.time += 1;
+                } else {
+                  // 超过30秒自动停止
+                  this.stopRecord();
+                  clearInterval(this.recorder.timer);
+                }
+              },
+              1000,
+              this.recorder.time
+            );
           },
           cancel: () => {
             Toast.info("此次录音已取消");
@@ -451,23 +462,34 @@ export default {
       }
     },
     stopRecord() {
-      if (isWx()) {
-        window.wx.stopRecord({
-          success: res => {
-            this.recorder.localId = res.localId;
+      if (this.record.status) {
+        if (isWx()) {
+          window.wx.stopRecord({
+            success: res => {
+              clearInterval(this.recorder.timer);
+              if (this.recorder.time >= 5) {
+                this.recorder.localId = res.localId;
+                this.uploadVoice();
+              }
+              this.recorder.timer = 0;
+              this.recorder.status = false;
+            },
+            fail: () => {
+              clearInterval(this.recorder.timer);
+              this.recorder.timer = 0;
+              this.recorder.status = false;
+            }
+          });
+        } else {
+          this.recorder.mediaRecorder.stopRecording(() => {
             this.recorder.status = false;
-            this.uploadVoice();
-          }
-        });
-      } else {
-        this.recorder.mediaRecorder.stopRecording(() => {
-          this.recorder.status = false;
-          const url = URL.createObjectURL(
-            this.recorder.mediaRecorder.getBlob()
-          );
-          this.recorder.mediaSteam.stop();
-          this.recorder.localId = url;
-        });
+            const url = URL.createObjectURL(
+              this.recorder.mediaRecorder.getBlob()
+            );
+            this.recorder.mediaSteam.stop();
+            this.recorder.localId = url;
+          });
+        }
       }
     },
     // 过滤部分表情包
