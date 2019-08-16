@@ -193,13 +193,13 @@ export default {
 
   .app_version {
     position: absolute;
-    bottom: 0;
+    top: 0;
     right: 0;
     background-color: #C5CAD5;
     color: #858B9C;
-    padding: 5px 10px 0 10px;
+    padding: 5px 10px;
     font-size: xx-small;
-    border-radius: 25px 0 0;
+    border-radius: 0 0 0 25px;
   }
 
   .full-screen {

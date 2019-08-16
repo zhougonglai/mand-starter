@@ -16,6 +16,7 @@
             type="tel"
             v-model.number.trim="forgetInfo.phone"
             placeholder="请输入手机号"
+            pattern="^[0-9]*$"
             :maxlength="areaCode.active.code === 86 && 11"
           />
         </div>
@@ -216,7 +217,7 @@ export default {
       this.$router.push({ name: "sign_in" });
     },
     async sendverifiCode() {
-      if (this.forgetInfo.phone) {
+      if (this.forgetInfo.phone && this.$refs.phone.validity.valid) {
         const code = await this.checkImageShow({ ...this.forgetInfo, type: 2 });
         if (code === 0) {
           await this.imgCode(3);
@@ -224,6 +225,9 @@ export default {
         } else if (code === 1) {
           await this.phoneAuthenticateNoLogin({ ...this.forgetInfo, type: 3 });
         }
+      } else {
+        Toast.info("请填写正确的手机号");
+        return;
       }
     },
     async imgCoderVerify(code) {
@@ -243,6 +247,9 @@ export default {
           return;
         } else if (this.$refs.phone.validity.valueMissing) {
           Toast.info("手机号必填");
+          return;
+        } else if (this.$refs.phone.validity.patternMismatch) {
+          Toast.info("请填写正确的手机号");
           return;
         }
       } else if (!this.$refs.password.validity.valid) {

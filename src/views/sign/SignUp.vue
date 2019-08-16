@@ -13,7 +13,8 @@
             name="tel"
             ref="phone"
             autocomplete="tel"
-            v-model.trim.number="signUp.phone"
+            v-model.number.trim="signUp.phone"
+            pattern="^[0-9]*$"
             placeholder="请输入手机号"
             :maxlength="areaCode.active.code === 86 && 11"
           />
@@ -499,9 +500,9 @@ export default {
       protocol: false,
       waiting: false,
       signUp: {
-        phone: undefined,
+        phone: "",
         password: "",
-        smsCode: undefined,
+        smsCode: "",
         imgCode: "",
         invitationCode: ""
       },
@@ -530,7 +531,7 @@ export default {
       this.imgCode(2);
     },
     async sendverifiCode() {
-      if (this.signUp.phone) {
+      if (this.signUp.phone && this.$refs.phone.validity.valid) {
         const code = await this.checkImageShow(this.signUp);
         if (code === 0) {
           await this.imgCode(2);
@@ -538,6 +539,9 @@ export default {
         } else if (code === 1) {
           await this.phoneAuthenticateNoLogin(this.signUp);
         }
+      } else {
+        Toast.info("请填写正确的手机号");
+        return;
       }
     },
     async imgCoderVerify(code) {
@@ -554,6 +558,9 @@ export default {
           return;
         } else if (this.$refs.phone.validity.valueMissing) {
           Toast.info("手机号不能为空");
+          return;
+        } else if (this.$refs.phone.validity.patternMismatch) {
+          Toast.info("请填写正确的手机号");
           return;
         }
       } else if (!this.$refs.smsCode.validity.valid) {

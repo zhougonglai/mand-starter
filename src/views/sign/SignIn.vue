@@ -14,6 +14,7 @@
             autocomplete="tel"
             :required="signIn.accountType"
             v-model.number.trim="signIn.phone"
+            pattern="^[0-9]*$"
             placeholder="请输入手机号"
             :maxlength="areaCode.active.code === 86 && 11"
           />
@@ -137,6 +138,9 @@ export default {
           } else if (this.$refs.phone.validity.valueMissing) {
             Toast.info("手机号必填");
             return;
+          } else if (this.$refs.phone.validity.patternMismatch) {
+            Toast.info("请填写正确的手机号");
+            return;
           }
         }
       } else {
@@ -156,11 +160,6 @@ export default {
         }
       }
       this.waiting = true;
-      // setTimeout(() => {
-      //   if (this.waiting) {
-      //     this.waiting = false;
-      //   }
-      // }, 6000);
       const { code } = await this.login(this.signIn);
       this.waiting = false;
       if (!code) {

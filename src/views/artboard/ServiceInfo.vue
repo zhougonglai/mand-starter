@@ -499,7 +499,7 @@ export default {
         return;
       }
       const rtnInfo = await this.playerInformationAdd();
-      if (rtnInfo) {
+      if (rtnInfo.code === 0) {
         const {
           data: { playerDetailsStatus }
         } = await this.playerStatus();

@@ -98,7 +98,8 @@
         <template slot="children">
           <div class="fill relative textarea">
             <textarea
-              v-model="basicInfo.hobby"
+              v-model.trim="basicInfo.hobby"
+              @change="hobbyInput"
               :rows="3"
               :cols="35"
               :maxlength="30"
@@ -295,7 +296,19 @@ export default {
         this.images.splice(index - 1, 1);
       }
     },
-    hidePopUp() {},
+    hobbyInput() {
+      const ranges = [
+        "\ud83c[\udf00-\udfff]",
+        "\ud83d[\udc00-\ude4f]",
+        "\ud83d[\ude80-\udeff]"
+      ];
+
+      this.basicInfo.hobby = this.basicInfo.hobby.replace(
+        new RegExp(ranges.join("|"), "g"),
+        ""
+      );
+      console.log(this.basicInfo.hobby);
+    },
     cityPicker(columns) {
       this.citySelector.active = columns.map(column => column.value);
     },
