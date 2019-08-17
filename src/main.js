@@ -7,9 +7,9 @@ import "./index.styl";
 import "./registerServiceWorker";
 import router from "./router";
 import store from "./store";
+import "@/config/wechatTitle";
 
 Vue.config.productionTip = false;
-Vue.config.devtools = process.env.NODE_ENV !== "production";
 Vue.config.performance = process.env.NODE_ENV !== "production";
 Vue.prototype.$http = Http;
 

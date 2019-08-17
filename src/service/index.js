@@ -1,4 +1,5 @@
 import axios from "axios";
+import store from "@/store";
 import { Toast } from "mand-mobile";
 
 import signApi from "./signApi";
@@ -12,12 +13,15 @@ const instance = axios.create({
 
 instance.interceptors.request.use(
   config => {
+    const { token } = store.getters;
+    if (token) config.headers["Authorization"] = token;
     Toast.loading("加载中", 0, false);
     return config;
   },
-  () => {
+  err => {
     Toast.hide();
     Toast.failed("请求错误, 请稍后再试!");
+    return Promise.reject(err);
   }
 );
 
@@ -26,9 +30,10 @@ instance.interceptors.response.use(
     Toast.hide();
     return res.data;
   },
-  () => {
+  err => {
     Toast.hide();
     Toast.failed("服务器响应失效");
+    return Promise.reject(err);
   }
 );
 

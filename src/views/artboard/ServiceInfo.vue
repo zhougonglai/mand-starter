@@ -11,14 +11,14 @@
       <md-cell-item
         arrow
         title="技能类型"
-        @click="toggelGameList"
+        @click="gameList.status = true"
         :addon="gameList.active.name ? gameList.active.name : '请选择'"
       />
       <md-cell-item
         title="段位"
         class="border-bottom-1px"
         :addon="rankList.active.rankName ? rankList.active.rankName : '请选择'"
-        @click="toggelRankList"
+        @click="rankList.status = true"
         no-border
         arrow
       >
@@ -74,7 +74,7 @@
               </div>
             </li>
             <li class="image_item">
-              <div class="img">
+              <div class="img add">
                 <md-image-reader
                   :mime="['jpg', 'jpeg', 'png']"
                   :size="8192"
@@ -170,7 +170,7 @@
       max-height="calc(100vh - 1.2rem)"
       :data="gameList.list"
       @choose="activeGame"
-      @cancel="toggelGameList"
+      @cancel="gameList.status = false"
     >
       <template slot-scope="{ option }">
         <div class="selector-item-body">
@@ -195,7 +195,7 @@
         }))
       "
       @choose="activeRankList"
-      @cancel="toggelRankList"
+      @cancel="rankList.status = false"
     />
     <md-image-viewer
       v-if="sampleGraph.server_icon"
@@ -539,8 +539,6 @@ export default {
       "fileUpload",
       "getgameList",
       "playerStatus",
-      "toggelGameList",
-      "toggelRankList",
       "activeGameList",
       "activeRankList",
       "playerInformationAdd"
@@ -687,11 +685,14 @@ export default {
     font-weight: 500;
     box-sizing: border-box;
     background-color: #FFF;
-    width: 80vw;
+    width: 90vw;
 
     &.popup-center {
+      overflow: hidden;
+
       img {
         width: 100%;
+        height: inherit;
       }
 
       border-radius: radius-normal;

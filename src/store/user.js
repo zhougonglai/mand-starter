@@ -12,7 +12,7 @@ import { Toast } from "mand-mobile";
 
 export default {
   namespaced: true,
-  state: {
+  state: () => ({
     info: {},
     gameApply: [],
     playerStatus: {
@@ -115,20 +115,20 @@ export default {
     },
     images: [],
     basicInfo: {
-      QQNO: undefined,
-      phone: undefined,
+      QQNO: "",
+      phone: "",
       gender: "2",
       hobby: ""
     },
     serviceInfo: {
       img: {
-        dataUrl: undefined,
-        url: undefined,
-        file: undefined
+        dataUrl: "",
+        url: "",
+        file: ""
       },
       skillInfo: "",
       voiceUrl: "",
-      serverId: undefined
+      serverId: ""
     },
     sampleGraph: {},
     gameList: {
@@ -146,14 +146,12 @@ export default {
       time: 60,
       timer: 0,
       status: false,
-      dataSource: undefined,
+      dataSource: "",
       type: 1 // 1: 短信验证码 , 0 : 图形验证码
     }
-  },
+  }),
   getters: {},
   actions: {
-    toggelGameList: ({ commit }) => commit("GAMELIST_TOGGEL"),
-    resetVerification: ({ commit }) => commit("SET_VERIFICATION"),
     activeGameList: ({ commit, dispatch }, { refresh, ...active }) => {
       if (refresh) {
         commit("GAMELIST_ACTIVE", active);
@@ -161,12 +159,8 @@ export default {
       dispatch("getrankList");
       dispatch("getSampleGraph");
       if (refresh) {
-        dispatch("activeRankList", {});
+        commit("RANKLIST_ACTIVE", active);
       }
-    },
-    toggelRankList: ({ commit }) => commit("RANKLIST_TOGGEL"),
-    activeRankList: ({ commit }, active) => {
-      commit("RANKLIST_ACTIVE", active);
     },
     async login(
       { commit, rootState },
@@ -535,16 +529,6 @@ export default {
     SET_INFO(state, result) {
       state.info = result;
     },
-    SET_VERIFICATION(state) {
-      state.verification = {
-        label: "获取短信验证码",
-        time: 60,
-        timer: 0,
-        status: false,
-        dataSource: undefined,
-        type: 1
-      };
-    },
     SET_STATUS(state, status) {
       state.playerStatus = status;
     },
@@ -627,9 +611,6 @@ export default {
     },
     SET_GAMELIST({ gameList }, list) {
       gameList.list = list;
-    },
-    GAMELIST_TOGGEL({ gameList }) {
-      gameList.status = !gameList.status;
     },
     GAMELIST_ACTIVE({ gameList }, active) {
       gameList.active = active;

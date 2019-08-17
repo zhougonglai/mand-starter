@@ -44,7 +44,6 @@
       href="<%= BASE_URL %>favicon-32x32.png"
       size="32x32"
     />
-
     <title>NN约玩</title>
     <script>
       (function(window, document) {
@@ -59,6 +58,7 @@
             document.documentElement.style.fontSize = (ww * 100) / 750 + "px";
           }
           if (
+            document.activeElement ||
             document.activeElement.tagName === "INPUT" ||
             document.activeElement.tagName === "TEXTAREA" ||
             document.activeElement.getAttribute("contenteditable") == "true"
@@ -88,15 +88,10 @@
   </head>
   <body>
     <div id="app"></div>
-    <!-- built files will be auto injected -->
-
-    <!-- <script src="//cdn.jsdelivr.net/npm/eruda"></script>
-    <script>
-      eruda.init();
-    </script> -->
     <script src="http://wechatfe.github.io/vconsole/lib/vconsole.min.js?v=3.3.0"></script>
     <script>
       window.vConsole = new window.VConsole();
     </script>
+    <!-- built files will be auto injected -->
   </body>
 </html>

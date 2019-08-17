@@ -45,18 +45,30 @@ export default new Router({
     {
       path: "/basic_info",
       name: "basic_info",
+      meta: {
+        title: "基本信息",
+        keepAlive: true
+      },
       component: () =>
         import(/* webpackChunkName: "basic_info" */ "@/views/artboard/BasicInfo.vue")
     },
     {
       path: "/service_info",
       name: "service_info",
+      meta: {
+        title: "服务信息",
+        keepAlive: true
+      },
       component: () =>
         import(/* webpackChunkName: "service_info" */ "@/views/artboard/ServiceInfo.vue")
     },
     {
       path: "/result_page",
       name: "result_page",
+      meta: {
+        title: "",
+        keepAlive: false
+      },
       component: () =>
         import(/* webpackChunkName: "result_page" */ "@/views/artboard/ResultPage.vue")
     },
@@ -69,12 +81,20 @@ export default new Router({
         {
           path: "in",
           name: "sign_in",
+          meta: {
+            title: "登录",
+            keepAlive: false
+          },
           component: () =>
             import(/* webpackChunkName: "sign_in" */ "@/views/sign/SignIn.vue")
         },
         {
           path: "up",
           name: "sign_up",
+          meta: {
+            title: "注册",
+            keepAlive: false
+          },
           component: () =>
             import(/* webpackChunkName: "sign_up" */ "@/views/sign/SignUp.vue")
         }
@@ -83,6 +103,10 @@ export default new Router({
     {
       path: "/forget_password",
       name: "forget_password",
+      meta: {
+        title: "找回密码",
+        keepAlive: false
+      },
       component: () =>
         import(/* webpackChunkName: "forget_password" */ "@/views/sign/ForgetPassword.vue")
     }

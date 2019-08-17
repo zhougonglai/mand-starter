@@ -1,8 +1,5 @@
 <template>
   <div id="forget_password">
-    <div class="app-header">
-      <div class="app-header-title">找回密码</div>
-    </div>
     <form class="input-fiel">
       <div class="fiel-row">
         <div class="fiel-item area_code inline" @click="changeAreaCode">
@@ -372,7 +369,7 @@ export default {
   }
 
   form.input-fiel {
-    padding: 0 10vw;
+    padding: 10vw;
     box-sizing: border-box;
   }
 

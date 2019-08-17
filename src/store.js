@@ -9,6 +9,9 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {},
+  getters: {
+    token: (state, getters, rootState) => rootState.user.info.token
+  },
   mutations: {},
   actions: {},
   modules: {

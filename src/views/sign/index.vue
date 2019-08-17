@@ -132,8 +132,8 @@ export default {
         offset += innerHeight;
       });
     },
-    ...mapActions("global", ["toggleAreaSelector"]),
-    ...mapActions("config", ["getWxConfig"])
+    ...mapActions("config", ["getWxConfig"]),
+    ...mapActions("global", ["toggleAreaSelector"])
   },
   created() {
     this.sign.current = this.$route.name;
