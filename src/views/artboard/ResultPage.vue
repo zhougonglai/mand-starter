@@ -39,7 +39,8 @@
 </template>
 <script>
 import { Button } from "mand-mobile";
-import { mapState } from "vuex";
+import { isWx, wxConfig } from "@/utils";
+import { mapState, mapActions } from "vuex";
 
 export default {
   name: "result-page",
@@ -58,11 +59,32 @@ export default {
     };
   },
   computed: {
+    ...mapState("config", ["config"]),
     ...mapState("user", ["playerStatus", "reasons"])
   },
   methods: {
     goBasicInfo() {
       this.$router.push({ name: "basic_info" });
+    },
+    ...mapActions("config", ["getWxConfig"])
+  },
+  async created() {
+    if (isWx()) {
+      const config = await this.getWxConfig();
+      wxConfig(config);
+      window.wx.ready(() => {
+        window.wx.updateAppMessageShareData({
+          title: "入驻NN游戏陪玩，瓜分百万现金奖励",
+          desc: "开心玩，轻松赚，千万用户量的陪玩平台",
+          link: "http://ywm.nnn.com/sign/in",
+          imgUrl: "http://ywm.nnn.com/nnlogoshare.jpg"
+        });
+        window.wx.updateTimelineShareData({
+          title: "入驻NN游戏陪玩，瓜分百万现金奖励",
+          link: "http://ywm.nnn.com/sign/in",
+          imgUrl: "http://ywm.nnn.com/nnlogoshare.jpg"
+        });
+      });
     }
   }
 };

@@ -26,7 +26,7 @@
           slot="children"
           v-if="gameList.active.id === '847e9dff77ba495da3cc8176e6bc4a5d'"
         >
-          <p>
+          <p class="description">
             说明：积分在1-1599的请选择初级段位，积分在1600-1700的请
             选择中级段位；积分在1800以上的请选择高级段位
           </p>
@@ -35,7 +35,7 @@
           slot="children"
           v-if="gameList.active.id === '84aea6416dfc4e7e958056bbb0138876'"
         >
-          <p>
+          <p class="description">
             KD值 ≤ 1的请选择初级段位； 1＜KD值 ≤ 2的请选择中级段位； KD值 ＞
             2的请选择高级段位
           </p>
@@ -76,7 +76,6 @@
             <li class="image_item">
               <div class="img add">
                 <md-image-reader
-                  :mime="['jpg', 'jpeg', 'png']"
                   :size="8192"
                   @error="fileError"
                   @select="onReaderSelect"
@@ -134,7 +133,7 @@
               class="mt-2"
               url="http://ywm.nnn.com/voicesamples.m4a"
             />
-            <p class="gray text-center">示例音频</p>
+            <p class="gray text-center description">示例音频</p>
           </div>
         </template>
         <template slot="children">
@@ -157,6 +156,11 @@
                 title="播放录音"
                 :url="serviceInfo.voiceUrl"
               />
+            </div>
+          </div>
+          <div class="row mt-5">
+            <div class="col" v-if="recorder.localId">
+              <audio-player title="播放微信录音" isWx :url="recorder.localId" />
             </div>
           </div>
         </template>
@@ -271,6 +275,7 @@
             </rect>
           </g>
         </svg>
+        <small>{{ this.recorder.time }}s</small>
       </div>
     </md-popup>
   </div>
@@ -289,8 +294,9 @@ import {
   PopupTitleBar,
   Button
 } from "mand-mobile";
+import imageProcessor from "mand-mobile/components/image-reader/image-processor";
 import RecordRTC from "recordrtc";
-import { isWx, round, wxConfig } from "@/utils";
+import { isWx, round, wxConfig, dataURLtoFile } from "@/utils";
 import { mapActions, mapState } from "vuex";
 
 const isEdge =
@@ -321,6 +327,7 @@ export default {
       popupEx: {
         status: false
       },
+      mime: ["jpg", "jpeg", "png"],
       action: [
         {
           text: "返回",
@@ -328,26 +335,34 @@ export default {
         },
         {
           text: "提交",
+          disabled: false,
           onClick: this.resultPage
         }
       ],
       recorder: {
         isWx: isWx(),
         timer: 0,
-        time: 30,
+        time: 0,
         status: false,
-        mediaRecorder: null,
-        mediaSteam: null,
-        blob: null,
+        mediaRecorder: "",
+        mediaSteam: "",
+        blob: "",
         localId: "",
-        url: undefined
+        url: ""
       },
       tlInfo:
         "这里是兴趣爱好的介绍，这里是兴趣爱好的介绍这里是兴趣爱好的。这里是兴趣爱好的介绍，这里是兴趣爱好的介绍这里是兴趣爱好的。这里是兴趣爱好的介绍，这里是兴趣爱好的介绍这里是兴趣爱好的。这里是兴趣爱好的介绍。"
     };
   },
   computed: {
-    ...mapState("user", ["gameList", "rankList", "serviceInfo", "sampleGraph"])
+    ...mapState("config", ["config"]),
+    ...mapState("user", [
+      "gameList",
+      "rankList",
+      "serviceInfo",
+      "sampleGraph",
+      "playerStatus"
+    ])
   },
   methods: {
     levelChoose(level) {
@@ -376,22 +391,44 @@ export default {
     },
     async onReaderComplete(name, { dataUrl, file }) {
       Toast.hide();
-      this.serviceInfo.img.dataUrl = dataUrl;
-      this.serviceInfo.img.file = file;
-      const res = await this.fileUpload(file);
-      if (res.code === 0) {
-        this.serviceInfo.img.url = res.data[0];
+      if (this.mime.map(i => file.type.includes(i)).filter(i => i).length) {
+        const img = new Image();
+        img.src = dataUrl;
+        img.onload = async () => {
+          const resFile = await imageProcessor({
+            dataUrl,
+            width: img.width,
+            height: img.height,
+            quality:
+              file.size < 1024
+                ? 1
+                : file.size < 3072
+                ? 0.3
+                : file.size < 5120
+                ? 0.2
+                : 0.1
+          });
+          const fileCompress = dataURLtoFile(resFile.dataUrl, file.name);
+          this.serviceInfo.img.dataUrl = resFile.dataUrl;
+          this.serviceInfo.img.file = fileCompress;
+          const res = await this.fileUpload(fileCompress);
+          if (res.code === 0) {
+            this.serviceInfo.img.url = res.data[0];
+          } else {
+            this.serviceInfo.img = {};
+          }
+        };
       } else {
-        this.serviceInfo.img = {};
+        Toast.info("仅支持jpg、jpeg、png格式的图片");
       }
     },
     uploadVoice() {
       window.wx.uploadVoice({
         localId: this.recorder.localId,
         isShowProgressTips: 1,
-        success: res => {
-          this.serviceInfo.serverId = res.serverId;
-          this.getWxMedia(res.serverId).then(({ rtnInfo: { data } }) => {
+        success: ({ serverId }) => {
+          this.serviceInfo.serverId = serverId;
+          this.getWxMedia(serverId).then(({ rtnInfo: { data } }) => {
             if (data) {
               this.serviceInfo.voiceUrl = data;
             }
@@ -403,18 +440,17 @@ export default {
       if (isWx()) {
         window.wx.startRecord({
           success: () => {
-            if (this.recorder.timer) {
-              clearInterval(this.recorder.timer);
-              this.recorder.timer = 0;
-            }
+            this.recorder.status = true;
             this.recorder.timer = setInterval(
               time => {
                 if (time < 30) {
                   this.recorder.time += 1;
                 } else {
-                  // 超过30秒自动停止
-                  this.stopRecord();
-                  clearInterval(this.recorder.timer);
+                  if (this.recorder.status) {
+                    // 超过30秒自动停止
+                    this.stopRecord();
+                    Toast.info("录音不能超过30s");
+                  }
                 }
               },
               1000,
@@ -425,7 +461,6 @@ export default {
             Toast.info("此次录音已取消");
           }
         });
-        this.recorder.status = true;
       } else if (
         navigator.mediaDevices &&
         navigator.mediaDevices.getUserMedia
@@ -462,7 +497,7 @@ export default {
       }
     },
     stopRecord() {
-      if (this.record.status) {
+      if (this.recorder.status) {
         if (isWx()) {
           window.wx.stopRecord({
             success: res => {
@@ -470,12 +505,16 @@ export default {
               if (this.recorder.time >= 5) {
                 this.recorder.localId = res.localId;
                 this.uploadVoice();
+              } else {
+                Toast.info("录音不能低于5S，请重新录音");
               }
+              this.recorder.time = 0;
               this.recorder.timer = 0;
               this.recorder.status = false;
             },
             fail: () => {
               clearInterval(this.recorder.timer);
+              this.recorder.time = 0;
               this.recorder.timer = 0;
               this.recorder.status = false;
             }
@@ -523,13 +562,17 @@ export default {
         Toast.info("需要填写技能介绍");
         return;
       }
+      this.action[1].disabled = true;
       const rtnInfo = await this.playerInformationAdd();
       if (rtnInfo.code === 0) {
-        const res = await this.playerStatus();
+        const res = await this.getPlayerStatus();
         if (res) {
-          this.$router.push({ name: "result_page" });
+          this.$router.push({ name: "result_page" }, () => {
+            this.action[1].disabled = false;
+          });
         }
       }
+      this.action[1].disabled = false;
     },
     goBack() {
       this.$router.push({ name: "basic_info" });
@@ -538,15 +581,23 @@ export default {
     ...mapActions("user", [
       "fileUpload",
       "getgameList",
-      "playerStatus",
+      "getPlayerStatus",
       "activeGameList",
       "activeRankList",
       "playerInformationAdd"
     ]),
     round
   },
-  created() {
-    this.getgameList(true).then(({ data }) => {
+  beforeRouteEnter(to, from, next) {
+    next(vm => {
+      if (vm.playerStatus.playerStatus === 2) {
+        vm.$router.forward();
+        Toast.info("您已经提交过入驻申请资料，请耐心等待官方的审核");
+      }
+    });
+  },
+  async created() {
+    this.getgameList().then(({ data }) => {
       // 游戏类型文案 补偿
       if (!this.gameList.active.type) {
         this.gameList.active.type = data.find(
@@ -558,31 +609,20 @@ export default {
       Toast.hide();
     });
     if (isWx()) {
-      window.wx.checkJsApi({
-        jsApiList: [
-          "startRecord",
-          // 停止录音
-          "stopRecord",
-          // 上传录音
-          "uploadVoice",
-          // 监听录音自动停止
-          "onVoiceRecordEnd",
-          // 播放语音
-          "playVoice",
-          // 暂停播放
-          "pauseVoice",
-          // 停止播放
-          "stopVoice",
-          // 监听语音播放完毕
-          "onVoicePlayEnd"
-        ],
-        fail: () => {
-          this.getWxConfig().then(data => {
-            if (data) {
-              wxConfig(data);
-            }
-          });
-        }
+      const config = await this.getWxConfig();
+      wxConfig(config);
+      window.wx.ready(() => {
+        window.wx.updateAppMessageShareData({
+          title: "入驻NN游戏陪玩，瓜分百万现金奖励",
+          desc: "开心玩，轻松赚，千万用户量的陪玩平台",
+          link: "http://ywm.nnn.com/sign/in",
+          imgUrl: "http://ywm.nnn.com/nnlogoshare.jpg"
+        });
+        window.wx.updateTimelineShareData({
+          title: "入驻NN游戏陪玩，瓜分百万现金奖励",
+          link: "http://ywm.nnn.com/sign/in",
+          imgUrl: "http://ywm.nnn.com/nnlogoshare.jpg"
+        });
       });
     }
   }
@@ -608,7 +648,7 @@ export default {
     }
   }
 
-  p {
+  p.description {
     font-size: 24px;
     color: #909399;
     letter-spacing: 0;
@@ -641,6 +681,7 @@ export default {
 
         img.image-file {
           width: 100%;
+          height: 100%;
         }
 
         &.add {
@@ -710,10 +751,18 @@ export default {
     &.popup-bottom {
       width: 100%;
       padding: 0 0 150px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+
+      svg {
+        margin: 50px 0;
+      }
 
       p {
-        margin-bottom: 100px;
         font-size: 64px;
+        line-height: 64px;
         font-weight: 200;
         color: #999;
       }

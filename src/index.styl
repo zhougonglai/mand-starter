@@ -68,12 +68,15 @@ button
   &.md-button
     height: 80px
     line-height: normal;
-    .md-button-inner
-      font-size 30px
+    &:not(.small)
+      .md-button-inner
+        font-size 32px
+        line-height: 38px
     &.small
       height: 64px
       .md-button-inner
         font-size 22px
+        line-height: 28px
     &.primary
       // background-image: linear-gradient(90deg, #F946F3 0%, #C158FE 100%);
       &::after

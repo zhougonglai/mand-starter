@@ -152,7 +152,6 @@
                 is-multiple
                 :size="8192"
                 :amount="6"
-                :mime="['jpg', 'jpeg', 'png']"
                 @select="onReaderSelect"
                 @complete="onReaderComplete"
                 @error="fileError"
@@ -209,7 +208,8 @@ import {
   Icon,
   Toast
 } from "mand-mobile";
-import { UUIDGeneratorBrowser } from "@/utils";
+import imageProcessor from "mand-mobile/components/image-reader/image-processor";
+import { UUIDGeneratorBrowser, dataURLtoFile, isWx, wxConfig } from "@/utils";
 import { mapActions, mapState } from "vuex";
 
 export default {
@@ -242,18 +242,21 @@ export default {
           text: "下一步",
           onClick: this.gotoServiceInfo
         }
-      ]
+      ],
+      mime: ["jpg", "jpeg", "png"]
     };
   },
   computed: {
+    ...mapState("config", ["config"]),
     ...mapState("user", [
+      "tags",
       "info",
+      "images",
       "reasons",
       "basicInfo",
-      "tags",
-      "images",
       "ageSelector",
-      "citySelector"
+      "citySelector",
+      "playerStatus"
     ])
   },
   methods: {
@@ -294,24 +297,45 @@ export default {
       };
       Toast.failed(errorMessage[code]);
     },
-    async onReaderComplete(name, { dataUrl, blob, file }) {
+    async onReaderComplete(inputName, { dataUrl, file }) {
       Toast.hide();
-      const uuid = UUIDGeneratorBrowser();
-      const index = this.images.push({
-        name: file.name,
-        uuid,
-        file,
-        blob,
-        dataUrl,
-        url: ""
-      });
-      const res = await this.fileUpload(file);
-      if (res && res.data && res.data[0] && res.code === 0) {
-        this.images[this.images.findIndex(item => item.uuid === uuid)].url =
-          res.data[0];
+      if (this.mime.map(i => file.type.includes(i)).filter(i => i).length) {
+        const img = new Image();
+        img.src = dataUrl;
+        img.onload = async () => {
+          const resFile = await imageProcessor({
+            dataUrl,
+            width: img.width,
+            height: img.height,
+            quality:
+              file.size < 1024
+                ? 1
+                : file.size < 3072
+                ? 0.3
+                : file.size < 5120
+                ? 0.2
+                : 0.1
+          });
+          const fileCompress = dataURLtoFile(resFile.dataUrl, file.name);
+          const uuid = UUIDGeneratorBrowser();
+          const index = this.images.push({
+            name: fileCompress.name,
+            uuid,
+            file: fileCompress,
+            blob: resFile.blob,
+            dataUrl: resFile.dataUrl,
+            url: ""
+          });
+          const res = await this.fileUpload(fileCompress);
+          if (res && res.data && res.data[0] && res.code === 0) {
+            this.images[this.images.findIndex(item => item.uuid === uuid)].url =
+              res.data[0];
+          } else {
+            this.images.splice(index - 1, 1);
+          }
+        };
       } else {
-        console.log("上传失败, 删除: 第", index);
-        this.images.splice(index - 1, 1);
+        Toast.info("仅支持jpg、jpeg、png格式的图片");
       }
     },
     hobbyInput() {
@@ -354,7 +378,35 @@ export default {
       }
       this.$router.push({ name: "service_info" });
     },
+    ...mapActions("config", ["getWxConfig"]),
     ...mapActions("user", ["fileUpload", "playerInformationAdd"])
+  },
+  beforeRouteEnter(to, from, next) {
+    next(vm => {
+      if (vm.playerStatus.playerStatus === 2) {
+        vm.$router.forward();
+        Toast.info("您已经提交过入驻申请资料，请耐心等待官方的审核");
+      }
+    });
+  },
+  async created() {
+    if (isWx()) {
+      const config = await this.getWxConfig();
+      wxConfig(config);
+      window.wx.ready(() => {
+        window.wx.updateAppMessageShareData({
+          title: "入驻NN游戏陪玩，瓜分百万现金奖励",
+          desc: "开心玩，轻松赚，千万用户量的陪玩平台",
+          link: "http://ywm.nnn.com/sign/in",
+          imgUrl: "http://ywm.nnn.com/nnlogoshare.jpg"
+        });
+        window.wx.updateTimelineShareData({
+          title: "入驻NN游戏陪玩，瓜分百万现金奖励",
+          link: "http://ywm.nnn.com/sign/in",
+          imgUrl: "http://ywm.nnn.com/nnlogoshare.jpg"
+        });
+      });
+    }
   }
 };
 </script>
@@ -434,6 +486,7 @@ export default {
 
       .image-file {
         width: 100%;
+        height: 100%;
       }
 
       &:nth-of-type(5n) {

@@ -6,7 +6,7 @@ export default {
       jsapi_ticket: "",
       noncestr: "",
       signature: "",
-      timestamp: undefined,
+      timestamp: "",
       url: ""
     },
     userInfo: {}

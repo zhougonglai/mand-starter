@@ -14,21 +14,21 @@ const config = {
   devServer: {
     proxy: "http://ywm.nnn.com/",
     compress: true
-  },
-  pwa: {
-    assetsVersion: "2019/8/13-1",
-    themeColor: "#C158FE",
-    msTileColor: "#111A34",
-    workboxOptions: {
-      importWorkboxFrom: "local",
-      cacheId: "nnplayer",
-      skipWaiting: true,
-      clientsClaim: true,
-      exclude: ["index.html"],
-      navigateFallback: "/sign/in",
-      navigateFallbackWhitelist: [/^\/sign/]
-    }
   }
+  // pwa: {
+  //   assetsVersion: "2019/8/13-1",
+  //   themeColor: "#C158FE",
+  //   msTileColor: "#111A34",
+  //   workboxOptions: {
+  //     importWorkboxFrom: "local",
+  //     cacheId: "nnplayer",
+  //     skipWaiting: true,
+  //     clientsClaim: true,
+  //     exclude: ["index.html"],
+  //     navigateFallback: "/sign/in",
+  //     navigateFallbackWhitelist: [/^\/sign/]
+  //   }
+  // }
 };
 
 module.exports = config;

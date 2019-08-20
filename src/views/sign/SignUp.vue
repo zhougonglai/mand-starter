@@ -24,8 +24,9 @@
         <div class="fiel-item fill">
           <input
             required
-            ref="smsCode"
             type="tel"
+            ref="smsCode"
+            autocomplete="smscode"
             v-model.trim="signUp.smsCode"
             placeholder="请输入6位数验证码"
             maxlength="6"
@@ -482,7 +483,7 @@ import {
   Field
 } from "mand-mobile";
 import { mapState, mapActions } from "vuex";
-import { clearInterval } from "timers";
+import { isWx, wxConfig } from "@/utils";
 
 export default {
   name: "sign-up",
@@ -588,32 +589,52 @@ export default {
       ) {
         this.waiting = true;
         const code = await this.register(this.signUp);
-        this.waiting = false;
         if (code === 0) {
-          await this.playerStatus();
-          this.gotoBasicInfo();
+          await this.getPlayerStatus();
+          this.$router.push({ name: "basic_info" }, () => {
+            this.waiting = false;
+          });
         }
+        this.waiting = false;
       } else {
         Toast.info("密码格式错误");
         return;
       }
     },
     ...mapActions("global", ["toggleAreaSelector"]),
+    ...mapActions("config", ["getWxConfig"]),
     ...mapActions("user", [
       "imgCode",
       "register",
-      "playerStatus",
       "checkImageShow",
+      "getPlayerStatus",
       "phoneAuthenticateNoLogin"
     ])
   },
-  created() {
+  async created() {
     this.sign.current = "sign_up";
     if (this.verification.timer) {
       clearInterval(this.verification.timer);
       this.verification.timer = 0;
       this.verification.status = false;
       this.verification.time = 60;
+    }
+    if (isWx()) {
+      const config = await this.getWxConfig();
+      wxConfig(config);
+      window.wx.ready(() => {
+        window.wx.updateAppMessageShareData({
+          title: "入驻NN游戏陪玩，瓜分百万现金奖励",
+          desc: "开心玩，轻松赚，千万用户量的陪玩平台",
+          link: "http://ywm.nnn.com/sign/in",
+          imgUrl: "http://ywm.nnn.com/nnlogoshare.jpg"
+        });
+        window.wx.updateTimelineShareData({
+          title: "入驻NN游戏陪玩，瓜分百万现金奖励",
+          link: "http://ywm.nnn.com/sign/in",
+          imgUrl: "http://ywm.nnn.com/nnlogoshare.jpg"
+        });
+      });
     }
   }
 };

@@ -218,7 +218,7 @@ export default {
         return;
       }
     },
-    async findPwd({ rootState }, { phone, smsCode, password }) {
+    async findPwd({ rootState }, { imgCode, phone, smsCode, password }) {
       const params = new URLSearchParams(location.search);
       const {
         rtnCode,
@@ -226,6 +226,7 @@ export default {
       } = await $http.findPwd({
         channel: params.has("channel") ? params.get("channel") : "",
         countryCode: rootState.global.areaCode.active.code,
+        imgCode,
         smsCode,
         phone,
         password: CryptoJS.MD5(password).toString()
@@ -447,6 +448,7 @@ export default {
         basicInfo,
         ageSelector,
         citySelector,
+        playerStatus,
         serviceInfo,
         gameList,
         rankList
@@ -455,7 +457,7 @@ export default {
       const { rtnInfo } = await $http.playerInformationAdd(
         {
           ...basicInfo,
-          isPlayer: info.isPlayerApply,
+          isPlayer: playerStatus.playerStatus,
           age: ageSelector.active.value,
           personalityLables: tags.active,
           province: citySelector.active[0],
@@ -485,7 +487,7 @@ export default {
       }
       return rtnInfo;
     },
-    async playerStatus({ state: { info }, commit }) {
+    async getPlayerStatus({ state: { info }, commit }) {
       const { rtnCode, rtnInfo } = await $http.playerStatus({}, false, {
         headers: {
           Authorization: info.token

@@ -62,7 +62,6 @@ import {
   ScrollView
 } from "mand-mobile";
 import { mapState, mapActions } from "vuex";
-import { isWx, wxConfig } from "@/utils";
 
 export default {
   name: "sign",
@@ -132,53 +131,12 @@ export default {
         offset += innerHeight;
       });
     },
-    ...mapActions("config", ["getWxConfig"]),
     ...mapActions("global", ["toggleAreaSelector"])
   },
   created() {
     this.sign.current = this.$route.name;
   },
   mounted() {
-    if (isWx()) {
-      this.getWxConfig().then(data => {
-        if (data) {
-          wxConfig(data);
-          window.wx.ready(() => {
-            window.wx.checkJsApi({
-              jsApiList: [
-                "updateAppMessageShareData",
-                "updateTimelineShareData"
-              ],
-              success: ({
-                checkResult: {
-                  updateAppMessageShareData,
-                  updateTimelineShareData
-                }
-                // errMsg
-              }) => {
-                if (updateAppMessageShareData) {
-                  window.wx.updateAppMessageShareData({
-                    title: "入驻NN游戏陪玩，瓜分百万现金奖励",
-                    desc: "开心玩，轻松赚，千万用户量的陪玩平台",
-                    link: "http://ywm.nnn.com/sign/in",
-                    imgUrl: "http://ywm.nnn.com/nnlogoshare.jpg"
-                  });
-                }
-                if (updateTimelineShareData) {
-                  window.wx.updateTimelineShareData({
-                    title: "入驻NN游戏陪玩，瓜分百万现金奖励",
-                    link: "http://ywm.nnn.com/sign/in",
-                    imgUrl: "http://ywm.nnn.com/nnlogoshare.jpg"
-                  });
-                }
-              }
-            });
-          });
-        } else {
-          alert("微信配置获取失败");
-        }
-      });
-    }
     this.$_initScrollBlock();
   }
 };

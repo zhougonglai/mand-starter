@@ -72,7 +72,12 @@
       </div>
 
       <div class="fiel-row">
-        <md-button type="primary" round @click="confirmChange"
+        <md-button
+          type="primary"
+          round
+          :loading="waiting"
+          :inactive="waiting"
+          @click="confirmChange"
           >确认修改</md-button
         >
       </div>
@@ -142,6 +147,7 @@ import {
   Captcha
 } from "mand-mobile";
 import { mapState, mapActions } from "vuex";
+import { isWx, wxConfig } from "@/utils";
 
 export default {
   name: "forget-password",
@@ -165,6 +171,7 @@ export default {
       imgCoder: {
         status: false
       },
+      waiting: false,
       passwordStatus: false
     };
   },
@@ -179,6 +186,7 @@ export default {
       return activeIndex;
     },
     ...mapState("global", ["areaCode"]),
+    ...mapState("config", ["config"]),
     ...mapState("user", ["verification"])
   },
   methods: {
@@ -278,15 +286,20 @@ export default {
           this.forgetInfo.password
         )
       ) {
+        this.waiting = true;
         const code = await this.findPwd(this.forgetInfo);
         if (code === 0) {
-          this.$router.push({ name: "sign_in", query: this.forgetInfo });
+          this.$router.push({ name: "sign_in", query: this.forgetInfo }, () => {
+            this.waiting = false;
+          });
         }
+        this.waiting = false;
       } else {
         Toast.info("密码格式错误");
         return;
       }
     },
+    ...mapActions("config", ["getWxConfig"]),
     ...mapActions("user", [
       "imgCode",
       "phoneAuthenticateNoLogin",
@@ -294,12 +307,29 @@ export default {
       "findPwd"
     ])
   },
-  created() {
+  async created() {
     if (this.verification.timer) {
       clearInterval(this.verification.timer);
       this.verification.timer = 0;
       this.verification.status = false;
       this.verification.time = 60;
+    }
+    if (isWx()) {
+      const config = await this.getWxConfig();
+      wxConfig(config);
+      window.wx.ready(() => {
+        window.wx.updateAppMessageShareData({
+          title: "入驻NN游戏陪玩，瓜分百万现金奖励",
+          desc: "开心玩，轻松赚，千万用户量的陪玩平台",
+          link: "http://ywm.nnn.com/sign/in",
+          imgUrl: "http://ywm.nnn.com/nnlogoshare.jpg"
+        });
+        window.wx.updateTimelineShareData({
+          title: "入驻NN游戏陪玩，瓜分百万现金奖励",
+          link: "http://ywm.nnn.com/sign/in",
+          imgUrl: "http://ywm.nnn.com/nnlogoshare.jpg"
+        });
+      });
     }
   },
   mounted() {
