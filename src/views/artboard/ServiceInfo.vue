@@ -440,7 +440,10 @@ export default {
     },
     record() {
       if (isWx()) {
-        if (this.$refs.voice.playing || this.$refs.recorder.playing) {
+        if (
+          this.$refs.voice.playing ||
+          ("recorder" in this.$refs && this.$refs.recorder.playing)
+        ) {
           Toast.info("有音频正在播放中");
         } else {
           window.wx.startRecord({
@@ -457,6 +460,9 @@ export default {
                   }
                 }
               }, 1000);
+            },
+            fail: err => {
+              alert(JSON.stringify(err));
             },
             cancel: () => {
               Toast.info("此次录音已取消");
@@ -629,6 +635,10 @@ export default {
           link: "http://ywm.nnn.com/sign/in",
           imgUrl: "http://ywm.nnn.com/nnlogoshare.jpg"
         });
+      });
+
+      window.wx.error(res => {
+        alert(JSON.stringify(res));
       });
     }
   }

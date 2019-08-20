@@ -359,8 +359,8 @@ button
 
   .fiel-item {
     border-radius: 40px;
-    border: 1px solid #dcdfe6;
     box-sizing: border-box;
+    border: 1px solid #dcdfe6;
     font-size: 32px;
     line-height: 32px;
     font-weight: lighter;
@@ -434,6 +434,18 @@ button
 
     &.inline {
       display: inline-flex;
+    }
+  }
+
+  @media (min-resolution: 2dppx){
+    .fiel-item{
+      border: 0.5px solid #dcdfe6;
+    }
+  }
+
+  @media (min-resolution: 3dppx){
+    .fiel-item{
+      border: 0.33px solid #dcdfe6;
     }
   }
 }
