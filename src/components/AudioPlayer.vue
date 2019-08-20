@@ -1,33 +1,14 @@
 <template>
-  <!-- <div class="audio-player" @click="playVoice" :class="{ ended }">
-    <div class="audio-content">
-      <div class="audio-title" v-if="title" v-text="title" />
-      <div class="audio-duation">
-        {{ data.duration ? round(data.duration) + "s" : "" }}
-      </div>
-    </div>
-    <div class="audio-bar" :class="{ playing }">
-      <div class="bar" />
-      <div class="bar" />
-      <div class="bar" />
-    </div>
-    <div
-      class="audio-animate"
-      v-if="currentTime"
-      :style="{ left: (currentTime / data.duration) * 110 + '%' }"
-    />
-  </div>-->
   <md-button
     type="primary"
     round
     size="small"
-    @click="playVoice"
+    @click="playing ? pause() : playVoice()"
     :loading="playing"
   >
-    <div class="audio-title" v-if="title" v-text="title" />
+    <div class="audio-title" v-if="title && !playing" v-text="title" />
     <div class="audio-title" v-else-if="currentTime">
       {{ round(currentTime) }}s
-      <!-- <template v-if="duration">{{round(duration)}}s</template> -->
     </div>
     <img class="audio-volume" :src="require('@/assets/images/volume.svg')" />
   </md-button>
@@ -68,6 +49,7 @@ export default {
         window.wx.playVoice({
           localId: this.url
         });
+        this.playing = true;
       } else {
         this.data.play();
         this.data.addEventListener("ended", () => {
@@ -86,11 +68,22 @@ export default {
         this.playing = true;
         this.$emit("playing");
       }
+    },
+    pause() {
+      this.playing = false;
+      if (this.isWx) {
+        window.wx.stopVoice({
+          localId: this.url
+        });
+      } else {
+        this.data.pause();
+      }
     }
   },
   mounted() {
     this.data.addEventListener("loadedmetadata", () => {
       this.duration = this.data.duration;
+      this.$emit("loadedmetadata", this.data.duration);
     });
   }
 };

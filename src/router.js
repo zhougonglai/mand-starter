@@ -66,7 +66,7 @@ export default new Router({
       path: "/result_page",
       name: "result_page",
       meta: {
-        title: "",
+        title: "  ",
         keepAlive: false
       },
       component: () =>

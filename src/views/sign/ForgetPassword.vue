@@ -399,8 +399,13 @@ export default {
   }
 
   form.input-fiel {
-    padding: 10vw;
+    position: absolute;
+    top: 0;
+    height: fit-content;
+    padding: 10vw 10vw 0 10vw;
     box-sizing: border-box;
+    will-change: transform;
+    transform: translateZ(0);
   }
 
   .selector-item-body {

@@ -155,12 +155,8 @@
                 class="ml-5"
                 title="播放录音"
                 :url="serviceInfo.voiceUrl"
+                @loadedmetadata="loadedmetadata"
               />
-            </div>
-          </div>
-          <div class="row mt-5">
-            <div class="col" v-if="recorder.localId">
-              <audio-player title="播放微信录音" isWx :url="recorder.localId" />
             </div>
           </div>
         </template>
@@ -357,6 +353,7 @@ export default {
   computed: {
     ...mapState("config", ["config"]),
     ...mapState("user", [
+      "info",
       "gameList",
       "rankList",
       "serviceInfo",
@@ -427,6 +424,7 @@ export default {
         localId: this.recorder.localId,
         isShowProgressTips: 1,
         success: ({ serverId }) => {
+          console.log("upload", serverId);
           this.serviceInfo.serverId = serverId;
           this.getWxMedia(serverId).then(({ rtnInfo: { data } }) => {
             if (data) {
@@ -436,11 +434,17 @@ export default {
         }
       });
     },
+    loadedmetadata(duration) {
+      this.serviceInfo.duration = round(duration);
+    },
     record() {
       if (isWx()) {
         window.wx.startRecord({
           success: () => {
             this.recorder.status = true;
+            if (this.serviceInfo.voiceUrl) {
+              this.serviceInfo.voiceUrl = "";
+            }
             this.recorder.timer = setInterval(
               time => {
                 if (time < 30) {
@@ -543,9 +547,6 @@ export default {
         ""
       );
     },
-    replaceAudio(src) {
-      this.$refs.audio.src = src;
-    },
     playRecord() {
       window.wx.playVoice({
         localId: this.recorder.localId
@@ -574,6 +575,9 @@ export default {
       }
       this.action[1].disabled = false;
     },
+    activeRankList(active) {
+      this.rankList.active = active;
+    },
     goBack() {
       this.$router.push({ name: "basic_info" });
     },
@@ -583,14 +587,15 @@ export default {
       "getgameList",
       "getPlayerStatus",
       "activeGameList",
-      "activeRankList",
       "playerInformationAdd"
     ]),
     round
   },
   beforeRouteEnter(to, from, next) {
     next(vm => {
-      if (vm.playerStatus.playerStatus === 2) {
+      if (!vm.info.token) {
+        vm.$router.push({ name: "sign_in" });
+      } else if (vm.playerStatus.playerStatus === 2) {
         vm.$router.forward();
         Toast.info("您已经提交过入驻申请资料，请耐心等待官方的审核");
       }

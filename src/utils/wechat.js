@@ -3,7 +3,8 @@
  * @param {*} config
  */
 export const wxConfig = ({
-  debug = process.env.NODE_ENV !== "production",
+  // debug = process.env.NODE_ENV !== "production",
+  debug = false,
   appId,
   timestamp,
   nonceStr,

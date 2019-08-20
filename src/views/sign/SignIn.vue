@@ -56,9 +56,11 @@
         </div>
       </div>
       <div class="fiel-row">
-        <div class="fill" @click="changeAccountType">
+        <div class="fill">
           <div class="line-normal larger primary">
-            {{ signIn.accountType ? "邮箱/账号登录" : "手机号登录" }}
+            <p class="inline" @click="changeAccountType">
+              {{ signIn.accountType ? "邮箱/账号登录" : "手机号登录" }}
+            </p>
           </div>
           <div class="line-normal gray mt-1">可使用雷神账号登录</div>
         </div>

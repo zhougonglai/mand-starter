@@ -383,7 +383,9 @@ export default {
   },
   beforeRouteEnter(to, from, next) {
     next(vm => {
-      if (vm.playerStatus.playerStatus === 2) {
+      if (!vm.info.token) {
+        vm.$router.push({ name: "sign_in" });
+      } else if (vm.playerStatus.playerStatus === 2) {
         vm.$router.forward();
         Toast.info("您已经提交过入驻申请资料，请耐心等待官方的审核");
       }

@@ -126,6 +126,7 @@ export default {
         url: "",
         file: ""
       },
+      duration: 0,
       skillInfo: "",
       voiceUrl: "",
       serverId: ""
@@ -163,7 +164,11 @@ export default {
       }
     },
     async login(
-      { commit, rootState },
+      {
+        commit,
+        state: { openId },
+        rootState
+      },
       { phone, emailOrAccount, accountType, password, wechat }
     ) {
       const params = new URLSearchParams(location.search);
@@ -177,7 +182,7 @@ export default {
         emailOrAccount: accountType ? "" : emailOrAccount,
         password: CryptoJS.MD5(password).toString(),
         countryCode: rootState.global.areaCode.active.code,
-        weChatOpenId: wechat ? window.localStorage.getItem("openId") : ""
+        weChatOpenId: wechat ? openId : ""
       });
       if (rtnCode === "000") {
         if (code) {
@@ -466,7 +471,7 @@ export default {
           images: images.filter(({ url }) => url).map(image => image.url),
           gameInfoParameter: [
             {
-              duration: "",
+              duration: serviceInfo.duration,
               gameType: gameList.active.id,
               pictureUrl: serviceInfo.img.url,
               rank: rankList.active.value,

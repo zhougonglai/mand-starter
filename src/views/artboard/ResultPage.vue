@@ -60,13 +60,20 @@ export default {
   },
   computed: {
     ...mapState("config", ["config"]),
-    ...mapState("user", ["playerStatus", "reasons"])
+    ...mapState("user", ["info", "playerStatus", "reasons"])
   },
   methods: {
     goBasicInfo() {
       this.$router.push({ name: "basic_info" });
     },
     ...mapActions("config", ["getWxConfig"])
+  },
+  beforeRouteEnter(to, from, next) {
+    next(vm => {
+      if (!vm.info.token) {
+        vm.$router.push({ name: "sign_in" });
+      }
+    });
   },
   async created() {
     if (isWx()) {
