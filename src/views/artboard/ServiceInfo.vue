@@ -130,6 +130,7 @@
         <template slot="right">
           <div class="right-content">
             <audio-player
+              ref="voice"
               class="mt-2"
               url="http://ywm.nnn.com/voicesamples.m4a"
             />
@@ -152,6 +153,7 @@
             </div>
             <div class="col" v-if="serviceInfo.voiceUrl">
               <audio-player
+                ref="recorder"
                 class="ml-5"
                 title="播放录音"
                 :url="serviceInfo.voiceUrl"
@@ -424,7 +426,6 @@ export default {
         localId: this.recorder.localId,
         isShowProgressTips: 1,
         success: ({ serverId }) => {
-          console.log("upload", serverId);
           this.serviceInfo.serverId = serverId;
           this.getWxMedia(serverId).then(({ rtnInfo: { data } }) => {
             if (data) {
@@ -439,15 +440,14 @@ export default {
     },
     record() {
       if (isWx()) {
-        window.wx.startRecord({
-          success: () => {
-            this.recorder.status = true;
-            if (this.serviceInfo.voiceUrl) {
-              this.serviceInfo.voiceUrl = "";
-            }
-            this.recorder.timer = setInterval(
-              time => {
-                if (time < 30) {
+        if (this.$refs.voice.playing || this.$refs.recorder.playing) {
+          Toast.info("有音频正在播放中");
+        } else {
+          window.wx.startRecord({
+            success: () => {
+              this.recorder.status = true;
+              this.recorder.timer = setInterval(() => {
+                if (this.recorder.time < 30) {
                   this.recorder.time += 1;
                 } else {
                   if (this.recorder.status) {
@@ -456,15 +456,13 @@ export default {
                     Toast.info("录音不能超过30s");
                   }
                 }
-              },
-              1000,
-              this.recorder.time
-            );
-          },
-          cancel: () => {
-            Toast.info("此次录音已取消");
-          }
-        });
+              }, 1000);
+            },
+            cancel: () => {
+              Toast.info("此次录音已取消");
+            }
+          });
+        }
       } else if (
         navigator.mediaDevices &&
         navigator.mediaDevices.getUserMedia
@@ -507,6 +505,9 @@ export default {
             success: res => {
               clearInterval(this.recorder.timer);
               if (this.recorder.time >= 5) {
+                if (this.serviceInfo.voiceUrl) {
+                  this.serviceInfo.voiceUrl = "";
+                }
                 this.recorder.localId = res.localId;
                 this.uploadVoice();
               } else {

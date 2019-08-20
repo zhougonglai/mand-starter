@@ -50,6 +50,11 @@ export default {
           localId: this.url
         });
         this.playing = true;
+        window.wx.onVoicePlayEnd({
+          success: () => {
+            this.playing = false;
+          }
+        });
       } else {
         this.data.play();
         this.data.addEventListener("ended", () => {
