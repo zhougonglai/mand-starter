@@ -461,9 +461,7 @@ export default {
                 }
               }, 1000);
             },
-            fail: err => {
-              alert(JSON.stringify(err));
-            },
+            fail: () => {},
             cancel: () => {
               Toast.info("此次录音已取消");
             }
@@ -490,7 +488,7 @@ export default {
             };
             if (isSafari || isEdge) {
               config.recorderType = RecordRTC.StereoAudioRecorder;
-              this.recorder.localId = undefined;
+              this.recorder.localId = "";
             }
             this.recorder.mediaSteam = stream;
             this.recorder.mediaRecorder = new RecordRTC(stream, config);
@@ -510,6 +508,7 @@ export default {
           window.wx.stopRecord({
             success: res => {
               clearInterval(this.recorder.timer);
+              this.serviceInfo.duration = this.recorder.time;
               if (this.recorder.time >= 5) {
                 if (this.serviceInfo.voiceUrl) {
                   this.serviceInfo.voiceUrl = "";
@@ -621,24 +620,31 @@ export default {
       Toast.hide();
     });
     if (isWx()) {
-      const config = await this.getWxConfig();
-      wxConfig(config);
-      window.wx.ready(() => {
-        window.wx.updateAppMessageShareData({
-          title: "入驻NN游戏陪玩，瓜分百万现金奖励",
-          desc: "开心玩，轻松赚，千万用户量的陪玩平台",
-          link: "http://ywm.nnn.com/sign/in",
-          imgUrl: "http://ywm.nnn.com/nnlogoshare.jpg"
-        });
-        window.wx.updateTimelineShareData({
-          title: "入驻NN游戏陪玩，瓜分百万现金奖励",
-          link: "http://ywm.nnn.com/sign/in",
-          imgUrl: "http://ywm.nnn.com/nnlogoshare.jpg"
-        });
+      window.wx.checkJsApi({
+        jsApiList: ["startRecord", "stopRecord", "uploadVoice"],
+        success: async ({ checkResult }) => {
+          console.log("checkResult", checkResult);
+          const config = await this.getWxConfig();
+          wxConfig(config);
+          window.wx.ready(() => {
+            window.wx.updateAppMessageShareData({
+              title: "入驻NN游戏陪玩，瓜分百万现金奖励",
+              desc: "开心玩，轻松赚，千万用户量的陪玩平台",
+              link: "http://ywm.nnn.com/sign/in",
+              imgUrl: "http://ywm.nnn.com/nnlogoshare.jpg"
+            });
+            window.wx.updateTimelineShareData({
+              title: "入驻NN游戏陪玩，瓜分百万现金奖励",
+              link: "http://ywm.nnn.com/sign/in",
+              imgUrl: "http://ywm.nnn.com/nnlogoshare.jpg"
+            });
+          });
+        }
       });
 
-      window.wx.error(res => {
-        alert(JSON.stringify(res));
+      window.wx.error(async () => {
+        const config = await this.getWxConfig();
+        wxConfig(config);
       });
     }
   }
