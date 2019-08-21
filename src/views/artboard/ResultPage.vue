@@ -41,6 +41,7 @@
 import { Button } from "mand-mobile";
 import { isWx, wxConfig } from "@/utils";
 import { mapState, mapActions } from "vuex";
+import device from "current-device";
 
 export default {
   name: "result-page",
@@ -76,7 +77,7 @@ export default {
     });
   },
   async created() {
-    if (isWx()) {
+    if (isWx() && device.android()) {
       const config = await this.getWxConfig();
       wxConfig(config);
       window.wx.ready(() => {

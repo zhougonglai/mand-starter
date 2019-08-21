@@ -12,7 +12,7 @@ const config = {
     }
   },
   devServer: {
-    proxy: "http://ywm.nnn.com/",
+    proxy: "http://ywm.leigod.com",
     compress: true
   }
   // pwa: {

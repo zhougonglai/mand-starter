@@ -148,6 +148,7 @@ import {
 } from "mand-mobile";
 import { mapState, mapActions } from "vuex";
 import { isWx, wxConfig } from "@/utils";
+import device from "current-device";
 
 export default {
   name: "forget-password",
@@ -314,7 +315,7 @@ export default {
       this.verification.status = false;
       this.verification.time = 60;
     }
-    if (isWx()) {
+    if (isWx() && device.android()) {
       const config = await this.getWxConfig();
       wxConfig(config);
       window.wx.ready(() => {

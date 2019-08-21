@@ -12,6 +12,14 @@
     ></router-view>
   </div>
 </template>
+<script>
+export default {
+  name: "app",
+  created() {
+    console.log(process.env.BASE_URL);
+  }
+};
+</script>
 <style lang="stylus">
 svg.icon {
   width: 74px;

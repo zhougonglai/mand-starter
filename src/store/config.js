@@ -18,9 +18,9 @@ export default {
         rtnCode,
         rtnInfo: { data }
       } = await fetch(
-        `http://ywm.nnn.com/baseUrl/wx/getWxConfig?url=${encodeURIComponent(
-          location.href
-        )}`
+        `${
+          process.env.BASE_URL
+        }/baseUrl/wx/getWxConfig?url=${encodeURIComponent(location.href)}`
       ).then(res => res.json());
 
       if (rtnCode === "000") {
@@ -32,13 +32,13 @@ export default {
     },
     async getWxUserInfo(_, openId) {
       const res = await fetch(
-        `http://ywm.nnn.com/baseUrl/wx/user-info?openId=${openId}`
+        `${process.env.BASE_URL}/baseUrl/wx/user-info?openId=${openId}`
       ).then(res => res.json());
       return res;
     },
     async getWxMedia(_, serviceId) {
       const res = await fetch(
-        `http://ywm.nnn.com/baseUrl/wx/media-download?mediaId=${serviceId}`
+        `${process.env.BASE_URL}/baseUrl/wx/media-download?mediaId=${serviceId}`
       ).then(res => res.json());
       return res;
     }

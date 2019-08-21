@@ -211,6 +211,7 @@ import {
 import imageProcessor from "mand-mobile/components/image-reader/image-processor";
 import { UUIDGeneratorBrowser, dataURLtoFile, isWx, wxConfig } from "@/utils";
 import { mapActions, mapState } from "vuex";
+import device from "current-device";
 
 export default {
   name: "basic-info",
@@ -300,6 +301,7 @@ export default {
     async onReaderComplete(inputName, { dataUrl, file }) {
       Toast.hide();
       if (this.mime.map(i => file.type.includes(i)).filter(i => i).length) {
+        console.log(file);
         const img = new Image();
         img.src = dataUrl;
         img.onload = async () => {
@@ -308,11 +310,11 @@ export default {
             width: img.width,
             height: img.height,
             quality:
-              file.size < 1024
+              file.size / 1024 < 1024
                 ? 1
-                : file.size < 3072
+                : file.size / 1024 < 3072
                 ? 0.3
-                : file.size < 5120
+                : file.size / 1024 < 5120
                 ? 0.2
                 : 0.1
           });
@@ -392,7 +394,7 @@ export default {
     });
   },
   async created() {
-    if (isWx()) {
+    if (isWx() && device.android()) {
       const config = await this.getWxConfig();
       wxConfig(config);
       window.wx.ready(() => {

@@ -482,8 +482,9 @@ import {
   Captcha,
   Field
 } from "mand-mobile";
-import { mapState, mapActions } from "vuex";
+import { mapState, mapActions, mapMutations } from "vuex";
 import { isWx, wxConfig } from "@/utils";
+import device from "current-device";
 
 export default {
   name: "sign-up",
@@ -591,6 +592,7 @@ export default {
         const code = await this.register(this.signUp);
         if (code === 0) {
           await this.getPlayerStatus();
+          this.INIT_INFO_DATA();
           this.$router.push({ name: "basic_info" }, () => {
             this.waiting = false;
           });
@@ -601,6 +603,7 @@ export default {
         return;
       }
     },
+    ...mapMutations("user", ["INIT_INFO_DATA"]),
     ...mapActions("global", ["toggleAreaSelector"]),
     ...mapActions("config", ["getWxConfig"]),
     ...mapActions("user", [
@@ -619,7 +622,7 @@ export default {
       this.verification.status = false;
       this.verification.time = 60;
     }
-    if (isWx()) {
+    if (isWx() && device.android()) {
       const config = await this.getWxConfig();
       wxConfig(config);
       window.wx.ready(() => {

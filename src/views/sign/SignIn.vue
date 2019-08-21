@@ -91,7 +91,7 @@
 </template>
 <script>
 import { Agree, Icon, InputItem, Button, Toast } from "mand-mobile";
-import { mapState, mapActions } from "vuex";
+import { mapState, mapActions, mapMutations } from "vuex";
 import { isWx, wxConfig } from "@/utils";
 
 export default {
@@ -171,6 +171,7 @@ export default {
           data: { playerDetailsStatus, playerStatus }
         } = await this.getPlayerStatus();
         if (playerDetailsStatus === 3) {
+          this.INIT_INFO_DATA();
           // 已经是陪玩或者 初次申请者
           this.$router.push(
             {
@@ -214,7 +215,8 @@ export default {
       "playerGameApply",
       "exchangeCode",
       "autoLogin"
-    ])
+    ]),
+    ...mapMutations("user", ["INIT_INFO_DATA"])
   },
   async created() {
     this.sign.current = "sign_in";
@@ -228,6 +230,7 @@ export default {
             data: { playerDetailsStatus, playerStatus }
           } = await this.getPlayerStatus();
           if (playerDetailsStatus === 3) {
+            this.INIT_INFO_DATA();
             // 已经是陪玩或者 初次申请者
             this.$router.push({
               name: "basic_info"
@@ -252,6 +255,7 @@ export default {
     if (isWx()) {
       const config = await this.getWxConfig();
       wxConfig(config);
+
       window.wx.ready(() => {
         window.wx.updateAppMessageShareData({
           title: "入驻NN游戏陪玩，瓜分百万现金奖励",

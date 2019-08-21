@@ -539,6 +539,33 @@ export default {
     SET_STATUS(state, status) {
       state.playerStatus = status;
     },
+    INIT_INFO_DATA(state) {
+      const {
+        basicInfo,
+        ageSelector,
+        tags,
+        citySelector,
+        gameList,
+        rankList,
+        serviceInfo
+      } = state;
+      basicInfo.QQNO = "";
+      basicInfo.gender = "2";
+      basicInfo.hobby = "";
+      ageSelector.active = {
+        text: "23岁",
+        value: "23"
+      };
+      tags.active = [];
+      citySelector.active = [];
+      state.images = [];
+      state.reasons = "";
+      gameList.active = {};
+      rankList.active = {};
+      serviceInfo.skillInfo = "";
+      serviceInfo.voiceUrl = "";
+      serviceInfo.img.url = "";
+    },
     SET_INFO_STATUS(
       state,
       {

@@ -296,6 +296,7 @@ import imageProcessor from "mand-mobile/components/image-reader/image-processor"
 import RecordRTC from "recordrtc";
 import { isWx, round, wxConfig, dataURLtoFile } from "@/utils";
 import { mapActions, mapState } from "vuex";
+import device from "current-device";
 
 const isEdge =
   navigator.userAgent.indexOf("Edge") !== -1 &&
@@ -428,7 +429,7 @@ export default {
         success: ({ serverId }) => {
           this.serviceInfo.serverId = serverId;
           this.getWxMedia(serverId).then(({ rtnInfo: { data } }) => {
-            if (data) {
+            if (typeof data === "string") {
               this.serviceInfo.voiceUrl = data;
             }
           });
@@ -445,28 +446,30 @@ export default {
           ("recorder" in this.$refs && this.$refs.recorder.playing)
         ) {
           Toast.info("有音频正在播放中");
-        } else {
-          window.wx.startRecord({
-            success: () => {
-              this.recorder.status = true;
-              this.recorder.timer = setInterval(() => {
-                if (this.recorder.time < 30) {
-                  this.recorder.time += 1;
-                } else {
-                  if (this.recorder.status) {
-                    // 超过30秒自动停止
-                    this.stopRecord();
-                    Toast.info("录音不能超过30s");
-                  }
-                }
-              }, 1000);
-            },
-            fail: () => {},
-            cancel: () => {
-              Toast.info("此次录音已取消");
-            }
-          });
+          return;
         }
+        window.wx.startRecord({
+          success: () => {
+            this.recorder.status = true;
+            this.recorder.timer = setInterval(() => {
+              if (this.recorder.time < 30) {
+                this.recorder.time += 1;
+              } else {
+                if (this.recorder.status) {
+                  // 超过30秒自动停止
+                  this.stopRecord();
+                  Toast.info("录音不能超过30s");
+                }
+              }
+            }, 1000);
+          },
+          fail: ({ errMsg }) => {
+            console.log("startRecord fail", errMsg);
+          },
+          cancel: () => {
+            Toast.info("此次录音已取消");
+          }
+        });
       } else if (
         navigator.mediaDevices &&
         navigator.mediaDevices.getUserMedia
@@ -619,32 +622,21 @@ export default {
     this.$nextTick(() => {
       Toast.hide();
     });
-    if (isWx()) {
-      window.wx.checkJsApi({
-        jsApiList: ["startRecord", "stopRecord", "uploadVoice"],
-        success: async ({ checkResult }) => {
-          console.log("checkResult", checkResult);
-          const config = await this.getWxConfig();
-          wxConfig(config);
-          window.wx.ready(() => {
-            window.wx.updateAppMessageShareData({
-              title: "入驻NN游戏陪玩，瓜分百万现金奖励",
-              desc: "开心玩，轻松赚，千万用户量的陪玩平台",
-              link: "http://ywm.nnn.com/sign/in",
-              imgUrl: "http://ywm.nnn.com/nnlogoshare.jpg"
-            });
-            window.wx.updateTimelineShareData({
-              title: "入驻NN游戏陪玩，瓜分百万现金奖励",
-              link: "http://ywm.nnn.com/sign/in",
-              imgUrl: "http://ywm.nnn.com/nnlogoshare.jpg"
-            });
-          });
-        }
-      });
-
-      window.wx.error(async () => {
-        const config = await this.getWxConfig();
-        wxConfig(config);
+    if (isWx() && device.android()) {
+      const config = await this.getWxConfig();
+      wxConfig(config);
+      window.wx.ready(() => {
+        window.wx.updateAppMessageShareData({
+          title: "入驻NN游戏陪玩，瓜分百万现金奖励",
+          desc: "开心玩，轻松赚，千万用户量的陪玩平台",
+          link: "http://ywm.nnn.com/sign/in",
+          imgUrl: "http://ywm.nnn.com/nnlogoshare.jpg"
+        });
+        window.wx.updateTimelineShareData({
+          title: "入驻NN游戏陪玩，瓜分百万现金奖励",
+          link: "http://ywm.nnn.com/sign/in",
+          imgUrl: "http://ywm.nnn.com/nnlogoshare.jpg"
+        });
       });
     }
   }
