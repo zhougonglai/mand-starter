@@ -54,20 +54,22 @@
         <template slot="children">
           <ul class="image_box">
             <li class="image_item">
-              <div
-                class="img"
-                :style="
-                  sampleGraph.server_icon
-                    ? {
-                        backgroundImage: `url(${sampleGraph.server_icon})`,
-                        backgroundPosition: 'center center',
-                        backgroundRepeat: 'no-repeat',
-                        backgroundSize: 'cover'
-                      }
-                    : {}
-                "
-                @click="sampleGraph.server_icon && chooseImage()"
-              ></div>
+              <template v-if="'server_icon' in sampleGraph">
+                <div
+                  class="img"
+                  :style="
+                    sampleGraph.server_icon
+                      ? {
+                          backgroundImage: `url(${sampleGraph.server_icon})`,
+                          backgroundPosition: 'center center',
+                          backgroundRepeat: 'no-repeat',
+                          backgroundSize: 'cover'
+                        }
+                      : {}
+                  "
+                  @click="sampleGraph.server_icon && chooseImage()"
+                ></div>
+              </template>
               <div class="descript mt-2">
                 <div class="gray text-center">资料示例图</div>
                 <div class="gray mt-2 text-center">认证图片内容清晰</div>
@@ -132,7 +134,7 @@
             <audio-player
               ref="voice"
               class="mt-2"
-              url="http://ywm.nnn.com/voicesamples.m4a"
+              url="http://ywm.leigod.com/voicesamples.m4a"
             />
             <p class="gray text-center description">示例音频</p>
           </div>
@@ -223,13 +225,7 @@
       />
       <div class="popup-content popup-bottom">
         <p>录制中</p>
-        <svg
-          width="55"
-          height="80"
-          viewBox="0 0 55 80"
-          xmlns="http://www.w3.org/2000/svg"
-          fill="#C158FE"
-        >
+        <svg width="55" height="80" viewBox="0 0 55 80" fill="#C158FE">
           <g transform="matrix(1 0 0 -1 0 80)">
             <rect width="10" height="20" rx="3">
               <animate
@@ -284,13 +280,13 @@ import {
   Field,
   Toast,
   Popup,
+  Button,
   CellItem,
   Selector,
   ActionBar,
   ImageViewer,
   ImageReader,
-  PopupTitleBar,
-  Button
+  PopupTitleBar
 } from "mand-mobile";
 import imageProcessor from "mand-mobile/components/image-reader/image-processor";
 import RecordRTC from "recordrtc";
@@ -308,7 +304,6 @@ export default {
   components: {
     [Icon.name]: Icon,
     [Field.name]: Field,
-    [Toast.name]: Toast,
     [Popup.name]: Popup,
     [CellItem.name]: CellItem,
     [Selector.name]: Selector,
@@ -400,11 +395,11 @@ export default {
             width: img.width,
             height: img.height,
             quality:
-              file.size < 1024
+              file.size / 1024 < 1024
                 ? 1
-                : file.size < 3072
+                : file.size / 1024 < 3072
                 ? 0.3
-                : file.size < 5120
+                : file.size / 1024 < 5120
                 ? 0.2
                 : 0.1
           });
@@ -412,6 +407,7 @@ export default {
           this.serviceInfo.img.dataUrl = resFile.dataUrl;
           this.serviceInfo.img.file = fileCompress;
           const res = await this.fileUpload(fileCompress);
+          Toast.hide();
           if (res.code === 0) {
             this.serviceInfo.img.url = res.data[0];
           } else {
@@ -423,18 +419,34 @@ export default {
       }
     },
     uploadVoice() {
-      window.wx.uploadVoice({
-        localId: this.recorder.localId,
-        isShowProgressTips: 1,
-        success: ({ serverId }) => {
-          this.serviceInfo.serverId = serverId;
-          this.getWxMedia(serverId).then(({ rtnInfo: { data } }) => {
-            if (typeof data === "string") {
-              this.serviceInfo.voiceUrl = data;
-            }
-          });
-        }
-      });
+      if (isWx()) {
+        window.wx.uploadVoice({
+          localId: this.recorder.localId,
+          isShowProgressTips: 1,
+          success: ({ serverId }) => {
+            this.serviceInfo.serverId = serverId;
+            this.getWxMedia(serverId).then(({ rtnInfo: { data } }) => {
+              if (typeof data === "string") {
+                this.serviceInfo.voiceUrl = data;
+              }
+            });
+          }
+        });
+      } else {
+        this.serviceInfo.voiceUrl = this.recorder.mediaRecorder.toURL();
+        // this.recorder.mediaRecorder.getDataURL(async dataUrl => {
+        // const audioFile = dataURLtoFile(
+        //   dataUrl,
+        //   `audio.${dataUrl.slice(
+        //     dataUrl.indexOf("/") + 1,
+        //     dataUrl.indexOf(";")
+        //   )}`
+        // );
+        // // const res = await this.base64Upload(dataUrl);
+        // const res = await this.fileUpload(audioFile);
+        // this.serviceInfo.voiceUrl = res.data[0];
+        // });
+      }
     },
     loadedmetadata(duration) {
       this.serviceInfo.duration = round(duration);
@@ -483,6 +495,7 @@ export default {
                 }
           })
           .then(stream => {
+            this.recorder.mediaSteam = stream;
             let config = {
               type: "audio",
               numberOfAudioChannels: isEdge ? 1 : 2,
@@ -493,10 +506,20 @@ export default {
               config.recorderType = RecordRTC.StereoAudioRecorder;
               this.recorder.localId = "";
             }
-            this.recorder.mediaSteam = stream;
             this.recorder.mediaRecorder = new RecordRTC(stream, config);
             this.recorder.mediaRecorder.startRecording();
             this.recorder.status = true;
+            this.recorder.timer = setInterval(() => {
+              if (this.recorder.time < 30) {
+                this.recorder.time += 1;
+              } else {
+                if (this.recorder.status) {
+                  // 超过30秒自动停止
+                  this.stopRecord();
+                  Toast.info("录音不能超过30s");
+                }
+              }
+            }, 1000);
           })
           .catch(err => {
             console.log("err", err);
@@ -534,12 +557,25 @@ export default {
           });
         } else {
           this.recorder.mediaRecorder.stopRecording(() => {
-            this.recorder.status = false;
-            const url = URL.createObjectURL(
-              this.recorder.mediaRecorder.getBlob()
-            );
+            clearInterval(this.recorder.timer);
+            this.serviceInfo.duration = this.recorder.time;
             this.recorder.mediaSteam.stop();
-            this.recorder.localId = url;
+
+            if (this.recorder.time >= 5) {
+              if (this.serviceInfo.voiceUrl) {
+                this.serviceInfo.voiceUrl = "";
+              }
+              const url = URL.createObjectURL(
+                this.recorder.mediaRecorder.getBlob()
+              );
+              this.recorder.localId = url;
+              this.uploadVoice();
+            } else {
+              Toast.info("录音不能低于5S，请重新录音");
+            }
+            this.recorder.time = 0;
+            this.recorder.timer = 0;
+            this.recorder.status = false;
           });
         }
       }
@@ -593,6 +629,7 @@ export default {
     ...mapActions("config", ["getWxConfig", "getWxMedia"]),
     ...mapActions("user", [
       "fileUpload",
+      "base64Upload",
       "getgameList",
       "getPlayerStatus",
       "activeGameList",
@@ -619,23 +656,23 @@ export default {
         ).type;
       }
     });
-    this.$nextTick(() => {
-      Toast.hide();
-    });
+  },
+  async mounted() {
     if (isWx() && device.android()) {
       const config = await this.getWxConfig();
       wxConfig(config);
       window.wx.ready(() => {
+        Toast.hide();
         window.wx.updateAppMessageShareData({
           title: "入驻NN游戏陪玩，瓜分百万现金奖励",
           desc: "开心玩，轻松赚，千万用户量的陪玩平台",
-          link: "http://ywm.nnn.com/sign/in",
-          imgUrl: "http://ywm.nnn.com/nnlogoshare.jpg"
+          link: `${process.env.VUE_APP_BASE_URL}sign/in`,
+          imgUrl: `${process.env.VUE_APP_BASE_URL}nnlogoshare.jpg`
         });
         window.wx.updateTimelineShareData({
           title: "入驻NN游戏陪玩，瓜分百万现金奖励",
-          link: "http://ywm.nnn.com/sign/in",
-          imgUrl: "http://ywm.nnn.com/nnlogoshare.jpg"
+          link: `${process.env.VUE_APP_BASE_URL}sign/in`,
+          imgUrl: `${process.env.VUE_APP_BASE_URL}nnlogoshare.jpg`
         });
       });
     }

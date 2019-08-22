@@ -218,58 +218,64 @@ export default {
     ]),
     ...mapMutations("user", ["INIT_INFO_DATA"])
   },
-  async created() {
-    this.sign.current = "sign_in";
-    const query = new window.URLSearchParams(location.search);
-    if (query.has("code")) {
-      const { code } = await this.exchangeCode();
-      if (code === 0) {
-        const { code } = await this.autoLogin();
+  created() {
+    if (this.sign.current !== this.$route.name) {
+      this.sign.current = this.$route.name;
+    }
+  },
+  mounted() {
+    this.$nextTick(async () => {
+      const query = new window.URLSearchParams(location.search);
+      if (query.has("code")) {
+        const { code } = await this.exchangeCode();
         if (code === 0) {
-          const {
-            data: { playerDetailsStatus, playerStatus }
-          } = await this.getPlayerStatus();
-          if (playerDetailsStatus === 3) {
-            this.INIT_INFO_DATA();
-            // 已经是陪玩或者 初次申请者
-            this.$router.push({
-              name: "basic_info"
-            });
-          } else if (playerStatus === 0) {
-            this.$router.push({
-              name: "result_page"
-            });
-          } else {
-            // 已经提交申请中的陪玩
-            await this.playerInfoStatus();
-            this.$router.push({
-              name: "result_page"
-            });
+          const { code } = await this.autoLogin();
+          if (code === 0) {
+            const {
+              data: { playerDetailsStatus, playerStatus }
+            } = await this.getPlayerStatus();
+            if (playerDetailsStatus === 3) {
+              this.INIT_INFO_DATA();
+              // 已经是陪玩或者 初次申请者
+              this.$router.push({
+                name: "basic_info"
+              });
+            } else if (playerStatus === 0) {
+              this.$router.push({
+                name: "result_page"
+              });
+            } else {
+              // 已经提交申请中的陪玩
+              await this.playerInfoStatus();
+              this.$router.push({
+                name: "result_page"
+              });
+            }
           }
         }
+      } else if (query.has("phone")) {
+        this.signIn.phone = query.get("phone");
       }
-    } else if (query.has("phone")) {
-      this.signIn.phone = query.get("phone");
-    }
 
-    if (isWx()) {
-      const config = await this.getWxConfig();
-      wxConfig(config);
-
-      window.wx.ready(() => {
-        window.wx.updateAppMessageShareData({
-          title: "入驻NN游戏陪玩，瓜分百万现金奖励",
-          desc: "开心玩，轻松赚，千万用户量的陪玩平台",
-          link: "http://ywm.nnn.com/sign/in",
-          imgUrl: "http://ywm.nnn.com/nnlogoshare.jpg"
+      if (isWx()) {
+        const config = await this.getWxConfig();
+        wxConfig(config);
+        window.wx.ready(() => {
+          Toast.hide();
+          window.wx.updateAppMessageShareData({
+            title: "入驻NN游戏陪玩，瓜分百万现金奖励",
+            desc: "开心玩，轻松赚，千万用户量的陪玩平台",
+            link: `${process.env.VUE_APP_BASE_URL}sign/in`,
+            imgUrl: `${process.env.VUE_APP_BASE_URL}nnlogoshare.jpg`
+          });
+          window.wx.updateTimelineShareData({
+            title: "入驻NN游戏陪玩，瓜分百万现金奖励",
+            link: `${process.env.VUE_APP_BASE_URL}sign/in`,
+            imgUrl: `${process.env.VUE_APP_BASE_URL}nnlogoshare.jpg`
+          });
         });
-        window.wx.updateTimelineShareData({
-          title: "入驻NN游戏陪玩，瓜分百万现金奖励",
-          link: "http://ywm.nnn.com/sign/in",
-          imgUrl: "http://ywm.nnn.com/nnlogoshare.jpg"
-        });
-      });
-    }
+      }
+    });
   }
 };
 </script>

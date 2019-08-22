@@ -223,7 +223,6 @@ export default {
     [InputItem.name]: InputItem,
     [Tag.name]: Tag,
     [Icon.name]: Icon,
-    [Toast.name]: Toast,
     [Radio.name]: Radio,
     [ImageReader.name]: ImageReader,
     [ImageViewer.name]: ImageViewer,
@@ -301,7 +300,6 @@ export default {
     async onReaderComplete(inputName, { dataUrl, file }) {
       Toast.hide();
       if (this.mime.map(i => file.type.includes(i)).filter(i => i).length) {
-        console.log(file);
         const img = new Image();
         img.src = dataUrl;
         img.onload = async () => {
@@ -329,6 +327,7 @@ export default {
             url: ""
           });
           const res = await this.fileUpload(fileCompress);
+          Toast.hide();
           if (res && res.data && res.data[0] && res.code === 0) {
             this.images[this.images.findIndex(item => item.uuid === uuid)].url =
               res.data[0];
@@ -393,21 +392,22 @@ export default {
       }
     });
   },
-  async created() {
+  async mounted() {
     if (isWx() && device.android()) {
       const config = await this.getWxConfig();
       wxConfig(config);
       window.wx.ready(() => {
+        Toast.hide();
         window.wx.updateAppMessageShareData({
           title: "入驻NN游戏陪玩，瓜分百万现金奖励",
           desc: "开心玩，轻松赚，千万用户量的陪玩平台",
-          link: "http://ywm.nnn.com/sign/in",
-          imgUrl: "http://ywm.nnn.com/nnlogoshare.jpg"
+          link: `${process.env.VUE_APP_BASE_URL}sign/in`,
+          imgUrl: `${process.env.VUE_APP_BASE_URL}nnlogoshare.jpg`
         });
         window.wx.updateTimelineShareData({
           title: "入驻NN游戏陪玩，瓜分百万现金奖励",
-          link: "http://ywm.nnn.com/sign/in",
-          imgUrl: "http://ywm.nnn.com/nnlogoshare.jpg"
+          link: `${process.env.VUE_APP_BASE_URL}sign/in`,
+          imgUrl: `${process.env.VUE_APP_BASE_URL}nnlogoshare.jpg`
         });
       });
     }

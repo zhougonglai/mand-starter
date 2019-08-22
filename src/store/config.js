@@ -1,3 +1,5 @@
+import $http from "@/service";
+
 export default {
   namespaced: true,
   state: {
@@ -17,12 +19,7 @@ export default {
       const {
         rtnCode,
         rtnInfo: { data }
-      } = await fetch(
-        `${
-          process.env.BASE_URL
-        }/baseUrl/wx/getWxConfig?url=${encodeURIComponent(location.href)}`
-      ).then(res => res.json());
-
+      } = await $http.getWxConfig({ url: location.href });
       if (rtnCode === "000") {
         commit("SET_WX_CONFIG", { data });
         return data;
@@ -31,15 +28,13 @@ export default {
       }
     },
     async getWxUserInfo(_, openId) {
-      const res = await fetch(
-        `${process.env.BASE_URL}/baseUrl/wx/user-info?openId=${openId}`
-      ).then(res => res.json());
+      const res = await $http.getWxUserInfo({
+        openId
+      });
       return res;
     },
     async getWxMedia(_, serviceId) {
-      const res = await fetch(
-        `${process.env.BASE_URL}/baseUrl/wx/media-download?mediaId=${serviceId}`
-      ).then(res => res.json());
+      const res = await $http.getWxMedia({ mediaId: serviceId });
       return res;
     }
   },

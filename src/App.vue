@@ -14,10 +14,7 @@
 </template>
 <script>
 export default {
-  name: "app",
-  created() {
-    console.log(process.env.BASE_URL);
-  }
+  name: "app"
 };
 </script>
 <style lang="stylus">

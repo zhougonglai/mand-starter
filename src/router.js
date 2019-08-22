@@ -83,7 +83,7 @@ export default new Router({
           name: "sign_in",
           meta: {
             title: "登录",
-            keepAlive: false
+            keepAlive: true
           },
           component: () =>
             import(/* webpackChunkName: "sign_in" */ "@/views/sign/SignIn.vue")
@@ -93,7 +93,7 @@ export default new Router({
           name: "sign_up",
           meta: {
             title: "注册",
-            keepAlive: false
+            keepAlive: true
           },
           component: () =>
             import(/* webpackChunkName: "sign_up" */ "@/views/sign/SignUp.vue")

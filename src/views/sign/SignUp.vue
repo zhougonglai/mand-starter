@@ -106,7 +106,7 @@
       <h1 class="text-center">用户协议</h1>
       <p>
         欢迎申请使用【
-        武汉奥拉夫网络科技有限公司】有限公司（以下简称“本公司”）提供的服务。本公司通过网络平台：网址【yuewan.nn.com】（以下简称“NN约玩”）向用户提供服务（以下简称“本服务”）。请用户仔细阅读以下全部内容（特别是粗体下划线标注的内容）并选择接受或不接受本协议。除非您接受本协议所有条款，否则您无权使用本协议中所提供的服务。您一经注册或接受本协议中的服务即视为对本协议全部条款已充分理解并完全接受。此后，您不得以未阅读本协议条款内容作任何形式的抗辩。
+        武汉奥拉夫网络科技有限公司】有限公司（以下简称“本公司”）提供的服务。本公司通过网络平台：网址【ywm.leigod.com】（以下简称“NN约玩”）向用户提供服务（以下简称“本服务”）。请用户仔细阅读以下全部内容（特别是粗体下划线标注的内容）并选择接受或不接受本协议。除非您接受本协议所有条款，否则您无权使用本协议中所提供的服务。您一经注册或接受本协议中的服务即视为对本协议全部条款已充分理解并完全接受。此后，您不得以未阅读本协议条款内容作任何形式的抗辩。
       </p>
       <h2>一、服务相关定义</h2>
       <ol>
@@ -614,8 +614,12 @@ export default {
       "phoneAuthenticateNoLogin"
     ])
   },
-  async created() {
-    this.sign.current = "sign_up";
+  created() {
+    if (this.sign.current !== this.$route.name) {
+      this.sign.current = this.$route.name;
+    }
+  },
+  async mounted() {
     if (this.verification.timer) {
       clearInterval(this.verification.timer);
       this.verification.timer = 0;
@@ -626,16 +630,17 @@ export default {
       const config = await this.getWxConfig();
       wxConfig(config);
       window.wx.ready(() => {
+        Toast.hide();
         window.wx.updateAppMessageShareData({
           title: "入驻NN游戏陪玩，瓜分百万现金奖励",
           desc: "开心玩，轻松赚，千万用户量的陪玩平台",
-          link: "http://ywm.nnn.com/sign/in",
-          imgUrl: "http://ywm.nnn.com/nnlogoshare.jpg"
+          link: `${process.env.VUE_APP_BASE_URL}sign/in`,
+          imgUrl: `${process.env.VUE_APP_BASE_URL}nnlogoshare.jpg`
         });
         window.wx.updateTimelineShareData({
           title: "入驻NN游戏陪玩，瓜分百万现金奖励",
-          link: "http://ywm.nnn.com/sign/in",
-          imgUrl: "http://ywm.nnn.com/nnlogoshare.jpg"
+          link: `${process.env.VUE_APP_BASE_URL}sign/in`,
+          imgUrl: `${process.env.VUE_APP_BASE_URL}nnlogoshare.jpg`
         });
       });
     }

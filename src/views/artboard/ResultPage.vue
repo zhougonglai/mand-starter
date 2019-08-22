@@ -38,7 +38,7 @@
   </div>
 </template>
 <script>
-import { Button } from "mand-mobile";
+import { Button, Toast } from "mand-mobile";
 import { isWx, wxConfig } from "@/utils";
 import { mapState, mapActions } from "vuex";
 import device from "current-device";
@@ -76,21 +76,22 @@ export default {
       }
     });
   },
-  async created() {
+  async mounted() {
     if (isWx() && device.android()) {
       const config = await this.getWxConfig();
       wxConfig(config);
       window.wx.ready(() => {
+        Toast.hide();
         window.wx.updateAppMessageShareData({
           title: "入驻NN游戏陪玩，瓜分百万现金奖励",
           desc: "开心玩，轻松赚，千万用户量的陪玩平台",
-          link: "http://ywm.nnn.com/sign/in",
-          imgUrl: "http://ywm.nnn.com/nnlogoshare.jpg"
+          link: `${process.env.VUE_APP_BASE_URL}sign/in`,
+          imgUrl: `${process.env.VUE_APP_BASE_URL}nnlogoshare.jpg`
         });
         window.wx.updateTimelineShareData({
           title: "入驻NN游戏陪玩，瓜分百万现金奖励",
-          link: "http://ywm.nnn.com/sign/in",
-          imgUrl: "http://ywm.nnn.com/nnlogoshare.jpg"
+          link: `${process.env.VUE_APP_BASE_URL}sign/in`,
+          imgUrl: `${process.env.VUE_APP_BASE_URL}nnlogoshare.jpg`
         });
       });
     }

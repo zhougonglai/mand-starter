@@ -308,7 +308,8 @@ export default {
       "findPwd"
     ])
   },
-  async created() {
+  async mounted() {
+    this.$_initScrollBlock();
     if (this.verification.timer) {
       clearInterval(this.verification.timer);
       this.verification.timer = 0;
@@ -319,22 +320,20 @@ export default {
       const config = await this.getWxConfig();
       wxConfig(config);
       window.wx.ready(() => {
+        Toast.hide();
         window.wx.updateAppMessageShareData({
           title: "入驻NN游戏陪玩，瓜分百万现金奖励",
           desc: "开心玩，轻松赚，千万用户量的陪玩平台",
-          link: "http://ywm.nnn.com/sign/in",
-          imgUrl: "http://ywm.nnn.com/nnlogoshare.jpg"
+          link: `${process.env.VUE_APP_BASE_URL}sign/in`,
+          imgUrl: `${process.env.VUE_APP_BASE_URL}nnlogoshare.jpg`
         });
         window.wx.updateTimelineShareData({
           title: "入驻NN游戏陪玩，瓜分百万现金奖励",
-          link: "http://ywm.nnn.com/sign/in",
-          imgUrl: "http://ywm.nnn.com/nnlogoshare.jpg"
+          link: `${process.env.VUE_APP_BASE_URL}sign/in`,
+          imgUrl: `${process.env.VUE_APP_BASE_URL}nnlogoshare.jpg`
         });
       });
     }
-  },
-  mounted() {
-    this.$_initScrollBlock();
   }
 };
 </script>

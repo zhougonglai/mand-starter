@@ -10,12 +10,17 @@
     <md-tabs v-model="sign.current" @change="paneChange">
       <md-tab-pane
         class="content"
-        v-for="pane in signPane"
-        :key="pane.name"
-        :name="pane.name"
-        :label="pane.label"
+        :name="signPane[0].name"
+        :label="signPane[0].label"
       >
-        <router-view v-if="sign.current === pane.name" />
+        <router-view />
+      </md-tab-pane>
+      <md-tab-pane
+        class="content"
+        :name="signPane[1].name"
+        :label="signPane[1].label"
+      >
+        <router-view />
       </md-tab-pane>
     </md-tabs>
     <div v-if="areaCode.status" class="full-screen">
@@ -113,9 +118,6 @@ export default {
       this.areaCode.active = country;
       this.toggleAreaSelector();
     },
-    setPane(name) {
-      console.log(name);
-    },
     paneChange({ name }) {
       this.$router.push({ name });
     },
@@ -132,9 +134,6 @@ export default {
       });
     },
     ...mapActions("global", ["toggleAreaSelector"])
-  },
-  created() {
-    this.sign.current = this.$route.name;
   },
   mounted() {
     this.$_initScrollBlock();

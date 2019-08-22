@@ -4,16 +4,17 @@ import Vuex from "vuex";
 import global from "@/store/global";
 import config from "@/store/config";
 import user from "@/store/user";
+import { state, mutations, actions } from "@/store/index";
 
 Vue.use(Vuex);
 
 export default new Vuex.Store({
-  state: {},
+  state,
   getters: {
     token: (state, getters, rootState) => rootState.user.info.token
   },
-  mutations: {},
-  actions: {},
+  actions,
+  mutations,
   modules: {
     global,
     config,

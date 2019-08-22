@@ -6,6 +6,7 @@ import signApi from "./signApi";
 import uploadApi from "./uploadApi";
 import playerApi from "./playerApi";
 import gameApi from "./gameApi";
+import wechat from "./wechat";
 
 const instance = axios.create({
   baseURL: "/baseUrl"
@@ -13,12 +14,18 @@ const instance = axios.create({
 
 instance.interceptors.request.use(
   config => {
+    Toast.hide();
     const { token } = store.getters;
+    const { loading } = store.state;
     if (token) config.headers["Authorization"] = token;
-    Toast.loading("加载中", 0, false);
+    if (!loading) {
+      Toast.loading("加载中", 0, false);
+      store.dispatch("setLoading", true);
+    }
     return config;
   },
   err => {
+    store.dispatch("setLoading", false);
     Toast.hide();
     Toast.failed("请求错误, 请稍后再试!");
     return Promise.reject(err);
@@ -27,10 +34,12 @@ instance.interceptors.request.use(
 
 instance.interceptors.response.use(
   res => {
+    store.dispatch("setLoading", false);
     Toast.hide();
     return res.data;
   },
   err => {
+    store.dispatch("setLoading", false);
     Toast.hide();
     Toast.failed("服务器响应失效");
     return Promise.reject(err);
@@ -39,7 +48,7 @@ instance.interceptors.response.use(
 
 const Http = {};
 
-const APIS = Object.assign({}, signApi, uploadApi, playerApi, gameApi);
+const APIS = Object.assign({}, signApi, uploadApi, playerApi, gameApi, wechat);
 
 for (let key in APIS) {
   let api = APIS[key];
