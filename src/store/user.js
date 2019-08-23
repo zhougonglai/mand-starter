@@ -14,7 +14,6 @@ export default {
   namespaced: true,
   state: () => ({
     info: {},
-    gameApply: [],
     playerStatus: {
       //  陪玩资料审核状态：0已通过，1被驳回，2审核中, 3初次申请
       playerDetailsStatus: "",
@@ -625,7 +624,6 @@ export default {
         reasons
       }
     ) {
-      // state.gameApply = apply;
       state.basicInfo.QQNO = qQNO;
       state.basicInfo.gender = gender;
       state.basicInfo.hobby = hobby;

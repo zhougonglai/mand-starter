@@ -4,9 +4,10 @@
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
+    "server:production": "vue-cli-service serve --mode production --modern",
     "build": "vue-cli-service build --modern",
     "lint": "vue-cli-service lint",
-    "dev-build": "vue-cli-service build --mode developer --modern",
+    "build:dev": "vue-cli-service build --mode developer --modern",
     "now-build": "npm run build",
     "ui": "vue ui"
   },

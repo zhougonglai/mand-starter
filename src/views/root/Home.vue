@@ -1,12 +1,23 @@
 <template>
   <div id="home">
     <div class="app-header">
-      <img class="logo" src="@/assets/logo.png" alt />
+      <img
+        class="logo"
+        src="@/assets/logo@2x.png"
+        srcset="@/assets/logo@2x.png 2x, @/assets/logo@3x.png 3x"
+        alt="nn约玩"
+      />
       <div class="app-header-with-search">
-        <div class="search" />
+        <div class="search">输入ID或昵称</div>
       </div>
       <div class="app-header-action">
-        <md-button type="primary" size="small" inline round @click="gotoSign"
+        <md-button
+          type="primary"
+          size="small"
+          inline
+          round
+          plain
+          @click="gotoSign"
           >申请入驻</md-button
         >
       </div>
@@ -140,70 +151,19 @@ export default {
   },
   methods: {
     gotoSign() {
-      this.$router.push({ name: "binding" });
+      this.$router.push({ name: "sign_in" });
     },
     trigerTarget(key) {
       this[key]();
     },
-    updateAppMessageShareData() {
-      window.wx.ready(() => {
-        window.wx.updateAppMessageShareData({
-          title: "分享给朋友/分享到QQ",
-          desc: "描述描述描述",
-          link: "http://ywm.nnn.com/binding",
-          imgUrl: "https://www.leigod.com/images/leishen_logo725.png",
-          success() {
-            alert("转发成功");
-          }
-        });
-      });
-    },
-    updateTimelineShareData() {
-      window.wx.ready(() => {
-        window.wx.updateTimelineShareData({
-          title: "分享到朋友圈/分享到QQ空间",
-          link: "http://ywm.nnn.com/binding",
-          imgUrl: "https://www.leigod.com/images/leishen_logo725.png",
-          success() {
-            alert("转发成功");
-          }
-        });
-      });
-    },
-    onMenuShareWeibo() {
-      alert("还没做");
-    },
-    onMenuShareQZone() {
-      alert("还没做");
-    },
-    startRecord() {
-      window.wx.startRecord();
-    },
-    stopRecord() {
-      window.wx.stopRecord({
-        success: res => {
-          alert("停止录音", res);
-          this.localId = res.localId;
-        }
-      });
-    },
-    playVoice() {
-      console.log(this.localId);
-      window.wx.playVoice({
-        localId: this.localId
-      });
-    },
-    chooseImage() {
-      window.wx.chooseImage({
-        count: 1, // 默认9
-        sizeType: ["original", "compressed"], // 可以指定是原图还是压缩图，默认二者都有
-        sourceType: ["album", "camera"], // 可以指定来源是相册还是相机，默认二者都有
-        success: function(res) {
-          var localIds = res.localIds; // 返回选定照片的本地ID列表，localId可以作为img标签的src属性显示图片
-          alert("文件Id", localIds);
-        }
-      });
-    },
+    updateAppMessageShareData() {},
+    updateTimelineShareData() {},
+    onMenuShareWeibo() {},
+    onMenuShareQZone() {},
+    startRecord() {},
+    stopRecord() {},
+    playVoice() {},
+    chooseImage() {},
     ...mapActions("config", ["getWxConfig"])
   },
   created() {

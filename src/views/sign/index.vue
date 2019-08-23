@@ -7,22 +7,13 @@
         alt="nn约玩"
       />
     </div>
-    <md-tabs v-model="sign.current" @change="paneChange">
-      <md-tab-pane
-        class="content"
-        :name="signPane[0].name"
-        :label="signPane[0].label"
-      >
-        <router-view />
-      </md-tab-pane>
-      <md-tab-pane
-        class="content"
-        :name="signPane[1].name"
-        :label="signPane[1].label"
-      >
-        <router-view />
-      </md-tab-pane>
-    </md-tabs>
+    <md-tab-bar
+      class="content"
+      v-model="sign.current"
+      :items="signPane"
+      @change="paneChange"
+    />
+    <router-view></router-view>
     <div v-if="areaCode.status" class="full-screen">
       <md-icon name="close" class="close" @click.native="toggleAreaSelector" />
       <md-scroll-view
@@ -54,13 +45,14 @@
         {{ areaCode.list[activeBlockIndex - 1].name }}
       </p>
     </div>
-    <span v-text="VUE_APP_VERSION" class="app_version" />
+    <span v-if="!isProduction" v-text="VUE_APP_VERSION" class="app_version" />
   </div>
 </template>
 <script>
 import {
   Icon,
   Tabs,
+  TabBar,
   TabPane,
   Landscape,
   Selector,
@@ -73,6 +65,7 @@ export default {
   components: {
     [Icon.name]: Icon,
     [Tabs.name]: Tabs,
+    [TabBar.name]: TabBar,
     [TabPane.name]: TabPane,
     [Selector.name]: Selector,
     [ScrollView.name]: ScrollView,
@@ -80,6 +73,7 @@ export default {
   },
   data() {
     return {
+      isProduction: process.env.NODE_ENV === "production",
       scrollY: 0,
       VUE_APP_VERSION: process.env.VUE_APP_VERSION,
       dimensions: [],
@@ -218,30 +212,27 @@ export default {
     align-items: center;
     justify-content: center;
     margin-top: 10vh;
+    margin-bottom: 32px;
   }
 
-  >>>.md-tabs {
-    margin-top: 32px;
+  >>>.md-tab-bar {
+    background-color: transparent;
+    padding: 0 20vw;
+    border-bottom: 1px solid #E9E9ED;
 
-    .md-tab-bar {
-      background-color: transparent;
-      padding: 0 20vw;
-      border-bottom: 1px solid #E9E9ED;
+    .md-tab-bar-item {
+      font-size: 44px;
 
-      .md-tab-bar-item {
-        font-size: 44px;
-
-        &:not(.is-active) {
-          color: #909399;
-        }
+      &:not(.is-active) {
+        color: #909399;
       }
+    }
 
-      .md-tab-bar-ink {
-        height: 8px;
-        left: 8%;
-        max-width: 48px;
-        border-radius: 5px;
-      }
+    .md-tab-bar-ink {
+      height: 8px;
+      left: 40px;
+      max-width: 48px;
+      border-radius: 15px;
     }
   }
 }

@@ -19,18 +19,30 @@ export default new Router({
         {
           path: "",
           name: "home",
+          meta: {
+            title: "首页",
+            keepAlive: true
+          },
           component: () =>
             import(/* webpackChunkName: "home" */ "@/views/root/Home.vue")
         },
         {
           path: "search",
           name: "search",
+          meta: {
+            title: "找陪玩",
+            keepAlive: true
+          },
           component: () =>
             import(/* webpackChunkName: "search" */ "@/views/root/Search.vue")
         },
         {
           path: "account",
           name: "account",
+          meta: {
+            title: "我的",
+            keepAlive: true
+          },
           component: () =>
             import(/* webpackChunkName: "account" */ "@/views/root/Account.vue")
         }

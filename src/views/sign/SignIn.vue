@@ -225,6 +225,7 @@ export default {
   },
   mounted() {
     this.$nextTick(async () => {
+      Toast.hide();
       const query = new window.URLSearchParams(location.search);
       if (query.has("code")) {
         const { code } = await this.exchangeCode();
@@ -234,6 +235,7 @@ export default {
             const {
               data: { playerDetailsStatus, playerStatus }
             } = await this.getPlayerStatus();
+            Toast.hide();
             if (playerDetailsStatus === 3) {
               this.INIT_INFO_DATA();
               // 已经是陪玩或者 初次申请者
