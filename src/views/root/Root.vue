@@ -4,7 +4,7 @@
     <md-tab-bar
       v-model="current"
       :items="items"
-      :has-ink="false"
+      :ink-length="50"
       @change="tabChange"
     >
       <template slot="item" slot-scope="{ item }">
@@ -63,6 +63,18 @@ export default {
   height: 100vh;
   display: flex;
   flex-direction: column;
+
+  >>>.md-tab-bar {
+    /* 兼容 iOS < 11.2 */
+    padding-bottom: calc(0px + env(safe-area-inset-bottom));
+    /* 兼容 iOS >= 11.2 */
+    padding-bottom: calc(0px + constant(safe-area-inset-bottom));
+
+    .md-tab-bar-ink {
+      height: 10px;
+      border-radius: 5px;
+    }
+  }
 
   .custom-item {
     display: flex;

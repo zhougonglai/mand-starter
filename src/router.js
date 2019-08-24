@@ -1,5 +1,6 @@
 import Vue from "vue";
 import Router from "vue-router";
+import { lazyLoadView } from "@/utils";
 
 Vue.use(Router);
 
@@ -24,7 +25,9 @@ export default new Router({
             keepAlive: true
           },
           component: () =>
-            import(/* webpackChunkName: "home" */ "@/views/root/Home.vue")
+            lazyLoadView(
+              import(/* webpackChunkName: "home" */ "@/views/root/Home.vue")
+            )
         },
         {
           path: "search",
@@ -34,7 +37,9 @@ export default new Router({
             keepAlive: true
           },
           component: () =>
-            import(/* webpackChunkName: "search" */ "@/views/root/Search.vue")
+            lazyLoadView(
+              import(/* webpackChunkName: "search" */ "@/views/root/Search.vue")
+            )
         },
         {
           path: "account",
@@ -44,15 +49,11 @@ export default new Router({
             keepAlive: true
           },
           component: () =>
-            import(/* webpackChunkName: "account" */ "@/views/root/Account.vue")
+            lazyLoadView(
+              import(/* webpackChunkName: "account" */ "@/views/root/Account.vue")
+            )
         }
       ]
-    },
-    {
-      path: "/binding",
-      name: "binding",
-      component: () =>
-        import(/* webpackChunkName: "binding" */ "@/views/Binding.vue")
     },
     {
       path: "/basic_info",
@@ -62,7 +63,9 @@ export default new Router({
         keepAlive: true
       },
       component: () =>
-        import(/* webpackChunkName: "basic_info" */ "@/views/artboard/BasicInfo.vue")
+        lazyLoadView(
+          import(/* webpackChunkName: "basic_info" */ "@/views/artboard/BasicInfo.vue")
+        )
     },
     {
       path: "/service_info",
@@ -72,7 +75,9 @@ export default new Router({
         keepAlive: true
       },
       component: () =>
-        import(/* webpackChunkName: "service_info" */ "@/views/artboard/ServiceInfo.vue")
+        lazyLoadView(
+          import(/* webpackChunkName: "service_info" */ "@/views/artboard/ServiceInfo.vue")
+        )
     },
     {
       path: "/result_page",
@@ -82,13 +87,17 @@ export default new Router({
         keepAlive: false
       },
       component: () =>
-        import(/* webpackChunkName: "result_page" */ "@/views/artboard/ResultPage.vue")
+        lazyLoadView(
+          import(/* webpackChunkName: "result_page" */ "@/views/artboard/ResultPage.vue")
+        )
     },
     {
       path: "/sign",
       name: "sign",
       component: () =>
-        import(/* webpackChunkName: "sign" */ "@/views/sign/index.vue"),
+        lazyLoadView(
+          import(/* webpackChunkName: "sign" */ "@/views/sign/index.vue")
+        ),
       children: [
         {
           path: "in",
@@ -98,7 +107,9 @@ export default new Router({
             keepAlive: true
           },
           component: () =>
-            import(/* webpackChunkName: "sign_in" */ "@/views/sign/SignIn.vue")
+            lazyLoadView(
+              import(/* webpackChunkName: "sign_in" */ "@/views/sign/SignIn.vue")
+            )
         },
         {
           path: "up",
@@ -108,7 +119,9 @@ export default new Router({
             keepAlive: true
           },
           component: () =>
-            import(/* webpackChunkName: "sign_up" */ "@/views/sign/SignUp.vue")
+            lazyLoadView(
+              import(/* webpackChunkName: "sign_up" */ "@/views/sign/SignUp.vue")
+            )
         }
       ]
     },
@@ -120,7 +133,24 @@ export default new Router({
         keepAlive: false
       },
       component: () =>
-        import(/* webpackChunkName: "forget_password" */ "@/views/sign/ForgetPassword.vue")
+        lazyLoadView(
+          import(/* webpackChunkName: "forget_password" */ "@/views/sign/ForgetPassword.vue")
+        )
+    },
+    {
+      path: "/loading",
+      name: "loading",
+      component: () => import("@/components/public/RouteLoading.vue")
+    },
+    {
+      path: "/skeleton_sign",
+      name: "skeleton_sign",
+      component: () => import("@/components/skeleton/SkeletonSign.vue")
+    },
+    {
+      path: "/skeleton_home",
+      name: "skeleton_home",
+      component: () => import("@/components/skeleton/SkeletonHome.vue")
     }
   ]
 });

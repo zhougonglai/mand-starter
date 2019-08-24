@@ -8,11 +8,17 @@
         alt="nn约玩"
       />
       <div class="app-header-with-search">
-        <div class="search">输入ID或昵称</div>
+        <div class="search">
+          输入ID或昵称
+          <svg class="icon" aria-hidden="true">
+            <use xlink:href="#icon-cx" />
+          </svg>
+        </div>
       </div>
       <div class="app-header-action">
         <md-button
           type="primary"
+          class="waving"
           size="small"
           inline
           round
@@ -24,21 +30,17 @@
     </div>
     <div class="menus">
       <md-swiper :autoplay="0" :is-loop="false">
-        <md-swiper-item v-for="(gameArr, $index) in games" :key="$index">
+        <md-swiper-item v-for="(gameArr, index) in gameList" :key="index">
           <ul class="game-box">
             <li
               class="game-item"
-              v-for="(game, $$index) in gameArr"
-              :key="$$index"
+              v-for="(game, $index) in gameArr"
+              :key="$index"
             >
-              <svg
-                class="icon game-icon"
-                aria-hidden="true"
-                @click="trigerTarget(game.key)"
-              >
-                <use :xlink:href="game.icon" />
-              </svg>
-              <span class="game-label">{{ game.name }}</span>
+              <div class="game-icon">
+                <img :src="game.selectIcon" :alt="game.name" />
+              </div>
+              <span class="game-label small text-darker">{{ game.name }}</span>
             </li>
           </ul>
         </md-swiper-item>
@@ -49,8 +51,9 @@
 </template>
 <script>
 import { Button, Swiper, SwiperItem } from "mand-mobile";
-import { mapActions } from "vuex";
-import { wxConfig } from "@/utils";
+import { mapActions, mapState } from "vuex";
+// import { wxConfig } from "@/utils";
+import { chunk } from "lodash";
 
 export default {
   name: "home",
@@ -62,64 +65,6 @@ export default {
   },
   data() {
     return {
-      games: [
-        [
-          {
-            name: "分享给朋友/分享到QQ",
-            icon: "#icon-ziyuan4",
-            key: "updateAppMessageShareData"
-          },
-          {
-            name: "分享到朋友圈/分享到QQ空间",
-            icon: "#icon-ziyuan3",
-            key: "updateTimelineShareData"
-          },
-          {
-            name: "分享到腾讯微博",
-            icon: "#icon-ziyuan2",
-            key: "onMenuShareWeibo"
-          },
-          {
-            name: "分享到QQ空间",
-            icon: "#icon-gedou",
-            key: "onMenuShareQZone"
-          },
-          {
-            name: "开始录音",
-            icon: "#icon-tiyu",
-            key: "startRecord"
-          },
-          {
-            name: "停止录音",
-            icon: "#icon-xiuxianfangzhi",
-            key: "stopRecord"
-          },
-          {
-            name: "播放语音",
-            icon: "#icon-ziyuan",
-            key: "playVoice"
-          },
-          {
-            name: "拍照或从手机相册中选图",
-            icon: "#icon-qipai1",
-            key: "chooseImage"
-          }
-        ],
-        [
-          {
-            name: "益智",
-            icon: "#icon-yizhi"
-          },
-          {
-            name: "音乐",
-            icon: "#icon-mmp"
-          },
-          {
-            name: "射击",
-            icon: "#icon-sheji1"
-          }
-        ]
-      ],
       cellUsers: [
         {
           user_id: 123,
@@ -149,6 +94,11 @@ export default {
       localId: ""
     };
   },
+  computed: {
+    ...mapState("user", {
+      gameList: state => chunk(state.gameList.list, 8)
+    })
+  },
   methods: {
     gotoSign() {
       this.$router.push({ name: "sign_in" });
@@ -164,16 +114,13 @@ export default {
     stopRecord() {},
     playVoice() {},
     chooseImage() {},
+    ...mapActions("user", ["getGameList"]),
     ...mapActions("config", ["getWxConfig"])
   },
-  created() {
-    this.getWxConfig(location.href).then(data => {
-      if (data) {
-        wxConfig(data);
-      } else {
-        alert("微信配置获取失败");
-      }
-    });
+  async created() {
+    if (!this.gameList.length) {
+      await this.getGameList(true);
+    }
   }
 };
 </script>
@@ -205,6 +152,13 @@ export default {
         flex-direction: column;
 
         .game-icon {
+          width: 72px;
+          height: 72px;
+
+          img {
+            width: inherit;
+            height: inherit;
+          }
         }
 
         .game-label {

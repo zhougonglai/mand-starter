@@ -403,15 +403,26 @@ export default {
       );
       return rtnInfo;
     },
-    async getgameList({ commit, dispatch, state: { playerStatus } }) {
+    async getGameList(
+      {
+        commit,
+        dispatch,
+        state: { playerStatus }
+      },
+      lazy = false
+    ) {
       const { rtnCode, rtnInfo } = await $http.gameList();
       if (rtnCode === "000") {
         if (rtnInfo.code === 0) {
           commit("SET_GAMELIST", rtnInfo.data);
-          dispatch("activeGameList", {
-            ...rtnInfo.data[0],
-            refresh: playerStatus.playerStatus === 3
-          });
+          // 联动默认行为
+          if (!lazy) {
+            // playerStatus @from '@service/playerAPI' 第一次填写,付默认值
+            dispatch("activeGameList", {
+              ...rtnInfo.data[0],
+              refresh: playerStatus.playerStatus === 3
+            });
+          }
         }
       }
       return rtnInfo;

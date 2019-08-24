@@ -630,7 +630,7 @@ export default {
     ...mapActions("user", [
       "fileUpload",
       "base64Upload",
-      "getgameList",
+      "getGameList",
       "getPlayerStatus",
       "activeGameList",
       "playerInformationAdd"
@@ -648,14 +648,13 @@ export default {
     });
   },
   async created() {
-    this.getgameList().then(({ data }) => {
-      // 游戏类型文案 补偿
-      if (!this.gameList.active.type) {
-        this.gameList.active.type = data.find(
-          ({ id }) => id === this.gameList.active.id
-        ).type;
-      }
-    });
+    const { data } = this.getGameList();
+    // 游戏类型文案 补偿
+    if (!this.gameList.active.type) {
+      this.gameList.active.type = data.find(
+        ({ id }) => id === this.gameList.active.id
+      ).type;
+    }
   },
   async mounted() {
     if (isWx() && device.android()) {
