@@ -5,7 +5,7 @@ const resolve = file => path.resolve(__dirname, file);
 const config = {
   productionSourceMap: false,
   css: {
-    extract: true,
+    // extract: true,
     sourceMap: process.env.NODE_ENV === "development",
     loaderOptions: {
       stylus: {

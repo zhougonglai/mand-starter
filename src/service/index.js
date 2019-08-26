@@ -9,7 +9,7 @@ import gameApi from "./gameApi";
 import wechat from "./wechat";
 
 const instance = axios.create({
-  baseURL: "/baseUrl"
+  baseURL: `${process.env.VUE_APP_BASE_URL}baseUrl`
 });
 
 instance.interceptors.request.use(

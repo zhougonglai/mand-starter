@@ -1,7 +1,7 @@
 // TODO root级state
-export const state = {
+export const state = () => ({
   loading: false
-};
+});
 
 export const actions = {
   setLoading: ({ state: { loading }, commit }, status) => {

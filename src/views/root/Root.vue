@@ -69,6 +69,7 @@ export default {
     padding-bottom: calc(0px + env(safe-area-inset-bottom));
     /* 兼容 iOS >= 11.2 */
     padding-bottom: calc(0px + constant(safe-area-inset-bottom));
+    background-color: #fff;
 
     .md-tab-bar-ink {
       height: 10px;

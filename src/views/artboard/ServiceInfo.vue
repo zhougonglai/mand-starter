@@ -134,7 +134,7 @@
             <audio-player
               ref="voice"
               class="mt-2"
-              url="http://ywm.leigod.com/voicesamples.m4a"
+              url="https://ywm.leigod.com/voicesamples.m4a"
             />
             <p class="gray text-center description">示例音频</p>
           </div>

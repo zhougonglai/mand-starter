@@ -47,6 +47,9 @@
       </md-swiper>
     </div>
     <cell-box title="热门推荐" :cellUsers="cellUsers" />
+    <cell-box title="新秀推荐" brief :cellUsers="cellUsers" />
+    <cell-box title="当前在线" :cellUsers="cellUsers" direction="vertical" />
+    <div class="blok-bottom small">我是有底线的哦~</div>
   </div>
 </template>
 <script>
@@ -69,26 +72,92 @@ export default {
         {
           user_id: 123,
           nickname: "方糖酱酱",
-          label: "心悦君兮♕满满呢",
+          label: "心悦君兮满满呢",
+          gender: 2,
+          age: 23,
+          adress: "乌鲁木齐",
+          service: {
+            game: "英雄联盟",
+            rank: "最强王者"
+          },
           price: 60,
-          avatar:
-            "http://img1.tuwandata.com/v2/thumb/jpg/NDVjMiwzNjQsMzY0LDksMywxLC0xLE5PTkUsLCw5MA==/u/www.tuwan.com/uploads/play/2869651548938183.png"
+          audio: {
+            url: "https://ywm.leigod.com/voicesamples.m4a",
+            duation: 7
+          },
+          avatar: "https://api.adorable.io/avatars/200/face1.png"
         },
         {
           user_id: 123,
           nickname: "方糖酱酱",
-          label: "她太甜♚小仙女ღ锦梨",
+          label: "她太甜锦梨",
+          gender: 2,
+          age: 23,
+          adress: "乌鲁木齐",
+          service: {
+            game: "英雄联盟",
+            rank: "最强王者"
+          },
           price: 75,
-          avatar:
-            "http://img.tuwandata.com/v2/thumb/jpg/ZWU5NSwzNjQsMzY0LDksMywxLC0xLE5PTkUsLCw5MA==/u/www.tuwan.com/uploads/play/1648781535797050.jpg"
+          audio: {
+            url: "https://ywm.leigod.com/voicesamples.m4a",
+            duation: 7
+          },
+          avatar: "https://api.adorable.io/avatars/200/face2.png"
         },
         {
           user_id: 123,
           nickname: "方糖酱酱",
-          label: "平台最强♕职业选手包C秒接",
+          label: "她太甜锦梨",
+          gender: 2,
+          age: 23,
+          adress: "乌鲁木齐",
+          service: {
+            game: "英雄联盟",
+            rank: "最强王者"
+          },
+          price: 75,
+          audio: {
+            url: "https://ywm.leigod.com/voicesamples.m4a",
+            duation: 7
+          },
+          avatar: "https://api.adorable.io/avatars/200/face3.png"
+        },
+        {
+          user_id: 123,
+          nickname: "方糖酱酱",
+          label: "她太甜锦梨",
+          gender: 2,
+          age: 23,
+          adress: "乌鲁木齐",
+          service: {
+            game: "英雄联盟",
+            rank: "最强王者"
+          },
+          price: 75,
+          audio: {
+            url: "https://ywm.leigod.com/voicesamples.m4a",
+            duation: 7
+          },
+          avatar: "https://api.adorable.io/avatars/200/face4.png"
+        },
+        {
+          user_id: 123,
+          nickname: "方糖酱酱",
+          label: "平台最强秒接",
+          gender: 1,
+          age: 23,
+          adress: "乌鲁木齐",
+          service: {
+            game: "英雄联盟",
+            rank: "最强王者"
+          },
           price: 45,
-          avatar:
-            "http://img1.tuwandata.com/v2/thumb/jpg/MDQ4NywzNjQsMzY0LDksMywxLC0xLE5PTkUsLCw5MA==/u/www.tuwan.com/uploads/play/1043361563432825.png"
+          audio: {
+            url: "https://ywm.leigod.com/voicesamples.m4a",
+            duation: 7
+          },
+          avatar: "https://api.adorable.io/avatars/200/face5.png"
         }
       ],
       localId: ""
@@ -129,19 +198,27 @@ export default {
   width: 750px;
   flex: 1;
   overflow-y: auto;
+  background: #F5F5F7;
 
   .menus {
-    height: 320px;
+    margin-bottom: 16px;
+    background-color: #fff;
+
+    >>>.md-swiper-item {
+      min-width: 100vw;
+    }
 
     .game-box {
       margin: 0;
       padding: 0;
       display: flex;
       height: 100%;
-      align-items: self-start;
+      width: 100%;
+      align-items: flex-start;
       flex-wrap: wrap;
       flex-direction: row;
-      padding: 16px;
+      padding: 16px 16px 32px 16px;
+      box-sizing: border-box;
 
       .game-item {
         display: flex;
@@ -150,6 +227,10 @@ export default {
         width: 25%;
         font-size: 16px;
         flex-direction: column;
+
+        &:nth-child(4)~.game-item {
+          margin-top: 32px;
+        }
 
         .game-icon {
           width: 72px;
@@ -166,6 +247,15 @@ export default {
         }
       }
     }
+  }
+
+  .blok-bottom {
+    width: 100%;
+    height: 80px;
+    color: #909399;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 }
 </style>

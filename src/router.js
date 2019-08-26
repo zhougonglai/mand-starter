@@ -1,6 +1,5 @@
 import Vue from "vue";
 import Router from "vue-router";
-import { lazyLoadView } from "@/utils";
 
 Vue.use(Router);
 
@@ -22,12 +21,10 @@ export default new Router({
           name: "home",
           meta: {
             title: "首页",
-            keepAlive: true
+            keepAlive: false
           },
           component: () =>
-            lazyLoadView(
-              import(/* webpackChunkName: "home" */ "@/views/root/Home.vue")
-            )
+            import(/* webpackChunkName: "home" */ "@/views/root/Home.vue")
         },
         {
           path: "search",
@@ -37,9 +34,7 @@ export default new Router({
             keepAlive: true
           },
           component: () =>
-            lazyLoadView(
-              import(/* webpackChunkName: "search" */ "@/views/root/Search.vue")
-            )
+            import(/* webpackChunkName: "search" */ "@/views/root/Search.vue")
         },
         {
           path: "account",
@@ -49,9 +44,7 @@ export default new Router({
             keepAlive: true
           },
           component: () =>
-            lazyLoadView(
-              import(/* webpackChunkName: "account" */ "@/views/root/Account.vue")
-            )
+            import(/* webpackChunkName: "account" */ "@/views/root/Account.vue")
         }
       ]
     },
@@ -63,9 +56,7 @@ export default new Router({
         keepAlive: true
       },
       component: () =>
-        lazyLoadView(
-          import(/* webpackChunkName: "basic_info" */ "@/views/artboard/BasicInfo.vue")
-        )
+        import(/* webpackChunkName: "basic_info" */ "@/views/artboard/BasicInfo.vue")
     },
     {
       path: "/service_info",
@@ -75,9 +66,7 @@ export default new Router({
         keepAlive: true
       },
       component: () =>
-        lazyLoadView(
-          import(/* webpackChunkName: "service_info" */ "@/views/artboard/ServiceInfo.vue")
-        )
+        import(/* webpackChunkName: "service_info" */ "@/views/artboard/ServiceInfo.vue")
     },
     {
       path: "/result_page",
@@ -87,17 +76,13 @@ export default new Router({
         keepAlive: false
       },
       component: () =>
-        lazyLoadView(
-          import(/* webpackChunkName: "result_page" */ "@/views/artboard/ResultPage.vue")
-        )
+        import(/* webpackChunkName: "result_page" */ "@/views/artboard/ResultPage.vue")
     },
     {
       path: "/sign",
       name: "sign",
       component: () =>
-        lazyLoadView(
-          import(/* webpackChunkName: "sign" */ "@/views/sign/index.vue")
-        ),
+        import(/* webpackChunkName: "sign" */ "@/views/sign/index.vue"),
       children: [
         {
           path: "in",
@@ -107,9 +92,7 @@ export default new Router({
             keepAlive: true
           },
           component: () =>
-            lazyLoadView(
-              import(/* webpackChunkName: "sign_in" */ "@/views/sign/SignIn.vue")
-            )
+            import(/* webpackChunkName: "sign_in" */ "@/views/sign/SignIn.vue")
         },
         {
           path: "up",
@@ -119,9 +102,7 @@ export default new Router({
             keepAlive: true
           },
           component: () =>
-            lazyLoadView(
-              import(/* webpackChunkName: "sign_up" */ "@/views/sign/SignUp.vue")
-            )
+            import(/* webpackChunkName: "sign_up" */ "@/views/sign/SignUp.vue")
         }
       ]
     },
@@ -133,9 +114,7 @@ export default new Router({
         keepAlive: false
       },
       component: () =>
-        lazyLoadView(
-          import(/* webpackChunkName: "forget_password" */ "@/views/sign/ForgetPassword.vue")
-        )
+        import(/* webpackChunkName: "forget_password" */ "@/views/sign/ForgetPassword.vue")
     },
     {
       path: "/loading",

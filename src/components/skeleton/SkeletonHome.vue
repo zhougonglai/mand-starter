@@ -1,12 +1,22 @@
 <template>
   <div class="skeleton">
-    <div class="skeleton-head">
-      <div class="head-item"></div>
-      <div class="head-item"></div>
-      <div class="head-item"></div>
+    <div class="app-header">
+      <div class="logo"></div>
+      <div class="app-header-with-search">
+        <div class="search"></div>
+      </div>
+      <div class="app-header-action"></div>
     </div>
-    <div class="skeleton-content"></div>
-    <div class="skeleton-content"></div>
+    <div class="menus border-bottom-1px">
+      <div class="game-item"></div>
+      <div class="game-item"></div>
+      <div class="game-item"></div>
+      <div class="game-item"></div>
+      <div class="game-item"></div>
+      <div class="game-item"></div>
+      <div class="game-item"></div>
+      <div class="game-item"></div>
+    </div>
   </div>
 </template>
 
@@ -16,47 +26,40 @@ export default {
 };
 </script>
 
-<style scoped>
+<style lang="stylus" scoped>
 .skeleton {
-  padding: 10px;
-}
-
-.skeleton-head {
   width: 100%;
-  display: flex;
-  justify-content: space-between;
-}
 
-.head-item {
-  width: 30%;
-  height: 50px;
-}
+  .app-header {
+    .logo {
+      background: #F4F5F7;
+    }
 
-.skeleton-content {
-  width: 100%;
-  height: 200px;
-  margin-top: 20px;
-  border-radius: 10px;
-}
-
-.skeleton .head-item,
-.skeleton .skeleton-content {
-  background: rgb(194, 207, 214);
-  background-image: linear-gradient(
-    90deg,
-    rgba(255, 255, 255, 0.15) 25%,
-    transparent 25%
-  );
-  background-size: 20rem 20rem;
-  animation: skeleton-stripes 1s linear infinite;
-}
-
-@keyframes skeleton-stripes {
-  from {
-    background-position: 0 0;
+    .app-header-action {
+      background: #F4F5F7;
+      height: 56px;
+    }
   }
-  to {
-    background-position: 20rem 0;
+
+  .menus {
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    flex-wrap: wrap;
+    flex-direction: row;
+    padding: 16px 16px 32px 16px;
+    box-sizing: border-box;
+
+    .game-item {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #F4F5F7;
+      border-radius: 50%;
+      width: 72px;
+      height: 72px;
+      margin: 16px 50px 32px;
+    }
   }
 }
 </style>

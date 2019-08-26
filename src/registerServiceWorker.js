@@ -1,34 +1,31 @@
 /* eslint-disable no-console */
-
 import { register } from "register-service-worker";
 
 if (process.env.NODE_ENV === "production") {
-  register(`${process.env.BASE_URL}service-worker.js`, {
-    ready() {
-      console.log(
-        "App is being served from cache by a service worker.\n" +
-          "For more details, visit https://goo.gl/AFskqB"
-      );
+  register(`${process.env.BASE_URL}service-worker.js?timestamp=${Date.now()}`, {
+    ready(registration) {
+      if (window.SW_TURN_OFF) {
+        registration.unregister();
+      }
+      console.log("Service worker 激活成功", registration, self);
     },
-    registered() {
-      console.log("Service worker has been registered.");
+    registered(registration) {
+      console.log("Service worker 注册成功.", registration);
     },
-    cached() {
-      console.log("Content has been cached for offline use.");
+    cached(registration) {
+      console.log("缓存文件已经缓存完成", registration);
     },
-    updatefound() {
-      console.log("New content is downloading.");
+    updatefound(registration) {
+      console.log("新的版本正在更新中", registration);
     },
-    updated() {
-      console.log("New content is available; please refresh.");
+    updated(registration) {
+      console.log("新的版本已经更新完毕,请刷新", registration);
     },
     offline() {
-      console.log(
-        "No internet connection found. App is running in offline mode."
-      );
+      console.log("应用已经离线");
     },
     error(error) {
-      console.error("Error during service worker registration:", error);
+      console.error("注册发生错误", error);
     }
   });
 }
