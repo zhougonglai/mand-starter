@@ -13,6 +13,9 @@ export default new Router({
   routes: [
     {
       path: "/",
+      meta: {
+        keepAlive: true
+      },
       component: () =>
         import(/* webpackChunkName: "root" */ "@/views/root/Root.vue"),
       children: [
@@ -21,7 +24,7 @@ export default new Router({
           name: "home",
           meta: {
             title: "首页",
-            keepAlive: false
+            keepAlive: true
           },
           component: () =>
             import(/* webpackChunkName: "home" */ "@/views/root/Home.vue")

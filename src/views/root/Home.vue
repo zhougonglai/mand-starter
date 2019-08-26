@@ -1,5 +1,6 @@
 <template>
   <div id="home">
+    <small class="smaller text-gray app_version">{{ VUE_APP_VERSION }}</small>
     <div class="app-header">
       <img
         class="logo"
@@ -68,6 +69,7 @@ export default {
   },
   data() {
     return {
+      VUE_APP_VERSION: process.env.VUE_APP_VERSION,
       cellUsers: [
         {
           user_id: 123,
@@ -198,7 +200,14 @@ export default {
   width: 750px;
   flex: 1;
   overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
   background: #F5F5F7;
+
+  .app_version {
+    position: absolute;
+    top: 4px;
+    right: 4px;
+  }
 
   .menus {
     margin-bottom: 16px;

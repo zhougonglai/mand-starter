@@ -1,6 +1,15 @@
 <template>
   <div id="root">
-    <router-view />
+    <keep-alive>
+      <router-view
+        v-wechat-title="$route.meta.title"
+        v-if="$route.meta.keepAlive"
+      ></router-view>
+    </keep-alive>
+    <router-view
+      v-wechat-title="$route.meta.title"
+      v-if="!$route.meta.keepAlive"
+    ></router-view>
     <md-tab-bar
       v-model="current"
       :items="items"
@@ -31,7 +40,7 @@ export default {
   },
   data() {
     return {
-      current: "home",
+      current: this.$route.name,
       items: [
         {
           name: "home",
