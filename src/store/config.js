@@ -10,8 +10,7 @@ export default {
       signature: "",
       timestamp: "",
       url: ""
-    },
-    userInfo: {}
+    }
   },
   getters: {},
   actions: {

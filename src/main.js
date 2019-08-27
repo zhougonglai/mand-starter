@@ -1,13 +1,15 @@
 import FastClick from "fastclick";
-import "normalize.css";
+import device from "current-device";
 import Vue from "vue";
 import App from "./App.vue";
 import Http from "./service";
-import device from "current-device";
-import "./index.styl";
-import "./registerServiceWorker";
 import router from "./router";
 import store from "./store";
+
+import "./registerServiceWorker";
+import "./permission";
+import "normalize.css";
+import "./index.styl";
 import "@/config/wechatTitle";
 
 Vue.config.productionTip = false;

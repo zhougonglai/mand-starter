@@ -118,21 +118,22 @@ export default new Router({
       },
       component: () =>
         import(/* webpackChunkName: "forget_password" */ "@/views/sign/ForgetPassword.vue")
-    },
-    {
-      path: "/loading",
-      name: "loading",
-      component: () => import("@/components/public/RouteLoading.vue")
-    },
-    {
-      path: "/skeleton_sign",
-      name: "skeleton_sign",
-      component: () => import("@/components/skeleton/SkeletonSign.vue")
-    },
-    {
-      path: "/skeleton_home",
-      name: "skeleton_home",
-      component: () => import("@/components/skeleton/SkeletonHome.vue")
     }
+    //  骨架屏 和 loading 测试路径
+    // {
+    //   path: "/loading",
+    //   name: "loading",
+    //   component: () => import("@/components/public/RouteLoading.vue")
+    // },
+    // {
+    //   path: "/skeleton_sign",
+    //   name: "skeleton_sign",
+    //   component: () => import("@/components/skeleton/SkeletonSign.vue")
+    // },
+    // {
+    //   path: "/skeleton_home",
+    //   name: "skeleton_home",
+    //   component: () => import("@/components/skeleton/SkeletonHome.vue")
+    // }
   ]
 });

@@ -131,43 +131,14 @@ export default {
     forgetPassword() {
       this.$router.push({ name: "forget_password" });
     },
-    async signInSubmit() {
-      if (this.signIn.accountType) {
-        if (!this.$refs.phone.validity.valid) {
-          if (this.$refs.phone.validity.tooShort) {
-            Toast.info("手机号太短");
-            return;
-          } else if (this.$refs.phone.validity.tooLong) {
-            Toast.info("手机号太长");
-            return;
-          } else if (this.$refs.phone.validity.valueMissing) {
-            Toast.info("手机号必填");
-            return;
-          } else if (this.$refs.phone.validity.patternMismatch) {
-            Toast.info("请填写正确的手机号");
-            return;
-          }
-        }
+    // 跳转管理
+    async nextMove() {
+      if (this.$route.query.redirect) {
+        this.$router.push({ name: this.$route.query.redirect }, () => {
+          console.log("complete");
+          this.waiting = false;
+        });
       } else {
-        if (!this.$refs.emailOrAccount.validity.valid) {
-          if (this.$refs.emailOrAccount.validity.tooShort) {
-            Toast.info("邮箱/账号太短");
-            return;
-          } else if (this.$refs.emailOrAccount.validity.valueMissing) {
-            Toast.info("邮箱/账号必填");
-            return;
-          }
-        }
-      }
-      if (!this.$refs.password.validity.valid) {
-        if (this.$refs.password.validity.valueMissing) {
-          Toast.info("密码不能为空");
-        }
-      }
-      this.waiting = true;
-      const { code } = await this.login(this.signIn);
-
-      if (!code) {
         const {
           data: { playerDetailsStatus, playerStatus }
         } = await this.getPlayerStatus();
@@ -203,6 +174,45 @@ export default {
             }
           );
         }
+      }
+    },
+    async signInSubmit() {
+      if (this.signIn.accountType) {
+        if (!this.$refs.phone.validity.valid) {
+          if (this.$refs.phone.validity.tooShort) {
+            Toast.info("手机号太短");
+            return;
+          } else if (this.$refs.phone.validity.tooLong) {
+            Toast.info("手机号太长");
+            return;
+          } else if (this.$refs.phone.validity.valueMissing) {
+            Toast.info("手机号必填");
+            return;
+          } else if (this.$refs.phone.validity.patternMismatch) {
+            Toast.info("请填写正确的手机号");
+            return;
+          }
+        }
+      } else {
+        if (!this.$refs.emailOrAccount.validity.valid) {
+          if (this.$refs.emailOrAccount.validity.tooShort) {
+            Toast.info("邮箱/账号太短");
+            return;
+          } else if (this.$refs.emailOrAccount.validity.valueMissing) {
+            Toast.info("邮箱/账号必填");
+            return;
+          }
+        }
+      }
+      if (!this.$refs.password.validity.valid) {
+        if (this.$refs.password.validity.valueMissing) {
+          Toast.info("密码不能为空");
+        }
+      }
+      this.waiting = true;
+      const { code } = await this.login(this.signIn);
+      if (!code) {
+        this.nextMove();
       } else {
         this.waiting = false;
       }
@@ -211,11 +221,11 @@ export default {
     ...mapActions("global", ["toggleAreaSelector"]),
     ...mapActions("user", [
       "login",
-      "getPlayerStatus",
-      "playerInfoStatus",
-      "playerGameApply",
+      "autoLogin",
       "exchangeCode",
-      "autoLogin"
+      "playerGameApply",
+      "getPlayerStatus",
+      "playerInfoStatus"
     ]),
     ...mapMutations("user", ["INIT_INFO_DATA"])
   },
@@ -233,27 +243,7 @@ export default {
         if (code === 0) {
           const { code } = await this.autoLogin();
           if (code === 0) {
-            const {
-              data: { playerDetailsStatus, playerStatus }
-            } = await this.getPlayerStatus();
-            Toast.hide();
-            if (playerDetailsStatus === 3) {
-              this.INIT_INFO_DATA();
-              // 已经是陪玩或者 初次申请者
-              this.$router.push({
-                name: "basic_info"
-              });
-            } else if (playerStatus === 0) {
-              this.$router.push({
-                name: "result_page"
-              });
-            } else {
-              // 已经提交申请中的陪玩
-              await this.playerInfoStatus();
-              this.$router.push({
-                name: "result_page"
-              });
-            }
+            this.nextMove();
           }
         }
       } else if (query.has("phone")) {

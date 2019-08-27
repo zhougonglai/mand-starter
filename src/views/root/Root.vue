@@ -62,7 +62,7 @@ export default {
   },
   methods: {
     tabChange({ name }) {
-      this.$router.push({ name });
+      this.$router.push({ name, query: this.$route.query });
     }
   }
 };
