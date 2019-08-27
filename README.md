@@ -1,4 +1,10 @@
-# nnplayer_mobile
+# NN约玩 mobile
+
+> platform
+
+- `wechat`
+- `mobile browser`
+- `android app`(PWA)
 
 ## Project setup
 ```
