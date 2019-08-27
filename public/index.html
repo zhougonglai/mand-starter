@@ -13,35 +13,35 @@
       name="App-Config"
       content="fullscreen=yes,useHistoryState=yes,transition=yes"
     />
-    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black" />
     <meta name="apple-mobile-web-app-title" content="NN约玩" />
     <meta name="apple-touch-fullscreen" content="yes" />
     <meta name="application-name" content="NN约玩" />
     <meta
       name="msapplication-TileImage"
-      content="<%= BASE_URL %>img/icons/msapplication-icon-144x144.png"
+      content="/img/icons/msapplication-icon-144x144.png"
     />
     <meta name="msapplication-TileColor" content="#8e4cfc" />
     <meta name="msapplication-tap-highlight" content="no" />
     <meta name="theme-color" content="#8e4cfc" />
     <meta name="format-detection" content="telephone=no,email=no" />
 
-    <link rel="icon" href="<%= BASE_URL %>img/icons/favicon.ico" />
-    <link rel="bookmark" href="<%= BASE_URL %>img/icons/favicon.ico" />
+    <link rel="icon" href="/img/icons/favicon.ico" />
+    <link rel="bookmark" href="/img/icons/favicon.ico" />
     <link
       rel="apple-touch-icon"
-      href="<%= BASE_URL %>img/icons/favicon-48x48.png"
+      href="/img/icons/favicon-48x48.png"
       size="48x48"
     />
     <link
       rel="apple-touch-icon"
-      href="<%= BASE_URL %>img/icons/favicon-16x16.png"
+      href="/img/icons/favicon-16x16.png"
       size="16x16"
     />
     <link
       rel="apple-touch-icon"
-      href="<%= BASE_URL %>img/icons/favicon-32x32.png"
+      href="/img/icons/favicon-32x32.png"
       size="32x32"
     />
     <title>NN约玩</title>
@@ -58,7 +58,6 @@
             document.documentElement.style.fontSize = (ww * 100) / 750 + "px";
           }
           if (
-            document.activeElement ||
             document.activeElement.tagName === "INPUT" ||
             document.activeElement.tagName === "TEXTAREA" ||
             document.activeElement.getAttribute("contenteditable") == "true"
