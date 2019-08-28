@@ -72,10 +72,20 @@ export default new Router({
         import(/* webpackChunkName: "service_info" */ "@/views/artboard/ServiceInfo.vue")
     },
     {
+      path: "/wallet",
+      name: "wallet",
+      meta: {
+        title: "我的钱包",
+        keepAlive: false
+      },
+      component: () =>
+        import(/* webpackChunkName: "wallet" */ "@/views/account/Wallet.vue")
+    },
+    {
       path: "/result_page",
       name: "result_page",
       meta: {
-        title: `陪玩入驻审核结果`,
+        title: "陪玩入驻审核结果",
         keepAlive: false
       },
       component: () =>

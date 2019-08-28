@@ -4,7 +4,16 @@ export default {
   namespaced: true,
   state: () => ({
     balance: "",
-    playerStatus: "",
+    playerStatus: 1,
+    /**
+     * 订单状态
+     * 已取消: 21, 22
+     * 待接单: 23
+     * 已退款: 24,25,27,32,36,37
+     * 服务中: 26
+     * 售后中: 30
+     * 已完成: 28,29,31,33,34,35,38
+     */
     orders: {
       list: [],
       total: 0
@@ -66,8 +75,9 @@ export default {
     SET_PLAYER_STATUS(state, status) {
       state.playerStatus = status;
     },
-    SET_ORDERS(state, orders) {
-      state.orders = orders;
+    SET_ORDERS({ orders }, { list, total }) {
+      orders.list = list;
+      orders.total = total;
     }
   }
 };

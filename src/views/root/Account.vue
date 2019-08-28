@@ -5,7 +5,13 @@
         <img class="avatar" :src="info.imageUrl" :alt="info.nickName" />
       </div>
       <div class="account_content">
-        <div class="account_nick_name larger bold">{{ info.nickName }}</div>
+        <div class="account_nick_name larger bold">
+          {{ info.nickName }}
+          <small class="smaller text-white">
+            <div class="online"></div>
+            在线
+          </small>
+        </div>
         <div class="account_info">ID: {{ info.memberNo }}</div>
       </div>
       <svg class="icon" aria-hidden="true">
@@ -37,24 +43,31 @@
           <svg class="icon" aria-hidden="true">
             <use xlink:href="#iconic_service" />
           </svg>
-          <small class="small text-gray">进行中</small>
+          <small class="small text-gray">服务中</small>
         </div>
         <div class="order_item">
           <svg class="icon" aria-hidden="true">
             <use xlink:href="#iconic_after-sale" />
           </svg>
-          <small class="small text-gray">待确认</small>
+          <small class="small text-gray">售后中</small>
         </div>
       </div>
       <div class="my_order">
-        <div class="icon"></div>
+        <img
+          src="@/assets/images/ic_my-order@2x.png"
+          srcset="
+            @/assets/images/ic_my-order@2x.png 2x,
+            @/assets/images/ic_my-order@3x.png 3x
+          "
+          alt="我的接单"
+        />
         <small class="small text-gray">我的接单</small>
       </div>
     </div>
 
     <div class="wallet">
       <div class="wallet_header">
-        <div class="header_info">
+        <div class="header_info" @click="$router.push({ name: 'wallet' })">
           <svg class="icon" aria-hidden="true">
             <use xlink:href="#icongerenzhongxintubiao-zhuanqu_wodeqianbao" />
           </svg>
@@ -86,7 +99,7 @@
           </svg>
         </div>
         <div class="item_content border-bottom-1px">
-          <p>陪玩资料</p>
+          <p class="larger bold">陪玩资料</p>
           <div class="content_icon">
             <svg class="icon" aria-hidden="true">
               <use xlink:href="#iconchakangengduojiantou" />
@@ -102,7 +115,7 @@
           </svg>
         </div>
         <div class="item_content">
-          <p>服务管理</p>
+          <p class="larger bold">服务管理</p>
           <div class="content_icon">
             <svg class="icon" aria-hidden="true">
               <use xlink:href="#iconchakangengduojiantou" />
@@ -129,7 +142,24 @@ export default {
     };
   },
   computed: {
+    ordersStatus() {
+      if (this.orders.list.length) {
+        return {
+          wait: this.orders.list.filter(({ status }) => status === 23).length,
+          online: this.orders.list.filter(({ status }) => status === 26).length,
+          afterSale: this.orders.list.filter(({ status }) => status === 30)
+            .length
+        };
+      } else {
+        return {
+          wait: 0,
+          online: 0,
+          afterSale: 0
+        };
+      }
+    },
     ...mapState("user", ["info", "playerApply"]),
+    ...mapState("account", ["orders"]),
     ...mapGetters("account", ["balance", "playerStatus"])
   },
   methods: {
@@ -139,6 +169,7 @@ export default {
       this.processActive = false;
     },
     ...mapActions("account", [
+      "openPlayer",
       "orderPlayerList",
       "getAmountShow",
       "getPlayerStatus"
@@ -164,7 +195,9 @@ export default {
   .account_header {
     height: 180px;
     padding: 40px;
-    background-image: linear-gradient(90deg, #A16AFF 0%, #9D5DFB 100%);
+    background-image: url('../../assets/images/bg_me_top@2x.png');
+    background-position: center;
+    background-size: contain;
     display: flex;
     align-items: center;
     box-sizing: border-box;
