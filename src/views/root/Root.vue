@@ -10,12 +10,7 @@
       v-wechat-title="$route.meta.title"
       v-if="!$route.meta.keepAlive"
     ></router-view>
-    <md-tab-bar
-      v-model="current"
-      :items="items"
-      :ink-length="50"
-      @change="tabChange"
-    >
+    <!-- <md-tab-bar v-model="current" :items="items" :ink-length="50" @change="tabChange">
       <template slot="item" slot-scope="{ item }">
         <div class="custom-item">
           <div class="icon">
@@ -26,7 +21,7 @@
           </div>
         </div>
       </template>
-    </md-tab-bar>
+    </md-tab-bar>-->
   </div>
 </template>
 <script>
@@ -82,7 +77,8 @@ export default {
 
     .md-tab-bar-ink {
       height: 10px;
-      border-radius: 5px;
+      border-radius: 10px 10px 0 0;
+      box-shadow: 0 -1px 16px 6px alpha(color-primary, 0.2), 1px 0 4px 2px alpha(color-primary, 0.14), 0 0 4px 1px alpha(color-primary, 0.12);
     }
   }
 

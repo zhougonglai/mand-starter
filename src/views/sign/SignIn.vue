@@ -133,47 +133,29 @@ export default {
     },
     // 跳转管理
     async nextMove() {
+      const {
+        data: { playerDetailsStatus, playerStatus }
+      } = await this.getPlayerStatus();
       if (this.$route.query.redirect) {
-        this.$router.push({ name: this.$route.query.redirect }, () => {
-          console.log("complete");
+        this.$router.replace({ name: this.$route.query.redirect }, () => {
+          this.waiting = false;
+        });
+      } else if (playerDetailsStatus === 3) {
+        this.INIT_INFO_DATA();
+        // 已经是陪玩或者 初次申请者
+        this.$router.push({ name: "basic_info" }, () => {
+          this.waiting = false;
+        });
+      } else if (playerStatus === 0) {
+        this.$router.push({ name: "result_page" }, () => {
           this.waiting = false;
         });
       } else {
-        const {
-          data: { playerDetailsStatus, playerStatus }
-        } = await this.getPlayerStatus();
-        if (playerDetailsStatus === 3) {
-          this.INIT_INFO_DATA();
-          // 已经是陪玩或者 初次申请者
-          this.$router.push(
-            {
-              name: "basic_info"
-            },
-            () => {
-              this.waiting = false;
-            }
-          );
-        } else if (playerStatus === 0) {
-          this.$router.push(
-            {
-              name: "result_page"
-            },
-            () => {
-              this.waiting = false;
-            }
-          );
-        } else {
-          // 已经提交申请中的陪玩
-          await this.playerInfoStatus();
-          this.$router.push(
-            {
-              name: "result_page"
-            },
-            () => {
-              this.waiting = false;
-            }
-          );
-        }
+        // 已经提交申请中的陪玩
+        await this.playerInfoStatus();
+        this.$router.push({ name: "result_page" }, () => {
+          this.waiting = false;
+        });
       }
     },
     async signInSubmit() {

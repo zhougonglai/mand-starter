@@ -16,7 +16,7 @@ const config = {
   devServer: {
     proxy: {
       "/baseUrl": {
-        target: "https://yuewanapi.nn.com"
+        target: "http://192.168.3.67"
       }
     },
     compress: true

@@ -3,35 +3,35 @@
     <div class="result-image">
       <img
         :src="
-          'playerStatus' in playerStatus
-            ? img[playerStatus.playerStatus]
+          'playerStatus' in playerApply
+            ? img[playerApply.playerStatus]
             : require('@/assets/images/success.svg')
         "
       />
     </div>
     <div class="result-title">
       {{
-        "playerStatus" in playerStatus
-          ? text[playerStatus.playerStatus]
+        "playerStatus" in playerApply
+          ? text[playerApply.playerStatus]
           : "提交成功"
       }}
     </div>
     <div class="result-subtitle">
-      <template v-if="playerStatus.playerStatus === 0">
+      <template v-if="playerApply.playerStatus === 0">
         <div>恭喜您成功入驻NN约玩平台，</div>
         <div>快去NN约玩官方网站开启接单吧！</div>
         <div>官网：yuewan.nn.com</div>
       </template>
-      <template v-if="playerStatus.playerStatus === 1">
+      <template v-if="playerApply.playerStatus === 1">
         <div>{{ reasons }}</div>
       </template>
-      <template v-if="playerStatus.playerStatus === 2">
+      <template v-if="playerApply.playerStatus === 2">
         <div>审核结果将在1-3个工作日通知到您~</div>
       </template>
     </div>
     <div
       class="result-actions"
-      v-if="playerStatus.playerStatus === 1 && reasons"
+      v-if="playerApply.playerStatus === 1 && reasons"
     >
       <md-button type="primary" round @click="goBasicInfo">修改信息</md-button>
     </div>
@@ -61,7 +61,7 @@ export default {
   },
   computed: {
     ...mapState("config", ["config"]),
-    ...mapState("user", ["info", "playerStatus", "reasons"])
+    ...mapState("user", ["info", "playerApply", "reasons"])
   },
   methods: {
     goBasicInfo() {

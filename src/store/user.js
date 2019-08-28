@@ -14,7 +14,7 @@ export default {
   namespaced: true,
   state: () => ({
     info: {},
-    playerStatus: {
+    playerApply: {
       //  陪玩资料审核状态：0已通过，1被驳回，2审核中, 3初次申请
       playerDetailsStatus: "",
       //  陪玩状态 ：0审核通过（已经成为陪玩），1被驳回（不是陪玩），2审核中（不是陪玩）
@@ -407,7 +407,7 @@ export default {
       {
         commit,
         dispatch,
-        state: { playerStatus }
+        state: { playerApply }
       },
       lazy = false
     ) {
@@ -417,10 +417,10 @@ export default {
           commit("SET_GAMELIST", rtnInfo.data);
           // 联动默认行为
           if (!lazy) {
-            // playerStatus @from '@service/playerAPI' 第一次填写,付默认值
+            // playerApply @from '@service/playerAPI' 第一次填写,付默认值
             dispatch("activeGameList", {
               ...rtnInfo.data[0],
-              refresh: playerStatus.playerStatus === 3
+              refresh: playerApply.playerStatus === 3
             });
           }
         }
@@ -463,7 +463,7 @@ export default {
         basicInfo,
         ageSelector,
         citySelector,
-        playerStatus,
+        playerApply,
         serviceInfo,
         gameList,
         rankList
@@ -472,7 +472,7 @@ export default {
       const { rtnInfo } = await $http.playerInformationAdd(
         {
           ...basicInfo,
-          isPlayer: playerStatus.playerStatus,
+          isPlayer: playerApply.playerStatus,
           age: ageSelector.active.value,
           personalityLables: tags.active,
           province: citySelector.active[0],
@@ -547,7 +547,7 @@ export default {
       state.info = result;
     },
     SET_STATUS(state, status) {
-      state.playerStatus = status;
+      state.playerApply = status;
     },
     INIT_INFO_DATA(state) {
       const {

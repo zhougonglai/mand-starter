@@ -1,5 +1,6 @@
 import axios from "axios";
 import store from "@/store";
+import router from "@/router";
 import { Toast } from "mand-mobile";
 
 import signApi from "./signApi";
@@ -8,20 +9,27 @@ import playerApi from "./playerApi";
 import gameApi from "./gameApi";
 import wechat from "./wechat";
 
+import MemberController from "./MemberController";
+import OrderMemberController from "./OrderMemberController";
+
 const instance = axios.create({
-  baseURL: `${process.env.VUE_APP_BASE_URL}baseUrl`
+  baseURL: `${
+    process.env.NODE_ENV === "production"
+      ? process.env.VUE_APP_BASE_URL
+      : process.env.BASE_URL
+  }baseUrl`
 });
 
 instance.interceptors.request.use(
   config => {
     Toast.hide();
     const { token } = store.getters;
-    const { loading } = store.state;
+    // const { loading } = store.state;
     if (token) config.headers["Authorization"] = token;
-    if (!loading) {
-      Toast.loading("加载中", 0, false);
-      store.dispatch("setLoading", true);
-    }
+    // if (!loading) {
+    //   Toast.loading("加载中", 0, false);
+    //   store.dispatch("setLoading", true);
+    // }
     return config;
   },
   err => {
@@ -34,12 +42,19 @@ instance.interceptors.request.use(
 
 instance.interceptors.response.use(
   res => {
-    store.dispatch("setLoading", false);
-    Toast.hide();
+    // store.dispatch("setLoading", false);
+    // Toast.hide();
+    const { rtnCode } = res.data;
+    if (rtnCode && rtnCode === "999") {
+      router.replace({
+        name: "sign_in",
+        query: { redirect: router.history.current.name }
+      });
+    }
     return res.data;
   },
   err => {
-    store.dispatch("setLoading", false);
+    // store.dispatch("setLoading", false);
     Toast.hide();
     Toast.failed("服务器响应失效");
     return Promise.reject(err);
@@ -48,7 +63,16 @@ instance.interceptors.response.use(
 
 const Http = {};
 
-const APIS = Object.assign({}, signApi, uploadApi, playerApi, gameApi, wechat);
+const APIS = Object.assign(
+  {},
+  signApi,
+  uploadApi,
+  playerApi,
+  gameApi,
+  wechat,
+  MemberController,
+  OrderMemberController
+);
 
 for (let key in APIS) {
   let api = APIS[key];
