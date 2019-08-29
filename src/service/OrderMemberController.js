@@ -6,5 +6,9 @@ export default {
   orderPlayerList: {
     method: "post",
     url: "/order/orderPlayerList"
+  },
+  selectPayment: {
+    method: "post",
+    url: "/orderPayment/selectPayment"
   }
 };

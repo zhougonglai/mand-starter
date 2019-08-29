@@ -6,44 +6,154 @@
         <md-amount :value="balance" :duration="800" transition />
       </div>
     </div>
-    <md-tab-bar v-model="current" :ink-length="50" :items="items" />
+    <md-tabs v-model="current">
+      <md-tab-pane
+        class="content"
+        :name="item.name"
+        :label="item.label"
+        v-for="(item, index) in items"
+        :key="index"
+      >
+        <div
+          class="cells"
+          v-if="
+            payMents.list.filter(({ type }) => item.filter.includes(type))
+              .length
+          "
+        >
+          <div
+            class="cell-item column"
+            v-for="(payment, index) in payMents.list.filter(({ type }) =>
+              item.filter.includes(type)
+            )"
+            :key="payment.orderNo"
+          >
+            <div
+              class="item_content column"
+              :class="{ 'border-bottom-1px': index < payMents.list.length }"
+            >
+              <div class="item-top">
+                <p class="larger bold">
+                  <span v-if="[0].includes(payment.type)">充值</span>
+                  <span v-else-if="[10, 11].includes(payment.type)">提现</span>
+                  <span
+                    v-else-if="
+                      [20, 21, 22, 23, 24, 29, 34].includes(payment.type)
+                    "
+                    >消费</span
+                  >
+                  <span
+                    v-else-if="[25, 27, 30, 32, 35, 37].includes(payment.type)"
+                    >收益</span
+                  >
+                </p>
+
+                <small class="small text-grayer" v-text="payment.createTime" />
+              </div>
+              <div class="item-bottom">
+                <div class="bottom-left">
+                  <small class="small text-gray"
+                    >订单号:{{ payment.orderNo }}</small
+                  >
+                </div>
+                <div
+                  class="bottom-right bold"
+                  :class="{
+                    'text-error': [0, 25, 27, 30, 32, 35, 37].includes(
+                      payment.type
+                    )
+                  }"
+                >
+                  {{ payment.totalAmount }}元
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div v-else class="empty-block">
+          <img
+            class="block-cover"
+            src="@/assets/img_empty-state2@2x.png"
+            srcset="
+              @/assets/img_empty-state2@2x.png 2x,
+              @/assets/img_empty-state2@3x.png 3x
+            "
+          />
+          <p class="block-title">咦？ 没有没有相关记录哟~</p>
+        </div>
+      </md-tab-pane>
+    </md-tabs>
   </div>
 </template>
 <script>
-import { Amount, TabBar } from "mand-mobile";
-import { mapGetters } from "vuex";
+import { Amount, Tabs, TabPane } from "mand-mobile";
+import { mapState, mapGetters, mapActions } from "vuex";
 
 export default {
   name: "wallet",
   components: {
     [Amount.name]: Amount,
-    [TabBar.name]: TabBar
+    [Tabs.name]: Tabs,
+    [TabPane.name]: TabPane
   },
   data() {
     return {
-      current: 1,
+      current: "payMents",
       items: [
         {
-          name: 1,
-          label: "全部"
+          name: "payMents",
+          label: "全部",
+          filter: [
+            0,
+            10,
+            11,
+            20,
+            21,
+            22,
+            23,
+            24,
+            29,
+            34,
+            25,
+            27,
+            30,
+            32,
+            35,
+            37
+          ]
         },
         {
-          name: 2,
-          label: "收益"
+          name: "earningsPayments",
+          label: "收益",
+          filter: [25, 27, 30, 32, 35, 37]
         },
         {
-          name: 3,
-          label: "消费"
+          name: "consumePayments",
+          label: "消费",
+          filter: [20, 21, 22, 23, 24, 29, 34]
         },
         {
-          name: 4,
-          label: "提现"
+          name: "withdrawPayments",
+          label: "提现",
+          filter: [10, 11]
         }
       ]
     };
   },
   computed: {
-    ...mapGetters("account", ["balance"])
+    ...mapState("account", ["payMents"]),
+    ...mapGetters("account", [
+      "balance",
+      "earningsPayments",
+      "consumePayments",
+      "withdrawPayments"
+    ])
+  },
+  methods: {
+    ...mapActions("account", ["selectPayment"])
+  },
+  async created() {
+    this.selectPayment();
   }
 };
 </script>
@@ -53,7 +163,6 @@ export default {
   min-height: 100vh;
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
-  background: #F5F5F7;
 
   .wallet_header {
     height: 200px;
@@ -70,9 +179,23 @@ export default {
 
   >>>.md-tab-bar {
     background-color: #fff;
+    position: relative;
+
+    &::after {
+      content: '';
+      display: block;
+      position: absolute;
+      border-bottom: 1px solid #E9E9ED;
+      left: 0;
+      bottom: 0;
+      width: 100%;
+      transform-origin: 0 bottom;
+    }
 
     .md-tab-bar-ink {
       height: 10px;
+      max-width: 48px;
+      left: 2%;
       border-radius: 10px 10px 0 0;
       box-shadow: 0 -1px 16px 6px alpha(color-primary, 0.2), 1px 0 4px 2px alpha(color-primary, 0.14), 0 0 4px 1px alpha(color-primary, 0.12);
     }

@@ -7,25 +7,46 @@
       <div class="account_content">
         <div class="account_nick_name larger bold">
           {{ info.nickName }}
-          <small class="smaller text-white">
-            <div class="online"></div>
-            在线
+          <small class="x-small text-white player-status ml-2">
+            <div
+              class="status-bage"
+              :class="{
+                online: playerStatus === 0,
+                offline: playerStatus === 1,
+                serving: playerStatus === 2
+              }"
+            ></div>
+            {{
+              playerStatus ? (playerStatus === 1 ? "离线" : "服务中") : "在线"
+            }}
           </small>
         </div>
-        <div class="account_info">ID: {{ info.memberNo }}</div>
+        <div class="account_info">
+          <div class="info_id">ID:{{ info.memberNo }}</div>
+          <div class="info_invite">邀请码:{{ info.memberNo }}</div>
+          <div class="tag xx-small">复制</div>
+        </div>
       </div>
-      <svg class="icon" aria-hidden="true">
-        <use xlink:href="#icon-arrow-right" />
-      </svg>
+      <div
+        class="account_arrow"
+        @click="$router.push({ name: 'account_details' })"
+      >
+        <svg class="icon" aria-hidden="true">
+          <use xlink:href="#icon-arrow-right" />
+        </svg>
+      </div>
     </div>
 
-    <div class="online_switch" v-if="playerApply.playerStatus === 0">
+    <div
+      class="online_switch"
+      v-if="playerApply.playerStatus === 0 && playerStatus !== 2"
+    >
       <p
         class="larger bold fill"
-        v-text="playerStatus ? '关闭接单' : '开启接单'"
+        v-text="playerStatusTransform ? '关闭接单' : '开启接单'"
       />
       <md-switch
-        :value="playerStatus"
+        :value="playerStatusTransform"
         :disabled="processActive"
         @change="playerStatusChange"
       />
@@ -37,18 +58,33 @@
           <svg class="icon" aria-hidden="true">
             <use xlink:href="#iconic_waitingorder" />
           </svg>
+          <div
+            class="bage"
+            v-if="ordersStatus.wait"
+            v-text="ordersStatus.wait"
+          />
           <small class="small text-gray">待接单</small>
         </div>
         <div class="order_item">
           <svg class="icon" aria-hidden="true">
             <use xlink:href="#iconic_service" />
           </svg>
+          <div
+            class="bage"
+            v-if="ordersStatus.online"
+            v-text="ordersStatus.online"
+          />
           <small class="small text-gray">服务中</small>
         </div>
         <div class="order_item">
           <svg class="icon" aria-hidden="true">
             <use xlink:href="#iconic_after-sale" />
           </svg>
+          <div
+            class="bage"
+            v-if="ordersStatus.afterSale"
+            v-text="ordersStatus.afterSale"
+          />
           <small class="small text-gray">售后中</small>
         </div>
       </div>
@@ -65,7 +101,7 @@
       </div>
     </div>
 
-    <div class="wallet">
+    <!-- <div class="wallet">
       <div class="wallet_header">
         <div class="header_info" @click="$router.push({ name: 'wallet' })">
           <svg class="icon" aria-hidden="true">
@@ -89,9 +125,28 @@
         </div>
         <div class="balance_actions"></div>
       </div>
-    </div>
+    </div>-->
 
     <div class="cells">
+      <div class="cell-item" @click="$router.push({ name: 'wallet' })">
+        <div class="item_icon">
+          <svg class="icon" aria-hidden="true">
+            <use xlink:href="#icongerenzhongxintubiao-zhuanqu_wodeqianbao" />
+          </svg>
+        </div>
+        <div class="item_content border-bottom-1px">
+          <p class="larger bold">我的钱包</p>
+          <div class="content_icon">
+            <small class="small text-gray">
+              <md-amount :value="balance" :duration="800" transition />元
+            </small>
+            <svg class="icon" aria-hidden="true">
+              <use xlink:href="#iconchakangengduojiantou" />
+            </svg>
+          </div>
+        </div>
+      </div>
+
       <div class="cell-item">
         <div class="item_icon">
           <svg class="icon" aria-hidden="true">
@@ -159,8 +214,8 @@ export default {
       }
     },
     ...mapState("user", ["info", "playerApply"]),
-    ...mapState("account", ["orders"]),
-    ...mapGetters("account", ["balance", "playerStatus"])
+    ...mapState("account", ["orders", "playerStatus"]),
+    ...mapGetters("account", ["balance", "playerStatusTransform"])
   },
   methods: {
     async playerStatusChange() {
@@ -219,6 +274,44 @@ export default {
       display: flex;
       flex-direction: column;
       justify-content: space-between;
+
+      .account_nick_name {
+        height: fit-content;
+        display: flex;
+        align-items: center;
+      }
+
+      .account_info {
+        height: fit-content;
+        display: flex;
+        align-items: center;
+
+        .info_invite {
+          position: relative;
+          padding-left: 16px;
+          margin-left: 16px;
+          margin-right: 16px;
+
+          &::before {
+            content: '';
+            position: absolute;
+            width: 1px;
+            background: #DCDCDC;
+            height: 80%;
+            top: 10%;
+            opacity: 0.2;
+            left: 0;
+          }
+        }
+      }
+    }
+
+    .account_arrow {
+      height: 100%;
+      min-width: 50px;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
     }
 
     svg.icon {
@@ -271,6 +364,20 @@ export default {
         flex-direction: column;
         align-items: center;
         justify-content: center;
+        position: relative;
+
+        .bage {
+          position: absolute;
+          top: 1px;
+          right: 25%;
+          width: 32px;
+          height: 32px;
+          line-height: 32px;
+          text-align: center;
+          border-radius: 50%;
+          background-color: color-text-error;
+          color: white;
+        }
       }
     }
 
@@ -350,42 +457,6 @@ export default {
 
   .cells {
     margin-top: 24px;
-
-    .cell-item {
-      background-color: #fff;
-      height: 100px;
-      display: flex;
-      align-items: center;
-
-      .item_icon {
-        padding: 16px;
-
-        svg.icon {
-          width: 45px;
-          height: 45px;
-        }
-      }
-
-      .item_content {
-        flex: 1;
-        display: flex;
-        padding: 16px 16px 16px 0;
-        height: 100%;
-        box-sizing: border-box;
-        align-items: center;
-
-        p {
-          flex: 1;
-        }
-
-        .content_icon {
-          svg.icon {
-            width: 24px;
-            height: 24px;
-          }
-        }
-      }
-    }
   }
 }
 </style>

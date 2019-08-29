@@ -58,8 +58,8 @@ export default {
 </style>
 <style lang="stylus">
 svg.icon {
-  width: 74px;
-  height: 74px;
+  width: 48px;
+  height: 48px;
   vertical-align: -0.15em;
   fill: currentColor;
   overflow: hidden;

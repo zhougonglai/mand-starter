@@ -82,6 +82,16 @@ export default new Router({
         import(/* webpackChunkName: "wallet" */ "@/views/account/Wallet.vue")
     },
     {
+      path: "/account/details",
+      name: "account_details",
+      meta: {
+        title: "个人资料",
+        keepAlive: true
+      },
+      component: () =>
+        import(/* webpackChunkName: "account_details" */ "@/views/account/Details.vue")
+    },
+    {
       path: "/result_page",
       name: "result_page",
       meta: {

@@ -17,11 +17,80 @@ export default {
     orders: {
       list: [],
       total: 0
+    },
+    payMents: {
+      list: [],
+      pageNum: 0,
+      pageSize: 20,
+      total: 0
     }
   }),
   getters: {
     balance: ({ balance }) => Number(balance),
-    playerStatus: ({ playerStatus }) => Boolean(!playerStatus)
+    playerStatusTransform: ({ playerStatus }) => Boolean(!playerStatus),
+    // 收益记录
+    earningsPayments: ({ payMents }) => {
+      if (payMents.list.length) {
+        const earningsPaymentList = payMents.list.filter(({ type }) =>
+          [25, 27, 30, 32, 35, 37].includes(type)
+        );
+        return {
+          list: earningsPaymentList,
+          pageNum: Math.floor(earningsPaymentList.length / 20),
+          pageSize: 20,
+          total: earningsPaymentList.length
+        };
+      } else {
+        return {
+          list: [],
+          pageNum: 0,
+          pageSize: 20,
+          total: 0
+        };
+      }
+    },
+    // 消费记录
+    consumePayments: ({ payMents }) => {
+      if (payMents.list.length) {
+        const consumePaymentList = payMents.list.filter(({ type }) =>
+          [20, 21, 22, 23, 24, 29, 34].includes(type)
+        );
+        return {
+          list: consumePaymentList,
+          pageNum: Math.floor(consumePaymentList.length / 20),
+          pageSize: 20,
+          total: consumePaymentList.length
+        };
+      } else {
+        return {
+          list: [],
+          pageNum: 0,
+          pageSize: 20,
+          total: 0
+        };
+      }
+    },
+    // 提现记录
+    withdrawPayments: ({ payMents }) => {
+      if (payMents.list.length) {
+        const withdrawPaymentList = payMents.list.filter(({ type }) =>
+          [10, 11].includes(type)
+        );
+        return {
+          list: withdrawPaymentList,
+          pageNum: Math.floor(withdrawPaymentList.length / 20),
+          pageSize: 20,
+          total: withdrawPaymentList.length
+        };
+      } else {
+        return {
+          list: [],
+          pageNum: 0,
+          pageSize: 20,
+          total: 0
+        };
+      }
+    }
   },
   actions: {
     async getAmountShow({ commit }) {
@@ -63,7 +132,24 @@ export default {
         status: Number(!playerStatus)
       });
       if (rtnInfo.code === 0) {
-        commit("SET_PLAYER_STATUS", !playerStatus);
+        commit("SET_PLAYER_STATUS", playerStatus ? 0 : 1);
+      }
+      return rtnInfo;
+    },
+    /**
+     * {
+     *   createTimeEnd: ""
+     *   createTimeStart: ""
+     *   pageNum: 1
+     *   pageSize: 20
+     *   status: ""
+     * }
+     * @param {*} paymentParams
+     */
+    async selectPayment({ commit }, paymentParams = {}) {
+      const { rtnInfo } = await $http.selectPayment(paymentParams);
+      if (rtnInfo.code === 0) {
+        commit("SET_PAYMENTS", rtnInfo.data);
       }
       return rtnInfo;
     }
@@ -78,6 +164,12 @@ export default {
     SET_ORDERS({ orders }, { list, total }) {
       orders.list = list;
       orders.total = total;
+    },
+    SET_PAYMENTS({ payMents }, { list, total, pageNum, pageSize }) {
+      payMents.list = list;
+      payMents.total = total;
+      payMents.pageNum = pageNum;
+      payMents.pageSize = pageSize;
     }
   }
 };
