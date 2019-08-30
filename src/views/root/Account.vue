@@ -24,7 +24,7 @@
         <div class="account_info">
           <div class="info_id">ID:{{ info.memberNo }}</div>
           <div class="info_invite">邀请码:{{ info.memberNo }}</div>
-          <div class="tag xx-small">复制</div>
+          <div class="tag xx-small" @click="copyMenberNo">复制</div>
         </div>
       </div>
       <div
@@ -179,10 +179,18 @@
         </div>
       </div>
     </div>
+
+    <input
+      ref="copyTarget"
+      type="text"
+      readonly
+      :value="info.memberNo"
+      style="    visibility: hidden;"
+    />
   </div>
 </template>
 <script>
-import { Amount, Switch } from "mand-mobile";
+import { Amount, Switch, Toast } from "mand-mobile";
 import { mapState, mapGetters, mapActions } from "vuex";
 
 export default {
@@ -218,6 +226,18 @@ export default {
     ...mapGetters("account", ["balance", "playerStatusTransform"])
   },
   methods: {
+    copyMenberNo() {
+      const input = document.createElement("input");
+      input.setAttribute("readonly", "readonly");
+      input.setAttribute("value", this.info.memberNo);
+      document.body.appendChild(input);
+      input.setSelectionRange(0, this.info.memberNo.length);
+      if (document.execCommand("copy")) {
+        document.execCommand("copy");
+        Toast.succeed("复制成功");
+      }
+      document.body.removeChild(input);
+    },
     async playerStatusChange() {
       this.processActive = true;
       await this.openPlayer();

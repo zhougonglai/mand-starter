@@ -10,7 +10,10 @@
         </svg>
       </div>
 
-      <div class="header-action right">
+      <div
+        class="header-action right"
+        @click="$router.push({ name: 'account_avatar' })"
+      >
         <svg class="icon" aria-hidden="true">
           <use xlink:href="#iconic_edit" />
         </svg>
@@ -26,7 +29,10 @@
         <div class="cell-header">
           <div class="cell-title larger border-bottom-1px bold">资料</div>
         </div>
-        <div class="cell-item">
+        <div
+          class="cell-item"
+          @click="$router.push({ name: 'account_nickname' })"
+        >
           <div class="item_content border-bottom-1px">
             <p class="larger">昵称</p>
             <div class="biref text-gray">{{ info.nickName }}</div>
@@ -63,11 +69,13 @@
         <div class="cell-item">
           <div class="item_content border-bottom-1px">
             <p class="larger">QQ</p>
+            <div class="biref text-gray">{{ info.qQNo }}</div>
           </div>
         </div>
         <div class="cell-item">
           <div class="item_content border-bottom-1px">
             <p class="larger">手机号</p>
+            <div class="biref text-gray">{{ info.plainTextPhone }}</div>
           </div>
         </div>
         <div class="cell-item">

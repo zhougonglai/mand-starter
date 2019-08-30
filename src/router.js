@@ -92,6 +92,26 @@ export default new Router({
         import(/* webpackChunkName: "account_details" */ "@/views/account/Details.vue")
     },
     {
+      path: "/account/nickname",
+      name: "account_nickname",
+      meta: {
+        title: "昵称",
+        keepAlive: true
+      },
+      component: () =>
+        import(/* webpackChunkName: "account_nickname" */ "@/views/account/NickName.vue")
+    },
+    {
+      path: "/account/avatar",
+      name: "account_avatar",
+      meta: {
+        title: "上传头像",
+        keepAlive: false
+      },
+      component: () =>
+        import(/* webpackChunkName: "account_avatar" */ "@/views/account/Avatar.vue")
+    },
+    {
       path: "/result_page",
       name: "result_page",
       meta: {

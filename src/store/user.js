@@ -540,6 +540,24 @@ export default {
       } else {
         return false;
       }
+    },
+    async memberInformationUpdate(
+      {
+        state: { info },
+        commit
+      },
+      infomationParams
+    ) {
+      const { rtnInfo } = await $http.memberInformationUpdate({
+        ...info,
+        ...infomationParams
+      });
+      if (rtnInfo.code) {
+        Toast.failed(rtnInfo.msg);
+      } else {
+        commit("SET_INFO", { ...info, ...rtnInfo.data });
+      }
+      return rtnInfo;
     }
   },
   mutations: {

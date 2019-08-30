@@ -1,6 +1,6 @@
 import Vue from "vue";
 import Vuex from "vuex";
-// import createPersistedState from "vuex-persistedstate";
+import createPersistedState from "vuex-persistedstate";
 import { state, mutations, actions } from "@/store/index";
 
 import global from "@/store/global";
@@ -23,6 +23,6 @@ export default new Vuex.Store({
     config,
     user,
     account
-  }
-  // plugins: [createPersistedState()]
+  },
+  plugins: [createPersistedState()]
 });

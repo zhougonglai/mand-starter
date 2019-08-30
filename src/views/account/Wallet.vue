@@ -6,7 +6,7 @@
         <md-amount :value="balance" :duration="800" transition />
       </div>
     </div>
-    <md-tabs v-model="current">
+    <md-tabs v-model="current" @change="typeChange">
       <md-tab-pane
         class="content"
         :name="item.name"
@@ -150,6 +150,15 @@ export default {
     ])
   },
   methods: {
+    typeChange({ name }) {
+      const status = {
+        payMents: "",
+        earningsPayments: "3",
+        consumePayments: "2",
+        withdrawPayments: "1"
+      };
+      this.selectPayment({ status: status[name] });
+    },
     ...mapActions("account", ["selectPayment"])
   },
   async created() {

@@ -120,6 +120,7 @@ export default {
       }
       return rtnInfo;
     },
+    // 在线状态 {0: 在线, 1:不在线, 2:服务中}
     async getPlayerStatus({ commit }) {
       const { rtnInfo } = await $http.getPlayerStatus();
       if (rtnInfo.code === 0) {
@@ -137,6 +138,7 @@ export default {
       return rtnInfo;
     },
     /**
+     * 交易记录
      * {
      *   createTimeEnd: ""
      *   createTimeStart: ""
