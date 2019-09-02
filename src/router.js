@@ -112,6 +112,16 @@ export default new Router({
         import(/* webpackChunkName: "account_avatar" */ "@/views/account/Avatar.vue")
     },
     {
+      path: "/order/management",
+      name: "order_management",
+      meta: {
+        title: "接单管理",
+        keepAlive: true
+      },
+      component: () =>
+        import(/* webpackChunkName: "order_management" */ "@/views/account/OrderManagement.vue")
+    },
+    {
       path: "/result_page",
       name: "result_page",
       meta: {
@@ -159,21 +169,5 @@ export default new Router({
       component: () =>
         import(/* webpackChunkName: "forget_password" */ "@/views/sign/ForgetPassword.vue")
     }
-    //  骨架屏 和 loading 测试路径
-    // {
-    //   path: "/loading",
-    //   name: "loading",
-    //   component: () => import("@/components/public/RouteLoading.vue")
-    // },
-    // {
-    //   path: "/skeleton_sign",
-    //   name: "skeleton_sign",
-    //   component: () => import("@/components/skeleton/SkeletonSign.vue")
-    // },
-    // {
-    //   path: "/skeleton_home",
-    //   name: "skeleton_home",
-    //   component: () => import("@/components/skeleton/SkeletonHome.vue")
-    // }
   ]
 });

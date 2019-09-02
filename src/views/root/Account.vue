@@ -88,7 +88,7 @@
           <small class="small text-gray">售后中</small>
         </div>
       </div>
-      <div class="my_order">
+      <div class="my_order" @click="$router.push({ name: 'order_management' })">
         <img
           src="@/assets/images/ic_my-order@2x.png"
           srcset="

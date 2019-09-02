@@ -394,7 +394,7 @@ export default {
         {
           fileName: base64
         },
-        false,
+        true,
         {
           headers: {
             Authorization: info.token

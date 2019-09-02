@@ -108,7 +108,7 @@ export default {
   .app-header {
     position: fixed;
     z-index: 99;
-    background-image: linear-gradient(0deg, rgba(0, 0, 0, 0) 0%, #000000 100%);
+    background-image: linear-gradient(0deg, rgba(0, 0, 0, 0), rgba(0, 0, 0, 1));
     opacity: 0.4;
 
     .left {
