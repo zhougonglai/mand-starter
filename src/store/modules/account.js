@@ -1,4 +1,5 @@
 import $http from "@/service";
+import { Toast } from "mand-mobile";
 
 export default {
   namespaced: true,
@@ -18,6 +19,7 @@ export default {
       list: [],
       total: 0
     },
+    orderPlayerDetails: {},
     payMents: {
       list: [],
       pageNum: 0,
@@ -154,6 +156,22 @@ export default {
         commit("SET_PAYMENTS", rtnInfo.data);
       }
       return rtnInfo;
+    },
+    async orderPlayerDetails({ commit }, orderNo) {
+      const { rtnInfo } = await $http.orderPlayerDetails({ orderNo });
+      if (rtnInfo.code) {
+        Toast.failed(rtnInfo.msg);
+      } else {
+        commit("SET_ORDERPLAYERDETAILS", rtnInfo.data);
+      }
+      return rtnInfo;
+    },
+    async orderDetails(state, orderNo) {
+      const { rtnInfo } = await $http.orderDetails({ orderNo });
+      if (rtnInfo.code) {
+        Toast.failed(rtnInfo.msg);
+      }
+      return rtnInfo;
     }
   },
   mutations: {
@@ -166,6 +184,9 @@ export default {
     SET_ORDERS({ orders }, { list, total }) {
       orders.list = list;
       orders.total = total;
+    },
+    SET_ORDERPLAYERDETAILS(state, orderPlayerDetails) {
+      state.orderPlayerDetails = orderPlayerDetails;
     },
     SET_PAYMENTS({ payMents }, { list, total, pageNum, pageSize }) {
       payMents.list = list;

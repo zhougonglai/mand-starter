@@ -7,6 +7,14 @@ export default {
     method: "post",
     url: "/order/orderPlayerList"
   },
+  orderDetails: {
+    method: "get",
+    url: "/order/orderDetails"
+  },
+  orderPlayerDetails: {
+    method: "get",
+    url: "/order/orderPlayerDetails"
+  },
   selectPayment: {
     method: "post",
     url: "/orderPayment/selectPayment"

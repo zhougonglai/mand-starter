@@ -382,6 +382,47 @@ button
   height: inherit;
 }
 
+.action-bar{
+  display: flex;
+  flex-direction: row;
+  .action-details{
+    display: flex;
+    flex-direction: column
+    align-items: flex-start;
+    justify-content: center;
+    padding-left: 20px;
+  }
+}
+
+.before-diver{
+  position relative
+  &::before {
+    content: '';
+    position: absolute;
+    border: 1px solid #dcdcdc;
+    height: 60%;
+    top: 20%;
+    left: 0;
+    transform-origin: 0 0;
+  }
+
+  @media (min-resolution: 2dppx){
+    &::before{
+      transform: scale(0.5);
+      height: 120%;
+      top: 30%;
+    }
+  }
+
+  @media (min-resolution: 3dppx){
+    &::before{
+      height: 180%;
+      top: 40%;
+      transform: scale(0.3333)  
+    }
+  }
+}
+
 .order-list{
   .order-item{
     margin-top: 20px;
@@ -399,18 +440,45 @@ button
       .header-content{
         flex: 1;
         display: flex;
-        flex-direction: column;  
+        flex-direction: column;
+        justify-content: center;
+        padding-left: 20px;
+      }
+
+      .header-action{
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+        align-items: flex-end;
       }
     }
 
     .order-content{
       display: flex;
       flex-direction: column;
+      padding: 24px 0;
+      .content-top{
+
+      }
+      .content-bottom{
+        margin-top: 20px;
+        small{
+          padding-right: 40px;
+          &+.small{
+            padding-left: 40px
+          }
+        }  
+      }
     }
 
     .order-actions{
       display: flex;
-      justify-content: flex-end;  
+      justify-content: flex-end;
+      padding: 20px 20px 20px 0;
+
+      button.md-button{
+        min-width: 200px;
+      }
     }
   }  
 }
@@ -438,11 +506,16 @@ button
       min-height 100px;
     }
   }
+  .padding{
+    padding: 20px;  
+  }
+
   .cell-item {
     background-color: #fff;
     min-height: 100px;
     display: flex;
     align-items: center;
+    box-sizing: border-box;
 
     &:not(.column){
       .item_content{

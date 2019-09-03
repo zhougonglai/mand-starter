@@ -558,6 +558,13 @@ export default {
         commit("SET_INFO", { ...info, ...rtnInfo.data });
       }
       return rtnInfo;
+    },
+    async memberInformationShow() {
+      const { rtnInfo } = await $http.memberInformationShow();
+      if (rtnInfo.code) {
+        Toast.failed(rtnInfo.msg);
+      }
+      return rtnInfo;
     }
   },
   mutations: {

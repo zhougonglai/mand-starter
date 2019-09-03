@@ -122,6 +122,16 @@ export default new Router({
         import(/* webpackChunkName: "order_management" */ "@/views/account/OrderManagement.vue")
     },
     {
+      path: "/order/details/:orderNo",
+      name: "order_details",
+      meta: {
+        title: "接单详情",
+        keepAlive: true
+      },
+      component: () =>
+        import(/* webpackChunkName: "order_details" */ "@/views/account/OrderDetails.vue")
+    },
+    {
       path: "/result_page",
       name: "result_page",
       meta: {
