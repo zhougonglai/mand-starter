@@ -6,10 +6,10 @@ const config = {
   css: {
     loaderOptions: {
       stylus: {
-        import: ["D:\\myproj\\nnplayer_front4m\\src\\assets\\theme.custom"]
+        import: [path.resolve("./src/assets/theme.custom.styl")]
       }
     },
-    extract: false
+    extract: true
   },
   devServer: {
     proxy: {

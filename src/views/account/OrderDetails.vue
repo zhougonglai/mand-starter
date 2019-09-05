@@ -30,12 +30,10 @@
           >
         </div>
         <div class="info_item">
-          <small class="small text-gray"
-            >备注说明:
-            {{
-              orderPlayerDetails.remark ? orderPlayerDetails.remark : "无"
-            }}</small
-          >
+          <small class="small text-gray">
+            备注说明:
+            {{ orderPlayerDetails.remark ? orderPlayerDetails.remark : "无" }}
+          </small>
         </div>
       </div>
     </div>
@@ -95,7 +93,7 @@
       </div>
     </div>
 
-    <div class="action-bar">
+    <!-- <div class="action-bar">
       <div class="action-details">
         <p class="bold large">
           预计收益:
@@ -103,11 +101,34 @@
         </p>
         <small class="small mt-2 text-gray">扣除10%的平台服务费34元</small>
       </div>
-    </div>
+    </div>-->
+    <md-action-bar :actions="actions">
+      <div class="action-details">
+        <p class="bold large">
+          预计收益:
+          <span class="text-error"
+            >{{ orderPlayerDetails.profitAmount }}元</span
+          >
+        </p>
+        <small class="small mt-2 text-gray"
+          >扣除10%的平台服务费{{orderPlayerDetails.systemAmount|round:2
+
+
+
+
+
+
+
+
+
+          }}元</small
+        >
+      </div>
+    </md-action-bar>
   </div>
 </template>
 <script>
-import { Field, CellItem, Amount } from "mand-mobile";
+import { Field, CellItem, Amount, ActionBar } from "mand-mobile";
 import { mapState } from "vuex";
 
 export default {
@@ -115,7 +136,18 @@ export default {
   components: {
     [Field.name]: Field,
     [Amount.name]: Amount,
+    [ActionBar.name]: ActionBar,
     [CellItem.name]: CellItem
+  },
+  data() {
+    return {
+      actions: [
+        {
+          text: "接单",
+          round: true
+        }
+      ]
+    };
   },
   computed: {
     ...mapState("account", ["orderPlayerDetails"])
@@ -125,7 +157,8 @@ export default {
 <style lang="stylus" scoped>
 .order_details {
   width: 750px;
-  min-height: 100vh;
+  height: 100vh;
+  padding-bottom: 500px;
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
   background: #F5F5F7;

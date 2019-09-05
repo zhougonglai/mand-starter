@@ -82,7 +82,7 @@
         </div>
       </div>
       <div class="fiel-row between align-center mt-2">
-        <p class="line-normal larger gray">
+        <p class="line-normal medium gray">
           注册即代表同意
           <span @click="protocol = !protocol">《用户协议》</span>
         </p>
@@ -97,7 +97,7 @@
           >立即注册</md-button
         >
       </div>
-      <div class="fiel-row justyfy-center mt-2 larger">
+      <div class="fiel-row justyfy-center mt-2 medium">
         已有账号?
         <div class="primary ml-half" @click="toLogin">立即登录></div>
       </div>

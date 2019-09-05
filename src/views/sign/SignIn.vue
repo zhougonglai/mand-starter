@@ -73,7 +73,7 @@
           </div>
         </div>
       </div>
-      <div class="border-top-1px border-bottom-1px py-2 mt-2">
+      <div class="small border-top-1px border-bottom-1px py-2 mt-2">
         <md-agree v-model="signIn.wechat">绑定微信账号</md-agree>
       </div>
       <div class="fiel-row mt-5">

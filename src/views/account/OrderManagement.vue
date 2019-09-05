@@ -23,9 +23,9 @@
                 <div class="header-content-title larger bold">
                   {{ order.nickname }}
                 </div>
-                <small class="header-content-subtitle small text-gray mt-2">{{
-                  order.createTime
-                }}</small>
+                <small class="header-content-subtitle small text-gray mt-2">
+                  {{ order.createTime }}
+                </small>
               </div>
               <div class="header-action">
                 <div class="action-top">
@@ -62,7 +62,9 @@
                     >已完成</small
                   >
                 </div>
-                <div class="action-bottom mt-2">{{ order.remainingTime }}</div>
+                <div class="action-bottom text-error mt-2">
+                  {{ order.remainingTime }}
+                </div>
               </div>
             </div>
             <div class="order-content border-top-1px">
