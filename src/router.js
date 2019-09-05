@@ -112,6 +112,16 @@ export default new Router({
         import(/* webpackChunkName: "account_avatar" */ "@/views/account/Avatar.vue")
     },
     {
+      path: "/servicemanage",
+      name: "servicemanage",
+      meta: {
+        title: "技能管理",
+        keepAlive: true
+      },
+      component: () =>
+        import(/* webpackChunkName: "servicemanage" */ "@/views/account/Servicemanage.vue")
+    },
+    {
       path: "/order/management",
       name: "order_management",
       meta: {

@@ -5,8 +5,6 @@ import App from "./App.vue";
 import Http from "./service";
 import router from "./router";
 import store from "./store";
-import { round } from "./utils";
-
 import "./registerServiceWorker";
 import "./permission";
 import "normalize.css";
@@ -17,7 +15,6 @@ Vue.config.productionTip = false;
 Vue.config.performance = process.env.NODE_ENV !== "production";
 Vue.prototype.$http = Http;
 Vue.prototype.$device = device;
-Vue.filter("round", round);
 
 // 当 Web App 线上出现紧急问题的时候将值设为 true 并上线
 window.SW_TURN_OFF = false;

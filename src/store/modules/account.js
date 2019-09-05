@@ -20,6 +20,7 @@ export default {
       total: 0
     },
     orderPlayerDetails: {},
+    gameApply: [],
     payMents: {
       list: [],
       pageNum: 0,
@@ -172,6 +173,22 @@ export default {
         Toast.failed(rtnInfo.msg);
       }
       return rtnInfo;
+    },
+    async orderOPlayerTaking(state, orderNo) {
+      const { rtnInfo } = await $http.orderOPlayerTaking({ orderNo });
+      if (rtnInfo.code) {
+        Toast.failed(rtnInfo.msg);
+      }
+      return rtnInfo;
+    },
+    async playerGameApply({ commit }) {
+      const { rtnCode, rtnInfo } = await $http.playerGameApply();
+      if (rtnCode === "000") {
+        await commit("SET_GAME_APPLY", rtnInfo.data);
+        return rtnInfo;
+      } else {
+        return false;
+      }
     }
   },
   mutations: {
@@ -193,6 +210,9 @@ export default {
       payMents.total = total;
       payMents.pageNum = pageNum;
       payMents.pageSize = pageSize;
+    },
+    SET_GAME_APPLY(state, gameApply) {
+      state.gameApply = gameApply;
     }
   }
 };

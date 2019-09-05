@@ -93,50 +93,84 @@
       </div>
     </div>
 
-    <!-- <div class="action-bar">
+    <div class="action-bar">
       <div class="action-details">
+        <!-- 参考# OrderManagement.vue -->
         <p class="bold large">
-          预计收益:
-          <span class="text-error">{{ orderPlayerDetails.profitAmount }}</span>
-        </p>
-        <small class="small mt-2 text-gray">扣除10%的平台服务费34元</small>
-      </div>
-    </div>-->
-    <md-action-bar :actions="actions">
-      <div class="action-details">
-        <p class="bold large">
-          预计收益:
-          <span class="text-error"
-            >{{ orderPlayerDetails.profitAmount }}元</span
+          <span v-if="[23, 26].includes(orderPlayerDetails.status)"
+            >预计收益:</span
           >
+          <span
+            v-else-if="
+              [28, 29, 31, 33, 34, 35, 38].includes(orderPlayerDetails.status)
+            "
+            >收益:</span
+          >
+          <span v-else-if="[30].includes(orderPlayerDetails.status)"
+            >实付金额:</span
+          >
+          <span
+            v-else-if="
+              [24, 25, 27, 32, 36, 37].includes(orderPlayerDetails.status)
+            "
+            >已退款:</span
+          >
+          <span class="text-error">
+            <md-amount :value="orderPlayerDetails.profitAmount" />元
+          </span>
         </p>
-        <small class="small mt-2 text-gray"
-          >扣除10%的平台服务费{{orderPlayerDetails.systemAmount|round:2
-
-
-
-
-
-
-
-
-
-          }}元</small
+        <small
+          class="small mt-2 text-gray"
+          v-if="
+            [23, 26, 28, 29, 31, 33, 34, 35, 38].includes(
+              orderPlayerDetails.status
+            )
+          "
+        >
+          扣除{{ orderPlayerDetails.platformFee * 100 }}%的平台服务费
+          <md-amount :value="orderPlayerDetails.systemAmount" />元
+        </small>
+      </div>
+      <div
+        class="action-buttons"
+        v-if="[23].includes(orderPlayerDetails.status)"
+      >
+        <md-button
+          type="primary"
+          size="small"
+          round
+          inline
+          @click="orderOPlayerTaking($route.params.orderNo)"
+          >接单</md-button
         >
       </div>
-    </md-action-bar>
+    </div>
+    <!-- <md-action-bar :actions="actions">
+      <div class="action-details">
+        <p class="bold large">
+          预计收益:
+          <span class="text-error">
+            <md-amount :value="orderPlayerDetails.profitAmount" />元
+          </span>
+        </p>
+        <small class="small mt-2 text-gray">
+          扣除{{orderPlayerDetails.platformFee * 100}}%的平台服务费
+          <md-amount :value="orderPlayerDetails.systemAmount" />元
+        </small>
+      </div>
+    </md-action-bar>-->
   </div>
 </template>
 <script>
-import { Field, CellItem, Amount, ActionBar } from "mand-mobile";
-import { mapState } from "vuex";
+import { Field, CellItem, Amount, Button } from "mand-mobile";
+import { mapState, mapActions } from "vuex";
 
 export default {
   name: "order_details",
   components: {
     [Field.name]: Field,
     [Amount.name]: Amount,
-    [ActionBar.name]: ActionBar,
+    [Button.name]: Button,
     [CellItem.name]: CellItem
   },
   data() {
@@ -144,13 +178,17 @@ export default {
       actions: [
         {
           text: "接单",
-          round: true
+          round: true,
+          onClick: () => this.orderOPlayerTaking(this.$route.params.orderNo)
         }
       ]
     };
   },
   computed: {
     ...mapState("account", ["orderPlayerDetails"])
+  },
+  methods: {
+    ...mapActions("account", ["orderOPlayerTaking"])
   }
 };
 </script>

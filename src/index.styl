@@ -13,31 +13,8 @@ body
   -webkit-text-size-adjust: none
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0)
 
-
-p
-  margin 0
-
-blockquote, q
-  quotes: none
-
-blockquote:before, blockquote:after,
-q:before, q:after
-  content: none
-
-table
-  border-collapse: collapse
-  border-spacing: 0
-
-a
-  color: #7e8c8d
-  -webkit-backface-visibility: hidden
-  text-decoration: none
-
-li
-  list-style: none
-
 .md-action-bar-container{
-  padding: 8px 16px;
+  padding: 20px 40px;
   box-shadow: 0 0 8px 4px alpha(color-text-disabled, 0.2), 0 0 4px 2px alpha(color-text-disabled, 0.14), 0 0 4px 1px alpha(color-text-disabled, 0.12);
   .md-action-bar-group{
     align-items: center;
@@ -148,13 +125,13 @@ button
   font-size: 16px !important
 
 .bold
-  font-weight: bold;
+  font-weight: bold !important
 
 .bolder
-  font-weight: bolder;
+  font-weight: bolder !important
 
 .lighter
-  font-weight: lighter;
+  font-weight: lighter !important
 
 .text-indent
   text-indent 50px
@@ -401,6 +378,16 @@ button
     align-items: flex-start;
     justify-content: center;
     padding-left: 20px;
+  }
+  .action-buttons{
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding-right: 20px;
+    button{
+      min-width: 200px;
+    }
   }
 }
 

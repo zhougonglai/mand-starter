@@ -528,19 +528,6 @@ export default {
         return false;
       }
     },
-    async playerGameApply({ state: { info }, commit }) {
-      const { rtnCode, rtnInfo } = await $http.playerGameApply({}, false, {
-        headers: {
-          Authorization: info.token
-        }
-      });
-      if (rtnCode === "000") {
-        await commit("SET_GAME_APPLY", rtnInfo.data);
-        return rtnInfo;
-      } else {
-        return false;
-      }
-    },
     async memberInformationUpdate(
       {
         state: { info },
@@ -637,42 +624,6 @@ export default {
       state.rankList.active.value = rank;
       state.rankList.active.id = rank;
       state.rankList.active.rankName = rankName;
-      state.serviceInfo.skillInfo = skills;
-      state.serviceInfo.voiceUrl = voiceUrl;
-      state.serviceInfo.img.url = pictureUrl;
-    },
-    SET_GAME_APPLY(
-      state,
-      {
-        age,
-        area,
-        city,
-        isPlayer,
-        province,
-        gameInfoParameter: [
-          { gameId, gameType, pictureUrl, rank, rankName, skills, voiceUrl }
-        ],
-        gender,
-        hobby,
-        images,
-        personalityLable,
-        qQNO,
-        reasons
-      }
-    ) {
-      state.basicInfo.QQNO = qQNO;
-      state.basicInfo.gender = gender;
-      state.basicInfo.hobby = hobby;
-      state.ageSelector.active.text = age;
-      state.info.isPlayerApply = isPlayer;
-      state.tags.active = personalityLable.split(", ");
-      state.citySelector.active = [province, city, area];
-      state.images = images.map(url => ({ url }));
-      state.reasons = reasons;
-      state.gameList.active.value = gameId;
-      state.gameList.active.text = gameType;
-      state.rankList.active.value = rank;
-      state.rankList.active.text = rankName;
       state.serviceInfo.skillInfo = skills;
       state.serviceInfo.voiceUrl = voiceUrl;
       state.serviceInfo.img.url = pictureUrl;

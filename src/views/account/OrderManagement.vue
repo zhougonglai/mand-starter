@@ -23,9 +23,9 @@
                 <div class="header-content-title larger bold">
                   {{ order.nickname }}
                 </div>
-                <small class="header-content-subtitle small text-gray mt-2">
-                  {{ order.createTime }}
-                </small>
+                <small class="header-content-subtitle small text-gray mt-2">{{
+                  order.createTime
+                }}</small>
               </div>
               <div class="header-action">
                 <div class="action-top">

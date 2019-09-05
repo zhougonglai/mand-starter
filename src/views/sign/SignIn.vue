@@ -36,12 +36,12 @@
       <div class="fiel-row">
         <div class="fiel-item fill">
           <input
+            required
             name="password"
             ref="password"
             autocomplete="current-password"
             :type="passwordStatus ? 'text' : 'password'"
             v-model.trim="signIn.password"
-            required
             placeholder="请输入登录密码"
           />
           <svg

@@ -15,6 +15,10 @@ export default {
     method: "get",
     url: "/order/orderPlayerDetails"
   },
+  orderOPlayerTaking: {
+    method: "get",
+    url: "/order/orderOPlayerTaking"
+  },
   selectPayment: {
     method: "post",
     url: "/orderPayment/selectPayment"

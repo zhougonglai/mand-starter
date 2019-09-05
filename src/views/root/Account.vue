@@ -163,7 +163,7 @@
         </div>
       </div>
 
-      <div class="cell-item">
+      <div class="cell-item" @click="$router.push({ name: 'servicemanage' })">
         <div class="item_icon">
           <svg class="icon" aria-hidden="true">
             <use xlink:href="#icongerenzhongxintubiao_zhuanqu_fuwuguanli" />
@@ -185,7 +185,7 @@
       type="text"
       readonly
       :value="info.memberNo"
-      style="    visibility: hidden;"
+      style="visibility: hidden;"
     />
   </div>
 </template>
