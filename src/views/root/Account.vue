@@ -22,9 +22,9 @@
           </small>
         </div>
         <div class="account_info">
-          <div class="info_id">ID:{{ info.memberNo }}</div>
-          <div class="info_invite">邀请码:{{ info.memberNo }}</div>
-          <div class="tag xx-small" @click="copyMenberNo">复制</div>
+          <div class="info_id small">ID:{{ info.memberNo }}</div>
+          <div class="info_invite small">邀请码:{{ info.memberNo }}</div>
+          <div class="tag" @click="copyMenberNo">复制</div>
         </div>
       </div>
       <div
@@ -392,6 +392,7 @@ export default {
           right: 25%;
           width: 32px;
           height: 32px;
+          font-size: 24px;
           line-height: 32px;
           text-align: center;
           border-radius: 50%;

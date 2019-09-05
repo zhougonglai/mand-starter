@@ -1,17 +1,15 @@
 const path = require("path");
 const SkeletonWebpackPlugin = require("vue-skeleton-webpack-plugin");
-const resolve = file => path.resolve(__dirname, file);
 
 const config = {
   productionSourceMap: false,
   css: {
-    // extract: true,
-    sourceMap: process.env.NODE_ENV === "development",
     loaderOptions: {
       stylus: {
-        import: [resolve("./src/assets/theme.custom")]
+        import: ["D:\\myproj\\nnplayer_front4m\\src\\assets\\theme.custom"]
       }
-    }
+    },
+    extract: false
   },
   devServer: {
     proxy: {
