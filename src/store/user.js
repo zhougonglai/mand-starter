@@ -22,6 +22,8 @@ export default {
     },
     reasons: "",
     openId: "",
+    gameEditId: "",
+    // 年龄选择器
     ageSelector: {
       status: false,
       active: {
@@ -30,6 +32,7 @@ export default {
       },
       list: numList(14, 46).map(i => ({ value: i, text: `${i}岁` }))
     },
+    // 城市选择器
     citySelector: {
       status: false,
       active: [],
@@ -552,7 +555,33 @@ export default {
         Toast.failed(rtnInfo.msg);
       }
       return rtnInfo;
+    },
+    async gameDetailsShow({ commit }, id) {
+      const { rtnInfo } = await $http.gameDetailsShow({ id });
+      if (rtnInfo.code) {
+        Toast.failed(rtnInfo.msg);
+      } else {
+        commit("SET_GAME_DETAILS", rtnInfo.data);
+      }
+      return rtnInfo;
     }
+    // TODO: 编辑接口
+    // async gameDetailsEdit({
+    //   state: {
+    //     serviceInfo: { duration },
+    //     gameList
+    //   }
+    // }) {
+    //   // gameId: "42ccad924c6f441c8561e98ee1e23b9b"
+    //   // gameType: "和平精英"
+    //   // id: "0715ecbdf56944fb9a095f7cdd5d5d02"
+    //   // pictureUrl: "http://192.168.3.68/group1/M00/00/72/wKgDRF1grq6AdkjJAAftzRfubI8707.png"
+    //   // rank: "5bb661fd7054485a88ecbf5b3ecc8eda"
+    //   // skills: "和平精英  英勇黄金  上传音频7S"
+    //   // voiceUrl: "http://192.168.3.112/group1/M00/01/57/wKgDQl1grxGAMpZ2AAExcEPEWlk244.mp3"
+    //   const { rtnInfo } = await $http.gameDetailsEdit({});
+    //   return rtnInfo;
+    // }
   },
   mutations: {
     SET_INFO(state, result) {
@@ -627,6 +656,35 @@ export default {
       state.serviceInfo.skillInfo = skills;
       state.serviceInfo.voiceUrl = voiceUrl;
       state.serviceInfo.img.url = pictureUrl;
+    },
+    SET_GAME_DETAILS(
+      state,
+      {
+        id,
+        duration,
+        gameId,
+        gameType,
+        voiceUrl,
+        pictureUrl,
+        rank,
+        rankName,
+        skills,
+        reasons
+      }
+    ) {
+      state.gameEditId = id;
+      state.serviceInfo.duration = duration;
+      state.gameList.active.value = gameId;
+      state.gameList.active.id = gameId;
+      state.gameList.active.name = gameType;
+      state.gameList.active.type = 0;
+      state.serviceInfo.voiceUrl = voiceUrl;
+      state.serviceInfo.img.url = pictureUrl;
+      state.rankList.active.value = rank;
+      state.rankList.active.id = rank;
+      state.rankList.active.rankName = rankName;
+      state.serviceInfo.skillInfo = skills;
+      state.reasons = reasons;
     },
     SET_GAMELIST({ gameList }, list) {
       gameList.list = list;

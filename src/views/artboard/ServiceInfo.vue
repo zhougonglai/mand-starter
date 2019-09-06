@@ -171,6 +171,7 @@
     <md-selector
       title="技能类型"
       v-model="gameList.status"
+      :default-value="gameList.active.value"
       max-height="calc(100vh - 1.2rem)"
       :data="gameList.list"
       @choose="activeGame"
@@ -191,6 +192,7 @@
     <md-selector
       title="选择陪玩段位"
       v-model="rankList.status"
+      :default-value="rankList.active.value"
       :data="
         rankList.list.map(item => ({
           ...item,
@@ -330,7 +332,7 @@ export default {
         {
           text: "提交",
           disabled: false,
-          onClick: this.resultPage
+          onClick: this.nextPage
         }
       ],
       recorder: {
@@ -597,7 +599,7 @@ export default {
         localId: this.recorder.localId
       });
     },
-    async resultPage() {
+    async nextPage() {
       if (!this.rankList.active.value) {
         Toast.info("需要选择段位");
         return;
@@ -624,7 +626,9 @@ export default {
       this.rankList.active = active;
     },
     goBack() {
-      this.$router.push({ name: "basic_info" });
+      this.$router.push({
+        name: this.$route.query.from ? this.$route.query.from : "basic_info"
+      });
     },
     ...mapActions("config", ["getWxConfig", "getWxMedia"]),
     ...mapActions("user", [
@@ -648,13 +652,15 @@ export default {
     });
   },
   async created() {
-    const { data } = this.getGameList();
+    const { data } = await this.getGameList();
     // 游戏类型文案 补偿
     if (!this.gameList.active.type) {
       this.gameList.active.type = data.find(
         ({ id }) => id === this.gameList.active.id
       ).type;
     }
+
+    console.log(this.$route);
   },
   async mounted() {
     if (isWx() && device.android()) {
@@ -681,9 +687,26 @@ export default {
 <style lang="stylus" scoped>
 #service_info {
   height: 100vh;
+  padding: 36px;
 
   >>>.md-field {
     padding-bottom: 50vh;
+
+    .md-cell-item-title {
+      padding-left: 20px;
+      position: relative;
+
+      &::after {
+        content: '';
+        position: absolute;
+        width: 6px;
+        border-radius: 3px;
+        left: 0;
+        bottom: 12%;
+        background-color: color-primary;
+        height: 28px;
+      }
+    }
   }
 
   >>>.md-cell-item-children {

@@ -377,7 +377,10 @@ export default {
         Toast.info("至少上传4张照片");
         return;
       }
-      this.$router.push({ name: "service_info" });
+      this.$router.push({
+        name: "service_info",
+        query: { from: this.$route.name, to: "result_page" }
+      });
     },
     ...mapActions("config", ["getWxConfig"]),
     ...mapActions("user", ["fileUpload", "playerInformationAdd"])

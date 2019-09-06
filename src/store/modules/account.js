@@ -198,6 +198,17 @@ export default {
       } else {
         return false;
       }
+    },
+    async gameUpdateShelf({ commit }, { isShelf, gameId }) {
+      const { rtnInfo } = await $http.gameUpdateShelf({ isShelf, gameId });
+      if (rtnInfo.code) {
+        Toast.failed(rtnInfo.msg);
+      } else if (rtnInfo.data === 3) {
+        Toast.failed("你还有待付款/待接单/服务中的订单");
+      } else {
+        commit("GAME_UPDATE_SHELF", gameId);
+      }
+      return rtnInfo;
     }
   },
   mutations: {
@@ -222,6 +233,10 @@ export default {
     },
     SET_GAME_APPLY(state, gameApply) {
       state.gameApply = gameApply;
+    },
+    GAME_UPDATE_SHELF({ gameApply }, gameId) {
+      const index = gameApply.findIndex(game => game.gameId === gameId);
+      gameApply[index].obtained = !gameApply[index].obtained;
     }
   }
 };

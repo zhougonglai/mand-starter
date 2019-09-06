@@ -30,5 +30,17 @@ export default {
   playerGameApply: {
     method: "get",
     url: "/playerGame/playerGameApply"
+  },
+  gameUpdateShelf: {
+    method: "get",
+    url: "/playerGame/gameUpdateShelf"
+  },
+  gameDetailsShow: {
+    method: "get",
+    url: "/playerGame/gameDetailsShow"
+  },
+  gameDetailsEdit: {
+    method: "post",
+    url: "/playerGame/gameDetailsEdit"
   }
 };
