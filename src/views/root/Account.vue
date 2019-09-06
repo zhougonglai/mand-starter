@@ -134,7 +134,7 @@
             <use xlink:href="#icongerenzhongxintubiao-zhuanqu_wodeqianbao" />
           </svg>
         </div>
-        <div class="item_content border-bottom-1px">
+        <div class="item-content border-bottom-1px">
           <p class="larger bold">我的钱包</p>
           <div class="content_icon">
             <small class="small text-gray">
@@ -153,7 +153,7 @@
             <use xlink:href="#icongerenzhongxintubiao-zhuanqu_gerenziliao" />
           </svg>
         </div>
-        <div class="item_content border-bottom-1px">
+        <div class="item-content border-bottom-1px">
           <p class="larger bold">陪玩资料</p>
           <div class="content_icon">
             <svg class="icon" aria-hidden="true">
@@ -169,7 +169,7 @@
             <use xlink:href="#icongerenzhongxintubiao_zhuanqu_fuwuguanli" />
           </svg>
         </div>
-        <div class="item_content">
+        <div class="item-content">
           <p class="larger bold">服务管理</p>
           <div class="content_icon">
             <svg class="icon" aria-hidden="true">

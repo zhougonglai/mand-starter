@@ -19,6 +19,15 @@ export default {
       list: [],
       total: 0
     },
+    /**
+     * 服务技能状态: status
+     * {
+     *    0 = 已通过,
+     *    1 = 已驳回,
+     *    2 = 待审核,
+     *    3 = 已封禁
+     * }
+     */
     orderPlayerDetails: {},
     gameApply: [],
     payMents: {

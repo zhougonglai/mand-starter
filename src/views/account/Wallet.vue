@@ -29,7 +29,7 @@
             :key="payment.orderNo"
           >
             <div
-              class="item_content column"
+              class="item-content column"
               :class="{ 'border-bottom-1px': index < payMents.list.length }"
             >
               <div class="item-top">

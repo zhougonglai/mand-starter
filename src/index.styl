@@ -517,7 +517,7 @@ button
     box-sizing: border-box;
 
     &:not(.column){
-      .item_content{
+      .item-content{
         &:first-child{
           padding-left: 32px;
         }
@@ -549,7 +549,27 @@ button
       margin-top: 16px;
     }
 
-    .item_content {
+    .item-avatar{
+      width: 108px;
+      height 108px;
+      border 1px solid #DCDFE6;
+      border-radius: 8px;
+      padding: 10px;
+      box-sizing: border-box;
+
+      img{
+        width: 100%;
+        height: 100%;
+      }
+    }
+
+    .item-tile{
+      flex: 1;
+      height: 100%;
+      padding: 10px;
+    }
+
+    .item-content {
       flex: 1;
       width: 100%;
       min-height: 100px;
@@ -560,13 +580,15 @@ button
       box-sizing: border-box;
       align-items: center;
 
+      .item
+
       p {
         flex: 1;
       }
 
       .content_icon {
+        margin: 0 8px;
         svg.icon {
-          margin-left: 8px;
           width: 24px;
           height: 24px;
         }

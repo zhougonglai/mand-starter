@@ -33,7 +33,7 @@
           class="cell-item"
           @click="$router.push({ name: 'account_nickname' })"
         >
-          <div class="item_content border-bottom-1px">
+          <div class="item-content border-bottom-1px">
             <p class="larger">昵称</p>
             <div class="biref text-gray">{{ info.nickName }}</div>
             <div class="content_icon">
@@ -45,41 +45,41 @@
         </div>
 
         <div class="cell-item">
-          <div class="item_content border-bottom-1px">
+          <div class="item-content border-bottom-1px">
             <p class="larger">ID</p>
             <div class="biref text-gray">{{ info.memberNo }}</div>
           </div>
         </div>
         <div class="cell-item">
-          <div class="item_content border-bottom-1px">
+          <div class="item-content border-bottom-1px">
             <p class="larger">邀请码</p>
             <div class="biref text-gray">{{ info.memberNo }}</div>
           </div>
         </div>
         <div class="cell-item">
-          <div class="item_content border-bottom-1px">
+          <div class="item-content border-bottom-1px">
             <p class="larger">性别</p>
           </div>
         </div>
         <div class="cell-item">
-          <div class="item_content border-bottom-1px">
+          <div class="item-content border-bottom-1px">
             <p class="larger">年龄</p>
           </div>
         </div>
         <div class="cell-item">
-          <div class="item_content border-bottom-1px">
+          <div class="item-content border-bottom-1px">
             <p class="larger">QQ</p>
             <div class="biref text-gray">{{ info.qQNo }}</div>
           </div>
         </div>
         <div class="cell-item">
-          <div class="item_content border-bottom-1px">
+          <div class="item-content border-bottom-1px">
             <p class="larger">手机号</p>
             <div class="biref text-gray">{{ info.plainTextPhone }}</div>
           </div>
         </div>
         <div class="cell-item">
-          <div class="item_content border-bottom-1px">
+          <div class="item-content border-bottom-1px">
             <p class="larger">地区</p>
           </div>
         </div>
