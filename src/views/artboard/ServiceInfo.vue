@@ -11,6 +11,7 @@
       <md-cell-item
         arrow
         title="技能类型"
+        :disabled="$route.query.type && $route.query.type === 'update'"
         @click="gameList.status = true"
         :addon="gameList.active.name ? gameList.active.name : '请选择'"
       />
@@ -133,6 +134,7 @@
           <div class="right-content">
             <audio-player
               ref="voice"
+              title="7s"
               class="mt-2"
               url="https://ywm.leigod.com/voicesamples.m4a"
             />
@@ -140,7 +142,16 @@
           </div>
         </template>
         <template slot="children">
-          <div class="row gute-3">
+          <div class="row">
+            <div class="col" v-if="serviceInfo.voiceUrl">
+              <audio-player
+                ref="recorder"
+                class="ml-5"
+                :title="`${serviceInfo.duration}s`"
+                :url="serviceInfo.voiceUrl"
+                @loadedmetadata="loadedmetadata"
+              />
+            </div>
             <div class="col">
               <md-button
                 type="primary"
@@ -152,15 +163,6 @@
                 @click="record"
                 >{{ serviceInfo.voiceUrl ? "重新录制" : "开始录音" }}</md-button
               >
-            </div>
-            <div class="col" v-if="serviceInfo.voiceUrl">
-              <audio-player
-                ref="recorder"
-                class="ml-5"
-                title="播放录音"
-                :url="serviceInfo.voiceUrl"
-                @loadedmetadata="loadedmetadata"
-              />
             </div>
           </div>
         </template>
@@ -327,11 +329,13 @@ export default {
       action: [
         {
           text: "返回",
+          round: true,
           onClick: this.goBack
         },
         {
           text: "提交",
           disabled: false,
+          round: true,
           onClick: this.nextPage
         }
       ],
@@ -611,13 +615,27 @@ export default {
         return;
       }
       this.action[1].disabled = true;
-      const rtnInfo = await this.playerInformationAdd();
-      if (rtnInfo.code === 0) {
-        const res = await this.getPlayerStatus();
-        if (res) {
-          this.$router.push({ name: "result_page" }, () => {
-            this.action[1].disabled = false;
-          });
+      if (this.$route.query.to) {
+        // 更新
+        if (this.$route.query.type === "update") {
+          const { code } = await this.gameDetailsEdit(this.$route.query.id);
+          if (code === 0) {
+            this.$router.push({ name: this.$route.query.to });
+          }
+          // 新增
+        } else if (this.$route.query.type === "add") {
+          const { code } = await this.gameDetailsAdd();
+          if (code === 0) {
+            this.$router.push({ name: this.$route.query.to });
+          }
+        }
+      } else {
+        const { code } = await this.playerInformationAdd();
+        if (code === 0) {
+          const res = await this.getPlayerStatus();
+          if (res) {
+            this.$router.push({ name: "result_page" });
+          }
         }
       }
       this.action[1].disabled = false;
@@ -635,32 +653,46 @@ export default {
       "fileUpload",
       "base64Upload",
       "getGameList",
+      "getGameUnApplyList",
       "getPlayerStatus",
       "activeGameList",
-      "playerInformationAdd"
+      "playerInformationAdd",
+      "gameDetailsAdd",
+      "gameDetailsEdit"
     ]),
     round
   },
   beforeRouteEnter(to, from, next) {
     next(vm => {
-      if (!vm.info.token) {
-        vm.$router.push({ name: "sign_in" });
-      } else if (vm.playerApply.playerStatus === 2) {
+      if (vm.playerApply.playerStatus === 2) {
         vm.$router.forward();
         Toast.info("您已经提交过入驻申请资料，请耐心等待官方的审核");
       }
     });
   },
   async created() {
-    const { data } = await this.getGameList();
-    // 游戏类型文案 补偿
-    if (!this.gameList.active.type) {
-      this.gameList.active.type = data.find(
-        ({ id }) => id === this.gameList.active.id
-      ).type;
+    if (this.$route.query.type && this.$route.query.type === "add") {
+      const { code } = await this.getGameUnApplyList();
+      if (!code) {
+        this.serviceInfo.img = {
+          dataUrl: "",
+          url: "",
+          file: ""
+        };
+        this.serviceInfo.duration = 0;
+        this.serviceInfo.skillInfo = "";
+        this.serviceInfo.voiceUrl = "";
+        this.serviceInfo.serverId = "";
+      }
+    } else {
+      const { data } = await this.getGameList();
+      // 游戏类型文案 补偿
+      if (!this.gameList.active.type) {
+        this.gameList.active.type = data.find(
+          ({ id }) => id === this.gameList.active.id
+        ).type;
+      }
     }
-
-    console.log(this.$route);
   },
   async mounted() {
     if (isWx() && device.android()) {

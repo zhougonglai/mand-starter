@@ -22,7 +22,6 @@ export default {
     },
     reasons: "",
     openId: "",
-    gameEditId: "",
     // 年龄选择器
     ageSelector: {
       status: false,
@@ -430,6 +429,19 @@ export default {
       }
       return rtnInfo;
     },
+    async getGameUnApplyList({ commit, dispatch }) {
+      const { rtnInfo } = await $http.gameUnApplyList();
+      if (rtnInfo.code) {
+        Toast.failed(rtnInfo.msg);
+      } else {
+        commit("SET_GAMELIST", rtnInfo.data);
+        dispatch("activeGameList", {
+          ...rtnInfo.data[0],
+          refresh: true
+        });
+      }
+      return rtnInfo;
+    },
     async getrankList({ state: { gameList }, commit }) {
       const {
         rtnCode,
@@ -564,24 +576,42 @@ export default {
         commit("SET_GAME_DETAILS", rtnInfo.data);
       }
       return rtnInfo;
+    },
+    async gameDetailsEdit(
+      {
+        state: { serviceInfo, gameList, rankList }
+      },
+      id
+    ) {
+      const { rtnInfo } = await $http.gameDetailsEdit({
+        gameId: gameList.active.id,
+        gameType: gameList.active.name,
+        id,
+        pictureUrl: serviceInfo.img.url,
+        rank: rankList.active.id,
+        skills: serviceInfo.skillInfo,
+        voiceUrl: serviceInfo.voiceUrl
+      });
+      if (rtnInfo.code) {
+        Toast.failed(rtnInfo.msg);
+      }
+      return rtnInfo;
+    },
+    async gameDetailsAdd({ state: { serviceInfo, gameList, rankList } }) {
+      const { rtnInfo } = await $http.gameDetailsAdd({
+        duration: serviceInfo.duration,
+        gameId: gameList.active.value,
+        gameType: gameList.active.name,
+        pictureUrl: serviceInfo.img.url,
+        rank: rankList.active.value,
+        skills: serviceInfo.skillInfo,
+        voiceUrl: serviceInfo.voiceUrl
+      });
+      if (rtnInfo.code) {
+        Toast.failed(rtnInfo.msg);
+      }
+      return rtnInfo;
     }
-    // TODO: 编辑接口
-    // async gameDetailsEdit({
-    //   state: {
-    //     serviceInfo: { duration },
-    //     gameList
-    //   }
-    // }) {
-    //   // gameId: "42ccad924c6f441c8561e98ee1e23b9b"
-    //   // gameType: "和平精英"
-    //   // id: "0715ecbdf56944fb9a095f7cdd5d5d02"
-    //   // pictureUrl: "http://192.168.3.68/group1/M00/00/72/wKgDRF1grq6AdkjJAAftzRfubI8707.png"
-    //   // rank: "5bb661fd7054485a88ecbf5b3ecc8eda"
-    //   // skills: "和平精英  英勇黄金  上传音频7S"
-    //   // voiceUrl: "http://192.168.3.112/group1/M00/01/57/wKgDQl1grxGAMpZ2AAExcEPEWlk244.mp3"
-    //   const { rtnInfo } = await $http.gameDetailsEdit({});
-    //   return rtnInfo;
-    // }
   },
   mutations: {
     SET_INFO(state, result) {
@@ -660,7 +690,6 @@ export default {
     SET_GAME_DETAILS(
       state,
       {
-        id,
         duration,
         gameId,
         gameType,
@@ -672,7 +701,6 @@ export default {
         reasons
       }
     ) {
-      state.gameEditId = id;
       state.serviceInfo.duration = duration;
       state.gameList.active.value = gameId;
       state.gameList.active.id = gameId;

@@ -2,7 +2,8 @@
   <div class="servicemanage">
     <div class="cells">
       <div
-        class="cell-item column mt-2"
+        class="cell-item column"
+        :class="{ 'mt-2': index }"
         v-for="(game, index) of gameApply"
         :key="game.id"
       >
@@ -12,7 +13,7 @@
           </div>
           <div class="item-tile">
             <div class="item-content-title bold larger">
-              {{ game.rankName }}
+              {{ game.gameType }}
             </div>
             <div class="item-content-sub-title mt-1">
               <small class="small text-success" v-if="game.status === 0"
@@ -35,7 +36,7 @@
             </svg>
           </div>
         </div>
-        <div class="item-foot" v-if="game.status !== 0">
+        <div class="item-foot" v-if="game.status === 1 || game.status === 3">
           <p class="text-darker">
             备注说明:
             <span class="text-grayer">{{ game.reasons }}</span>
@@ -43,11 +44,20 @@
         </div>
         <div class="item-actions" v-if="game.status === 0 || game.status === 1">
           <md-switch
+            v-if="game.status === 0"
             :value="game.obtained"
             :disabled="wait === index"
             @change="statusUpdate(game, index)"
           />
-          <md-button class="ml-2" size="small" inline round>删除</md-button>
+          <md-button
+            class="ml-2"
+            v-if="!game.obtained"
+            size="small"
+            inline
+            round
+            @click="deleteGame(game)"
+            >删除</md-button
+          >
         </div>
       </div>
     </div>
@@ -71,7 +81,17 @@ export default {
       actions: [
         {
           text: "新增技能类型",
-          round: true
+          round: true,
+          onClick: () => {
+            this.$router.push({
+              name: "service_info",
+              query: {
+                from: this.$route.name,
+                to: this.$route.name,
+                type: "add"
+              }
+            });
+          }
         }
       ],
       wait: -1
@@ -101,15 +121,34 @@ export default {
       this.wait = -1;
     },
     async showGameDetails(game) {
-      const { code } = await this.gameDetailsShow(game.id);
+      const { data, code } = await this.gameDetailsShow(game.id);
       if (!code) {
         this.$router.push({
           name: "service_info",
-          query: { from: this.$route.name, to: this.$route.name }
+          query: {
+            from: this.$route.name,
+            to: this.$route.name,
+            id: data.id,
+            type: "update"
+          }
         });
       }
     },
-    ...mapActions("account", ["playerGameApply", "gameUpdateShelf"]),
+    async deleteGame(game) {
+      Dialog.confirm({
+        title: "删除技能提醒",
+        content: `是否确认删除此项技能，删除后无法再恢复`,
+        cancelText: "我点错了",
+        onConfirm: async () => {
+          await this.deleteGameApply(game.gameId);
+        }
+      });
+    },
+    ...mapActions("account", [
+      "playerGameApply",
+      "gameUpdateShelf",
+      "deleteGameApply"
+    ]),
     ...mapActions("user", ["gameDetailsShow"])
   },
   async created() {

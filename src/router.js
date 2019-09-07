@@ -116,7 +116,7 @@ export default new Router({
       name: "servicemanage",
       meta: {
         title: "技能管理",
-        keepAlive: true
+        keepAlive: false
       },
       component: () =>
         import(/* webpackChunkName: "servicemanage" */ "@/views/account/Servicemanage.vue")
@@ -126,7 +126,7 @@ export default new Router({
       name: "order_management",
       meta: {
         title: "接单管理",
-        keepAlive: true
+        keepAlive: false
       },
       component: () =>
         import(/* webpackChunkName: "order_management" */ "@/views/account/OrderManagement.vue")

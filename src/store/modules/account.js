@@ -199,14 +199,26 @@ export default {
         return false;
       }
     },
-    async gameUpdateShelf({ commit }, { isShelf, gameId }) {
-      const { rtnInfo } = await $http.gameUpdateShelf({ isShelf, gameId });
+    async gameUpdateShelf({ commit }, { obtained, gameId }) {
+      const { rtnInfo } = await $http.gameUpdateShelf({
+        isShelf: obtained ? 2 : 1,
+        gameId
+      });
       if (rtnInfo.code) {
         Toast.failed(rtnInfo.msg);
       } else if (rtnInfo.data === 3) {
         Toast.failed("你还有待付款/待接单/服务中的订单");
       } else {
         commit("GAME_UPDATE_SHELF", gameId);
+      }
+      return rtnInfo;
+    },
+    async deleteGameApply({ commit }, gameId) {
+      const { rtnInfo } = await $http.deleteGameApply({ gameId });
+      if (rtnInfo.code) {
+        Toast.failed(rtnInfo.msg);
+      } else {
+        commit("DELETE_GAME_APPLY", gameId);
       }
       return rtnInfo;
     }
@@ -234,9 +246,14 @@ export default {
     SET_GAME_APPLY(state, gameApply) {
       state.gameApply = gameApply;
     },
+    DELETE_GAME_APPLY(state, gameId) {
+      const index = state.gameApply.findIndex(game => game.gameId === gameId);
+      state.gameApply.splice(index, 1);
+    },
     GAME_UPDATE_SHELF({ gameApply }, gameId) {
       const index = gameApply.findIndex(game => game.gameId === gameId);
       gameApply[index].obtained = !gameApply[index].obtained;
+      gameApply[index].isShelf = gameApply[index].obtained ? 1 : 2;
     }
   }
 };

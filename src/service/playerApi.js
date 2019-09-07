@@ -27,6 +27,10 @@ export default {
     method: "get",
     url: "/playerApply/playerApplyInfoShow"
   },
+  playerDetailsShow: {
+    method: "get",
+    url: "/playerApply/playerDetailsShow"
+  },
   playerGameApply: {
     method: "get",
     url: "/playerGame/playerGameApply"
@@ -42,5 +46,13 @@ export default {
   gameDetailsEdit: {
     method: "post",
     url: "/playerGame/gameDetailsEdit"
+  },
+  deleteGameApply: {
+    method: "get",
+    url: "/playerGame/deleteGameApply"
+  },
+  gameDetailsAdd: {
+    method: "post",
+    url: "/playerGame/gameDetailsAdd"
   }
 };
