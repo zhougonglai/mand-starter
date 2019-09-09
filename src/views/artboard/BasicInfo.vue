@@ -1,10 +1,3 @@
-<!--
- * @Description: 基本信息
- * @Author: John Zhou
- * @Date: 2019-08-10 21:01:19
- * @LastEditTime: 2019-08-11 18:27:02
- * @LastEditors: John Zhou
- -->
 <template>
   <div id="basic_info">
     <div v-if="reasons" class="popup top">{{ reasons }}</div>
@@ -13,13 +6,13 @@
         ref="qqNo"
         type="tel"
         clearable
-        v-model="basicInfo.QQNO"
+        v-model="basicInfo.qQNO"
         placeholder="请输入QQ号码"
         align="right"
       >
         <template slot="left">
           <span class="text-dark text-title">QQ号码</span>
-          <small class="gray xx-small ml-1">(必填)</small>
+          <small class="text-gray align-self-flex-end small ml-1">(必填)</small>
         </template>
       </md-input-item>
       <md-input-item
@@ -32,13 +25,13 @@
       >
         <template slot="left">
           <span class="text-dark text-title">手机号</span>
-          <small class="gray xx-small ml-1">(必填)</small>
+          <small class="text-gray align-self-flex-end small ml-1">(必填)</small>
         </template>
       </md-input-item>
       <md-cell-item>
         <template slot="left">
           <span class="text-dark text-title">性别</span>
-          <small class="gray xx-small ml-1">(必填)</small>
+          <small class="text-gray small ml-1">(必填)</small>
         </template>
         <template slot="right">
           <md-radio name="1" v-model="basicInfo.gender" label="男" inline />
@@ -54,7 +47,7 @@
       >
         <template slot="left">
           <span class="text-dark text-title">所在城市</span>
-          <small class="gray xx-small ml-1">(必填)</small>
+          <small class="text-gray small ml-1">(必填)</small>
         </template>
       </md-cell-item>
       <md-cell-item
@@ -66,16 +59,16 @@
       >
         <template slot="left">
           <span class="text-dark text-title">年龄</span>
-          <small class="gray xx-small ml-1">(必填)</small>
+          <small class="text-gray small ml-1">(必填)</small>
         </template>
       </md-cell-item>
       <md-cell-item no-border class="border-bottom-1px">
         <template slot="left">
           <span class="text-dark text-title">个性标签</span>
-          <small class="gray xx-small ml-1">(必填)</small>
+          <small class="text-gray small ml-1">(必填)</small>
         </template>
         <template slot="right">
-          <small class="gray smaller"
+          <small class="text-gray smaller"
             >最多可选择3个标签({{ tags.active.length }}/3)</small
           >
         </template>
@@ -239,8 +232,12 @@ export default {
       },
       action: [
         {
-          text: "下一步",
-          onClick: this.gotoServiceInfo
+          text:
+            this.$route.query.from && this.$route.query.from === "account"
+              ? "提交"
+              : "下一步",
+          round: true,
+          onClick: this.nextMove
         }
       ],
       mime: ["jpg", "jpeg", "png"]
@@ -354,7 +351,7 @@ export default {
     cityPicker(columns) {
       this.citySelector.active = columns.map(column => column.value);
     },
-    gotoServiceInfo() {
+    async nextMove() {
       if (
         !this.basicInfo.QQNO ||
         !new RegExp(/^[1-9][0-9]{4,14}$/).test(this.basicInfo.QQNO)
@@ -377,19 +374,35 @@ export default {
         Toast.info("至少上传4张照片");
         return;
       }
-      this.$router.push({
-        name: "service_info",
-        query: { from: this.$route.name, to: "result_page" }
-      });
+      if (this.$route.query.from && this.$route.query.from === "account") {
+        const { msg, code } = await this.playerDetailsUpdate();
+        if (!code) {
+          this.$router.replace(
+            {
+              name: this.$route.query.redirect
+            },
+            () => {
+              Toast.succeed(msg);
+            }
+          );
+        }
+      } else {
+        this.$router.push({
+          name: "service_info",
+          query: { from: this.$route.name, to: "result_page" }
+        });
+      }
     },
     ...mapActions("config", ["getWxConfig"]),
-    ...mapActions("user", ["fileUpload", "playerInformationAdd"])
+    ...mapActions("user", [
+      "fileUpload",
+      "playerInformationAdd",
+      "playerDetailsUpdate"
+    ])
   },
   beforeRouteEnter(to, from, next) {
     next(vm => {
-      if (!vm.info.token) {
-        vm.$router.push({ name: "sign_in" });
-      } else if (vm.playerApply.playerStatus === 2) {
+      if (vm.playerApply.playerStatus === 2) {
         vm.$router.forward();
         Toast.info("您已经提交过入驻申请资料，请耐心等待官方的审核");
       }
@@ -420,6 +433,10 @@ export default {
 <style lang="stylus" scoped>
 #basic_info {
   height: 100vh;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  padding: 20px 36px 44vh 36px;
+  box-sizing: border-box;
 
   .popup {
     padding: 20px;
@@ -461,11 +478,6 @@ export default {
         color: #fff;
       }
     }
-  }
-
-  >>>.md-field {
-    padding-bottom: 50vh;
-    padding-top: 20px;
   }
 
   .image-reader-list {

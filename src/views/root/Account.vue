@@ -52,7 +52,7 @@
       />
     </div>
 
-    <div class="order">
+    <div class="order" v-if="playerApply.playerStatus === 0">
       <div class="order_status">
         <div class="order_item">
           <svg class="icon" aria-hidden="true">
@@ -147,7 +147,7 @@
         </div>
       </div>
 
-      <div class="cell-item">
+      <div class="cell-item" @click="applyDetails">
         <div class="item_icon">
           <svg class="icon" aria-hidden="true">
             <use xlink:href="#icongerenzhongxintubiao-zhuanqu_gerenziliao" />
@@ -243,17 +243,35 @@ export default {
       await this.openPlayer();
       this.processActive = false;
     },
+    async applyDetails() {
+      if (this.playerApply.playerDetailsStatus === 2) {
+        Toast.info("资料审核中");
+      } else {
+        const { code } = await this.playerDetailsShow();
+        if (!code) {
+          this.$router.push({
+            name: "basic_info",
+            query: {
+              from: this.$route.name,
+              redirect: this.$route.name,
+              type: "update"
+            }
+          });
+        }
+      }
+    },
     ...mapActions("account", [
       "openPlayer",
       "orderPlayerList",
       "getAmountShow",
       "getPlayerStatus"
-    ])
+    ]),
+    ...mapActions("user", ["playerDetailsShow"])
   },
   async created() {
     await this.getAmountShow();
+    await this.getPlayerStatus();
     if (this.playerApply.playerStatus === 0) {
-      await this.getPlayerStatus();
       await this.orderPlayerList();
     }
   }

@@ -164,6 +164,9 @@ export default {
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
   background: #F5F5F7;
-  padding-bottom: 50vh;
+
+  .cells {
+    margin-bottom: 40vh;
+  }
 }
 </style>

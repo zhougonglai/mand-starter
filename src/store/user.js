@@ -116,7 +116,7 @@ export default {
     },
     images: [],
     basicInfo: {
-      QQNO: "",
+      qQNO: "",
       phone: "",
       gender: "2",
       hobby: ""
@@ -472,7 +472,6 @@ export default {
     },
     async playerInformationAdd({
       state: {
-        info,
         tags,
         images,
         basicInfo,
@@ -484,58 +483,42 @@ export default {
         rankList
       }
     }) {
-      const { rtnInfo } = await $http.playerInformationAdd(
-        {
-          ...basicInfo,
-          isPlayer: playerApply.playerStatus,
-          age: ageSelector.active.value,
-          personalityLables: tags.active,
-          province: citySelector.active[0],
-          city: citySelector.active[1],
-          area: citySelector.active[2],
-          images: images.filter(({ url }) => url).map(image => image.url),
-          gameInfoParameter: [
-            {
-              duration: serviceInfo.duration,
-              gameType: gameList.active.id,
-              pictureUrl: serviceInfo.img.url,
-              rank: rankList.active.value,
-              skills: serviceInfo.skillInfo,
-              voiceUrl: serviceInfo.voiceUrl
-            }
-          ]
-        },
-        false,
-        {
-          headers: {
-            Authorization: info.token
+      const { rtnInfo } = await $http.playerInformationAdd({
+        ...basicInfo,
+        isPlayer: playerApply.playerStatus,
+        age: ageSelector.active.value,
+        personalityLables: tags.active,
+        province: citySelector.active[0],
+        city: citySelector.active[1],
+        area: citySelector.active[2],
+        images: images.filter(({ url }) => url).map(image => image.url),
+        gameInfoParameter: [
+          {
+            duration: serviceInfo.duration,
+            gameType: gameList.active.id,
+            pictureUrl: serviceInfo.img.url,
+            rank: rankList.active.value,
+            skills: serviceInfo.skillInfo,
+            voiceUrl: serviceInfo.voiceUrl
           }
-        }
-      );
+        ]
+      });
       if (rtnInfo.code !== 0) {
         Toast.info(rtnInfo.msg);
       }
       return rtnInfo;
     },
-    async getPlayerStatus({ state: { info }, commit }) {
-      const { rtnCode, rtnInfo } = await $http.playerStatus({}, false, {
-        headers: {
-          Authorization: info.token
-        }
-      });
+    async getPlayerStatus({ commit }) {
+      const { rtnCode, rtnInfo } = await $http.playerStatus();
       if (rtnCode === "000") {
         commit("SET_STATUS", rtnInfo.data);
         return rtnInfo;
       } else {
-        return false;
+        return rtnInfo;
       }
     },
-    async playerInfoStatus({ state: { info }, commit }) {
-      const { rtnCode, rtnInfo } = await $http.playerInfoStatus({}, false, {
-        headers: {
-          Authorization: info.token
-        }
-      });
+    async playerInfoStatus({ commit }) {
+      const { rtnCode, rtnInfo } = await $http.playerInfoStatus();
       if (rtnCode === "000") {
         commit("SET_INFO_STATUS", rtnInfo.data);
         return rtnInfo;
@@ -611,6 +594,35 @@ export default {
         Toast.failed(rtnInfo.msg);
       }
       return rtnInfo;
+    },
+    async playerDetailsShow({ commit }) {
+      const { rtnInfo } = await $http.playerDetailsShow();
+      if (rtnInfo.code) {
+        Toast.failed(rtnInfo.msg);
+      } else {
+        commit("SET_INFO_DETAIS", rtnInfo.data);
+      }
+      return rtnInfo;
+    },
+    async playerDetailsUpdate({
+      state: { basicInfo, ageSelector, citySelector, images, tags },
+      commit
+    }) {
+      const { rtnInfo } = await $http.playerDetailsUpdate({
+        ...basicInfo,
+        age: ageSelector.active.value,
+        province: citySelector.active[0],
+        city: citySelector.active[1],
+        area: citySelector.active[2],
+        imageUrls: images.filter(({ url }) => url).map(image => image.url),
+        personalityLable: tags.active
+      });
+      if (rtnInfo.code) {
+        Toast.failed(rtnInfo.msg);
+      } else {
+        commit("SET_STATUS", rtnInfo.data);
+      }
+      return rtnInfo;
     }
   },
   mutations: {
@@ -630,7 +642,7 @@ export default {
         rankList,
         serviceInfo
       } = state;
-      basicInfo.QQNO = "";
+      basicInfo.qQNO = "";
       basicInfo.gender = "2";
       basicInfo.hobby = "";
       ageSelector.active = {
@@ -666,7 +678,7 @@ export default {
         reasons
       }
     ) {
-      state.basicInfo.QQNO = qQNO;
+      state.basicInfo.qQNO = qQNO;
       state.basicInfo.gender = gender.toString();
       state.basicInfo.hobby = hobby;
       state.ageSelector.active.text = age + "岁";
@@ -686,6 +698,30 @@ export default {
       state.serviceInfo.skillInfo = skills;
       state.serviceInfo.voiceUrl = voiceUrl;
       state.serviceInfo.img.url = pictureUrl;
+    },
+    SET_INFO_DETAIS(
+      state,
+      {
+        age,
+        area,
+        city,
+        province,
+        gender,
+        qQNO,
+        hobby,
+        imageUrls,
+        personalityLable
+      }
+    ) {
+      state.basicInfo.qQNO = qQNO;
+      state.basicInfo.gender = gender.toString();
+      state.basicInfo.hobby = hobby;
+      state.ageSelector.active.text = age + "岁";
+      state.ageSelector.active.value = age.toString();
+      state.tags.active = personalityLable.split(", ");
+      state.citySelector.active = [province, city, area];
+      state.images = imageUrls.map(url => ({ url }));
+      state.reasons = "";
     },
     SET_GAME_DETAILS(
       state,

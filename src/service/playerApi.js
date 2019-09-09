@@ -31,6 +31,10 @@ export default {
     method: "get",
     url: "/playerApply/playerDetailsShow"
   },
+  playerDetailsUpdate: {
+    method: "post",
+    url: "/playerApply/playerDetailsUpdate"
+  },
   playerGameApply: {
     method: "get",
     url: "/playerGame/playerGameApply"
