@@ -90,11 +90,12 @@
   </head>
   <body>
     <div id="app"></div>
-
+    <% if(process.env.NODE_ENV !== 'production') {%>
     <script src="//cdn.jsdelivr.net/npm/eruda"></script>
     <script>
       eruda.init();
     </script>
+    <% } %>
     <!-- built files will be auto injected -->
   </body>
 </html>

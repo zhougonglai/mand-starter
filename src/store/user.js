@@ -1,10 +1,3 @@
-/*
- * @Description: In User Settings Edit
- * @Author: John Zhou
- * @Date: 2019-08-10 21:01:19
- * @LastEditTime: 2019-08-11 18:25:55
- * @LastEditors: John Zhou
- */
 import $http from "@/service";
 import { citys, numList } from "@/utils";
 import CryptoJS from "crypto-js";
@@ -517,8 +510,8 @@ export default {
         return rtnInfo;
       }
     },
-    async playerInfoStatus({ commit }) {
-      const { rtnCode, rtnInfo } = await $http.playerInfoStatus();
+    async playerApplyInfoShow({ commit }) {
+      const { rtnCode, rtnInfo } = await $http.playerApplyInfoShow();
       if (rtnCode === "000") {
         commit("SET_INFO_STATUS", rtnInfo.data);
         return rtnInfo;

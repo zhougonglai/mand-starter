@@ -13,9 +13,6 @@ export default new Router({
   routes: [
     {
       path: "/",
-      meta: {
-        keepAlive: true
-      },
       component: () =>
         import(/* webpackChunkName: "root" */ "@/views/root/Root.vue"),
       children: [
@@ -43,8 +40,7 @@ export default new Router({
           path: "account",
           name: "account",
           meta: {
-            title: "我的",
-            keepAlive: true
+            title: "我的"
           },
           component: () =>
             import(/* webpackChunkName: "account" */ "@/views/root/Account.vue")
@@ -75,8 +71,7 @@ export default new Router({
       path: "/wallet",
       name: "wallet",
       meta: {
-        title: "我的钱包",
-        keepAlive: false
+        title: "我的钱包"
       },
       component: () =>
         import(/* webpackChunkName: "wallet" */ "@/views/account/Wallet.vue")
@@ -105,8 +100,7 @@ export default new Router({
       path: "/account/avatar",
       name: "account_avatar",
       meta: {
-        title: "上传头像",
-        keepAlive: false
+        title: "上传头像"
       },
       component: () =>
         import(/* webpackChunkName: "account_avatar" */ "@/views/account/Avatar.vue")
@@ -115,8 +109,7 @@ export default new Router({
       path: "/servicemanage",
       name: "servicemanage",
       meta: {
-        title: "技能管理",
-        keepAlive: false
+        title: "技能管理"
       },
       component: () =>
         import(/* webpackChunkName: "servicemanage" */ "@/views/account/Servicemanage.vue")
@@ -125,8 +118,7 @@ export default new Router({
       path: "/order/management",
       name: "order_management",
       meta: {
-        title: "接单管理",
-        keepAlive: false
+        title: "接单管理"
       },
       component: () =>
         import(/* webpackChunkName: "order_management" */ "@/views/account/OrderManagement.vue")
@@ -145,8 +137,7 @@ export default new Router({
       path: "/result_page",
       name: "result_page",
       meta: {
-        title: "陪玩入驻审核结果",
-        keepAlive: false
+        title: "陪玩入驻审核结果"
       },
       component: () =>
         import(/* webpackChunkName: "result_page" */ "@/views/artboard/ResultPage.vue")
@@ -183,8 +174,7 @@ export default new Router({
       path: "/forget_password",
       name: "forget_password",
       meta: {
-        title: "找回密码",
-        keepAlive: false
+        title: "找回密码"
       },
       component: () =>
         import(/* webpackChunkName: "forget_password" */ "@/views/sign/ForgetPassword.vue")
