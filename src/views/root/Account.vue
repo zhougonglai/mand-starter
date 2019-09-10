@@ -54,7 +54,15 @@
 
     <div class="order" v-if="playerApply.playerStatus === 0">
       <div class="order_status">
-        <div class="order_item">
+        <div
+          class="order_item"
+          @click="
+            $router.push({
+              name: 'order_management',
+              query: { current: 'wait' }
+            })
+          "
+        >
           <svg class="icon" aria-hidden="true">
             <use xlink:href="#iconic_waitingorder" />
           </svg>
@@ -65,7 +73,15 @@
           />
           <small class="small text-gray">待接单</small>
         </div>
-        <div class="order_item">
+        <div
+          class="order_item"
+          @click="
+            $router.push({
+              name: 'order_management',
+              query: { current: 'online' }
+            })
+          "
+        >
           <svg class="icon" aria-hidden="true">
             <use xlink:href="#iconic_service" />
           </svg>
@@ -76,7 +92,15 @@
           />
           <small class="small text-gray">服务中</small>
         </div>
-        <div class="order_item">
+        <div
+          class="order_item"
+          @click="
+            $router.push({
+              name: 'order_management',
+              query: { current: 'afterSale' }
+            })
+          "
+        >
           <svg class="icon" aria-hidden="true">
             <use xlink:href="#iconic_after-sale" />
           </svg>

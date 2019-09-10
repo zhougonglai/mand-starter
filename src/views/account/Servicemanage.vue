@@ -127,7 +127,7 @@ export default {
           name: "service_info",
           query: {
             from: this.$route.name,
-            to: this.$route.name,
+            redirect: this.$route.name,
             id: data.id,
             type: "update"
           }
