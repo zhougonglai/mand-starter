@@ -6,14 +6,15 @@
         <md-amount :value="balance" :duration="800" transition />
       </div>
     </div>
-    <md-tabs v-model="current" @change="typeChange">
-      <md-tab-pane
-        class="content"
-        :name="item.name"
-        :label="item.label"
-        v-for="(item, index) in items"
-        :key="index"
-      >
+    <md-tab-bar v-model="current" @change="typeChange" :items="items" />
+    <md-swiper
+      ref="swiper"
+      :autoplay="0"
+      :is-loop="false"
+      :has-dots="false"
+      @before-change="onSwiperChange"
+    >
+      <md-swiper-item v-for="item in items" :key="item.name">
         <div
           class="cells"
           v-if="
@@ -26,7 +27,7 @@
             v-for="(payment, index) in payMents.list.filter(({ type }) =>
               item.filter.includes(type)
             )"
-            :key="payment.orderNo"
+            :key="payment.transferNo"
           >
             <div
               class="item-content column"
@@ -47,7 +48,6 @@
                     >收益</span
                   >
                 </p>
-
                 <small class="small text-grayer" v-text="payment.createTime" />
               </div>
               <div class="item-bottom">
@@ -81,20 +81,21 @@
           />
           <p class="block-title">咦？ 没有没有相关记录哟~</p>
         </div>
-      </md-tab-pane>
-    </md-tabs>
+      </md-swiper-item>
+    </md-swiper>
   </div>
 </template>
 <script>
-import { Amount, Tabs, TabPane } from "mand-mobile";
+import { Amount, TabBar, Swiper, SwiperItem } from "mand-mobile";
 import { mapState, mapGetters, mapActions } from "vuex";
 
 export default {
   name: "wallet",
   components: {
     [Amount.name]: Amount,
-    [Tabs.name]: Tabs,
-    [TabPane.name]: TabPane
+    [TabBar.name]: TabBar,
+    [Swiper.name]: Swiper,
+    [SwiperItem.name]: SwiperItem
   },
   data() {
     return {
@@ -150,14 +151,18 @@ export default {
     ])
   },
   methods: {
-    typeChange({ name }) {
+    async typeChange({ name }, index) {
       const status = {
         payMents: "",
         earningsPayments: "3",
         consumePayments: "2",
         withdrawPayments: "1"
       };
-      this.selectPayment({ status: status[name] });
+      await this.selectPayment({ status: status[name] });
+      this.$refs.swiper.goto(index);
+    },
+    onSwiperChange(from, to) {
+      this.current = this.items[to].name;
     },
     ...mapActions("account", ["selectPayment"])
   },
