@@ -4,12 +4,12 @@
       <router-view
         v-wechat-title="$route.meta.title"
         v-if="$route.meta.keepAlive"
-      ></router-view>
+      />
     </keep-alive>
     <router-view
       v-wechat-title="$route.meta.title"
       v-if="!$route.meta.keepAlive"
-    ></router-view>
+    />
     <md-popup v-model="updatePopup" :hasMask="false" position="top">
       <div class="update_popup">
         <p class="fill">发现新的版本.点击更新</p>
