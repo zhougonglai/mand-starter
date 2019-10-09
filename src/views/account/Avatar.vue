@@ -136,6 +136,7 @@ export default {
       this.$refs.cropper.relativeZoom(ratio);
     },
     cropImage() {
+      Toast.loading("裁剪中...");
       this.$refs.cropper.getCroppedCanvas().toBlob(blob => {
         const dataUrl = this.$refs.cropper.getCroppedCanvas().toDataURL();
         const img = new Image();
@@ -155,6 +156,7 @@ export default {
                 : 0.1
           });
           this.cropImg = resFile.dataUrl;
+          Toast.hide();
         };
       });
     },

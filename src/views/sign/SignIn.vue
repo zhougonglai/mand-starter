@@ -152,7 +152,7 @@ export default {
         });
       } else {
         // 已经提交申请中的陪玩
-        await this.playerInfoStatus();
+        await this.playerApplyInfoShow();
         this.$router.push({ name: "result_page" }, () => {
           this.waiting = false;
         });
@@ -207,7 +207,7 @@ export default {
       "exchangeCode",
       "playerGameApply",
       "getPlayerStatus",
-      "playerInfoStatus"
+      "playerApplyInfoShow"
     ]),
     ...mapMutations("user", ["INIT_INFO_DATA"])
   },

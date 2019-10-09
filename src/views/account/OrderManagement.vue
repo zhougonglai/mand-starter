@@ -9,88 +9,110 @@
         :key="index"
       >
         <div class="order-list" v-if="orders.list.length">
-          <div
-            class="order-item"
+          <md-skeleton
+            avatar
+            title
             v-for="order in orders.list"
             :key="order.orderNo"
-            @click="navigatorDetails(order)"
+            :loading="loading"
+            :row="2"
+            class="skeleton-item"
           >
-            <div class="order-header">
-              <div class="header-avatar">
-                <img class="avatar" :src="order.imageUrl" />
-              </div>
-              <div class="header-content">
-                <div class="header-content-title larger bold">
-                  {{ order.nickname }}
+            <div class="order-item">
+              <div class="order-header" @click="navigatorDetails(order)">
+                <div class="header-avatar">
+                  <img class="avatar" :src="order.imageUrl" />
                 </div>
-                <small class="header-content-subtitle small text-gray mt-2">
-                  {{ order.createTime }}
-                </small>
+                <div class="header-content">
+                  <div class="header-content-title larger bold">
+                    {{ order.nickname }}
+                  </div>
+                  <small class="header-content-subtitle small text-gray mt-2">
+                    {{ order.createTime }}
+                  </small>
+                </div>
+                <div class="header-action">
+                  <div class="action-top">
+                    <small
+                      class="small text-gray"
+                      v-if="[21, 22].includes(order.status)"
+                      >已取消</small
+                    >
+                    <small
+                      class="small text-gray"
+                      v-else-if="[23].includes(order.status)"
+                      >待接单</small
+                    >
+                    <small
+                      class="small text-gray"
+                      v-else-if="
+                        [24, 25, 27, 32, 36, 37].includes(order.status)
+                      "
+                      >已退款</small
+                    >
+                    <small
+                      class="small text-gray"
+                      v-else-if="[26].includes(order.status)"
+                      >服务中</small
+                    >
+                    <small
+                      class="small text-gray"
+                      v-else-if="[30].includes(order.status)"
+                      >售后中</small
+                    >
+                    <small
+                      class="small text-gray"
+                      v-else-if="
+                        [28, 29, 31, 33, 34, 35, 38].includes(order.status)
+                      "
+                      >已完成</small
+                    >
+                  </div>
+                  <div
+                    class="action-bottom text-error mt-2"
+                    v-if="order.remainingTime"
+                  >
+                    <CountDown
+                      :prefix="
+                        [26].includes(order.status)
+                          ? '剩余时间:'
+                          : '剩余支付时间:'
+                      "
+                      :time="order.remainingTime"
+                    />
+                  </div>
+                </div>
               </div>
-              <div class="header-action">
-                <div class="action-top">
-                  <small
-                    class="small text-gray"
-                    v-if="[21, 22].includes(order.status)"
-                    >已取消</small
-                  >
-                  <small
-                    class="small text-gray"
-                    v-else-if="[23].includes(order.status)"
-                    >待接单</small
-                  >
-                  <small
-                    class="small text-gray"
-                    v-else-if="[24, 25, 27, 32, 36, 37].includes(order.status)"
-                    >已退款</small
-                  >
-                  <small
-                    class="small text-gray"
-                    v-else-if="[26].includes(order.status)"
-                    >服务中</small
-                  >
-                  <small
-                    class="small text-gray"
-                    v-else-if="[30].includes(order.status)"
-                    >售后中</small
-                  >
-                  <small
-                    class="small text-gray"
-                    v-else-if="
-                      [28, 29, 31, 33, 34, 35, 38].includes(order.status)
-                    "
-                    >已完成</small
+              <div class="order-content border-top-1px">
+                <div class="content-top">
+                  <small class="small text-gray"
+                    >服务类型: {{ order.gameName }}</small
                   >
                 </div>
-                <div class="action-bottom text-error mt-2">
-                  {{ order.remainingTime }}
+                <div class="content-bottom">
+                  <small class="small text-gray"
+                    >数量: {{ order.orderNumber }}</small
+                  >
+                  <small class="small text-gray before-diver"
+                    >金额: {{ order.orderPrice }}</small
+                  >
                 </div>
               </div>
-            </div>
-            <div class="order-content border-top-1px">
-              <div class="content-top">
-                <small class="small text-gray"
-                  >服务类型: {{ order.gameName }}</small
-                >
-              </div>
-              <div class="content-bottom">
-                <small class="small text-gray"
-                  >数量: {{ order.orderNumber }}</small
-                >
-                <small class="small text-gray before-diver"
-                  >金额: {{ order.orderPrice }}</small
-                >
-              </div>
-            </div>
-            <div
-              class="order-actions border-top-1px"
-              v-if="[23].includes(order.status)"
-            >
-              <md-button type="primary" size="small" round inline
-                >接单</md-button
+              <div
+                class="order-actions border-top-1px"
+                v-if="[23].includes(order.status)"
               >
+                <md-button
+                  type="primary"
+                  size="small"
+                  @click="takingOrderOPlayer(order)"
+                  round
+                  inline
+                  >接单</md-button
+                >
+              </div>
             </div>
-          </div>
+          </md-skeleton>
         </div>
         <div v-else class="empty-block">
           <img
@@ -108,7 +130,7 @@
   </div>
 </template>
 <script>
-import { Amount, Tabs, TabPane, Button } from "mand-mobile";
+import { Amount, Tabs, TabPane, Skeleton, Button } from "mand-mobile";
 import { mapState, mapActions } from "vuex";
 
 export default {
@@ -117,7 +139,9 @@ export default {
     [Tabs.name]: Tabs,
     [Amount.name]: Amount,
     [Button.name]: Button,
-    [TabPane.name]: TabPane
+    [Skeleton.name]: Skeleton,
+    [TabPane.name]: TabPane,
+    CountDown: () => import("@/components/CountDown")
   },
   data() {
     return {
@@ -148,32 +172,58 @@ export default {
           label: "售后中",
           status: [30]
         }
-      ]
+      ],
+      loading: true
     };
   },
   computed: {
     ...mapState("account", ["orders"])
   },
   methods: {
-    tabChange({ name }) {
-      this.orderPlayerList({
+    async tabChange({ name }) {
+      this.loading = true;
+      await this.orderPlayerList({
         status: this.items[
           this.items.findIndex(item => item.name === name)
         ].status.join()
       });
+      this.$nextTick(() => {
+        this.loading = false;
+      });
     },
     async navigatorDetails({ orderNo }) {
-      const { code } = await this.orderPlayerDetails(orderNo);
+      const { code } = await this.getOrderPlayerDetails(orderNo);
       if (code === 0) {
         this.$router.push({ name: "order_details", params: { orderNo } });
       }
     },
-    ...mapActions("account", ["orderPlayerList", "orderPlayerDetails"])
+    async takingOrderOPlayer({ orderNo }) {
+      const { code } = await this.orderOPlayerTaking(orderNo);
+      if (!code) {
+        this.tabChange({ name: this.current });
+      }
+    },
+    ...mapActions("account", [
+      "orderPlayerList",
+      "orderOPlayerTaking",
+      "getOrderPlayerDetails"
+    ])
   },
-  created() {
+  async created() {
     if (!this.orders.list.length) {
-      this.orderPlayerList();
+      await this.orderPlayerList();
+      this.loading = false;
     }
+
+    if (this.$route.query.current) {
+      this.current = this.$route.query.current;
+      this.tabChange({ name: this.$route.query.current });
+    }
+  },
+  mounted() {
+    this.$nextTick(() => {
+      this.loading = false;
+    });
   }
 };
 </script>

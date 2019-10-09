@@ -13,18 +13,37 @@
         >
         <span v-else-if="[26].includes(orderPlayerDetails.status)">服务中</span>
         <span v-else-if="[30].includes(orderPlayerDetails.status)">售后中</span>
+        <span
+          v-else-if="
+            [28, 29, 31, 33, 34, 35, 38].includes(orderPlayerDetails.status)
+          "
+          >已完成</span
+        >
+      </div>
+      <div
+        class="status_subtitle text-error mt-2"
+        v-if="orderPlayerDetails.remainingTime"
+      >
+        <CountDown
+          :prefix="
+            [26].includes(orderPlayerDetails.status)
+              ? '剩余时间:'
+              : '剩余支付时间:'
+          "
+          :time="orderPlayerDetails.remainingTime"
+        />
       </div>
     </div>
 
     <div class="order_info">
       <div class="info_title larger">用户信息</div>
       <div class="info_list">
-        <div class="info_item">
+        <div class="info_item" v-if="[26].includes(orderPlayerDetails.status)">
           <small class="small text-gray"
             >手机号: {{ orderPlayerDetails.phoneNo }}</small
           >
         </div>
-        <div class="info_item">
+        <div class="info_item" v-if="[26].includes(orderPlayerDetails.status)">
           <small class="small text-gray"
             >QQ: {{ orderPlayerDetails.QQNo }}</small
           >
@@ -80,12 +99,12 @@
             >下单时间: {{ orderPlayerDetails.orderTime }}</small
           >
         </div>
-        <div class="info_item">
+        <div class="info_item" v-if="orderPlayerDetails.paymentTime">
           <small class="small text-gray"
             >支付时间: {{ orderPlayerDetails.paymentTime }}</small
           >
         </div>
-        <div class="info_item">
+        <div class="info_item" v-if="orderPlayerDetails.receiptTime">
           <small class="small text-gray"
             >接单时间: {{ orderPlayerDetails.receiptTime }}</small
           >
@@ -171,7 +190,8 @@ export default {
     [Field.name]: Field,
     [Amount.name]: Amount,
     [Button.name]: Button,
-    [CellItem.name]: CellItem
+    [CellItem.name]: CellItem,
+    CountDown: () => import("@/components/CountDown")
   },
   data() {
     return {
@@ -179,7 +199,7 @@ export default {
         {
           text: "接单",
           round: true,
-          onClick: () => this.orderOPlayerTaking(this.$route.params.orderNo)
+          onClick: this.takingOrderOPlayer
         }
       ]
     };
@@ -188,7 +208,15 @@ export default {
     ...mapState("account", ["orderPlayerDetails"])
   },
   methods: {
-    ...mapActions("account", ["orderOPlayerTaking"])
+    async takingOrderOPlayer() {
+      const { code } = await this.orderOPlayerTaking(
+        this.$route.params.orderNo
+      );
+      if (!code) {
+        await this.getOrderPlayerDetails(this.$route.params.orderNo);
+      }
+    },
+    ...mapActions("account", ["orderOPlayerTaking", "getOrderPlayerDetails"])
   }
 };
 </script>

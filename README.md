@@ -1,12 +1,12 @@
 # NN约玩 mobile
 
-> platform
+> platform (目标平台)
 
 - `wechat`
 - `mobile browser`
 - `android app`(PWA)
 
-> tree
+> tree (项目结构)
 
 ```
 ├─assets (资源文件)
@@ -30,10 +30,15 @@
     └─sign  (注册/登录)
 ```
 
-> todo
+> project package
 
-- 注册申请
-- 个人中心
+- request: [axios](https://github.com/axios/axios)
+- user-agent: [current-device](https://github.com/matthewhudson/current-device)
+- utils: [lodash](https://www.html.cn/doc/lodash/)
+- UI: [mand-mobile](https://didi.github.io/mand-mobile/#/zh-CN/home)
+- WebRTC: [recordrtc](https://github.com/muaz-khan/RecordRTC)
+- cropper: [vue-cropperjs](https://github.com/Agontuk/vue-cropperjs)
+
 
 ## Project setup
 ```

@@ -167,7 +167,7 @@ export default {
       }
       return rtnInfo;
     },
-    async orderPlayerDetails({ commit }, orderNo) {
+    async getOrderPlayerDetails({ commit }, orderNo) {
       const { rtnInfo } = await $http.orderPlayerDetails({ orderNo });
       if (rtnInfo.code) {
         Toast.failed(rtnInfo.msg);

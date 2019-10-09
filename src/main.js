@@ -10,7 +10,9 @@ import "./permission";
 import "normalize.css";
 import "./index.styl";
 import "@/config/wechatTitle";
+import { VueHammer } from "vue2-hammer";
 
+Vue.use(VueHammer);
 Vue.config.productionTip = false;
 Vue.config.performance = process.env.NODE_ENV !== "production";
 Vue.prototype.$http = Http;
@@ -20,14 +22,12 @@ Vue.prototype.$device = device;
 window.SW_TURN_OFF = false;
 
 if ("addEventListener" in document && "ontouchstart" in window) {
-  FastClick.prototype.focus = function(targetElement) {
+  FastClick.prototype.focus = targetElement => {
     targetElement.focus();
   };
   document.addEventListener(
     "DOMContentLoaded",
-    function() {
-      FastClick.attach(document.body);
-    },
+    () => FastClick.attach(document.body),
     false
   );
 }

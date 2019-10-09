@@ -23,7 +23,7 @@ export default {
     method: "post",
     url: "/playerApply/playerInformationAdd"
   },
-  playerInfoStatus: {
+  playerApplyInfoShow: {
     method: "get",
     url: "/playerApply/playerApplyInfoShow"
   },

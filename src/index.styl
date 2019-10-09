@@ -606,7 +606,12 @@ button
       }
 
       .content_icon {
-        margin: 0 8px;
+        &:first-child{
+          margin: 0 8px;
+        }
+        &:last-child{
+          margin-left: 8px;
+        }
         svg.icon {
           width: 24px;
           height: 24px;

@@ -177,14 +177,6 @@ export default {
     trigerTarget(key) {
       this[key]();
     },
-    updateAppMessageShareData() {},
-    updateTimelineShareData() {},
-    onMenuShareWeibo() {},
-    onMenuShareQZone() {},
-    startRecord() {},
-    stopRecord() {},
-    playVoice() {},
-    chooseImage() {},
     ...mapActions("user", ["getGameList"]),
     ...mapActions("config", ["getWxConfig"])
   },

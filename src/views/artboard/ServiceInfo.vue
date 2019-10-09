@@ -147,7 +147,9 @@
               <audio-player
                 ref="recorder"
                 class="ml-5"
-                :title="`${serviceInfo.duration}s`"
+                :title="
+                  serviceInfo.duration ? `${serviceInfo.duration}s` : '播放录音'
+                "
                 :url="serviceInfo.voiceUrl"
                 @loadedmetadata="loadedmetadata"
               />
@@ -448,7 +450,7 @@ export default {
         //     dataUrl.indexOf(";")
         //   )}`
         // );
-        // // const res = await this.base64Upload(dataUrl);
+        // const res = await this.base64Upload(dataUrl);
         // const res = await this.fileUpload(audioFile);
         // this.serviceInfo.voiceUrl = res.data[0];
         // });
@@ -615,18 +617,19 @@ export default {
         return;
       }
       this.action[1].disabled = true;
-      if (this.$route.query.to) {
+      if (this.$route.query.type) {
+        ``;
         // 更新
         if (this.$route.query.type === "update") {
           const { code } = await this.gameDetailsEdit(this.$route.query.id);
           if (code === 0) {
-            this.$router.push({ name: this.$route.query.to });
+            this.$router.replace({ name: this.$route.query.redirect });
           }
           // 新增
         } else if (this.$route.query.type === "add") {
           const { code } = await this.gameDetailsAdd();
           if (code === 0) {
-            this.$router.push({ name: this.$route.query.to });
+            this.$router.replace({ name: this.$route.query.to });
           }
         }
       } else {
@@ -713,6 +716,9 @@ export default {
         });
       });
     }
+  },
+  destroyed() {
+    clearInterval(this.recorder.timer);
   }
 };
 </script>

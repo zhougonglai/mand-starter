@@ -24,5 +24,5 @@ export default new Vuex.Store({
     user,
     account
   },
-  plugins: [createPersistedState()]
+  plugins: process.env.NODE_ENV === "production" ? [] : [createPersistedState()] //开发环境使用,生产环境慎用
 });
