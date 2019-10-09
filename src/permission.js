@@ -2,7 +2,14 @@ import router from "./router";
 import store from "./store";
 
 // 白名单页面
-const whiteList = ["home", "search", "sign_in", "sign_up", "forget_password"];
+const whiteList = [
+  "home",
+  "search",
+  "account",
+  "sign_in",
+  "sign_up",
+  "forget_password"
+];
 
 router.beforeEach((to, from, next) => {
   const { token } = store.getters;

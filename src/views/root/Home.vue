@@ -17,14 +17,7 @@
         </div>
       </div>
       <div class="app-header-action">
-        <md-button
-          type="primary"
-          class="waving"
-          size="small"
-          inline
-          round
-          plain
-          @click="gotoSign"
+        <md-button type="primary" class="waving" size="small" inline round plain
           >申请入驻</md-button
         >
       </div>
@@ -39,7 +32,9 @@
               :key="$index"
             >
               <div class="game-icon">
-                <img :src="game.selectIcon" :alt="game.name" />
+                <svg class="icon" aria-hidden="true">
+                  <use :xlink:href="game.icon" />
+                </svg>
               </div>
               <span class="game-label small text-darker">{{ game.name }}</span>
             </li>
@@ -55,9 +50,6 @@
 </template>
 <script>
 import { Button, Swiper, SwiperItem } from "mand-mobile";
-import { mapActions, mapState } from "vuex";
-// import { wxConfig } from "@/utils";
-import { chunk } from "lodash";
 
 export default {
   name: "home",
@@ -162,29 +154,60 @@ export default {
           avatar: "https://api.adorable.io/avatars/200/face5.png"
         }
       ],
+      gameList: [
+        [
+          {
+            icon: "#icon-ziyuan4",
+            name: "模拟经营"
+          },
+          {
+            icon: "#icon-gedou",
+            name: "格斗"
+          },
+          {
+            icon: "#icon-ziyuan",
+            name: "LOL"
+          },
+          {
+            icon: "#icon-sheji",
+            name: "射击"
+          },
+          {
+            icon: "#icon-qiapai",
+            name: "卡牌"
+          },
+          {
+            icon: "#icon-jishizhanlve",
+            name: "战略"
+          },
+          {
+            icon: "#icon-qipai",
+            name: "棋牌"
+          },
+          {
+            icon: "#icon-jiaose",
+            name: "角色扮演"
+          }
+        ],
+        [
+          {
+            icon: "#icon-tiyu",
+            name: "体育"
+          },
+          {
+            icon: "#icon-mmp",
+            name: "音乐"
+          },
+          {
+            icon: "#icon-yizhi",
+            name: "益智"
+          }
+        ]
+      ],
       localId: ""
     };
   },
-  computed: {
-    ...mapState("user", {
-      gameList: state => chunk(state.gameList.list, 8)
-    })
-  },
-  methods: {
-    gotoSign() {
-      this.$router.push({ name: "sign_in" });
-    },
-    trigerTarget(key) {
-      this[key]();
-    },
-    ...mapActions("user", ["getGameList"]),
-    ...mapActions("config", ["getWxConfig"])
-  },
-  async created() {
-    if (!this.gameList.length) {
-      await this.getGameList(true);
-    }
-  }
+  methods: {}
 };
 </script>
 <style lang="stylus" scoped>
@@ -237,7 +260,7 @@ export default {
           width: 72px;
           height: 72px;
 
-          img {
+          svg.icon {
             width: inherit;
             height: inherit;
           }

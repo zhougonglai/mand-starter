@@ -17,7 +17,7 @@
               }"
             ></div>
             {{
-              playerStatus ? (playerStatus === 1 ? "离线" : "服务中") : "在线"
+            playerStatus ? (playerStatus === 1 ? "离线" : "服务中") : "在线"
             }}
           </small>
         </div>
@@ -27,24 +27,15 @@
           <div class="tag" @click="copyMenberNo">复制</div>
         </div>
       </div>
-      <div
-        class="account_arrow"
-        @click="$router.push({ name: 'account_details' })"
-      >
+      <div class="account_arrow" @click="$router.push({ name: 'account_details' })">
         <svg class="icon" aria-hidden="true">
           <use xlink:href="#icon-arrow-right" />
         </svg>
       </div>
     </div>
 
-    <div
-      class="online_switch"
-      v-if="playerApply.playerStatus === 0 && playerStatus !== 2"
-    >
-      <p
-        class="larger bold fill"
-        v-text="playerStatusTransform ? '关闭接单' : '开启接单'"
-      />
+    <div class="online_switch" v-if="playerApply.playerStatus === 0 && playerStatus !== 2">
+      <p class="larger bold fill" v-text="playerStatusTransform ? '关闭接单' : '开启接单'" />
       <md-switch
         :value="playerStatusTransform"
         :disabled="processActive"
@@ -66,11 +57,7 @@
           <svg class="icon" aria-hidden="true">
             <use xlink:href="#iconic_waitingorder" />
           </svg>
-          <div
-            class="bage"
-            v-if="ordersStatus.wait"
-            v-text="ordersStatus.wait"
-          />
+          <div class="bage" v-if="ordersStatus.wait" v-text="ordersStatus.wait" />
           <small class="small text-gray">待接单</small>
         </div>
         <div
@@ -85,71 +72,26 @@
           <svg class="icon" aria-hidden="true">
             <use xlink:href="#iconic_service" />
           </svg>
-          <div
-            class="bage"
-            v-if="ordersStatus.online"
-            v-text="ordersStatus.online"
-          />
+          <div class="bage" v-if="ordersStatus.online" v-text="ordersStatus.online" />
           <small class="small text-gray">服务中</small>
         </div>
-        <div
-          class="order_item"
-          @click="
-            $router.push({
-              name: 'order_management',
-              query: { current: 'afterSale' }
-            })
-          "
-        >
+        <div class="order_item">
           <svg class="icon" aria-hidden="true">
             <use xlink:href="#iconic_after-sale" />
           </svg>
-          <div
-            class="bage"
-            v-if="ordersStatus.afterSale"
-            v-text="ordersStatus.afterSale"
-          />
+          <div class="bage" v-if="ordersStatus.afterSale" v-text="ordersStatus.afterSale" />
           <small class="small text-gray">售后中</small>
         </div>
       </div>
       <div class="my_order" @click="$router.push({ name: 'order_management' })">
         <img
           src="@/assets/images/ic_my-order@2x.png"
-          srcset="
-            @/assets/images/ic_my-order@2x.png 2x,
-            @/assets/images/ic_my-order@3x.png 3x
-          "
+          srcset="@/assets/images/ic_my-order@2x.png 2x, @/assets/images/ic_my-order@3x.png 3x"
           alt="我的接单"
         />
         <small class="small text-gray">我的接单</small>
       </div>
     </div>
-
-    <!-- <div class="wallet">
-      <div class="wallet_header">
-        <div class="header_info" @click="$router.push({ name: 'wallet' })">
-          <svg class="icon" aria-hidden="true">
-            <use xlink:href="#icongerenzhongxintubiao-zhuanqu_wodeqianbao" />
-          </svg>
-
-          <p class="larger bold ml-2">我的钱包</p>
-        </div>
-        <div class="header_icon">
-          <svg class="icon" aria-hidden="true">
-            <use xlink:href="#iconchakangengduojiantou" />
-          </svg>
-        </div>
-      </div>
-      <div class="wallet_content">
-        <div class="balance">
-          <div class="x-large bold">
-            <md-amount :value="balance" :duration="800" transition />
-          </div>
-          <small class="mt-1 smaller text-gray">账户余额(元)</small>
-        </div>
-        <div class="balance_actions"></div>
-      </div>
-    </div>-->
 
     <div class="cells">
       <div class="cell-item" @click="$router.push({ name: 'wallet' })">
@@ -204,18 +146,12 @@
       </div>
     </div>
 
-    <input
-      ref="copyTarget"
-      type="text"
-      readonly
-      :value="info.memberNo"
-      style="visibility: hidden;"
-    />
+    <input ref="copyTarget" type="text" readonly :value="info.memberNo" style="visibility: hidden;" />
   </div>
 </template>
 <script>
-import { Amount, Switch, Toast } from "mand-mobile";
-import { mapState, mapGetters, mapActions } from "vuex";
+import { Amount, Switch } from "mand-mobile";
+import { mapActions } from "vuex";
 
 export default {
   name: "account",
@@ -228,76 +164,11 @@ export default {
       processActive: false
     };
   },
-  computed: {
-    ordersStatus() {
-      if (this.orders.list.length) {
-        return {
-          wait: this.orders.list.filter(({ status }) => status === 23).length,
-          online: this.orders.list.filter(({ status }) => status === 26).length,
-          afterSale: this.orders.list.filter(({ status }) => status === 30)
-            .length
-        };
-      } else {
-        return {
-          wait: 0,
-          online: 0,
-          afterSale: 0
-        };
-      }
-    },
-    ...mapState("user", ["info", "playerApply"]),
-    ...mapState("account", ["orders", "playerStatus"]),
-    ...mapGetters("account", ["balance", "playerStatusTransform"])
-  },
   methods: {
-    copyMenberNo() {
-      const input = document.createElement("input");
-      input.setAttribute("readonly", "readonly");
-      input.setAttribute("value", this.info.memberNo);
-      document.body.appendChild(input);
-      input.setSelectionRange(0, this.info.memberNo.length);
-      if (document.execCommand("copy")) {
-        document.execCommand("copy");
-        Toast.succeed("复制成功");
-      }
-      document.body.removeChild(input);
-    },
-    async playerStatusChange() {
-      this.processActive = true;
-      await this.openPlayer();
-      this.processActive = false;
-    },
-    async applyDetails() {
-      if (this.playerApply.playerDetailsStatus === 2) {
-        Toast.info("资料审核中");
-      } else {
-        const { code } = await this.playerDetailsShow();
-        if (!code) {
-          this.$router.push({
-            name: "basic_info",
-            query: {
-              from: this.$route.name,
-              redirect: this.$route.name,
-              type: "update"
-            }
-          });
-        }
-      }
-    },
-    ...mapActions("account", [
-      "openPlayer",
-      "orderPlayerList",
-      "getAmountShow",
-      "getPlayerStatus"
-    ]),
-    ...mapActions("user", ["playerDetailsShow"])
+    ...mapActions("user", ["getUserInfo"])
   },
   async created() {
-    await this.getAmountShow();
-    await this.getPlayerStatus();
-    if (this.playerApply.playerStatus === 0) {
-      await this.orderPlayerList();
-    }
+    this.getUserInfo();
   }
 };
 </script>

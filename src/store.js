@@ -14,7 +14,7 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   state,
   getters: {
-    token: (state, getters, rootState) => rootState.user.info.token
+    token: (state, getters, rootState) => rootState.user.token
   },
   actions,
   mutations,
@@ -24,5 +24,6 @@ export default new Vuex.Store({
     user,
     account
   },
-  plugins: process.env.NODE_ENV === "production" ? [] : [createPersistedState()] //开发环境使用,生产环境慎用
+  // plugins: process.env.NODE_ENV === "production" ? [] : [createPersistedState()] //开发环境使用,生产环境慎用
+  plugins: [createPersistedState()] //开发环境使用,生产环境慎用
 });

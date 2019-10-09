@@ -24,8 +24,8 @@ if (process.env.NODE_ENV === "production") {
       updated(registration) {
         // connect to ./App.vue #未调试
         registration.update();
-        window.dispatchEvent(new Event("sw.update"));
         // console.log("新的版本已经更新完毕,请刷新", registration);
+        // window.dispatchEvent(new Event("sw.update"));
       },
       offline() {
         console.log("应用已经离线");

@@ -21,126 +21,33 @@ export default new Router({
           name: "home",
           meta: {
             title: "首页",
-            keepAlive: true
+            keepAlive: true,
           },
           component: () =>
-            import(/* webpackChunkName: "home" */ "@/views/root/Home.vue")
+            import(/* webpackChunkName: "home" */ "@/views/root/Home.vue"),
         },
         {
           path: "search",
           name: "search",
           meta: {
             title: "找陪玩",
-            keepAlive: true
+            keepAlive: true,
           },
           component: () =>
-            import(/* webpackChunkName: "search" */ "@/views/root/Search.vue")
+            import(/* webpackChunkName: "search" */ "@/views/root/Search.vue"),
         },
         {
           path: "account",
           name: "account",
           meta: {
-            title: "我的"
+            title: "我的",
           },
           component: () =>
-            import(/* webpackChunkName: "account" */ "@/views/root/Account.vue")
-        }
-      ]
-    },
-    {
-      path: "/basic_info",
-      name: "basic_info",
-      meta: {
-        title: "基本信息",
-        keepAlive: true
-      },
-      component: () =>
-        import(/* webpackChunkName: "basic_info" */ "@/views/artboard/BasicInfo.vue")
-    },
-    {
-      path: "/service_info",
-      name: "service_info",
-      meta: {
-        title: "服务信息",
-        keepAlive: true
-      },
-      component: () =>
-        import(/* webpackChunkName: "service_info" */ "@/views/artboard/ServiceInfo.vue")
-    },
-    {
-      path: "/wallet",
-      name: "wallet",
-      meta: {
-        title: "我的钱包"
-      },
-      component: () =>
-        import(/* webpackChunkName: "wallet" */ "@/views/account/Wallet.vue")
-    },
-    {
-      path: "/account/details",
-      name: "account_details",
-      meta: {
-        title: "个人资料",
-        keepAlive: true
-      },
-      component: () =>
-        import(/* webpackChunkName: "account_details" */ "@/views/account/Details.vue")
-    },
-    {
-      path: "/account/nickname",
-      name: "account_nickname",
-      meta: {
-        title: "昵称",
-        keepAlive: true
-      },
-      component: () =>
-        import(/* webpackChunkName: "account_nickname" */ "@/views/account/NickName.vue")
-    },
-    {
-      path: "/account/avatar",
-      name: "account_avatar",
-      meta: {
-        title: "上传头像"
-      },
-      component: () =>
-        import(/* webpackChunkName: "account_avatar" */ "@/views/account/Avatar.vue")
-    },
-    {
-      path: "/servicemanage",
-      name: "servicemanage",
-      meta: {
-        title: "技能管理"
-      },
-      component: () =>
-        import(/* webpackChunkName: "servicemanage" */ "@/views/account/Servicemanage.vue")
-    },
-    {
-      path: "/order/management",
-      name: "order_management",
-      meta: {
-        title: "接单管理"
-      },
-      component: () =>
-        import(/* webpackChunkName: "order_management" */ "@/views/account/OrderManagement.vue")
-    },
-    {
-      path: "/order/details/:orderNo",
-      name: "order_details",
-      meta: {
-        title: "接单详情",
-        keepAlive: true
-      },
-      component: () =>
-        import(/* webpackChunkName: "order_details" */ "@/views/account/OrderDetails.vue")
-    },
-    {
-      path: "/result_page",
-      name: "result_page",
-      meta: {
-        title: "陪玩入驻审核结果"
-      },
-      component: () =>
-        import(/* webpackChunkName: "result_page" */ "@/views/artboard/ResultPage.vue")
+            import(
+              /* webpackChunkName: "account" */ "@/views/root/Account.vue"
+            ),
+        },
+      ],
     },
     {
       path: "/sign",
@@ -153,31 +60,33 @@ export default new Router({
           name: "sign_in",
           meta: {
             title: "登录",
-            keepAlive: true
+            keepAlive: true,
           },
           component: () =>
-            import(/* webpackChunkName: "sign_in" */ "@/views/sign/SignIn.vue")
+            import(/* webpackChunkName: "sign_in" */ "@/views/sign/SignIn.vue"),
         },
         {
           path: "up",
           name: "sign_up",
           meta: {
             title: "注册",
-            keepAlive: true
+            keepAlive: true,
           },
           component: () =>
-            import(/* webpackChunkName: "sign_up" */ "@/views/sign/SignUp.vue")
-        }
-      ]
+            import(/* webpackChunkName: "sign_up" */ "@/views/sign/SignUp.vue"),
+        },
+      ],
     },
     {
       path: "/forget_password",
       name: "forget_password",
       meta: {
-        title: "找回密码"
+        title: "找回密码",
       },
       component: () =>
-        import(/* webpackChunkName: "forget_password" */ "@/views/sign/ForgetPassword.vue")
-    }
-  ]
+        import(
+          /* webpackChunkName: "forget_password" */ "@/views/sign/ForgetPassword.vue"
+        ),
+    },
+  ],
 });

@@ -10,7 +10,9 @@
               :key="$index"
             >
               <div class="game-icon">
-                <img :src="game.selectIcon" :alt="game.name" />
+                <svg class="icon" aria-hidden="true">
+                  <use :xlink:href="game.icon" />
+                </svg>
               </div>
               <span class="game-label small text-darker">{{ game.name }}</span>
             </li>
@@ -23,8 +25,6 @@
 </template>
 <script>
 import { Swiper, SwiperItem, DropMenu } from "mand-mobile";
-import { mapState } from "vuex";
-import { chunk } from "lodash";
 
 export default {
   name: "search",
@@ -32,11 +32,6 @@ export default {
     [Swiper.name]: Swiper,
     [SwiperItem.name]: SwiperItem,
     [DropMenu.name]: DropMenu
-  },
-  computed: {
-    ...mapState("user", {
-      gameList: state => chunk(state.gameList.list, 8)
-    })
   },
   data() {
     return {
@@ -87,6 +82,56 @@ export default {
             }
           ]
         }
+      ],
+      gameList: [
+        [
+          {
+            icon: "#icon-ziyuan4",
+            name: "模拟经营"
+          },
+          {
+            icon: "#icon-gedou",
+            name: "格斗"
+          },
+          {
+            icon: "#icon-ziyuan",
+            name: "LOL"
+          },
+          {
+            icon: "#icon-sheji",
+            name: "射击"
+          },
+          {
+            icon: "#icon-qiapai",
+            name: "卡牌"
+          },
+          {
+            icon: "#icon-jishizhanlve",
+            name: "战略"
+          },
+          {
+            icon: "#icon-qipai",
+            name: "棋牌"
+          },
+          {
+            icon: "#icon-jiaose",
+            name: "角色扮演"
+          }
+        ],
+        [
+          {
+            icon: "#icon-tiyu",
+            name: "体育"
+          },
+          {
+            icon: "#icon-mmp",
+            name: "音乐"
+          },
+          {
+            icon: "#icon-yizhi",
+            name: "益智"
+          }
+        ]
       ]
     };
   }

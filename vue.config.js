@@ -13,8 +13,8 @@ const config = {
   },
   devServer: {
     proxy: {
-      "/baseUrl": {
-        target: "http://192.168.3.67"
+      "/base": {
+        target: "https://storeserverapi.zhougonglai.now.sh/"
       }
     },
     compress: true
