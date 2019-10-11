@@ -21,33 +21,31 @@ export default new Router({
           name: "home",
           meta: {
             title: "首页",
-            keepAlive: true,
+            keepAlive: true
           },
           component: () =>
-            import(/* webpackChunkName: "home" */ "@/views/root/Home.vue"),
+            import(/* webpackChunkName: "home" */ "@/views/root/Home.vue")
         },
         {
           path: "search",
           name: "search",
           meta: {
             title: "找陪玩",
-            keepAlive: true,
+            keepAlive: true
           },
           component: () =>
-            import(/* webpackChunkName: "search" */ "@/views/root/Search.vue"),
+            import(/* webpackChunkName: "search" */ "@/views/root/Search.vue")
         },
         {
           path: "account",
           name: "account",
           meta: {
-            title: "我的",
+            title: "我的"
           },
           component: () =>
-            import(
-              /* webpackChunkName: "account" */ "@/views/root/Account.vue"
-            ),
-        },
-      ],
+            import(/* webpackChunkName: "account" */ "@/views/root/Account.vue")
+        }
+      ]
     },
     {
       path: "/sign",
@@ -60,33 +58,31 @@ export default new Router({
           name: "sign_in",
           meta: {
             title: "登录",
-            keepAlive: true,
+            keepAlive: true
           },
           component: () =>
-            import(/* webpackChunkName: "sign_in" */ "@/views/sign/SignIn.vue"),
+            import(/* webpackChunkName: "sign_in" */ "@/views/sign/SignIn.vue")
         },
         {
           path: "up",
           name: "sign_up",
           meta: {
             title: "注册",
-            keepAlive: true,
+            keepAlive: true
           },
           component: () =>
-            import(/* webpackChunkName: "sign_up" */ "@/views/sign/SignUp.vue"),
-        },
-      ],
+            import(/* webpackChunkName: "sign_up" */ "@/views/sign/SignUp.vue")
+        }
+      ]
     },
     {
       path: "/forget_password",
       name: "forget_password",
       meta: {
-        title: "找回密码",
+        title: "找回密码"
       },
       component: () =>
-        import(
-          /* webpackChunkName: "forget_password" */ "@/views/sign/ForgetPassword.vue"
-        ),
-    },
-  ],
+        import(/* webpackChunkName: "forget_password" */ "@/views/sign/ForgetPassword.vue")
+    }
+  ]
 });

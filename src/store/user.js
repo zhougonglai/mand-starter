@@ -9,13 +9,15 @@ export default {
   getters: {},
   actions: {
     async getUserInfo({ commit }) {
-      const user = await $http.get("/user");
-      return commit("SET_USER", user);
+      const { data, status } = await $http.login();
+      commit("SET_USER", data);
+      return status;
     }
   },
   mutations: {
     SET_USER(state, user) {
       state.info = user;
+      state.token = user.memberNo;
     }
   }
 };

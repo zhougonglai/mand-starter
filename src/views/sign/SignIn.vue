@@ -39,15 +39,23 @@
             v-model.trim="signIn.password"
             placeholder="请输入登录密码"
           />
-          <svg class="icon" aria-hidden="true" @click="passwordStatus = !passwordStatus">
-            <use :xlink:href="passwordStatus ? '#icon-eye' : '#icon-eye-slash'" />
+          <svg
+            class="icon"
+            aria-hidden="true"
+            @click="passwordStatus = !passwordStatus"
+          >
+            <use
+              :xlink:href="passwordStatus ? '#icon-eye' : '#icon-eye-slash'"
+            />
           </svg>
         </div>
       </div>
       <div class="fiel-row">
         <div class="fill">
           <div class="line-normal larger primary">
-            <p class="inline">{{ signIn.accountType ? "邮箱/账号登录" : "手机号登录" }}</p>
+            <p class="inline">
+              {{ signIn.accountType ? "邮箱/账号登录" : "手机号登录" }}
+            </p>
           </div>
         </div>
         <div class="fill justyfy-end flex">
@@ -58,13 +66,21 @@
         <md-agree v-model="signIn.wechat">绑定微信账号</md-agree>
       </div>
       <div class="fiel-row mt-5">
-        <md-button round type="primary" :loading="waiting" :inactive="waiting">立即登录</md-button>
+        <md-button
+          round
+          type="primary"
+          :loading="waiting"
+          :inactive="waiting"
+          @click="login"
+          >立即登录</md-button
+        >
       </div>
     </form>
   </div>
 </template>
 <script>
 import { Agree, Icon, InputItem, Button } from "mand-mobile";
+import { mapActions } from "vuex";
 import { isWx } from "@/utils";
 
 export default {
@@ -90,7 +106,15 @@ export default {
       waiting: false
     };
   },
-  methods: {}
+  methods: {
+    async login() {
+      const status = await this.getUserInfo(this.signIn);
+      if (status) {
+        this.$router.push({ name: "account" });
+      }
+    },
+    ...mapActions("user", ["getUserInfo"])
+  }
 };
 </script>
 <style lang="stylus" scoped>

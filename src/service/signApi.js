@@ -1,7 +1,7 @@
 const SIGN_API = {
   login: {
     method: "post",
-    url: "/member/login"
+    url: "/user"
   },
   autoLogin: {
     method: "post",

@@ -5,88 +5,49 @@
         <img class="avatar" :src="info.imageUrl" :alt="info.nickName" />
       </div>
       <div class="account_content">
-        <div class="account_nick_name larger bold">
-          {{ info.nickName }}
-          <small class="x-small text-white player-status ml-2">
-            <div
-              class="status-bage"
-              :class="{
-                online: playerStatus === 0,
-                offline: playerStatus === 1,
-                serving: playerStatus === 2
-              }"
-            ></div>
-            {{
-            playerStatus ? (playerStatus === 1 ? "离线" : "服务中") : "在线"
-            }}
-          </small>
-        </div>
+        <div class="account_nick_name larger bold">{{ info.nickName }}</div>
         <div class="account_info">
           <div class="info_id small">ID:{{ info.memberNo }}</div>
-          <div class="info_invite small">邀请码:{{ info.memberNo }}</div>
-          <div class="tag" @click="copyMenberNo">复制</div>
         </div>
       </div>
-      <div class="account_arrow" @click="$router.push({ name: 'account_details' })">
+      <div class="account_arrow">
         <svg class="icon" aria-hidden="true">
           <use xlink:href="#icon-arrow-right" />
         </svg>
       </div>
     </div>
 
-    <div class="online_switch" v-if="playerApply.playerStatus === 0 && playerStatus !== 2">
-      <p class="larger bold fill" v-text="playerStatusTransform ? '关闭接单' : '开启接单'" />
-      <md-switch
-        :value="playerStatusTransform"
-        :disabled="processActive"
-        @change="playerStatusChange"
-      />
-    </div>
-
-    <div class="order" v-if="playerApply.playerStatus === 0">
+    <div class="order">
       <div class="order_status">
-        <div
-          class="order_item"
-          @click="
-            $router.push({
-              name: 'order_management',
-              query: { current: 'wait' }
-            })
-          "
-        >
+        <div class="order_item">
           <svg class="icon" aria-hidden="true">
-            <use xlink:href="#iconic_waitingorder" />
+            <use xlink:href="#icon-daijiedan" />
           </svg>
-          <div class="bage" v-if="ordersStatus.wait" v-text="ordersStatus.wait" />
+          <div class="bage" />
           <small class="small text-gray">待接单</small>
         </div>
-        <div
-          class="order_item"
-          @click="
-            $router.push({
-              name: 'order_management',
-              query: { current: 'online' }
-            })
-          "
-        >
+        <div class="order_item">
           <svg class="icon" aria-hidden="true">
-            <use xlink:href="#iconic_service" />
+            <use xlink:href="#icon-servicing" />
           </svg>
-          <div class="bage" v-if="ordersStatus.online" v-text="ordersStatus.online" />
+          <div class="bage" />
           <small class="small text-gray">服务中</small>
         </div>
         <div class="order_item">
           <svg class="icon" aria-hidden="true">
-            <use xlink:href="#iconic_after-sale" />
+            <use xlink:href="#icon-dingdan-shouhouzhong" />
           </svg>
-          <div class="bage" v-if="ordersStatus.afterSale" v-text="ordersStatus.afterSale" />
+          <div class="bage" />
           <small class="small text-gray">售后中</small>
         </div>
       </div>
-      <div class="my_order" @click="$router.push({ name: 'order_management' })">
+      <div class="my_order">
         <img
           src="@/assets/images/ic_my-order@2x.png"
-          srcset="@/assets/images/ic_my-order@2x.png 2x, @/assets/images/ic_my-order@3x.png 3x"
+          srcset="
+            @/assets/images/ic_my-order@2x.png 2x,
+            @/assets/images/ic_my-order@3x.png 3x
+          "
           alt="我的接单"
         />
         <small class="small text-gray">我的接单</small>
@@ -94,18 +55,16 @@
     </div>
 
     <div class="cells">
-      <div class="cell-item" @click="$router.push({ name: 'wallet' })">
+      <div class="cell-item">
         <div class="item_icon">
           <svg class="icon" aria-hidden="true">
-            <use xlink:href="#icongerenzhongxintubiao-zhuanqu_wodeqianbao" />
+            <use xlink:href="#icon-qianbao" />
           </svg>
         </div>
         <div class="item-content border-bottom-1px">
           <p class="larger bold">我的钱包</p>
           <div class="content_icon">
-            <small class="small text-gray">
-              <md-amount :value="balance" :duration="800" transition />元
-            </small>
+            <small class="small text-gray">1元</small>
             <svg class="icon" aria-hidden="true">
               <use xlink:href="#iconchakangengduojiantou" />
             </svg>
@@ -113,10 +72,10 @@
         </div>
       </div>
 
-      <div class="cell-item" @click="applyDetails">
+      <div class="cell-item">
         <div class="item_icon">
           <svg class="icon" aria-hidden="true">
-            <use xlink:href="#icongerenzhongxintubiao-zhuanqu_gerenziliao" />
+            <use xlink:href="#icon-ziliao" />
           </svg>
         </div>
         <div class="item-content border-bottom-1px">
@@ -129,10 +88,10 @@
         </div>
       </div>
 
-      <div class="cell-item" @click="$router.push({ name: 'servicemanage' })">
+      <div class="cell-item">
         <div class="item_icon">
           <svg class="icon" aria-hidden="true">
-            <use xlink:href="#icongerenzhongxintubiao_zhuanqu_fuwuguanli" />
+            <use xlink:href="#icon-fuwu" />
           </svg>
         </div>
         <div class="item-content">
@@ -146,12 +105,18 @@
       </div>
     </div>
 
-    <input ref="copyTarget" type="text" readonly :value="info.memberNo" style="visibility: hidden;" />
+    <input
+      ref="copyTarget"
+      type="text"
+      readonly
+      :value="info.memberNo"
+      style="visibility: hidden;"
+    />
   </div>
 </template>
 <script>
 import { Amount, Switch } from "mand-mobile";
-import { mapActions } from "vuex";
+import { mapActions, mapState } from "vuex";
 
 export default {
   name: "account",
@@ -164,11 +129,14 @@ export default {
       processActive: false
     };
   },
+  computed: {
+    ...mapState("user", ["info"])
+  },
   methods: {
     ...mapActions("user", ["getUserInfo"])
   },
   async created() {
-    this.getUserInfo();
+    // this.getUserInfo();
   }
 };
 </script>

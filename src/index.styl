@@ -369,6 +369,13 @@ button
 
 
 /* --------------------------------- @components --------------------------------- */
+.triangle{
+  width: 0;
+  height: 0;
+  border-top: 12px solid #333 !important;
+  border-left: 12px solid transparent !important;
+  border-right: 12px solid transparent !important;
+}
 .avatar{
   width: inherit;
   height: inherit;
@@ -677,6 +684,19 @@ button
     height: 48px;
   }
 
+  .avatar{
+    border-radius: 50%;
+    width: 72px;
+    height: 72px;
+  }
+
+  .app-header-title{
+    font-size: 36px;
+    color: #606166;
+    text-align: center;
+    font-weight: bold;
+  }
+
   .app-header-with-search {
     flex: 1;
     padding: 0 32px;
@@ -706,7 +726,11 @@ button
 
   .app-header-action {
     display: flex;
-    min-width: 128px;
+
+    .icon{
+      width: 72px;
+      height: 72px;
+    }
   }
 }
 
@@ -812,15 +836,6 @@ button
   background: linear-gradient(90deg, #f2f2f2 25%, #e6e6e6 37%, #f2f2f2 63%);
   background-size: 400% 100%;
   animation: ant-skeleton-loading 1.4s ease infinite;  
-}
-
-.app-header{
-  .app-header-title{
-    font-size: 36px;
-    color: #606166;
-    text-align: center;
-    font-weight: bold;
-  }  
 }
 
 .selector-item-body {

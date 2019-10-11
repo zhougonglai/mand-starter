@@ -31,13 +31,13 @@
             />
             <div class="avatar-info" v-if="!brief">
               <svg class="icon gender" aria-hidden="true">
-                <use v-if="cellUser.gender === 1" xlink:href="#iconnan" />
-                <use v-if="cellUser.gender === 2" xlink:href="#iconnv" />
+                <use v-if="cellUser.gender === 1" xlink:href="#icon-Man" />
+                <use v-if="cellUser.gender === 2" xlink:href="#icon-woman" />
               </svg>
               <small class="small text-white">{{ cellUser.age }}</small>
 
               <svg class="icon adress ml-2" aria-hidden="true">
-                <use xlink:href="#icondidian_fuzhi" />
+                <use xlink:href="#icon-geo" />
               </svg>
               <small class="small text-white">{{ cellUser.adress }}</small>
             </div>
@@ -72,13 +72,13 @@
           <p class="item-title larger bold" v-text="cellUser.label" />
           <div class="content-info">
             <svg class="icon gender" aria-hidden="true">
-              <use v-if="cellUser.gender === 1" xlink:href="#iconnan" />
-              <use v-if="cellUser.gender === 2" xlink:href="#iconnv" />
+              <use v-if="cellUser.gender === 1" xlink:href="#icon-Man" />
+              <use v-if="cellUser.gender === 2" xlink:href="#icon-woman" />
             </svg>
             <small class="small text-grayer">{{ cellUser.age }}</small>
 
             <svg class="icon adress ml-2" aria-hidden="true">
-              <use xlink:href="#icondidian_fuzhi" />
+              <use xlink:href="#icon-geo" />
             </svg>
             <small class="small text-grayer">{{ cellUser.adress }}</small>
           </div>
@@ -98,9 +98,9 @@
             />
           </div>
           <p class="larger bold" v-text="cellUser.service.game" />
-          <tag size="small" shape="square" type="ghost">
-            {{ cellUser.service.rank }}
-          </tag>
+          <tag size="small" shape="square" type="ghost">{{
+            cellUser.service.rank
+          }}</tag>
         </div>
       </div>
     </div>

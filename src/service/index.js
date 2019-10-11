@@ -13,9 +13,7 @@ import MemberController from "./MemberController";
 import OrderMemberController from "./OrderMemberController";
 
 const instance = axios.create({
-  baseURL: `${
-    process.env.NODE_ENV === "production" ? process.env.VUE_APP_BASE_URL : ""
-  }baseUrl`
+  baseURL: process.env.VUE_APP_BASE_URL
 });
 
 instance.interceptors.request.use(

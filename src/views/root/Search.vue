@@ -1,139 +1,71 @@
 <template>
   <div id="search">
-    <div class="menus">
-      <md-swiper :autoplay="0" :is-loop="false">
-        <md-swiper-item v-for="(gameArr, index) in gameList" :key="index">
-          <ul class="game-box">
-            <li
-              class="game-item"
-              v-for="(game, $index) in gameArr"
-              :key="$index"
-            >
-              <div class="game-icon">
-                <svg class="icon" aria-hidden="true">
-                  <use :xlink:href="game.icon" />
-                </svg>
-              </div>
-              <span class="game-label small text-darker">{{ game.name }}</span>
-            </li>
-          </ul>
-        </md-swiper-item>
-      </md-swiper>
+    <div class="app-header border-bottom-1px">
+      <img class="avatar" :src="info.imageUrl" />
+      <div class="app-header-with-search">
+        <div class="search">
+          输入ID或昵称
+          <svg class="icon" aria-hidden="true">
+            <use xlink:href="#icon-cx" />
+          </svg>
+        </div>
+      </div>
+      <div class="app-header-action">
+        <svg class="icon" aria-hidden="true">
+          <use xlink:href="#icon-setting" />
+        </svg>
+      </div>
     </div>
-    <div class="content">正文区域</div>
+    <div class="content">
+      <div class="search-options">
+        <div class="search-item">
+          <div class="options">
+            性别
+            <svg
+              class="icon"
+              aria-hidden="true"
+              @click="searchOptions.status = !searchOptions.status"
+            >
+              <use v-if="searchOptions.status" xlink:href="#icon-Man" />
+              <use v-else xlink:href="#icon-woman" />
+            </svg>
+          </div>
+        </div>
+        <div class="search-item">
+          <div class="options">
+            排序
+            <div class="triangle"></div>
+          </div>
+        </div>
+        <div class="search-item">
+          <div class="options">
+            筛选
+            <div class="triangle"></div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 <script>
-import { Swiper, SwiperItem, DropMenu } from "mand-mobile";
+import { Swiper, SwiperItem } from "mand-mobile";
+import { mapState } from "vuex";
 
 export default {
   name: "search",
   components: {
     [Swiper.name]: Swiper,
-    [SwiperItem.name]: SwiperItem,
-    [DropMenu.name]: DropMenu
+    [SwiperItem.name]: SwiperItem
   },
   data() {
     return {
-      data: [
-        {
-          text: "排量",
-          options: [
-            {
-              value: "0",
-              text: "1.6L"
-            },
-            {
-              value: "1",
-              text: "1.8L"
-            },
-            {
-              value: "2",
-              text: "2.0L"
-            },
-            {
-              value: "3",
-              text: "1.2T"
-            },
-            {
-              value: "4",
-              text: "1.4T"
-            },
-            {
-              value: "5",
-              text: "1.6T"
-            }
-          ]
-        },
-        {
-          text: "变速箱",
-          options: [
-            {
-              value: "7",
-              text: "手动挡"
-            },
-            {
-              value: "8",
-              text: "自动挡"
-            },
-            {
-              value: "9",
-              text: "手自一体"
-            }
-          ]
-        }
-      ],
-      gameList: [
-        [
-          {
-            icon: "#icon-ziyuan4",
-            name: "模拟经营"
-          },
-          {
-            icon: "#icon-gedou",
-            name: "格斗"
-          },
-          {
-            icon: "#icon-ziyuan",
-            name: "LOL"
-          },
-          {
-            icon: "#icon-sheji",
-            name: "射击"
-          },
-          {
-            icon: "#icon-qiapai",
-            name: "卡牌"
-          },
-          {
-            icon: "#icon-jishizhanlve",
-            name: "战略"
-          },
-          {
-            icon: "#icon-qipai",
-            name: "棋牌"
-          },
-          {
-            icon: "#icon-jiaose",
-            name: "角色扮演"
-          }
-        ],
-        [
-          {
-            icon: "#icon-tiyu",
-            name: "体育"
-          },
-          {
-            icon: "#icon-mmp",
-            name: "音乐"
-          },
-          {
-            icon: "#icon-yizhi",
-            name: "益智"
-          }
-        ]
-      ]
+      searchOptions: {
+        status: false
+      }
     };
+  },
+  computed: {
+    ...mapState("user", ["info"])
   }
 };
 </script>
@@ -143,54 +75,28 @@ export default {
   width: 750px;
   flex: 1;
   overflow-y: auto;
+  flex-direction: column;
 
-  .menus {
-    margin-bottom: 16px;
-    background-color: #fff;
+  .content {
+    flex: 1;
 
-    >>>.md-swiper-item {
-      min-width: 100vw;
-    }
-
-    .game-box {
-      margin: 0;
-      padding: 0;
+    .search-options {
+      padding: 8px 16px;
       display: flex;
-      height: 100%;
-      width: 100%;
-      align-items: flex-start;
-      flex-wrap: wrap;
-      flex-direction: row;
-      padding: 16px 16px 32px 16px;
-      box-sizing: border-box;
+      align-items: center;
 
-      .game-item {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        width: 25%;
-        font-size: 16px;
-        flex-direction: column;
+      .search-item {
+        flex: 1;
 
-        &:nth-child(4)~.game-item {
-          margin-top: 32px;
-        }
-
-        .game-icon {
-          width: 72px;
-          height: 72px;
-
-          img {
-            width: inherit;
-            height: inherit;
-          }
-        }
-
-        .game-label {
-          margin-top: 16px;
+        .options {
+          display: inline-flex;
         }
       }
     }
   }
+}
+
+.fill {
+  flex: 1;
 }
 </style>

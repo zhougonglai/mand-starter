@@ -11,6 +11,7 @@
       v-if="!$route.meta.keepAlive"
     ></router-view>
     <md-tab-bar
+      class="border-top-1px"
       v-model="current"
       :items="items"
       :ink-length="50"
